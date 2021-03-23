@@ -57,7 +57,7 @@ extraArgs: []
 # - --webhooktimeout=4
 resources:
   limits:
-    memory: 256Mi
+    memory: 512Mi
   requests:
     cpu: 100m
     memory: 50Mi
