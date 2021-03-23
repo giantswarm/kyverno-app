@@ -1,4 +1,4 @@
-nameOverride:
+nameOverride: kyverno-app
 fullnameOverride: kyverno-app
 namespace:
 # Supported- default/restricted/privileged/custom
