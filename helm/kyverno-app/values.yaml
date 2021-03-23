@@ -1,5 +1,5 @@
-nameOverride: kyverno-app
-fullnameOverride: kyverno-app
+nameOverride:
+fullnameOverride:
 namespace:
 # Supported- default/restricted/privileged/custom
 # For more info- https://kyverno.io/policies/pod-security
@@ -137,4 +137,4 @@ service:
 #    kyverno-svc.kyverno.svc.kyverno-tls-pair (with data entries named tls.key and tls.crt)
 # 3) Let Helm generate a self signed cert, by setting createSelfSignedCert true
 # If letting Kyverno create its own CA or providing your own, make createSelfSignedCert is false
-createSelfSignedCert: true
+createSelfSignedCert: false
