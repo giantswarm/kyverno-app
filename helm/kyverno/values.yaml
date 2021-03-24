@@ -31,7 +31,7 @@ initImage:
   # registry: quay.io
   repository: ghcr.io/kyverno/kyvernopre
   # If initImage.tag is missing, defaults to image.tag
-  tag:  v1.3.4-44-gc08843ef
+  tag: v1.3.4-44-gc08843ef
   # If initImage.pullPolicy is missing, defaults to image.pullPolicy
   pullPolicy:
   # No pull secrets just for initImage; just add to image.pullSecrets
