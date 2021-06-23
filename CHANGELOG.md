@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Update Kyverno to `1.4.0`.
-- Increase memory limit.
+- Reduce memory limit.
 
 ## [0.0.5] - 2021-06-03
 
