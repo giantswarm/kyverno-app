@@ -7,4 +7,4 @@ description: A Helm chart for kyverno
 home: https://github.com/giantswarm/kyverno-app
 engine: gotpl
 annotations:
-  config.giantswarm.io/version: 1.x.x
+  config.giantswarm.io/version: rename-kyverno-folder
