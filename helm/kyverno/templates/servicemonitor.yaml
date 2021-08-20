@@ -6,9 +6,7 @@ metadata:
   labels: {{ include "kyverno.labels" . | nindent 4 }}
 spec:
   selector:
-    matchLabels:
-      app.kubernetes.io/name: {{ include "kyverno.name" . }}
-      app.kubernetes.io/instance: {{ .Release.Name }}
+    matchLabels: {{ include "kyverno.matchLabels" . | nindent 6 }}
   endpoints:
   - honorLabels: true
     path: /metrics
