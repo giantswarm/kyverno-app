@@ -65,7 +65,7 @@ envVars: {}
 extraArgs: []
 resources:
   limits:
-    memory: 2048Mi
+    memory: 1024Mi
   requests:
     cpu: 100m
     memory: 256Mi
