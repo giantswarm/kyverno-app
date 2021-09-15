@@ -188,5 +188,5 @@ policy-reporter:
   global:
     plugins:
       keyverno: true
-  networkPolicy:
-    enabled: true
+  # networkPolicy:
+  #   enabled: true
