@@ -184,11 +184,13 @@ createSelfSignedCert: false
 policy-reporter:
   ui:
     enabled: true
+    plugins:
+      kyverno: true
   kyvernoPlugin:
     enabled: true
   global:
     plugins:
-      keyverno: true
+      kyverno: true
   monitoring:
     enabled: true
     namespace: monitoring
