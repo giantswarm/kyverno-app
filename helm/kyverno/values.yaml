@@ -188,5 +188,8 @@ policy-reporter:
   global:
     plugins:
       keyverno: true
+  monitoring:
+    enabled: true
+    namespace: monitoring
   # networkPolicy:
   #   enabled: true
