@@ -228,5 +228,3 @@ policy-reporter:
   monitoring:
     enabled: true
     namespace: monitoring
-    grafana:
-      namespace: monitoring
