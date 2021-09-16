@@ -204,13 +204,13 @@ policy-reporter:
 
   kyvernoPlugin:
     enabled: true
-      resources:
-        limits:
-          cpu: 10m
-          memory: 30Mi
-        requests:
-          cpu: 1m
-          memory: 15Mi
+    resources:
+      limits:
+        cpu: 10m
+        memory: 30Mi
+      requests:
+        cpu: 1m
+        memory: 15Mi
 
   global:
     plugins:
