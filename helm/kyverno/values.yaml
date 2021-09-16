@@ -215,6 +215,7 @@ policy-reporter:
   global:
     plugins:
       kyverno: true
+
   monitoring:
     enabled: true
     namespace: monitoring
