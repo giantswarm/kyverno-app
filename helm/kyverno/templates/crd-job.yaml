@@ -1,0 +1,45 @@
+{{- if .Values.crds.install }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "kyverno-app.crdInstall" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  annotations:
+    # create hook dependencies in the right order
+    "helm.sh/hook-weight": "-1"
+    {{- include "kyverno-app.CRDInstallAnnotations" . | nindent 4 }}
+  labels:
+    app.kubernetes.io/component: {{ include "kyverno-app.crdInstall" . | quote }}
+    {{- include "kyverno-app.selectorLabels" . | nindent 4 }}
+    role: {{ include "kyverno-app.CRDInstallSelector" . | quote }}
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: {{ include "kyverno-app.crdInstall" . | quote }}
+        {{- include "kyverno-app.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "kyverno-app.crdInstall" . }}
+      securityContext:
+        runAsUser: {{ .Values.prometheusOperator.securityContext.runAsUser }}
+        runAsGroup: {{ .Values.prometheusOperator.securityContext.runAsGroup }}
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      containers:
+      - name: kubectl
+        image: "{{ .Values.image.registry }}/giantswarm/docker-kubectl:latest"
+        command:
+        - sh
+        - -c
+        - |
+          set -o errexit ; set -o xtrace ; set -o nounset
+
+          # piping stderr to stdout means kubectl's errors are surfaced
+          # in the pod's logs.
+          kubectl annotate crd clusterpolicy meta.helm.sh/release-name=kyverno
+          kubectl annotate crd clusterpolicy meta.helm.sh/release-namespace=giantswarm
+          kubectl label crd clusterpolicy app.kubernetes.io/managed-by=Helm
+      restartPolicy: Never
+  backoffLimit: 4
+{{- end }}

@@ -2,6 +2,9 @@ project:
   branch: "[[ .Branch ]]"
   commit: "[[ .SHA ]]"
 
+crds:
+  install: true
+
 kyverno:
   fullnameOverride: kyverno
   image:
