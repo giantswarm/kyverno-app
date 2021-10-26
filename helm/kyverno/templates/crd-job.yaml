@@ -37,9 +37,9 @@ spec:
 
           # piping stderr to stdout means kubectl's errors are surfaced
           # in the pod's logs.
-          kubectl annotate crd clusterpolicies.kyverno.io policies.kyverno.io meta.helm.sh/release-name=kyverno --overwrite
-          kubectl annotate crd clusterpolicies.kyverno.io policies.kyverno.io meta.helm.sh/release-namespace=giantswarm --overwrite
-          kubectl label crd clusterpolicies.kyverno.io policies.kyverno.io app.kubernetes.io/managed-by=Helm --overwrite
+          kubectl annotate crd generaterequests.kyverno.io clusterreportchangerequests.kyverno.io clusterpolicyreports.wgpolicyk8s.io reportchangerequests.kyverno.io policyreports.wgpolicyk8s.io clusterpolicies.kyverno.io policies.kyverno.io meta.helm.sh/release-name=kyverno --overwrite
+          kubectl annotate crd generaterequests.kyverno.io clusterreportchangerequests.kyverno.io clusterpolicyreports.wgpolicyk8s.io reportchangerequests.kyverno.io policyreports.wgpolicyk8s.io clusterpolicies.kyverno.io policies.kyverno.io meta.helm.sh/release-namespace=giantswarm --overwrite
+          kubectl label crd generaterequests.kyverno.io clusterreportchangerequests.kyverno.io clusterpolicyreports.wgpolicyk8s.io reportchangerequests.kyverno.io policyreports.wgpolicyk8s.io clusterpolicies.kyverno.io policies.kyverno.io app.kubernetes.io/managed-by=Helm --overwrite
       restartPolicy: Never
   backoffLimit: 4
 {{- end }}
