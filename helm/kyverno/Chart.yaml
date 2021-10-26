@@ -12,3 +12,7 @@ annotations:
 dependencies:
   - name: policy-reporter
     version: 1.9.3
+  - name: kyverno
+    version: v2.1.1
+  - name: kyverno-policies
+    version: v2.1.1
