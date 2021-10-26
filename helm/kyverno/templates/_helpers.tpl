@@ -52,9 +52,9 @@ heritage: {{ $.Release.Service | quote }}
 "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
 {{- end -}}
 
-{{- define "kube-prometheus-stack.selectorLabels" -}}
-app.kubernetes.io/name: "{{ template "kube-prometheus-stack.name" . }}"
-app.kubernetes.io/instance: "{{ template "kube-prometheus-stack.name" . }}"
+{{- define "kyverno-app.selectorLabels" -}}
+app.kubernetes.io/name: "{{ template "kyverno-app.name" . }}"
+app.kubernetes.io/instance: "{{ template "kyverno-app.name" . }}"
 {{- end -}}
 
 {{/* Create a label which can be used to select any orphaned crd-install hook resources */}}
