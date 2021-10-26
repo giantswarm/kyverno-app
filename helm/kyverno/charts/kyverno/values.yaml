@@ -151,7 +151,7 @@ config:
   - "[ReportChangeRequest,*,*]"
   - "[ClusterReportChangeRequest,*,*]"
   # Or give the name of an existing config map (ignores default/provided resourceFilters)
-  existingConfig: ''
+  existingConfig:
   excludeGroupRole:
 #  - ""
   excludeUsername:
