@@ -5,6 +5,9 @@ project:
 crds:
   install: true
 
+image:
+  registry: quay.io
+
 kyverno:
   fullnameOverride: kyverno
   image:
