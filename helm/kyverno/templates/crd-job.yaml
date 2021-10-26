@@ -37,9 +37,9 @@ spec:
 
           # piping stderr to stdout means kubectl's errors are surfaced
           # in the pod's logs.
-          kubectl annotate crd clusterpolicy meta.helm.sh/release-name=kyverno
-          kubectl annotate crd clusterpolicy meta.helm.sh/release-namespace=giantswarm
-          kubectl label crd clusterpolicy app.kubernetes.io/managed-by=Helm
+          kubectl annotate crd clusterpolicies.kyverno.io, policies.kyverno.io meta.helm.sh/release-name=kyverno
+          kubectl annotate crd clusterpolicies.kyverno.io, policies.kyverno.io meta.helm.sh/release-namespace=giantswarm
+          kubectl label crd clusterpolicies.kyverno.io, policies.kyverno.io app.kubernetes.io/managed-by=Helm
       restartPolicy: Never
   backoffLimit: 4
 {{- end }}
