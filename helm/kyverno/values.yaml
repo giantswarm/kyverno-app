@@ -1,3 +1,6 @@
+crds:
+  install: true
+
 nameOverride:
 fullnameOverride: kyverno
 namespace:
