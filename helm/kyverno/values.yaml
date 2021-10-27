@@ -1,9 +1,112 @@
+<<<<<<< HEAD
+=======
+crds:
+  install: true
+
+
+nameOverride:
+fullnameOverride: kyverno
+namespace:
+# Supported- default/restricted/privileged/custom
+# For more info- https://kyverno.io/policies/pod-security
+podSecurityStandard: custom
+# Supported- low/medium/high
+podSecuritySeverity: medium
+# Policies to include when podSecurityStandard is custom
+podSecurityPolicies: []
+# Supported values- `audit`, `enforce`
+# For more info- https://kyverno.io/docs/writing-policies/validate/
+validationFailureAction: audit
+
+# -- Additional labels
+customLabels: {}
+
+rbac:
+  create: true
+  serviceAccount:
+    create: true
+    name:
+    annotations: {}
+
+>>>>>>> master
 project:
   branch: "[[ .Branch ]]"
   commit: "[[ .SHA ]]"
 
+<<<<<<< HEAD
 crds:
   install: true
+=======
+image:
+  registry: quay.io
+  repository: quay.io/giantswarm/kyverno
+  # Defaults to appVersion in Chart.yaml if omitted
+  tag: v1.5.0
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+  # - secretName
+
+initImage:
+  repository: quay.io/giantswarm/kyvernopre
+  # If initImage.tag is missing, defaults to image.tag
+  tag: v1.5.0
+  # If initImage.pullPolicy is missing, defaults to image.pullPolicy
+  pullPolicy:
+  # No pull secrets just for initImage; just add to image.pullSecrets
+
+replicaCount: 3
+podLabels: {}
+#   example.com/label: foo
+podAnnotations: {}
+#   example.com/annotation: foo
+podSecurityContext: {}
+affinity: {}
+nodeSelector: {}
+tolerations: []
+
+# change hostNetwork to true when you want the kyverno's pod to share its host's network namespace
+# useful for situations like when you end up dealing with a custom CNI over Amazon EKS
+# update the 'dnsPolicy' accordingly as well to suit the host network mode
+hostNetwork: false
+
+# dnsPolicy determines the manner in which DNS resolution happens in the cluster
+# in case of hostNetwork: true, usually, the dnsPolicy is suitable to be "ClusterFirstWithHostNet"
+# for further reference: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
+dnsPolicy: "ClusterFirst"
+envVars: {}
+extraArgs: []
+resources:
+  limits:
+    memory: 1024Mi
+  requests:
+    cpu: 100m
+    memory: 256Mi
+
+initResources:
+  limits:
+    cpu: 100m
+    memory: 256Mi
+  requests:
+    cpu: 10m
+    memory: 64Mi
+
+verticalPodAutoscaler:
+  enabled: false
+
+## Liveness Probe. The block is directly forwarded into the deployment, so you can use whatever livenessProbe configuration you want.
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
+##
+livenessProbe:
+  httpGet:
+    path: /health/liveness
+    port: 9443
+    scheme: HTTPS
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 2
+  successThreshold: 1
+>>>>>>> master
 
 image:
   registry: quay.io

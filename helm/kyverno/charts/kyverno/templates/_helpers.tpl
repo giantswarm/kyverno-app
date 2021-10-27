@@ -92,6 +92,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 {{- end -}}
 
+<<<<<<< HEAD:helm/kyverno/charts/kyverno/templates/_helpers.tpl
 {{/* Create the default PodDisruptionBudget to use */}}
 {{- define "podDisruptionBudget.spec" -}}
 {{- if and .Values.podDisruptionBudget.minAvailable .Values.podDisruptionBudget.maxUnavailable }}
@@ -104,3 +105,46 @@ minAvailable: {{ default 0 .Values.podDisruptionBudget.minAvailable }}
 maxUnavailable: {{ .Values.podDisruptionBudget.maxUnavailable }}
 {{- end }}
 {{- end }}
+=======
+{{/* Set if a default policy is managed */}}
+{{- define "kyverno.podSecurityDefault" -}}
+{{- if or (eq .Values.podSecurityStandard "default") (eq .Values.podSecurityStandard "restricted") }}
+{{- true }}
+{{- else if and (eq .Values.podSecurityStandard "custom") (has .name .Values.podSecurityPolicies) }}
+{{- true }}
+{{- else -}}
+{{- false }}
+{{- end -}}
+{{- end -}}
+
+{{/* Set if a restricted policy is managed */}}
+{{- define "kyverno.podSecurityRestricted" -}}
+{{- if eq .Values.podSecurityStandard "restricted" }}
+{{- true }}
+{{- else if and (eq .Values.podSecurityStandard "custom") (has .name .Values.podSecurityPolicies) }}
+{{- true }}
+{{- else -}}
+{{- false }}
+{{- end -}}
+{{- end -}}
+
+
+{{- define "kyverno.crdInstall" -}}
+{{- printf "%s-%s" ( include "kyverno.name" . ) "crd-install" | replace "+" "_" | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "kyverno.CRDInstallAnnotations" -}}
+"helm.sh/hook": "pre-install,pre-upgrade"
+"helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+{{- end -}}
+
+{{- define "kyverno.selectorLabels" -}}
+app.kubernetes.io/name: "{{ template "kyverno.name" . }}"
+app.kubernetes.io/instance: "{{ template "kyverno.name" . }}"
+{{- end -}}
+
+{{/* Create a label which can be used to select any orphaned crd-install hook resources */}}
+{{- define "kyverno.CRDInstallSelector" -}}
+{{- printf "%s" "crd-install-hook" -}}
+{{- end -}}
+>>>>>>> master:helm/kyverno/templates/_helpers.tpl
