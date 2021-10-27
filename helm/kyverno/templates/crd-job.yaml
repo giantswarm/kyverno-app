@@ -37,9 +37,9 @@ spec:
 
           # piping stderr to stdout means kubectl's errors are surfaced
           # in the pod's logs.
-          kubectl annotate crd generaterequests.kyverno.io clusterreportchangerequests.kyverno.io clusterpolicyreports.wgpolicyk8s.io reportchangerequests.kyverno.io policyreports.wgpolicyk8s.io clusterpolicies.kyverno.io policies.kyverno.io meta.helm.sh/release-name=kyverno --overwrite --ignore-not-found=true
-          kubectl annotate crd generaterequests.kyverno.io clusterreportchangerequests.kyverno.io clusterpolicyreports.wgpolicyk8s.io reportchangerequests.kyverno.io policyreports.wgpolicyk8s.io clusterpolicies.kyverno.io policies.kyverno.io meta.helm.sh/release-namespace=giantswarm --overwrite --ignore-not-found=true
-          kubectl label crd generaterequests.kyverno.io clusterreportchangerequests.kyverno.io clusterpolicyreports.wgpolicyk8s.io reportchangerequests.kyverno.io policyreports.wgpolicyk8s.io clusterpolicies.kyverno.io policies.kyverno.io app.kubernetes.io/managed-by=Helm --overwrite --ignore-not-found=true
+          kubectl annotate crd generaterequests.kyverno.io clusterreportchangerequests.kyverno.io clusterpolicyreports.wgpolicyk8s.io reportchangerequests.kyverno.io policyreports.wgpolicyk8s.io clusterpolicies.kyverno.io policies.kyverno.io meta.helm.sh/release-name=kyverno --overwrite 2>/dev/null
+          kubectl annotate crd generaterequests.kyverno.io clusterreportchangerequests.kyverno.io clusterpolicyreports.wgpolicyk8s.io reportchangerequests.kyverno.io policyreports.wgpolicyk8s.io clusterpolicies.kyverno.io policies.kyverno.io meta.helm.sh/release-namespace=giantswarm --overwrite 2>/dev/null
+          kubectl label crd generaterequests.kyverno.io clusterreportchangerequests.kyverno.io clusterpolicyreports.wgpolicyk8s.io reportchangerequests.kyverno.io policyreports.wgpolicyk8s.io clusterpolicies.kyverno.io policies.kyverno.io app.kubernetes.io/managed-by=Helm --overwrite 2>/dev/null
       restartPolicy: Never
   backoffLimit: 4
 {{- end }}
