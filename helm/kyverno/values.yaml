@@ -189,7 +189,7 @@ createSelfSignedCert: false
 policy-reporter:
   image:
     repository: quay.io/giantswarm/policy-reporter
-    tag: 1.10.1
+    tag: 1.10.2
   resources:
     limits:
       cpu: 15m
