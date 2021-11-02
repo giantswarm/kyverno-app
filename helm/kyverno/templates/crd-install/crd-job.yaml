@@ -21,8 +21,8 @@ spec:
     spec:
       serviceAccountName: {{ include "kyverno-stack.crdInstall" . }}
       securityContext:
-        runAsUser: {{ .Values.prometheusOperator.securityContext.runAsUser }}
-        runAsGroup: {{ .Values.prometheusOperator.securityContext.runAsGroup }}
+        runAsUser: 65534
+        runAsGroup: 65534
       tolerations:
       - key: node-role.kubernetes.io/master
         effect: NoSchedule
