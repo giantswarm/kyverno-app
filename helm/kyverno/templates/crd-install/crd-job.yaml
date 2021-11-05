@@ -35,6 +35,9 @@ spec:
         - |
           set -o errexit ; set -o xtrace ; set -o nounset
 
+          # Temporary fix to work around selector changes
+          kubectl -n {{ .Release.Namespace }} delete deployment kyverno
+
           # piping stderr to stdout means kubectl's errors are surfaced
           # in the pod's logs.
 
