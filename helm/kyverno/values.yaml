@@ -9,6 +9,7 @@ image:
   registry: quay.io
 
 kyverno:
+  installCRDs: false
   fullnameOverride: kyverno
   image:
     repository: quay.io/giantswarm/kyverno
