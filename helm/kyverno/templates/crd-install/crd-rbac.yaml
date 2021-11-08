@@ -18,6 +18,8 @@ rules:
   resources:
   - policyreports
   verbs:
+  - "list"
+  - "get"
   - "delete"
 - apiGroups:
   - "apps"
