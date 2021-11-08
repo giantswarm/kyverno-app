@@ -48,7 +48,7 @@ policy-reporter:
   resources:
     limits:
       cpu: 15m
-      memory: 50Mi
+      memory: 100Mi
     requests:
       cpu: 5m
       memory: 30Mi
