@@ -18,7 +18,7 @@ kyverno:
     pullPolicy: IfNotPresent
   initImage:
     repository: quay.io/giantswarm/kyvernopre
-    tag: v1.5.0
+    tag: v1.5.1
   replicaCount: 3
   resources:
     limits:
