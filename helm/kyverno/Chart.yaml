@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: v1.5.1
 annotations:
   application.giantswarm.io/team: team-honeybadger
-  config.giantswarm.io/version: 1.x.x
+  config.giantswarm.io/version: "enable-polrep-monitoring"
 dependencies:
   - name: policy-reporter
     version: 1.12.5
