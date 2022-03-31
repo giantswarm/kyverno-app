@@ -17,7 +17,7 @@ kyverno:
   fullnameOverride: kyverno
   image:
     repository: quay.io/giantswarm/kyverno
-    tag: v1.5.1
+    tag: v1.6.2
     pullPolicy: IfNotPresent
   initImage:
     repository: quay.io/giantswarm/kyvernopre
