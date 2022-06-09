@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.1] - 2022-06-09
+
 ### Fixed
 
 - Update the kyverno CRDS to align with v1.6.2 version.
@@ -130,7 +132,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.10.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.10.1...HEAD
+[0.10.1]: https://github.com/giantswarm/kyverno-app/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/giantswarm/kyverno-app/compare/v0.9.1...v0.10.0
 [0.9.1]: https://github.com/giantswarm/kyverno-app/compare/v0.9.0...v0.9.1
 [0.9.0]: https://github.com/giantswarm/kyverno-app/compare/v0.8.1...v0.9.0
