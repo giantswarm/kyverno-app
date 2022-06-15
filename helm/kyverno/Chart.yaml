@@ -1,7 +1,7 @@
 apiVersion: v2
 appVersion: v1.6.2
 annotations:
-  application.giantswarm.io/team: team-honeybadger
+  application.giantswarm.io/team: team-shield
   config.giantswarm.io/version: 1.x.x
 dependencies:
   - name: policy-reporter
