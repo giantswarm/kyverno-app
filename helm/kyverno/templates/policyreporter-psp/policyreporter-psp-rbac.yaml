@@ -1,4 +1,4 @@
-{{ if .Values.policy-reporter.psp.enabled }}
+{{ if ".Values.policy-reporter.psp.enabled" }}
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
