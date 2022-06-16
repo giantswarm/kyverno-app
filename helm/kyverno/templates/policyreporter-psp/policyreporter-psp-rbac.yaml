@@ -58,7 +58,7 @@ metadata:
     {{- include "kyverno-stack.labels" . | nindent 4 }}
 subjects:
   - kind: ServiceAccount
-    name: {{ include {{ index .Values "policy-reporter" "serviceAccount" "name" }} . }}
+    name: {{ index .Values "policy-reporter" "serviceAccount" "name" }}
     namespace: {{ include "kyverno-stack.namespace"  . }}
 roleRef:
   kind: ClusterRole
