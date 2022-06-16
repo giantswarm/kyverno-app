@@ -56,8 +56,6 @@ policy-reporter:
       memory: 30Mi
   serviceAccount:
     name: "policyreporter-sa"  # Only needed to support adding a PSP. Can be removed when PSPs are disabled.
-  securityContext:
-    seccompProfile: {}
 
   ui:
     enabled: true
@@ -73,6 +71,8 @@ policy-reporter:
       requests:
         cpu: 1m
         memory: 8Mi
+    serviceAccount:
+      name: "policyreporter-sa"  # Only needed to support adding a PSP. Can be removed when PSPs are disabled.
 
   kyvernoPlugin:
     enabled: true
@@ -86,6 +86,8 @@ policy-reporter:
       requests:
         cpu: 1m
         memory: 15Mi
+    serviceAccount:
+      name: "policyreporter-sa"  # Only needed to support adding a PSP. Can be removed when PSPs are disabled.
 
   global:
     plugins:
