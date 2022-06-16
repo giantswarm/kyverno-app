@@ -1,0 +1,156 @@
+loki:
+  host: {{ .Values.target.loki.host | quote }}
+  minimumPriority: {{ .Values.target.loki.minimumPriority | quote }}
+  skipExistingOnStartup: {{ .Values.target.loki.skipExistingOnStartup }}
+  {{- with .Values.target.loki.customLabels }}
+  customLabels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.loki.sources }}
+  sources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.loki.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.loki.channels }}
+  channels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+elasticsearch:
+  host: {{ .Values.target.elasticsearch.host | quote }}
+  index: {{ .Values.target.elasticsearch.index | default "policy-reporter" | quote }}
+  rotation: {{ .Values.target.elasticsearch.rotation | default "dayli" | quote }}
+  minimumPriority: {{ .Values.target.elasticsearch.minimumPriority | quote }}
+  skipExistingOnStartup: {{ .Values.target.elasticsearch.skipExistingOnStartup }}
+  {{- with .Values.target.elasticsearch.sources }}
+  sources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.elasticsearch.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.elasticsearch.channels }}
+  channels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+slack:
+  webhook: {{ .Values.target.slack.webhook | quote }}
+  minimumPriority: {{ .Values.target.slack.minimumPriority | quote }}
+  skipExistingOnStartup: {{ .Values.target.slack.skipExistingOnStartup }}
+  {{- with .Values.target.slack.sources }}
+  sources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.slack.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.slack.channels }}
+  channels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+discord:
+  webhook: {{ .Values.target.discord.webhook | quote }}
+  minimumPriority: {{ .Values.target.discord.minimumPriority | quote }}
+  skipExistingOnStartup: {{ .Values.target.discord.skipExistingOnStartup }}
+  {{- with .Values.target.discord.sources }}
+  sources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.discord.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.discord.channels }}
+  channels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+teams:
+  webhook: {{ .Values.target.teams.webhook | quote }}
+  minimumPriority: {{ .Values.target.teams.minimumPriority | quote }}
+  skipExistingOnStartup: {{ .Values.target.teams.skipExistingOnStartup }}
+  {{- with .Values.target.teams.sources }}
+  sources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.teams.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.teams.channels }}
+  channels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+webhook:
+  host: {{ .Values.target.webhook.host | quote }}
+  minimumPriority: {{ .Values.target.webhook.minimumPriority | quote }}
+  skipExistingOnStartup: {{ .Values.target.webhook.skipExistingOnStartup }}
+  {{- with .Values.target.webhook.sources }}
+  sources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.webhook.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.webhook.channels }}
+  channels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+ui:
+  host: {{ include "policyreporter.uihost" . }}
+  minimumPriority: {{ .Values.target.ui.minimumPriority | quote }}
+  skipExistingOnStartup: {{ .Values.target.ui.skipExistingOnStartup }}
+  {{- with .Values.target.ui.sources }}
+  sources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+s3:
+  accessKeyID: {{ .Values.target.s3.accessKeyID }}
+  secretAccessKey:  {{ .Values.target.s3.secretAccessKey }}
+  region: {{ .Values.target.s3.region }}
+  endpoint: {{ .Values.target.s3.endpoint }}
+  bucket: {{ .Values.target.s3.bucket }}
+  prefix: {{ .Values.target.s3.prefix }}
+  minimumPriority: {{ .Values.target.s3.minimumPriority | quote }}
+  skipExistingOnStartup: {{ .Values.target.s3.skipExistingOnStartup }}
+  {{- with .Values.target.s3.sources }}
+  sources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.s3.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.s3.channels }}
+  channels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+{{- with .Values.policyPriorities }}
+priorityMap:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+
+reportFilter:
+  namespaces:
+    {{- with .Values.reportFilter.namespaces.include }}
+    include:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .Values.reportFilter.namespaces.exclude }}
+    exclude:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  clusterReports:
+    disabled: {{ .Values.reportFilter.clusterReports.disabled }}
