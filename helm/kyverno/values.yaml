@@ -72,6 +72,7 @@ policy-reporter:
         cpu: 1m
         memory: 8Mi
     serviceAccount:
+      create: true
       name: "policyreporter-ui-sa"  # Only needed to support adding a PSP. Can be removed when PSPs are disabled.
 
   kyvernoPlugin:
