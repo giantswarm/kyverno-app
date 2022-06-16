@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update `policy-reporter` to version 2.9.1 / app version 2.6.1.
+
 ## [0.10.1] - 2022-06-09
 
 ### Fixed
