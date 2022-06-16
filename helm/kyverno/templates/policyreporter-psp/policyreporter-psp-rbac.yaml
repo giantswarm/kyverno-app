@@ -64,4 +64,34 @@ roleRef:
   kind: ClusterRole
   name: {{ template "kyverno-stack.fullname" . }}-polr-psp
   apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ template "kyverno-stack.fullname" . }}-polr-ui-psp
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ index .Values "policy-reporter" "ui" "serviceAccount" "name" }}
+    namespace: {{ include "kyverno-stack.namespace"  . }}
+roleRef:
+  kind: ClusterRole
+  name: {{ template "kyverno-stack.fullname" . }}-polr-psp
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ template "kyverno-stack.fullname" . }}-polr-plugin-psp
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ index .Values "policy-reporter" "kyvernoPlugin" "serviceAccount" "name" }}
+    namespace: {{ include "kyverno-stack.namespace"  . }}
+roleRef:
+  kind: ClusterRole
+  name: {{ template "kyverno-stack.fullname" . }}-polr-psp
+  apiGroup: rbac.authorization.k8s.io
 {{- end }}
