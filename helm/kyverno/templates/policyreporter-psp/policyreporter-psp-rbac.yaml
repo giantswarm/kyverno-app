@@ -4,7 +4,7 @@ kind: PodSecurityPolicy
 metadata:
   name: {{ template "kyverno-stack.fullname" . }}-polr-psp
   labels:
-    {{- include "labels.common" . | nindent 4 }}
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
   annotations:
     seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'runtime/default'
 spec:
@@ -39,7 +39,7 @@ kind: ClusterRole
 metadata:
   name: {{ template "kyverno-stack.fullname" . }}-polr-psp
   labels:
-    {{- include "labels.common" . | nindent 4 }}
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
 rules:
   - apiGroups:
       - extensions
@@ -55,7 +55,7 @@ kind: ClusterRoleBinding
 metadata:
   name: {{ template "kyverno-stack.fullname" . }}-polr-psp
   labels:
-    {{- include "labels.common" . | nindent 4 }}
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
 subjects:
   - kind: ServiceAccount
     name: {{ include ".Values.policy-reporter.serviceAccount.name"  . }}
