@@ -2,6 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "kyvernoplugin.fullname" . }}
+  annotations:
+    checksum/secret: {{ include (print .Template.BasePath "/config-secret.yaml") . | sha256sum | quote }}
+    {{- if .Values.annotations }}
+      {{- toYaml .Values.annotations | nindent 4 }}
+    {{- end }}
   labels:
     {{- include "kyvernoplugin.labels" . | nindent 4 }}
 spec:
@@ -23,8 +28,11 @@ spec:
         {{- with .Values.global.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
-      {{- if .Values.podAnnotations }}
+      {{- if or .Values.annotations .Values.podAnnotations }}
       annotations:
+        {{- with .Values.annotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
         {{- with .Values.podAnnotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -41,28 +49,32 @@ spec:
           image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.securityContext }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+          securityContext: {{ include "kyverno.securityContext" . | nindent 12 }}
           {{- end }}
           args:
-            - --apiPort=8080
+            - --port={{ .Values.port.number }}
+            - --metrics-enabled={{ .Values.metrics.enabled }}
+            - --rest-enabled={{ .Values.rest.enabled }}
           ports:
-            - name: http
-              containerPort: 2113
-              protocol: TCP
-            - name: rest
-              containerPort: 8080
+            - name: {{ .Values.port.name }}
+              containerPort: {{ .Values.port.number }}
               protocol: TCP
           livenessProbe:
-            httpGet:
-              path: /healthz
-              port: rest
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
-            httpGet:
-              path: /ready
-              port: rest
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - name: config-file
+            mountPath: /app/config.yaml
+            subPath: config.yaml
+            readOnly: true
+      volumes:
+      - name: config-file
+        secret:
+          secretName: {{ include "kyvernoplugin.fullname" . }}-config
+          optional: true
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

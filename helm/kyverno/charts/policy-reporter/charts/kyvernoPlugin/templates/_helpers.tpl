@@ -34,7 +34,9 @@ helm.sh/chart: {{ include "kyvernoplugin.chart" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
+app.kubernetes.io/component: plugin
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/part-of: {{ include "policyreporter.name" . }}
 {{- with .Values.global.labels }}
 {{ toYaml . }}
 {{- end -}}
@@ -56,5 +58,21 @@ Create the name of the service account to use
 {{- default (include "kyvernoplugin.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}
+
+{{/*
+Selector labels
+*/}}
+{{- define "ui.selectorLabels" -}}
+app.kubernetes.io/name: ui
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{- define "kyverno.securityContext" -}}
+{{- if semverCompare "<1.19" .Capabilities.KubeVersion.Version }}
+{{ toYaml (omit .Values.securityContext "seccompProfile") }}
+{{- else }}
+{{ toYaml .Values.securityContext }}
 {{- end }}
 {{- end }}

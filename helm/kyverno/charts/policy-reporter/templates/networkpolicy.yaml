@@ -2,6 +2,10 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
+  {{- if .Values.annotations }}
+  annotations:
+    {{- toYaml .Values.annotations | nindent 4 }}
+  {{- end }}
   labels: {{ include "policyreporter.labels" . | nindent 4 }}
   name: {{ include "policyreporter.fullname" . }}
 spec:
@@ -11,25 +15,26 @@ spec:
   - Ingress
   - Egress
   ingress:
+  {{- if .Values.ui.enabled }}
   - from:
+    - podSelector:
+        matchLabels: {{- include "ui.selectorLabels" . | nindent 10 }}
     ports:
     - protocol: TCP
-      port: {{ .Values.global.port }}
-  - from:
-    ports:
-    - protocol: TCP
-      port: {{ .Values.service.port }}
+      port: 8080
+  {{- end }}
+  {{- with .Values.networkPolicy.ingress }}
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
   egress:
+  {{- if .Values.ui.enabled }}
   - to:
     - podSelector:
         matchLabels: {{- include "ui.selectorLabels" . | nindent 10 }}
     ports:
     - protocol: TCP
       port: {{ .Values.ui.service.port }}
-  - to:
-    ports:
-    - protocol: TCP
-      port: {{ .Values.networkPolicy.kubernetesApiPort }}
+  {{- end }}
   {{- with .Values.networkPolicy.egress }}
     {{- toYaml . | nindent 2 }}
   {{- end }}

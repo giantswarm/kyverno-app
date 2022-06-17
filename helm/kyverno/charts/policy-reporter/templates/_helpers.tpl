@@ -34,7 +34,9 @@ helm.sh/chart: {{ include "policyreporter.chart" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
+app.kubernetes.io/component: reporting
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/part-of: {{ include "policyreporter.name" . }}
 {{- with .Values.global.labels }}
 {{ toYaml . }}
 {{- end -}}
@@ -65,9 +67,19 @@ Create UI target host based on configuration
 {{- define "policyreporter.uihost" -}}
 {{ if .Values.target.ui.host }}
 {{- .Values.target.ui.host }}
-{{- else if .Values.ui.enabled }}
-{{- printf "http://%s-ui:%s" .Release.Name (.Values.ui.service.port | toString) }}
+{{- else if not .Values.ui.enabled }}
+{{- "" }}
+{{- else if and .Values.ui.enabled (and .Values.ui.views.logs .Values.ui.service.enabled) }}
+{{- printf "http://%s:%s" (include "ui.fullname" .) (.Values.ui.service.port | toString) }}
 {{- else }}
 {{- "" }}
+{{- end }}
+{{- end }}
+
+{{- define "kyverno.securityContext" -}}
+{{- if semverCompare "<1.19" .Capabilities.KubeVersion.Version }}
+{{ toYaml (omit .Values.securityContext "seccompProfile") }}
+{{- else }}
+{{ toYaml .Values.securityContext }}
 {{- end }}
 {{- end }}

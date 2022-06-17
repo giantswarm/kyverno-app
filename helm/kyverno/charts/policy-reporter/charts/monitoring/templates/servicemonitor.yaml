@@ -5,6 +5,10 @@ metadata:
   {{ if .Values.serviceMonitor.namespace }}
   namespace: {{ .Values.serviceMonitor.namespace }}
   {{ end }}
+  {{- if .Values.annotations }}
+  annotations:
+    {{- toYaml .Values.annotations | nindent 4 }}
+  {{- end }}
   labels:
     {{- include "monitoring.labels" . | nindent 4 }}
     {{- with .Values.serviceMonitor.labels }}
@@ -16,3 +20,11 @@ spec:
         {{- include "policyreporter.selectorLabels" . | nindent 8 }}
   endpoints:
   - port: http
+    {{- with .Values.serviceMonitor.relabelings }}
+    relabelings:
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- with .Values.serviceMonitor.metricRelabelings }}
+    metricRelabelings:
+      {{- toYaml . | nindent 4 }}
+    {{- end }}

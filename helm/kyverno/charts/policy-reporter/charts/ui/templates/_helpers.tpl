@@ -4,7 +4,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 If release name contains chart name it will be used as a full name.
 */}}
 {{- define "ui.fullname" -}}
-{{- $name := .Chart.Name }}
+{{- $name := "ui" }}
 {{- if .Values.global.fullnameOverride }}
 {{- printf "%s-%s" .Values.global.fullnameOverride $name | trunc 63 | trimSuffix "-" }}
 {{- else if contains $name .Release.Name }}
@@ -34,7 +34,9 @@ helm.sh/chart: {{ include "ui.chart" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
+app.kubernetes.io/component: ui
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/part-of: {{ include "policyreporter.name" . }}
 {{- with .Values.global.labels }}
 {{ toYaml . }}
 {{- end -}}
@@ -48,6 +50,22 @@ Selector labels
 */}}
 {{- define "ui.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "ui.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
+Policy Reporter Selector labels
+*/}}
+{{- define "policyreporter.selectorLabels" -}}
+app.kubernetes.io/name: policy-reporter
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
+Kyverno Plugin Selector labels
+*/}}
+{{- define "kyvernoplugin.selectorLabels" -}}
+app.kubernetes.io/name: kyverno-plugin
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
@@ -83,5 +101,13 @@ Create the name of the service account to use
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+{{- end }}
+
+{{- define "kyverno.securityContext" -}}
+{{- if semverCompare "<1.19" .Capabilities.KubeVersion.Version }}
+{{ toYaml (omit .Values.securityContext "seccompProfile") }}
+{{- else }}
+{{ toYaml .Values.securityContext }}
 {{- end }}
 {{- end }}
