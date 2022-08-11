@@ -5,6 +5,10 @@ project:
 # We install CRDs through a Job with the helm specific crd folder.
 crds:
   install: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
 
 image:
   registry: quay.io
