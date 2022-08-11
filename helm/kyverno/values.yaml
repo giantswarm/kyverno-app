@@ -41,6 +41,8 @@ kyverno:
   podDisruptionBudget:
     maxUnavailable: 1
     minAvailable: ""
+  psp:
+    enabled: true
   rbac:
     serviceAccount:
       name: "kyverno"  # Added so that we can create a PSP allowing emptyDir and seccomp profiles. Can be removed when PSPs are removed.
