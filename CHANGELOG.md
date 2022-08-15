@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Update `policy-reporter` to version 2.9.1 / app version 2.6.1.
+- Update `kyverno` to upstream version 1.7.2 / chart version 2.5.2.
+- Use pre-install CRD install Job to remove storage version `v1alpha1` for several Kyverno CRDs.
 
 ## [0.10.1] - 2022-06-09
 
