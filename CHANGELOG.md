@@ -7,19 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update `kyverno` to upstream version 1.7.2 / chart version 2.5.2.
+- Use pre-install CRD install Job to remove storage version `v1alpha1` for several Kyverno CRDs.
+
 ## [0.10.3] - 2022-08-09
 
 ### Changed
 
-- Fix Circle CI job name for puhsing to app collection.
+- Fix Circle CI job name for pushing to app collection.
 
 ## [0.10.2] - 2022-08-05
 
 ### Changed
 
 - Update `policy-reporter` to version 2.9.1 / app version 2.6.1.
-- Update `kyverno` to upstream version 1.7.2 / chart version 2.5.2.
-- Use pre-install CRD install Job to remove storage version `v1alpha1` for several Kyverno CRDs.
 
 ## [0.10.1] - 2022-06-09
 
