@@ -35,9 +35,6 @@ spec:
         - |
           set -o errexit ; set -o xtrace ; set -o nounset
 
-          # piping stderr to stdout means kubectl's errors are surfaced
-          # in the pod's logs.
-
           # Patch CRD status to remove old version v1alpha1. This can't be done with kubectl,
           # so we use curl directly against a locally proxied api-server.
           kubectl proxy &
@@ -54,6 +51,10 @@ spec:
           done
 
           sleep 60
+          exit 1
+          
+          # piping stderr to stdout means kubectl's errors are surfaced
+          # in the pod's logs.
           kubectl apply -f /data/ 2>&1
         volumeMounts:
 {{- range $path, $_ := .Files.Glob "crds/**" }}
