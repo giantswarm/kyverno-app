@@ -51,7 +51,6 @@ spec:
           done
 
           sleep 60
-          exit 1
 
           # piping stderr to stdout means kubectl's errors are surfaced
           # in the pod's logs.
