@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: v1.6.2
+appVersion: v1.7.2
 annotations:
   application.giantswarm.io/team: team-shield
   config.giantswarm.io/version: 1.x.x
