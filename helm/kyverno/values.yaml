@@ -51,7 +51,7 @@ kyverno:
     serviceAccount:
       name: "kyverno"  # Added so that we can create a PSP allowing emptyDir and seccomp profiles. Can be removed when PSPs are removed.
   extraArgs:
-    - -maxReportChangeRequests=500
+    - -maxReportChangeRequests=50
 
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
