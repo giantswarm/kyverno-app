@@ -50,6 +50,9 @@ spec:
             --data '[{"op": "replace", "path": "/status/storedVersions", "value":["v1alpha2"]}]'
 
           kubectl apply -f /data/ 2>&1
+          kubectl proxy
+
+          sleep 30
         volumeMounts:
 {{- range $path, $_ := .Files.Glob "crds/**" }}
         - name: {{ $path | base | trimSuffix ".yaml" }}
