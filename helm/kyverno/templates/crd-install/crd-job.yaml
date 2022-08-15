@@ -50,8 +50,6 @@ spec:
             fi
           done
 
-          sleep 60
-
           # piping stderr to stdout means kubectl's errors are surfaced
           # in the pod's logs.
           kubectl apply -f /data/ 2>&1
