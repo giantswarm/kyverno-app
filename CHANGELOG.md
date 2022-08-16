@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Use pre-install CRD install Job to remove storage version `v1alpha1` for several Kyverno CRDs.
 - Set Kyverno to use the `giantswarm-critical` PriorityClass.
 - Limit maximum ReportChangeRequests per namespace to 100.
+- Split PolicyReports into one report per policy to support the RCR limiting and avoid cases where a report doesn't fit into etcd.
 
 ## [0.10.3] - 2022-08-09
 
