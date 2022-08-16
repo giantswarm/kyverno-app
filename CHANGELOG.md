@@ -7,19 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update `kyverno` to upstream version 1.7.2 / chart version 2.5.2.
+- Use pre-install CRD install Job to remove storage version `v1alpha1` for several Kyverno CRDs.
+- Set Kyverno to use the `giantswarm-critical` PriorityClass.
+- Limit maximum ReportChangeRequests per namespace to 100.
+- Split PolicyReports into one report per policy to support the RCR limiting and avoid cases where a report doesn't fit into etcd.
+
 ## [0.10.3] - 2022-08-09
 
 ### Changed
 
-- Fix Circle CI job name for puhsing to app collection.
+- Fix Circle CI job name for pushing to app collection.
 
 ## [0.10.2] - 2022-08-05
 
 ### Changed
 
 - Update `policy-reporter` to version 2.9.1 / app version 2.6.1.
-- Update `kyverno` to upstream version 1.7.2 / chart version 2.5.2.
-- Use pre-install CRD install Job to remove storage version `v1alpha1` for several Kyverno CRDs.
 
 ## [0.10.1] - 2022-06-09
 
@@ -38,17 +44,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Change to using `maxUnavailable` to match existing configs
+- Change to using `maxUnavailable` to match existing configs.
 
 ## [0.9.0] - 2022-03-14
 
 ### Changed
 
-- Enable Pod Disruption Budget by default
+- Enable Pod Disruption Budget by default.
 
 ## [0.8.1] - 2022-02-18
 
-- make PDB version conditional based on available API
+- Make PDB version conditional based on available API.
 
 ## [0.8.0] - 2022-02-03
 
