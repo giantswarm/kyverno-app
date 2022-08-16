@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update `kyverno` to upstream version 1.7.2 / chart version 2.5.2.
 - Use pre-install CRD install Job to remove storage version `v1alpha1` for several Kyverno CRDs.
 - Set Kyverno to use the `giantswarm-critical` PriorityClass.
-- Limit maximum ReportChangeRequests per namespace to 500.
+- Limit maximum ReportChangeRequests per namespace to 100.
 
 ## [0.10.3] - 2022-08-09
 
