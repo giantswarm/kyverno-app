@@ -2,13 +2,10 @@ image:
   registry: ghcr.io
   repository: kyverno/policy-reporter
   pullPolicy: IfNotPresent
-  tag: 2.6.1
+  tag: 2.8.0
 
 imagePullSecrets: []
 
-# Deploy not more than one replica
-# Policy Reporter doesn't scale yet.
-# Each pod will report each change.
 replicaCount: 1
 
 deploymentStrategy: {}
@@ -103,11 +100,16 @@ rest:
 # Prometheus Metrics API
 metrics:
   enabled: false
+  mode: detailed # available modes are detailed, simple and custom
+  customLabels: [] # only used for custom mode. Supported fields are: ["namespace", "rule", "policy", "report" // PolicyReport name, "kind" // resource kind, "name" // resource name, "status", "severity", "category", "source"]
 #  filter:
 #    sources:
 #      exclude: ["Trivy CIS Kube Bench"]
 #    status:
 #      exclude: ["pass", "skip"]
+
+profiling:
+  enabled: false
 
 # Filter PolicyReport resources to process
 reportFilter:
@@ -151,6 +153,69 @@ global:
 #   require-ns-labels: error
 policyPriorities: {}
 
+emailReports:
+  clusterName: "" # (optional) - displayed in the email report if configured
+  smtp:
+    host: ""
+    port: 465
+    username: ""
+    password: ""
+    from: "" # displayed from email address
+    encryption: "" # default is none, supports ssl/tls and starttls
+
+  # basic summary report
+  summary:
+    enabled: false
+    schedule: "0 8 * * *" # CronJob schedule defines when the report will be send
+    activeDeadlineSeconds: 300 # timeout in seconds
+    backoffLimit: 3 # retry counter
+    ttlSecondsAfterFinished: 0
+    restartPolicy: Never # pod restart policy
+
+    to: [] # list of receiver email addresses
+    filter: {} # optional filters
+    #  disableClusterReports: false # remove ClusterPolicyResults from Reports
+    #  namespaces:
+    #    include: []
+    #    exclude: []
+    #  sources:
+    #    include: []
+    #    exclude: []
+    channels: [] # (optional) channels can be used to to send only a subset of namespaces / sources to dedicated email addresses    channels: [] # (optional) channels can be used to to send only a subset of namespaces / sources to dedicated email addresses
+    #  - to: ['team-a@company.org']
+    #    filter:
+    #      disableClusterReports: true
+    #      namespaces:
+    #        include: ['team-a-*']
+    #      sources:
+    #        include: ['Kyverno']
+  # violation summary report
+  violations:
+    enabled: false
+    schedule: "0 8 * * *" # CronJob schedule defines when the report will be send
+    activeDeadlineSeconds: 300 # timeout in seconds
+    backoffLimit: 3 # retry counter
+    ttlSecondsAfterFinished: 0
+    restartPolicy: Never # pod restart policy
+
+    to: [] # list of receiver email addresses
+    filter: {} # optional filters
+    #  disableClusterReports: false # remove ClusterPolicyResults from Reports
+    #  namespaces:
+    #    include: []
+    #    exclude: []
+    #  sources:
+    #    include: []
+    #    exclude: []
+    channels: [] # (optional) channels can be used to to send only a subset of namespaces / sources to dedicated email addresses    channels: [] # (optional) channels can be used to to send only a subset of namespaces / sources to dedicated email addresses
+    #  - to: ['team-a@company.org']
+    #    filter:
+    #      disableClusterReports: true
+    #      namespaces:
+    #        include: ['team-a-*']
+    #      sources:
+    #        include: ['Kyverno']
+
 # Reference a configuration which already exists instead of creating one
 existingTargetConfig:
   enabled: false
@@ -164,6 +229,8 @@ target:
   loki:
     # loki host address
     host: ""
+    # loki api path, defaults to "/api/prom/push" (deprecated)
+    path: ""
     # minimum priority "" < info < warning < critical < error
     minimumPriority: ""
     # list of sources which should send to loki
@@ -253,6 +320,8 @@ target:
   teams:
     # teams webhook address
     webhook: ""
+    # skip TLS
+    skipTLS: false
     # minimum priority "" < info < warning < critical < error
     minimumPriority: ""
     # list of sources which should send to teams
@@ -313,6 +382,56 @@ target:
     filter: {}
     # add additional s3 channels with different configurations and filters
     channels: []
+
+  kinesis:
+    # AWS access key
+    accessKeyID: ""
+    # AWS secret access key
+    secretAccessKey: ""
+    # AWS region
+    region: ""
+    # AWS Kinesis endpoint
+    endpoint: ""
+    # AWS Kinesis stream name
+    streamName: ""
+    # minimum priority "" < info < warning < critical < error
+    minimumPriority: ""
+    # list of sources which should send to S3
+    sources: []
+    # Skip already existing PolicyReportResults on startup
+    skipExistingOnStartup: true
+    # filter results send by namespaces, policies and priorities
+    filter: {}
+    # add additional s3 channels with different configurations and filters
+    channels: []
+
+# required when policy-reporter runs in HA mode and you have targets configured
+# if no targets are configured, leaderElection is disabled automatically
+# will be enabled when replicaCount > 1
+leaderElection:
+  enabled: false
+  releaseOnCancel: true
+  leaseDuration: 15
+  renewDeadline: 10
+  retryPeriod: 2
+
+# use redis as external result cache instead of the in memory cache
+redis:
+  enabled: false
+  address: ""
+  database: 0
+  prefix: "policy-reporter"
+  username: ""
+  password: ""
+
+# enabled if replicaCount > 1
+podDisruptionBudget:
+  # -- Configures the minimum available pods for policy-reporter disruptions.
+  # Cannot be used if `maxUnavailable` is set.
+  minAvailable: 1
+  # -- Configures the maximum unavailable pods for policy-reporter disruptions.
+  # Cannot be used if `minAvailable` is set.
+  maxUnavailable:
 
 # Node labels for pod assignment
 # ref: https://kubernetes.io/docs/user-guide/node-selection/
