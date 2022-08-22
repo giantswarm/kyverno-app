@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Increase maximum sustained and burst Kubernetes client rate limits to 75 and 150 requests/second, respectively.
+
 ## [0.11.0] - 2022-08-17
 
 ### Changed
