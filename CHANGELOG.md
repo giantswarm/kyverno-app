@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.1] - 2022-08-23
+
 ### Changed
 
 - Increase maximum sustained and burst Kubernetes client rate limits to 75 and 150 requests/second, respectively.
@@ -159,7 +161,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.11.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.11.1...HEAD
+[0.11.1]: https://github.com/giantswarm/kyverno-app/compare/v0.11.0...v0.11.1
 [0.11.0]: https://github.com/giantswarm/kyverno-app/compare/v0.10.3...v0.11.0
 [0.10.3]: https://github.com/giantswarm/kyverno-app/compare/v0.10.2...v0.10.3
 [0.10.2]: https://github.com/giantswarm/kyverno-app/compare/v0.10.1...v0.10.2
