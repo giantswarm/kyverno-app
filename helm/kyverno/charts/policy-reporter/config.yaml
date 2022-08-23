@@ -1,5 +1,6 @@
 loki:
   host: {{ .Values.target.loki.host | quote }}
+  path: {{ .Values.target.loki.path | quote }}
   minimumPriority: {{ .Values.target.loki.minimumPriority | quote }}
   skipExistingOnStartup: {{ .Values.target.loki.skipExistingOnStartup }}
   {{- with .Values.target.loki.customLabels }}
@@ -74,6 +75,7 @@ discord:
 
 teams:
   webhook: {{ .Values.target.teams.webhook | quote }}
+  skipTLS: {{ .Values.target.teams.skipTLS }}
   minimumPriority: {{ .Values.target.teams.minimumPriority | quote }}
   skipExistingOnStartup: {{ .Values.target.teams.skipExistingOnStartup }}
   {{- with .Values.target.teams.sources }}
@@ -137,10 +139,42 @@ s3:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 
+kinesis:
+  accessKeyID: {{ .Values.target.kinesis.accessKeyID }}
+  secretAccessKey:  {{ .Values.target.kinesis.secretAccessKey }}
+  region: {{ .Values.target.kinesis.region }}
+  endpoint: {{ .Values.target.kinesis.endpoint }}
+  streamName: {{ .Values.target.kinesis.streamName }}
+  minimumPriority: {{ .Values.target.kinesis.minimumPriority | quote }}
+  skipExistingOnStartup: {{ .Values.target.kinesis.skipExistingOnStartup }}
+  {{- with .Values.target.kinesis.sources }}
+  sources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.kinesis.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.kinesis.channels }}
+  channels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
 {{- with .Values.policyPriorities }}
 priorityMap:
   {{- toYaml . | nindent 2 }}
 {{- end }}
+
+metrics:
+  mode: {{ .Values.metrics.mode }}
+  {{- with .Values.metrics.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.metrics.customLabels }}
+  customLabels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 
 reportFilter:
   namespaces:
@@ -154,3 +188,15 @@ reportFilter:
     {{- end }}
   clusterReports:
     disabled: {{ .Values.reportFilter.clusterReports.disabled }}
+
+leaderElection:
+  enabled: {{ or .Values.leaderElection.enabled (gt (int .Values.replicaCount) 1) }}
+  releaseOnCancel: {{ .Values.leaderElection.releaseOnCancel }}
+  leaseDuration: {{ .Values.leaderElection.leaseDuration }}
+  renewDeadline: {{ .Values.leaderElection.renewDeadline }}
+  retryPeriod: {{ .Values.leaderElection.retryPeriod }}
+
+{{- with .Values.redis }}
+redis:
+  {{- toYaml . | nindent 2 }}
+{{- end }}

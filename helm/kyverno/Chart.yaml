@@ -5,7 +5,7 @@ annotations:
   config.giantswarm.io/version: 1.x.x
 dependencies:
   - name: policy-reporter
-    version: 2.9.1
+    version: 2.11.1
   - name: kyverno
     version: v2.5.2
 description: |
