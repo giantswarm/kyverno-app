@@ -24,6 +24,7 @@ kyverno:
     pullPolicy: IfNotPresent
   initImage:
     repository: quay.io/giantswarm/kyvernopre
+  namespace: kyverno
   replicaCount: 3
   resources:
     limits:
