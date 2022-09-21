@@ -1,8 +1,15 @@
+{{/*
+We have to create individual jobs for each CRD - they timeout during installation
+*/}}
+{{ $currentScope := . }}
 {{- if .Values.crds.install }}
+  {{- range $path, $_ := .Files.Glob "crd/**" }}
+    {{- with $currentScope }}
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "kyverno-stack.crdInstall" . }}
+  name: {{ include "kyverno-stack.crdInstall" . }}-{{ $path | base | trimSuffix ".yaml" }}
   namespace: {{ .Release.Namespace | quote }}
   annotations:
     # create hook dependencies in the right order
@@ -39,24 +46,19 @@ spec:
           # in the pod's logs.
           kubectl apply -f /data/ 2>&1
         volumeMounts:
-{{- range $path, $_ := .Files.Glob "crd/**" }}
         - name: {{ $path | base | trimSuffix ".yaml" }}
           mountPath: /data/{{ $path | base }}
           subPath: {{ $path | base }}
-{{- end }}
         resources: {{- toYaml .Values.crds.resources | nindent 10 }}
       volumes:
-{{ $currentScope := . }}
-{{- range $path, $_ := .Files.Glob "crd/**" }}
-    {{- with $currentScope }}
       - name: {{ $path | base | trimSuffix ".yaml" }}
         configMap:
           name: {{ include "kyverno-stack.crdInstall" . }}-{{ $path | base | trimSuffix ".yaml" }}
           items:
           - key: content
             path: {{ $path | base }}
-{{- end }}
-{{- end }}
       restartPolicy: Never
   backoffLimit: 4
+    {{- end }}
+  {{- end }}
 {{- end }}
