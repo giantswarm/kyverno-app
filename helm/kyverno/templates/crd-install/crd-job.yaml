@@ -36,7 +36,7 @@ spec:
           set -o errexit ; set -o xtrace ; set -o nounset
           # piping stderr to stdout means kubectl's errors are surfaced
           # in the pod's logs.
-          kubectl apply -v=6 -f /data/ 2>&1
+          kubectl apply -v=7 -f /data/ 2>&1
         volumeMounts:
 {{- range $path, $_ := .Files.Glob "crd/**" }}
         - name: {{ $path | base | trimSuffix ".yaml" }}
