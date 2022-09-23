@@ -57,9 +57,9 @@ spec:
           - key: content
             path: {{ $path | base }}
 {{- end }}
+{{- end }}
       - name: kube-cache
         emptyDir: {}
-{{- end }}
       restartPolicy: Never
   backoffLimit: 4
 {{- end }}
