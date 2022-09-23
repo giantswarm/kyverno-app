@@ -45,7 +45,10 @@ spec:
 {{- end }}
         - name: kube-cache
           mountPath: /.kube
-        resources: {{- toYaml .Values.crds.resources | nindent 10 }}
+        resources:
+          requests:
+            cpu: 400m
+            memory: 512Mi
       volumes:
 {{ $currentScope := . }}
 {{- range $path, $_ := .Files.Glob "crd/**" }}
