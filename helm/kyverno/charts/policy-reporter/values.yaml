@@ -2,7 +2,7 @@ image:
   registry: ghcr.io
   repository: kyverno/policy-reporter
   pullPolicy: IfNotPresent
-  tag: 2.8.0
+  tag: 2.10.0
 
 imagePullSecrets: []
 
@@ -143,6 +143,8 @@ global:
   backend: ""
   # overwrite the fullname of all resources including subcharts
   fullnameOverride: ""
+  # configure the namespace of all resources including subcharts
+  namespace: ""
   # additional labels added on each resource
   labels: {}
 
@@ -156,6 +158,7 @@ policyPriorities: {}
 emailReports:
   clusterName: "" # (optional) - displayed in the email report if configured
   smtp:
+    secret: "" # (optional) secret name to provide the complete or partial SMTP configuration
     host: ""
     port: 465
     username: ""
@@ -229,6 +232,13 @@ target:
   loki:
     # loki host address
     host: ""
+    # path to your custom certificate
+    # can be added under extraVolumes
+    certificate: ""
+    # skip TLS verification if necessary
+    skipTLS: false
+    # receive the host from an existing secret instead
+    secretRef: ""
     # loki api path, defaults to "/api/prom/push" (deprecated)
     path: ""
     # minimum priority "" < info < warning < critical < error
@@ -260,8 +270,19 @@ target:
   elasticsearch:
     # elasticsearch host address
     host: ""
+    # path to your custom certificate
+    # can be added under extraVolumes
+    certificate: ""
+    # skip TLS verification if necessary
+    skipTLS: false
     # elasticsearch index (default: policy-reporter)
     index: ""
+    # elasticsearch username für HTTP Basic Auth
+    username: ""
+    # elasticsearch password für HTTP Basic Auth
+    password: ""
+    # receive the host, username and/or password from an existing secret instead
+    secretRef: ""
     # elasticsearch index rotation and index suffix
     # possible values: daily, monthly, annually, none (default: daily)
     rotation: ""
@@ -279,12 +300,16 @@ target:
   slack:
     # slack app webhook address
     webhook: ""
+    # receive the webhook from an existing secret instead
+    secretRef: ""
     # minimum priority "" < info < warning < critical < error
     minimumPriority: ""
     # list of sources which should send to slack
     sources: []
     # Skip already existing PolicyReportResults on startup
     skipExistingOnStartup: true
+    # Added as additional fields to each Slack event
+    customField: {}
     # filter results send by namespaces, policies and priorities
     filter: {}
     # add additional slack channels with different configurations and filters
@@ -306,6 +331,8 @@ target:
   discord:
     # discord app webhook address
     webhook: ""
+    # receive the webhook from an existing secret instead
+    secretRef: ""
     # minimum priority "" < info < warning < critical < error
     minimumPriority: ""
     # list of sources which should send to discord
@@ -320,7 +347,12 @@ target:
   teams:
     # teams webhook address
     webhook: ""
-    # skip TLS
+    # receive the webhook from an existing secret instead
+    secretRef: ""
+    # path to your custom certificate
+    # can be added under extraVolumes
+    certificate: ""
+    # skip TLS verification if necessary
     skipTLS: false
     # minimum priority "" < info < warning < critical < error
     minimumPriority: ""
@@ -336,6 +368,11 @@ target:
   ui:
     # ui host address
     host: ""
+    # path to your custom certificate
+    # can be added under extraVolumes
+    certificate: ""
+    # skip TLS verification if necessary
+    skipTLS: false
     # minimum priority "" < info < warning < critical < error
     minimumPriority: "warning"
     # list of sources which should send to the UI Log
@@ -346,6 +383,13 @@ target:
   webhook:
     # webhook host address
     host: ""
+    # path to your custom certificate
+    # can be added under extraVolumes
+    certificate: ""
+    # skip TLS verification if necessary
+    skipTLS: false
+    # receive the host and/or token from an existing secret, the token is added as Authorization header
+    secretRef: ""
     # additional http headers
     headers: {}
     # minimum priority "" < info < warning < critical < error
@@ -364,6 +408,8 @@ target:
     accessKeyID: ""
     # S3 secret access key
     secretAccessKey: ""
+    # receive the accessKeyID and/or secretAccessKey from an existing secret instead
+    secretRef: ""
     # S3 storage region
     region: ""
     # S3 storage endpoint
@@ -388,6 +434,8 @@ target:
     accessKeyID: ""
     # AWS secret access key
     secretAccessKey: ""
+    # receive the accessKeyID and/or secretAccessKey from an existing secret instead
+    secretRef: ""
     # AWS region
     region: ""
     # AWS Kinesis endpoint
@@ -455,3 +503,8 @@ readinessProbe:
   httpGet:
     path: /healthz
     port: http
+
+extraVolumes:
+  volumeMounts: []
+
+  volumes: []
