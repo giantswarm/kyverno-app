@@ -1,13 +1,13 @@
 apiVersion: v2
-appVersion: v1.7.3
+appVersion: v1.7.4
 annotations:
   application.giantswarm.io/team: team-shield
   config.giantswarm.io/version: 1.x.x
 dependencies:
   - name: policy-reporter
-    version: 2.11.1
+    version: 2.13.0
   - name: kyverno
-    version: v2.5.3
+    version: v2.5.4
 description: |
   Kyverno is a policy engine designed for Kubernetes. It can validate, mutate,
   and generate configurations using admission controls and background scans.
