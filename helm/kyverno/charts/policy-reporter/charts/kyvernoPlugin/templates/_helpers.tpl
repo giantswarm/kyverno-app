@@ -51,6 +51,15 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Pod labels
+*/}}
+{{- define "kyvernoplugin.podLabels" -}}
+helm.sh/chart: {{ include "kyvernoplugin.chart" . }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+app.kubernetes.io/part-of: {{ include "policyreporter.name" . }}
+{{- end }}
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "kyvernoplugin.serviceAccountName" -}}
@@ -76,3 +85,12 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{ toYaml .Values.securityContext }}
 {{- end }}
 {{- end }}
+
+{{/* Get the namespace name. */}}
+{{- define "kyvernoplugin.namespace" -}}
+{{- if .Values.global.namespace -}}
+    {{- .Values.global.namespace -}}
+{{- else -}}
+    {{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}

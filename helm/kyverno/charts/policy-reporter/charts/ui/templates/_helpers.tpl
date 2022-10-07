@@ -54,6 +54,15 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Pod labels
+*/}}
+{{- define "ui.podLabels" -}}
+helm.sh/chart: {{ include "ui.chart" . }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+app.kubernetes.io/part-of: {{ include "policyreporter.name" . }}
+{{- end }}
+
+{{/*
 Policy Reporter Selector labels
 */}}
 {{- define "policyreporter.selectorLabels" -}}
@@ -111,3 +120,12 @@ Create the name of the service account to use
 {{ toYaml .Values.securityContext }}
 {{- end }}
 {{- end }}
+
+{{/* Get the namespace name. */}}
+{{- define "ui.namespace" -}}
+{{- if .Values.global.namespace -}}
+    {{- .Values.global.namespace -}}
+{{- else -}}
+    {{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
