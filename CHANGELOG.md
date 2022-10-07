@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Change target namespace for Giant Swarm management clusters.
+
 ## [0.11.1] - 2022-08-23
 
 ### Changed
