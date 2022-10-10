@@ -32,6 +32,7 @@ workflows:
           name: aws-app-collection
           context: "architect"
           app_name: "kyverno"
+          app_namespace: "kyverno"
           app_collection_repo: "aws-app-collection"
           requires:
             - push-kyverno-chart-to-control-plane-catalog
@@ -45,6 +46,7 @@ workflows:
           name: azure-app-collection
           context: "architect"
           app_name: "kyverno"
+          app_namespace: "kyverno"
           app_collection_repo: "azure-app-collection"
           requires:
             - push-kyverno-chart-to-control-plane-catalog
@@ -58,6 +60,7 @@ workflows:
           name: kvm-app-collection
           context: "architect"
           app_name: "kyverno"
+          app_namespace: "kyverno"
           app_collection_repo: "kvm-app-collection"
           requires:
             - push-kyverno-chart-to-control-plane-catalog
@@ -70,6 +73,7 @@ workflows:
           name: capa-app-collection
           context: "architect"
           app_name: "kyverno"
+          app_namespace: "kyverno"
           app_collection_repo: "capa-app-collection"
           requires:
             - push-kyverno-chart-to-control-plane-catalog
@@ -94,6 +98,7 @@ workflows:
           name: openstack-app-collection
           context: "architect"
           app_name: "kyverno"
+          app_namespace: "kyverno"
           app_collection_repo: "openstack-app-collection"
           requires:
             - push-kyverno-chart-to-control-plane-catalog
@@ -107,6 +112,7 @@ workflows:
           name: vmware-app-collection
           context: "architect"
           app_name: "kyverno"
+          app_namespace: "kyverno"
           app_collection_repo: "vmware-app-collection"
           requires:
             - push-kyverno-chart-to-control-plane-catalog
