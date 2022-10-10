@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Add Service and Deployment annotations for Giant Swarm platform monitoring.
+
 ## [0.11.3] - 2022-10-07
 
 ### Changed
