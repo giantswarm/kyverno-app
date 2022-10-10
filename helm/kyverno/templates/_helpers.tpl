@@ -53,6 +53,7 @@ app.kubernetes.io/part-of: {{ template "kyverno-stack.name" . }}
 chart: {{ template "kyverno-stack.chartref" . }}
 release: {{ $.Release.Name | quote }}
 heritage: {{ $.Release.Service | quote }}
+application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
 {{- if .Values.commonLabels}}
 {{ toYaml .Values.commonLabels }}
 {{- end }}
