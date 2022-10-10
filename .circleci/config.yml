@@ -7,7 +7,7 @@ workflows:
     jobs:
       - architect/push-to-app-catalog:
           context: "architect"
-          # executor: "app-build-suite" # uncomment this if you want automatic metadata generation
+          executor: "app-build-suite"
           name: push-kyverno-chart-to-control-plane-catalog
           app_catalog: "control-plane-catalog"
           app_catalog_test: "control-plane-test-catalog"
@@ -19,6 +19,7 @@ workflows:
 
       - architect/push-to-app-catalog:
           context: "architect"
+          executor: "app-build-suite"
           name: push-kyverno-chart-to-giantswarm-catalog
           app_catalog: "giantswarm-catalog"
           app_catalog_test: "giantswarm-test-catalog"
