@@ -14,7 +14,6 @@ checks:
   - "no-readiness-probe"
   - "access-to-create-pods"
   - "access-to-secrets"
-  # - "env-var-secret"
   - "use-namespace"
   - "minimum-three-replicas"
   - "no-rolling-update-strategy"
