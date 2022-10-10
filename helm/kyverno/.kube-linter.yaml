@@ -1,0 +1,20 @@
+checks:
+  addAllBuiltIn: true
+  exclude:
+  # Exceptions are all for test pods.
+  - "no-read-only-root-fs"
+  - "run-as-non-root"
+  - "unset-cpu-requirements"
+  - "unset-memory-requirements"
+  - "latest-tag"
+  # - "required-annotation-email"
+  # - "required-label-owner"
+  # - "no-liveness-probe"
+  # - "no-readiness-probe"
+  # - "access-to-create-pods"
+  # - "access-to-secrets"
+  # - "env-var-secret"
+  # - "use-namespace"
+  # - "minimum-three-replicas"
+  # - "no-rolling-update-strategy"
+  # - "non-isolated-pod"
