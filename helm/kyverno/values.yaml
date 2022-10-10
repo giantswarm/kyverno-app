@@ -15,6 +15,10 @@ image:
 
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
 kyverno:
+  # Labels on the Deployment. See podLabels for Pod-level labels.
+  customLabels:
+    giantswarm.io/service-type: "managed"
+    giantswarm.io/monitoring_basic_sli: "true"
   # We do not want Kyverno to install these CRDs.
   # Kyverno managed them through helm templates which clashes with chart-operator.
   installCRDs: false
@@ -42,6 +46,9 @@ kyverno:
     create: true
     type: ClusterIP
     port: 8000
+    annotations:
+      giantswarm.io/monitoring-port: "8000"
+      giantswarm.io/monitoring-app-label: "kyverno"
   podDisruptionBudget:
     maxUnavailable: 1
     minAvailable: ""
