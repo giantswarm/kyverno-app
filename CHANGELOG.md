@@ -7,8 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Push `kyverno` to the GCP app collection.
+
 ### Changed
 
+- Add Service and Deployment annotations for Giant Swarm platform monitoring.
 - Change target namespace for Giant Swarm management clusters.
 
 ## [0.11.3] - 2022-10-07

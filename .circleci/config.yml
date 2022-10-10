@@ -35,7 +35,7 @@ workflows:
           app_namespace: "kyverno"
           app_collection_repo: "aws-app-collection"
           requires:
-            - push-kyverno-chart-to-giantswarm-catalog
+            - push-kyverno-chart-to-control-plane-catalog
           filters:
             branches:
               ignore: /.*/
@@ -49,7 +49,7 @@ workflows:
           app_namespace: "kyverno"
           app_collection_repo: "azure-app-collection"
           requires:
-            - push-kyverno-chart-to-giantswarm-catalog
+            - push-kyverno-chart-to-control-plane-catalog
           filters:
             branches:
               ignore: /.*/
@@ -63,7 +63,7 @@ workflows:
           app_namespace: "kyverno"
           app_collection_repo: "kvm-app-collection"
           requires:
-            - push-kyverno-chart-to-giantswarm-catalog
+            - push-kyverno-chart-to-control-plane-catalog
           filters:
             branches:
               ignore: /.*/
@@ -76,7 +76,19 @@ workflows:
           app_namespace: "kyverno"
           app_collection_repo: "capa-app-collection"
           requires:
-            - push-kyverno-chart-to-giantswarm-catalog
+            - push-kyverno-chart-to-control-plane-catalog
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/
+      - architect/push-to-app-collection:
+          name: gcp-app-collection
+          context: "architect"
+          app_name: "kyverno"
+          app_collection_repo: "gcp-app-collection"
+          requires:
+            - push-kyverno-chart-to-control-plane-catalog
           filters:
             branches:
               ignore: /.*/
@@ -89,7 +101,7 @@ workflows:
           app_namespace: "kyverno"
           app_collection_repo: "openstack-app-collection"
           requires:
-            - push-kyverno-chart-to-giantswarm-catalog
+            - push-kyverno-chart-to-control-plane-catalog
           filters:
             branches:
               ignore: /.*/
@@ -103,7 +115,7 @@ workflows:
           app_namespace: "kyverno"
           app_collection_repo: "vmware-app-collection"
           requires:
-            - push-kyverno-chart-to-giantswarm-catalog
+            - push-kyverno-chart-to-control-plane-catalog
           filters:
             branches:
               ignore: /.*/
