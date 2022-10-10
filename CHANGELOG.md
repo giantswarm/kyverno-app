@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add Service and Deployment annotations for Giant Swarm platform monitoring.
 - Change target namespace for Giant Swarm management clusters.
+- Build with `app-build-suite`.
 
 ## [0.11.3] - 2022-10-07
 
