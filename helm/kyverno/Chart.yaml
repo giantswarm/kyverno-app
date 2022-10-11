@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: v1.7.4
 annotations:
   application.giantswarm.io/team: team-shield
-  config.giantswarm.io/version: 1.x.x
+  config.giantswarm.io/version: "kyverno-dashboard-labels"
 dependencies:
   - name: policy-reporter
     version: 2.13.0
