@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Change namespace on GCP management clusters to `kyverno`.
+
 ## [0.11.4] - 2022-10-11
 
 ### Added
