@@ -1,12 +1,11 @@
 [![CircleCI](https://circleci.com/gh/giantswarm/kyverno-app.svg?style=shield)](https://circleci.com/gh/giantswarm/kyverno-app)
 
-# kyverno chart
+# kyverno
 
-Giant Swarm offers a kyverno App which can be installed in workload clusters.
+Kyverno is an admission controller offering policy enforcement as a validating or mutating webhook.
+It audits or enforces policies for cluster resources, and produces reports about the compliance of the cluster.
 
-Kyverno is an admission controller which offers policy enforcement as a validating or mutating webhook.
-
-Here we define the kyverno chart with its templates and default configuration.
+It is used to enforce [Pod Security Standards (PSS)][pss-policies] as a replacement for Pod Security Policies (PSPs), as well as many other community-supported policies for various use cases. For more information on the switch from PSP to PSS, see [our blog post][pss-blog].
 
 ## Installing
 
@@ -20,12 +19,14 @@ There are 3 ways to install this app onto a workload cluster.
 
 #### Kyverno Configurations
 
-Please see the below page for configurable values.
-[Kyverno Configuration](helm/kyverno/#configuration)
-
+Please see the [Kyverno docs][kyverno-docs] or the [configuration reference in this chart](helm/kyverno/#configuration) for configurable values.
 
 See our [full reference page on how to configure applications](https://docs.giantswarm.io/app-platform/app-configuration/) for more details.
 
 ## Credit
 
 * https://github.com/kyverno/kyverno
+
+[kyverno-docs]: https://kyverno.io/docs/
+[pss-blog]: https://www.giantswarm.io/blog/giant-swarms-farewell-to-psp
+[pss-policies]: https://kyverno.io/policies/?policytypes=Pod%2520Security%2520Standards%2520%28Baseline%29%2BPod%2520Security%2520Standards%2520%28Restricted%29
