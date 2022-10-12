@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Push `kyverno` to the cloud-director app collection.
+
 ## [0.11.5] - 2022-10-11
 
 ### Changed
