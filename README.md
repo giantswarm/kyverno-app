@@ -23,6 +23,40 @@ Please see the [Kyverno docs][kyverno-docs] or the [configuration reference in t
 
 See our [full reference page on how to configure applications](https://docs.giantswarm.io/app-platform/app-configuration/) for more details.
 
+## Development
+
+This repo contains subtrees from [giantswarm/kyverno](https://github.com/giantswarm/kyverno) and [giantswarm/policy-reporter](https://github.com/giantswarm/policy-reporter).
+
+### Steps to update subtree
+
+1. Fetch tags from upstream repo
+
+```
+git fetch https://github.com/giantswarm/policy-reporter.git refs/tags/{UPSTREAM_TAG}:refs/tags/{UPSTREAM_TAG}
+```
+
+2. Checkout to the upstream tag
+```
+git checkout {UPSTREAM_TAG}
+```
+
+3. Split subtree into temporary branch
+```
+git subtree split -P charts/policy-reporter  -b temp-split-branch
+```
+
+4. Checkout to your update branch and merge the subtree
+```
+git checkout update-policy-reporter
+git subtree merge --squash -P helm/kyverno/charts/policy-reporter temp-split-branch
+```
+
+5. Push and delete temporary branch
+```
+git push
+git branch -D temp-split-branch
+```
+
 ## Credit
 
 * https://github.com/kyverno/kyverno
