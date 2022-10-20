@@ -19,7 +19,7 @@ There are 3 ways to install this app onto a workload cluster.
 
 #### Kyverno Configurations
 
-Please see the [Kyverno docs][kyverno-docs] or the [configuration reference in this chart](helm/kyverno/#configuration) for configurable values.
+Please see the [Kyverno docs][kyverno-docs] or the [configuration reference in this chart](https://github.com/giantswarm/kyverno-app/tree/main/helm/kyverno#configuration) for configurable values.
 
 See our [full reference page on how to configure applications](https://docs.giantswarm.io/app-platform/app-configuration/) for more details.
 
