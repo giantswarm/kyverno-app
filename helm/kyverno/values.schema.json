@@ -11,6 +11,17 @@
                 "resources": {
                     "type": "object",
                     "properties": {
+                        "limits": {
+                            "type": "object",
+                            "properties": {
+                                "cpu": {
+                                    "type": "string"
+                                },
+                                "memory": {
+                                    "type": "string"
+                                }
+                            }
+                        },
                         "requests": {
                             "type": "object",
                             "properties": {
@@ -394,17 +405,6 @@
                             }
                         }
                     }
-                }
-            }
-        },
-        "project": {
-            "type": "object",
-            "properties": {
-                "branch": {
-                    "type": "string"
-                },
-                "commit": {
-                    "type": "string"
                 }
             }
         }
