@@ -37,7 +37,7 @@ spec:
 
           # piping stderr to stdout means kubectl's errors are surfaced
           # in the pod's logs.
-          kubectl apply -f /data/ 2>&1
+          kubectl replace -f /data/ 2>&1
         volumeMounts:
 {{- range $path, $_ := .Files.Glob "crd/**" }}
         - name: {{ $path | base | trimSuffix ".yaml" }}
