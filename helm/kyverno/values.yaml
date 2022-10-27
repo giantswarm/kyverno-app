@@ -60,7 +60,6 @@ kyverno:
   extraArgs:
     - -clientRateLimitQPS=75
     - -clientRateLimitBurst=150
-    - -splitPolicyReport=true
 
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
