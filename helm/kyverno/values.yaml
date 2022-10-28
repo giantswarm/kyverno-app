@@ -23,7 +23,7 @@ kyverno:
   installCRDs: false
   fullnameOverride: kyverno
   image:
-    registry: docker.io
+    registry: quay.io
     repository: giantswarm/kyverno
     pullPolicy: IfNotPresent
   initImage:
