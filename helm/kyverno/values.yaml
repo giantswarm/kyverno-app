@@ -10,7 +10,7 @@ crds:
       memory: 1024Mi
 
 image:
-  registry: docker.io
+  registry: quay.io
 
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
 kyverno:
@@ -23,11 +23,11 @@ kyverno:
   installCRDs: false
   fullnameOverride: kyverno
   image:
-    registry: docker.io
+    registry: quay.io
     repository: giantswarm/kyverno
     pullPolicy: IfNotPresent
   initImage:
-    registry: docker.io
+    registry: quay.io
     repository: giantswarm/kyvernopre
   replicaCount: 3
   resources:
@@ -62,14 +62,11 @@ kyverno:
   extraArgs:
     - -clientRateLimitQPS=75
     - -clientRateLimitBurst=150
-  securityContext:
-    runAsUser: 1000
-    runAsGroup: 1000
 
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
   image:
-    registry: docker.io
+    registry: quay.io
     repository: giantswarm/policy-reporter
   resources:
     limits:
@@ -84,7 +81,7 @@ policy-reporter:
   ui:
     enabled: true
     image:
-      registry: docker.io
+      registry: quay.io
       repository: giantswarm/policy-reporter-ui
     plugins:
       kyverno: true
@@ -102,7 +99,7 @@ policy-reporter:
   kyvernoPlugin:
     enabled: true
     image:
-      registry: docker.io
+      registry: quay.io
       repository: giantswarm/policy-reporter-kyverno-plugin
     resources:
       limits:
