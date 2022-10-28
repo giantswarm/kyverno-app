@@ -23,7 +23,7 @@ kyverno:
   installCRDs: false
   fullnameOverride: kyverno
   image:
-    registry: quay.io
+    registry: docker.io
     repository: giantswarm/kyverno
     pullPolicy: IfNotPresent
   initImage:
@@ -62,6 +62,9 @@ kyverno:
   extraArgs:
     - -clientRateLimitQPS=75
     - -clientRateLimitBurst=150
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
 
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
