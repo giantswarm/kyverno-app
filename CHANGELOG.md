@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fix broken links in documentation.
+- Don't remove the `crd-install` job when the job fails, so that we can investigate.
 
 ## [0.11.6] - 2022-10-19
 
