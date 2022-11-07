@@ -135,7 +135,7 @@ Allow the release namespace to be overridden for multi-namespace deployments in 
 
 {{- define "kyverno-stack.CRDInstallAnnotations" -}}
 "helm.sh/hook": "pre-install,pre-upgrade"
-"helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+"helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
 {{- end -}}
 
 {{- define "kyverno-stack.selectorLabels" -}}
