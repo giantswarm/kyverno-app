@@ -18,7 +18,7 @@ kyverno:
   customLabels:
     giantswarm.io/service-type: "managed"
     giantswarm.io/monitoring_basic_sli: "true"
-    application.giantswarm.io/team: "team-shield"
+    application.giantswarm.io/team: "shield"
 
   # We do not want Kyverno to install these CRDs.
   # Kyverno managed them through helm templates which clashes with chart-operator.
@@ -120,7 +120,7 @@ policy-reporter:
     labels:
       giantswarm.io/service-type: "managed"
       giantswarm.io/monitoring_basic_sli: "true"
-      application.giantswarm.io/team: "team-shield"
+      application.giantswarm.io/team: "shield"
 
   monitoring:
     enabled: false

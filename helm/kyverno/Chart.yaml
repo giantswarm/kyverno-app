@@ -1,7 +1,7 @@
 apiVersion: v2
 appVersion: v1.8.2
 annotations:
-  application.giantswarm.io/team: team-shield
+  application.giantswarm.io/team: shield
   config.giantswarm.io/version: 1.x.x
 dependencies:
   - name: policy-reporter
