@@ -116,12 +116,12 @@ policy-reporter:
   global:
     plugins:
       kyverno: true
-    
+
     labels:
       giantswarm.io/service-type: "managed"
       giantswarm.io/monitoring_basic_sli: "true"
       application.giantswarm.io/team: "team-shield"
-      
+
   monitoring:
     enabled: false
     namespace: monitoring
