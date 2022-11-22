@@ -29,6 +29,7 @@ rules:
   - delete
   - get
   - patch
+  - update
 - apiGroups:
   - policy
   resources:

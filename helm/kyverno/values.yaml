@@ -10,7 +10,7 @@ crds:
       memory: 1024Mi
 
 image:
-  registry: quay.io
+  registry: docker.io
 
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
 kyverno:
@@ -18,15 +18,19 @@ kyverno:
   customLabels:
     giantswarm.io/service-type: "managed"
     giantswarm.io/monitoring_basic_sli: "true"
+    application.giantswarm.io/team: "shield"
+
   # We do not want Kyverno to install these CRDs.
   # Kyverno managed them through helm templates which clashes with chart-operator.
   installCRDs: false
   fullnameOverride: kyverno
   image:
-    repository: quay.io/giantswarm/kyverno
+    registry: docker.io
+    repository: giantswarm/kyverno
     pullPolicy: IfNotPresent
   initImage:
-    repository: quay.io/giantswarm/kyvernopre
+    registry: docker.io
+    repository: giantswarm/kyvernopre
   replicaCount: 3
   resources:
     limits:
@@ -60,13 +64,11 @@ kyverno:
   extraArgs:
     - -clientRateLimitQPS=75
     - -clientRateLimitBurst=150
-    - -maxReportChangeRequests=100
-    - -splitPolicyReport=true
 
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
   image:
-    registry: quay.io
+    registry: docker.io
     repository: giantswarm/policy-reporter
   resources:
     limits:
@@ -81,7 +83,7 @@ policy-reporter:
   ui:
     enabled: true
     image:
-      registry: quay.io
+      registry: docker.io
       repository: giantswarm/policy-reporter-ui
     plugins:
       kyverno: true
@@ -99,7 +101,7 @@ policy-reporter:
   kyvernoPlugin:
     enabled: true
     image:
-      registry: quay.io
+      registry: docker.io
       repository: giantswarm/policy-reporter-kyverno-plugin
     resources:
       limits:
@@ -114,6 +116,11 @@ policy-reporter:
   global:
     plugins:
       kyverno: true
+
+    labels:
+      giantswarm.io/service-type: "managed"
+      giantswarm.io/monitoring_basic_sli: "true"
+      application.giantswarm.io/team: "shield"
 
   monitoring:
     enabled: false
