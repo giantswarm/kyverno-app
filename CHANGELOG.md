@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.12.1] - 2022-11-22
+
 ### Changed
 
 - Increased `kyverno-policy-reporter` resources limits.
@@ -224,7 +226,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.12.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.12.1...HEAD
+[0.12.1]: https://github.com/giantswarm/kyverno-app/compare/v0.12.0...v0.12.1
 [0.12.0]: https://github.com/giantswarm/kyverno-app/compare/v0.11.8...v0.12.0
 [0.11.8]: https://github.com/giantswarm/kyverno-app/compare/v0.11.7...v0.11.8
 [0.11.7]: https://github.com/giantswarm/kyverno-app/compare/v0.11.6...v0.11.7
