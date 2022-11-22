@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Increased `kyverno-policy-reporter` resources limits.
+
 ## [0.12.0] - 2022-11-22
 
 ### Changed
