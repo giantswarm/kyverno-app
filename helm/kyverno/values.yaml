@@ -18,6 +18,8 @@ kyverno:
   customLabels:
     giantswarm.io/service-type: "managed"
     giantswarm.io/monitoring_basic_sli: "true"
+    application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
+
   # We do not want Kyverno to install these CRDs.
   # Kyverno managed them through helm templates which clashes with chart-operator.
   installCRDs: false
@@ -114,7 +116,12 @@ policy-reporter:
   global:
     plugins:
       kyverno: true
-
+    
+    labels:
+      giantswarm.io/service-type: "managed"
+      giantswarm.io/monitoring_basic_sli: "true"
+      application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
+      
   monitoring:
     enabled: false
     namespace: monitoring
