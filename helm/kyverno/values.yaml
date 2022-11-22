@@ -72,7 +72,7 @@ policy-reporter:
     repository: giantswarm/policy-reporter
   resources:
     limits:
-      cpu: 15m
+      cpu: 30m
       memory: 100Mi
     requests:
       cpu: 5m
