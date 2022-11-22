@@ -25,6 +25,6 @@ name: kyverno
 restrictions:
   clusterSingleton: true
 sources:
-- https://github.com/kyverno/kyverno
+  - https://github.com/kyverno/kyverno
 type: application
-version: 0.11.8
+version: 0.12.0
