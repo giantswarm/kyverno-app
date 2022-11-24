@@ -17,23 +17,5 @@ spec:
     name:       {{ include "policyreporter.fullname" . }}
   updatePolicy:
     updateMode: Auto
----
-apiVersion: autoscaling.k8s.io/v1
-kind: VerticalPodAutoscaler
-metadata:
-  name: {{ include "ui.fullname" . }}-vpa
-  namespace: {{ include "ui.namespace" . }}
-  labels:
-    {{- include "kyverno-stack.labels" . | nindent 4 }}
-spec:
-  resourcePolicy:
-    containerPolicies:
-    - containerName: *
-  targetRef:
-    apiVersion: "apps/v1"
-    kind:       Deployment
-    name:       {{ include "ui.fullname" . }}
-  updatePolicy:
-    updateMode: Auto
 {{- end -}}
 {{- end -}}
