@@ -3,8 +3,8 @@
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
 metadata:
-  name: {{ include "policyreporter.fullname" . }}-vpa
-  namespace: {{ include "policyreporter.namespace" . }}
+  name: {{ include "kyverno-stack.fullname" . }}-policy-reporter-vpa
+  namespace: {{ include "kyverno-stack.namespace" . }}
   labels:
     {{- include "kyverno-stack.labels" . | nindent 4 }}
 spec:
@@ -14,14 +14,14 @@ spec:
   targetRef:
     apiVersion: "apps/v1"
     kind:       Deployment
-    name:       {{ include "policyreporter.fullname" . }}
+    name:       {{ include "kyverno-stack.fullname" . }}-policy-reporter
   updatePolicy:
     updateMode: Auto
 ---
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
 metadata:
-  name: {{ include "ui.fullname" . }}-vpa
+  name: {{ include "kyverno-stack.fullname" . }}-ui-vpa
   namespace: {{ include "ui.namespace" . }}
   labels:
     {{- include "kyverno-stack.labels" . | nindent 4 }}
@@ -32,7 +32,7 @@ spec:
   targetRef:
     apiVersion: "apps/v1"
     kind:       Deployment
-    name:       {{ include "ui.fullname" . }}
+    name:       {{ include "kyverno-stack.fullname" . }}-ui
   updatePolicy:
     updateMode: Auto
 {{- end -}}
