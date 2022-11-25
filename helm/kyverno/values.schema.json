@@ -436,6 +436,22 @@
             "properties": {
                 "enabled": {
                     "type": "boolean"
+                },
+                "policyReporter": {
+                    "type": "object",
+                    "properties": {
+                        "containerPolicies": {
+                            "type": "object"
+                        }
+                    }
+                },
+                "ui": {
+                    "type": "object",
+                    "properties": {
+                        "containerPolicies": {
+                            "type": "object"
+                        }
+                    }
                 }
             }
         }

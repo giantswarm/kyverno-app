@@ -14,6 +14,10 @@ image:
 
 verticalPodAutoscaler:
   enabled: true
+  policyReporter:
+    containerPolicies: {}
+  ui:
+    containerPolicies: {}
 
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
 kyverno:
