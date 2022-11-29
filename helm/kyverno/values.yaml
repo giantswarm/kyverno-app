@@ -12,6 +12,13 @@ crds:
 image:
   registry: docker.io
 
+verticalPodAutoscaler:
+  enabled: false
+  policyReporter:
+    containerPolicies: {}
+  ui:
+    containerPolicies: {}
+
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
 kyverno:
   # Labels on the Deployment. See podLabels for Pod-level labels.
