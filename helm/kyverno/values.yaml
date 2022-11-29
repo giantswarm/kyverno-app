@@ -13,7 +13,7 @@ image:
   registry: docker.io
 
 verticalPodAutoscaler:
-  enabled: true
+  enabled: false
   policyReporter:
     containerPolicies: {}
   ui:
