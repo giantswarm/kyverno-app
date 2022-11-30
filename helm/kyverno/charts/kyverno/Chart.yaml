@@ -19,6 +19,7 @@ maintainers:
     url: https://kyverno.io/
 kubeVersion: ">=1.16.0-0"
 annotations:
+  application.giantswarm.io/team: shield
   artifacthub.io/operator: "false"
   artifacthub.io/prerelease: "false"
   artifacthub.io/links: |
