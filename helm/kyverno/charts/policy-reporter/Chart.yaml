@@ -15,6 +15,9 @@ sources:
 maintainers:
   - name: Frank Jogeleit
 
+annotations:
+  application.giantswarm.io/team: shield
+
 dependencies:
   - name: monitoring
     condition: monitoring.enabled
