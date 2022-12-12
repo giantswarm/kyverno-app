@@ -63,6 +63,14 @@ kyverno:
     maxUnavailable: 1
     minAvailable: ""
   priorityClassName: "giantswarm-critical"
+  webhooks:
+    # Exclude namespaces
+    - namespaceSelector:
+        matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: NotIn
+          values:
+            - kube-system
   psp:
     enabled: true
   rbac:
