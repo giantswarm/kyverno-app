@@ -63,21 +63,22 @@ kyverno:
     maxUnavailable: 1
     minAvailable: ""
   priorityClassName: "giantswarm-critical"
-  webhooks:
-    - namespaceSelector:
-        matchExpressions:
-        - key: kubernetes.io/metadata.name
-          operator: NotIn
-          values:
-            - random
-            - asdf
-  # admissionWebhook:
-  #   config:
-  #     kind: ValidatingWebhookConfiguration
-  #     apiVersion: admissionregistration.k8s.io/v1beta1
-  #     excludeNamespaces:
-  #     - random
-  #     - qwer
+  config:
+    webhooks:
+      - namespaceSelector:
+          matchExpressions:
+          - key: kubernetes.io/metadata.name
+            operator: NotIn
+            values:
+              - random
+              - asdf
+    # admissionWebhook:
+    #   config:
+    #     kind: ValidatingWebhookConfiguration
+    #     apiVersion: admissionregistration.k8s.io/v1beta1
+    #     excludeNamespaces:
+    #     - random
+    #     - qwer
   psp:
     enabled: true
   rbac:
