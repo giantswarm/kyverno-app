@@ -19,3 +19,5 @@ checks:
   - "no-rolling-update-strategy"
   - "non-isolated-pod"
   - "wildcard-in-rules"
+  - "dnsconfig-options"
+  - "no-node-affinity"
