@@ -8,7 +8,7 @@ directories:
       url: https://github.com/giantswarm/kyverno
       ref: v1.8.4
     includePaths:
-      - charts/kyverno
+      - charts/kyverno/**
     newRootPath: charts/kyverno
 - path: helm/kyverno/charts/policy-reporter
   contents:
@@ -17,5 +17,6 @@ directories:
       url: https://github.com/giantswarm/policy-reporter
       ref: v2.11.0
     includePaths:
-      - charts/policy-reporter
+      - charts/policy-reporter/**
     newRootPath: charts/policy-reporter
+
