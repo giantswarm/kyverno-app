@@ -71,7 +71,8 @@ kyverno:
             operator: NotIn
             values:
               - kube-system
-  psp:
+              - kyverno
+psp:
     enabled: true
   rbac:
     serviceAccount:
