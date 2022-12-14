@@ -72,7 +72,7 @@ kyverno:
             values:
               - kube-system
               - kyverno
-psp:
+  psp:
     enabled: true
   rbac:
     serviceAccount:
