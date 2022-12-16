@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+### Changes
+
+- Excludes `kube-system` namespace from webhooks
+
 ## [0.13.0] - 2022-12-13
 
 ### Changed

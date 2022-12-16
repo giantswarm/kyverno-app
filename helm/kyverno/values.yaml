@@ -63,6 +63,17 @@ kyverno:
     maxUnavailable: 1
     minAvailable: ""
   priorityClassName: "giantswarm-critical"
+  # -- Exclude Kyverno namespace
+  # Determines if default Kyverno namespace exclusion is enabled for webhooks and resourceFilters
+  excludeKyvernoNamespace: true
+  config:
+    webhooks:
+      - namespaceSelector:
+          matchExpressions:
+          - key: kubernetes.io/metadata.name
+            operator: NotIn
+            values:
+              - kube-system
   psp:
     enabled: true
   rbac:
