@@ -48,6 +48,44 @@
         "kyverno": {
             "type": "object",
             "properties": {
+                "config": {
+                    "type": "object",
+                    "properties": {
+                        "webhooks": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "namespaceSelector": {
+                                        "type": "object",
+                                        "properties": {
+                                            "matchExpressions": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "key": {
+                                                            "type": "string"
+                                                        },
+                                                        "operator": {
+                                                            "type": "string"
+                                                        },
+                                                        "values": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "customLabels": {
                     "type": "object",
                     "properties": {
@@ -61,6 +99,9 @@
                             "type": "string"
                         }
                     }
+                },
+                "excludeKyvernoNamespace": {
+                    "type": "boolean"
                 },
                 "extraArgs": {
                     "type": "array",
@@ -208,39 +249,6 @@
                                 },
                                 "memory": {
                                     "type": "string"
-                                }
-                            }
-                        }
-                    }
-                },
-                "webhooks": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "namespaceSelector": {
-                                "type": "object",
-                                "properties": {
-                                    "matchExpressions": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "object",
-                                            "properties": {
-                                                "key": {
-                                                    "type": "string"
-                                                },
-                                                "operator": {
-                                                    "type": "string"
-                                                },
-                                                "values": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
                                 }
                             }
                         }
