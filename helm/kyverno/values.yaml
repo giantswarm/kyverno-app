@@ -123,8 +123,8 @@ policy-reporter:
       repository: giantswarm/policy-reporter-kyverno-plugin
     resources:
       limits:
-        cpu: 10m
-        memory: 30Mi
+        cpu: 50m
+        memory: 100Mi
       requests:
         cpu: 1m
         memory: 15Mi
