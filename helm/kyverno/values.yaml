@@ -126,8 +126,8 @@ policy-reporter:
         cpu: 50m
         memory: 100Mi
       requests:
-        cpu: 1m
-        memory: 15Mi
+        cpu: 10m
+        memory: 30Mi
     serviceAccount:
       name: "policyreporter-plugin-sa"  # Only needed to support adding a PSP. Can be removed when PSPs are disabled.
 
