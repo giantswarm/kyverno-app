@@ -33,11 +33,9 @@ kyverno:
   fullnameOverride: kyverno
   image:
     registry: docker.io
-    repository: giantswarm/kyverno
     pullPolicy: IfNotPresent
   initImage:
     registry: docker.io
-    repository: giantswarm/kyvernopre
   replicaCount: 3
   resources:
     limits:
@@ -87,7 +85,6 @@ kyverno:
 policy-reporter:
   image:
     registry: docker.io
-    repository: giantswarm/policy-reporter
   resources:
     limits:
       cpu: 30m
@@ -102,7 +99,6 @@ policy-reporter:
     enabled: true
     image:
       registry: docker.io
-      repository: giantswarm/policy-reporter-ui
     plugins:
       kyverno: true
     resources:
@@ -120,7 +116,6 @@ policy-reporter:
     enabled: true
     image:
       registry: docker.io
-      repository: giantswarm/policy-reporter-kyverno-plugin
     resources:
       limits:
         cpu: 50m
