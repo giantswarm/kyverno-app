@@ -37,6 +37,14 @@
                 }
             }
         },
+        "image": {
+            "type": "object",
+            "properties": {
+                "registry": {
+                    "type": "string"
+                }
+            }
+        },
         "kyverno": {
             "type": "object",
             "properties": {

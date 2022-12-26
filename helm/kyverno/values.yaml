@@ -9,6 +9,9 @@ crds:
       cpu: 750m
       memory: 1024Mi
 
+image:
+  registry: docker.io
+
 verticalPodAutoscaler:
   enabled: false
   policyReporter:
