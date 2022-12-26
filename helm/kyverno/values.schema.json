@@ -37,14 +37,6 @@
                 }
             }
         },
-        "image": {
-            "type": "object",
-            "properties": {
-                "registry": {
-                    "type": "string"
-                }
-            }
-        },
         "kyverno": {
             "type": "object",
             "properties": {
@@ -117,25 +109,11 @@
                     "properties": {
                         "pullPolicy": {
                             "type": "string"
-                        },
-                        "registry": {
-                            "type": "string"
-                        },
-                        "repository": {
-                            "type": "string"
                         }
                     }
                 },
                 "initImage": {
-                    "type": "object",
-                    "properties": {
-                        "registry": {
-                            "type": "string"
-                        },
-                        "repository": {
-                            "type": "string"
-                        }
-                    }
+                    "type": "null"
                 },
                 "initResources": {
                     "type": "object",
@@ -286,33 +264,11 @@
                         }
                     }
                 },
-                "image": {
-                    "type": "object",
-                    "properties": {
-                        "registry": {
-                            "type": "string"
-                        },
-                        "repository": {
-                            "type": "string"
-                        }
-                    }
-                },
                 "kyvernoPlugin": {
                     "type": "object",
                     "properties": {
                         "enabled": {
                             "type": "boolean"
-                        },
-                        "image": {
-                            "type": "object",
-                            "properties": {
-                                "registry": {
-                                    "type": "string"
-                                },
-                                "repository": {
-                                    "type": "string"
-                                }
-                            }
                         },
                         "resources": {
                             "type": "object",
@@ -410,17 +366,6 @@
                     "properties": {
                         "enabled": {
                             "type": "boolean"
-                        },
-                        "image": {
-                            "type": "object",
-                            "properties": {
-                                "registry": {
-                                    "type": "string"
-                                },
-                                "repository": {
-                                    "type": "string"
-                                }
-                            }
                         },
                         "plugins": {
                             "type": "object",
