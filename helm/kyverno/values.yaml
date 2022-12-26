@@ -9,9 +9,6 @@ crds:
       cpu: 750m
       memory: 1024Mi
 
-image:
-  registry: docker.io
-
 verticalPodAutoscaler:
   enabled: false
   policyReporter:
@@ -32,10 +29,8 @@ kyverno:
   installCRDs: false
   fullnameOverride: kyverno
   image:
-    registry: docker.io
     pullPolicy: IfNotPresent
   initImage:
-    registry: docker.io
   replicaCount: 3
   resources:
     limits:
@@ -83,8 +78,6 @@ kyverno:
 
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
-  image:
-    registry: docker.io
   resources:
     limits:
       cpu: 30m
@@ -97,8 +90,6 @@ policy-reporter:
 
   ui:
     enabled: true
-    image:
-      registry: docker.io
     plugins:
       kyverno: true
     resources:
@@ -114,8 +105,6 @@ policy-reporter:
 
   kyvernoPlugin:
     enabled: true
-    image:
-      registry: docker.io
     resources:
       limits:
         cpu: 50m
