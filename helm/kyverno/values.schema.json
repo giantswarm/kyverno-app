@@ -112,9 +112,6 @@
                         }
                     }
                 },
-                "initImage": {
-                    "type": "null"
-                },
                 "initResources": {
                     "type": "object",
                     "properties": {

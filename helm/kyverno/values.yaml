@@ -30,7 +30,6 @@ kyverno:
   fullnameOverride: kyverno
   image:
     pullPolicy: IfNotPresent
-  initImage:
   replicaCount: 3
   resources:
     limits:
