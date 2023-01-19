@@ -37,4 +37,8 @@ jobs:
           git add vendir.yml
           git commit -m "Update app version from fork repo"
           git push origin 'main#update-chart'
+  call-update-chart:
+    uses: ./.github/workflows/zz_generated.update_chart.yaml
+    with:
+      branch: 'main#update-chart'
 
