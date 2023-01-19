@@ -33,8 +33,8 @@ jobs:
           git checkout -b 'main#update-chart'
 
           # Modify the version in Vendir config
-          sed -i '/policy-reporter/{n;s/ref: .*/ref: $POLICY_REPORTER_LAST_TAG/}' vendir.yml
-          sed -i '/kyverno/{n;s/ref: .*/ref: $KYVERNO_LAST_TAG/}' vendir.yml
+          sed -i "/policy-reporter/{n;s/ref: .*/ref: $POLICY_REPORTER_LAST_TAG/}" vendir.yml
+          sed -i "/kyverno/{n;s/ref: .*/ref: $KYVERNO_LAST_TAG/}" vendir.yml
           # sed -i -r "s/(ref:).*/\1 $LAST_TAG/g" vendir.yml
           git add vendir.yml
           git commit -m "Update app version from fork repo"
