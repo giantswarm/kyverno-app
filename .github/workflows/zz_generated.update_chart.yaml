@@ -126,4 +126,4 @@ jobs:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           base: "${{ needs.gather_facts.outputs.base }}"
         run: |
-          hub pull-request -f -m "Update chart" -a ${{ github.actor }} -b ${{ env.base }} -h ${{ needs.gather_facts.outputs.branch }}
+          hub pull-request -f -m "Update upstream charts" -m "This PR was created by the \`update-chart\` automated workflow." -m "**:warning: Make sure all test are passed before merging.**" -a ${{ github.actor }} -b ${{ env.base }} -h ${{ needs.gather_facts.outputs.branch }}
