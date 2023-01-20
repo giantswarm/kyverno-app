@@ -2,18 +2,18 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: release v1.8.4 (#5638)...
-      sha: 0675d21dd9586a8e55ac2b3796a8db850b996895
+      commitTitle: release v1.8.5 (#5726)...
+      sha: c19061758dc4203106ab6d87a245045c20192721
       tags:
-      - kyverno-chart-2.6.4
+      - v1.8.5
     path: .
   path: helm/kyverno/charts/kyverno
 - contents:
   - git:
-      commitTitle: 'Merge pull request #233 from kyverno/prepare-release...'
-      sha: 5e98a82f51324ed2fdcddcf7d7dce08e266c05c7
+      commitTitle: 'Merge pull request #234 from kyverno/fix-label-generation...'
+      sha: 156ea7f77b3e5d5c767e9322e6b3a7c9d97bc6c3
       tags:
-      - policy-reporter-2.14.0
+      - v2.11.1
     path: .
   path: helm/kyverno/charts/policy-reporter
 kind: LockConfig
