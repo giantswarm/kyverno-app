@@ -1,8 +1,8 @@
 apiVersion: v2
 type: application
 name: kyverno
-version: 2.6.4
-appVersion: v1.8.4
+version: 2.6.5
+appVersion: v1.8.5
 icon: https://github.com/kyverno/kyverno/raw/main/img/logo.png
 description: Kubernetes Native Policy Management
 keywords:
@@ -19,7 +19,6 @@ maintainers:
     url: https://kyverno.io/
 kubeVersion: ">=1.16.0-0"
 annotations:
-  application.giantswarm.io/team: shield
   artifacthub.io/operator: "false"
   artifacthub.io/prerelease: "false"
   artifacthub.io/links: |
