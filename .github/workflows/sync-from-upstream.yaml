@@ -54,16 +54,15 @@ jobs:
           ref: 'main#update-chart'
       - name: Remove previous CRDs and install new ones
         run: |
-          cd helm/kyverno
+          cd helm/kyverno/crd
 
           # Remove previous CRDs
-          git rm -f crd/*
+          git rm -f *.yaml
           
           # Move new CRDs to crd directory
-          cp charts/kyverno/templates/crds.yaml crd/crds.yaml
+          cp ../charts/kyverno/templates/crds.yaml .
 
           # Split CRDs into multiple files
-          cd crd
           yq -s '"crd-" + $index + ".yaml"' crds.yaml
 
           # Remove original file
