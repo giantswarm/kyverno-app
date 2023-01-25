@@ -63,7 +63,7 @@ jobs:
           cp ../charts/kyverno/templates/crds.yaml .
 
           # Split CRDs into multiple files
-          yq -s '"crd-" + $index + ".yaml"' crds.yaml
+          #yq -s '"crd-" + $index + ".yaml"' crds.yaml
 
           # Remove original file
           rm -f crds.yaml
@@ -75,4 +75,4 @@ jobs:
           # Commit and push
           git add .
           git commit -m "Update CRDs"
-          git push origin 'main#update-chart'
+          #git push origin 'main#update-chart'
