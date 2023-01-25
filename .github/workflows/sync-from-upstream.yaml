@@ -62,8 +62,13 @@ jobs:
           # Move new CRDs to crd directory
           cp ../charts/kyverno/templates/crds.yaml .
 
+          # Remove helm content from CRDs
+          APP_VERSION=$(yq '.appVersion' ../charts/kyverno/Chart.yaml)
+          sed -i -e "s/{{.Chart.AppVersion}}/$APP_VERSION/g" crds.yaml
+          sed -i -e "/{{/d" crds.yaml
+
           # Split CRDs into multiple files
-          #yq -s '"crd-" + $index + ".yaml"' crds.yaml
+          yq -s '"crd-" + $index + ".yaml"' crds.yaml
 
           # Remove original file
           rm -f crds.yaml
