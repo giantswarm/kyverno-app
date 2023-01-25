@@ -54,7 +54,7 @@ jobs:
           ref: 'main#update-chart'
       - name: Remove previous CRDs and install new ones
         run: |
-          cd kyverno-app/helm/kyverno
+          cd helm/kyverno
 
           # Remove previous CRDs
           git rm -f crd/*
