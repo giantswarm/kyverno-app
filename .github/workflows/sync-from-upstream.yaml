@@ -60,7 +60,7 @@ jobs:
           git rm -f crd/*
           
           # Move new CRDs to crd directory
-          mv charts/kyverno/templates/crds.yaml crd/
+          cp charts/kyverno/templates/crds.yaml crd/
 
           # Split CRDs into multiple files
           cd crd
