@@ -1,7 +1,6 @@
 name: Sync from fork
 
 on:
-  push: # For testing
   schedule:
     - cron: '0 8 */7 * *' # At 08:00 on every 7th day-of-month
 
