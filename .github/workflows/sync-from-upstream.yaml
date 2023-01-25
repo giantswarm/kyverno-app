@@ -46,6 +46,7 @@ jobs:
       branch: 'main#update-chart'
   copy-kyverno-crds:
     runs-on: ubuntu-latest
+    needs: call-update-chart
     steps:
       - name: Checkout
         uses: actions/checkout@v3
