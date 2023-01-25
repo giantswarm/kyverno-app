@@ -80,4 +80,4 @@ jobs:
           # Commit and push
           git add .
           git commit -m "Update CRDs"
-          #git push origin 'main#update-chart'
+          git push origin 'main#update-chart'
