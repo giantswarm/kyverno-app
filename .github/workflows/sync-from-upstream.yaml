@@ -28,8 +28,8 @@ jobs:
           echo "Kyverno last tag found is $KYVERNO_LAST_TAG"
 
           # Setup git config
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           
           git checkout -b $branch
 
@@ -44,3 +44,40 @@ jobs:
     needs: sync-app-kyverno-with-fork
     with:
       branch: 'main#update-chart'
+  copy-kyverno-crds:
+    runs-on: ubuntu-latest
+    needs: call-update-chart
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: 'main#update-chart'
+      - name: Remove previous CRDs and install new ones
+        run: |
+          cd helm/kyverno/crd
+
+          # Remove previous CRDs
+          git rm -f *.yaml
+          
+          # Move new CRDs to crd directory
+          cp ../charts/kyverno/templates/crds.yaml .
+
+          # Remove helm content from CRDs
+          APP_VERSION=$(yq '.appVersion' ../charts/kyverno/Chart.yaml)
+          sed -i -e "s/{{.Chart.AppVersion}}/$APP_VERSION/g" crds.yaml
+          sed -i -e "/{{/d" crds.yaml
+
+          # Split CRDs into multiple files
+          yq -s '"crd-" + $index + ".yaml"' crds.yaml
+
+          # Remove original file
+          rm -f crds.yaml
+
+          # Setup git config
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          # Commit and push
+          git add .
+          git commit -m "Update CRDs"
+          git push origin 'main#update-chart'
