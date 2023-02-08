@@ -1,8 +1,8 @@
 apiVersion: v2
 type: application
 name: kyverno
-version: 2.6.4
-appVersion: v1.8.4
+version: 2.7.0
+appVersion: v1.9.0
 icon: https://github.com/kyverno/kyverno/raw/main/img/logo.png
 description: Kubernetes Native Policy Management
 keywords:
@@ -19,7 +19,6 @@ maintainers:
     url: https://kyverno.io/
 kubeVersion: ">=1.16.0-0"
 annotations:
-  application.giantswarm.io/team: shield
   artifacthub.io/operator: "false"
   artifacthub.io/prerelease: "false"
   artifacthub.io/links: |
@@ -27,29 +26,7 @@ annotations:
       url: https://kyverno.io/docs
   # valid kinds are: added, changed, deprecated, removed, fixed and security
   artifacthub.io/changes: |
-    - kind: added
-      description: Added possibility to define additional init and sidecar container.
-    - kind: added
-      description: Added ability to remove namespaces from default resourceFilters list.
-    - kind: added
-      description: Prevent installing Kyverno in namespace kube-system.
-    - kind: fixed
-      description: Docs for generatecontrollerExtraResources.
     - kind: changed
-      description: Enable autogen internals by default.
+      description: Syntax change for webhooksCleanup switch to match with the rest of the file
     - kind: fixed
-      description: Self signed certificates not using SANs.
-    - kind: added
-      description: Extra args support for init container.
-    - kind: added
-      description: Allow overriding of test security context and resource block.
-    - kind: added
-      description: Added possibility to define custom image registries
-    - kind: added
-      description: Enable adding optional annotations to configmaps
-    - kind: added
-      description: Add startup probes support
-    - kind: added
-      description: Support extra CRD annotations
-    - kind: added
-      description: Grafana dashboard.
+      description: Handle multiple extraArgs in init container

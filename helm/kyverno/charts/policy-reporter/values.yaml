@@ -2,7 +2,7 @@ image:
   registry: ghcr.io
   repository: kyverno/policy-reporter
   pullPolicy: IfNotPresent
-  tag: 2.11.0
+  tag: 2.12.0
 
 imagePullSecrets: []
 
@@ -507,6 +507,9 @@ tolerations: []
 
 # Anti-affinity to disallow deploying client and master nodes on the same worker node
 affinity: {}
+
+# Topology Spread Constraints to better spread pods
+topologySpreadConstraints: []
 
 # livenessProbe for policy-reporter
 livenessProbe:
