@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: '0 8 */7 * *' # At 08:00 on every 7th day-of-month
 
+  # Just for testing
+  push:
   # Allows to run this workflow manually from the Actions tab
   workflow_dispatch:
 env:
