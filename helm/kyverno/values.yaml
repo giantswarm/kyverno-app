@@ -121,6 +121,8 @@ policy-reporter:
 
   kyvernoPlugin:
     enabled: true
+    annotations:
+      giantswarm.io/monitoring: "true"
     image:
       registry: docker.io
       repository: giantswarm/policy-reporter-kyverno-plugin
