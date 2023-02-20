@@ -88,6 +88,8 @@ kyverno:
 
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
+  annotations:
+    giantswarm.io/monitoring: "true"
   image:
     registry: docker.io
     repository: giantswarm/policy-reporter
@@ -103,6 +105,8 @@ policy-reporter:
 
   ui:
     enabled: true
+    annotations:
+      giantswarm.io/monitoring: "true"
     image:
       registry: docker.io
       repository: giantswarm/policy-reporter-ui
