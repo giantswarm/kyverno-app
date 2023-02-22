@@ -84,6 +84,38 @@ kyverno:
     - -clientRateLimitBurst=150
     - -enablePolicyException=true
 
+  cleanupController:
+    # -- Enable cleanup controller.
+    enabled: true
+
+    rbac:
+      # -- Create RBAC resources
+      create: true
+
+      serviceAccount:
+        # -- Service account name
+        name:
+
+      clusterRole:
+        # -- Extra resource permissions to add in the cluster role
+        extraResources: []
+        # - apiGroups:
+        #     - ''
+        #   resources:
+        #     - pods
+
+    # -- Create self-signed certificates at deployment time.
+    # The certificates won't be automatically renewed if this is set to `true`.
+    createSelfSignedCert: false
+
+    image:
+      registry: docker.io
+      repository: ghcr.io/kyverno/cleanup-controller  # kyverno: replaced in e2e tests
+      # -- Image tag
+      # Defaults to appVersion in Chart.yaml if omitted
+      tag:  # replaced in e2e tests
+      pullPolicy: IfNotPresent
+
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
   image:
