@@ -110,10 +110,7 @@ kyverno:
 
     image:
       registry: docker.io
-      repository: ghcr.io/kyverno/cleanup-controller  # kyverno: replaced in e2e tests
-      # -- Image tag
-      # Defaults to appVersion in Chart.yaml if omitted
-      tag:  # replaced in e2e tests
+      repository: giantswarm/cleanup-controller  # kyverno: replaced in e2e tests
       pullPolicy: IfNotPresent
 
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
