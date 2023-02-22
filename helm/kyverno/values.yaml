@@ -21,6 +21,9 @@ verticalPodAutoscaler:
 
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
 kyverno:
+  service:
+    annotations:
+      giantswarm.io/monitoring: "true"
   # Labels on the Deployment. See podLabels for Pod-level labels.
   customLabels:
     giantswarm.io/service-type: "managed"
@@ -118,6 +121,8 @@ policy-reporter:
 
   kyvernoPlugin:
     enabled: true
+    annotations:
+      giantswarm.io/monitoring: "true"
     image:
       registry: docker.io
       repository: giantswarm/policy-reporter-kyverno-plugin
