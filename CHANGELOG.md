@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## Changes
+
+- Adds `giantswarm.io/monitoring` annotation to kyverno service & plugin.
+
 ## [0.13.1] - 2022-12-21
 
 ### Changes
