@@ -103,8 +103,6 @@ policy-reporter:
 
   ui:
     enabled: true
-    annotations:
-      giantswarm.io/monitoring: "true"
     image:
       registry: docker.io
       repository: giantswarm/policy-reporter-ui
