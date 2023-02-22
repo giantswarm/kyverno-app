@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update `kyverno` to upstream version 1.9.0 / chart version 2.7.0.
 - Update `kyverno-policy-reporter` to upstream version 2.12.0 / chart version 2.16.0.
+- Adds `giantswarm.io/monitoring` annotation to kyverno service & plugin.
 
 ## [0.13.1] - 2022-12-21
 
