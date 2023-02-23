@@ -89,7 +89,7 @@ kyverno:
 
   cleanupController:
     # -- Enable cleanup controller.
-    enabled: true
+    enabled: false
 
     rbac:
       # -- Create RBAC resources
