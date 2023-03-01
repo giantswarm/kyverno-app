@@ -10,10 +10,10 @@ directories:
   path: helm/kyverno/charts/kyverno
 - contents:
   - git:
-      commitTitle: 'Merge pull request #254 from mjnagel/name-override...'
-      sha: 440d72bcacec54aaeed2ba7118ae8f6b8f85e4f1
+      commitTitle: 'Merge pull request #266 from kyverno/k8s-client-config...'
+      sha: bcfe43458b46c27c358a23e97b0ad98e9a8c87de
       tags:
-      - policy-reporter-2.16.0
+      - v2.13.0-RC2
     path: .
   path: helm/kyverno/charts/policy-reporter
 kind: LockConfig
