@@ -83,9 +83,9 @@ kyverno:
     serviceAccount:
       name: "kyverno"  # Added so that we can create a PSP allowing emptyDir and seccomp profiles. Can be removed when PSPs are removed.
   extraArgs:
-    - -clientRateLimitQPS=75
-    - -clientRateLimitBurst=150
-    - -enablePolicyException=true
+    - --clientRateLimitQPS=75
+    - --clientRateLimitBurst=150
+    - --enablePolicyException=true
     - --loggingFormat=text
     - --exceptionNamespace={{ include "kyverno.namespace" . }}
 
