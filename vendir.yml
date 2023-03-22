@@ -6,7 +6,7 @@ directories:
   - path: .
     git:
       url: https://github.com/giantswarm/kyverno-upstream
-      ref: v1.9.1
+      ref: v1.9.2
     includePaths:
       - charts/kyverno/**
     newRootPath: charts/kyverno
