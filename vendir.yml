@@ -6,7 +6,7 @@ directories:
   - path: .
     git:
       url: https://github.com/giantswarm/kyverno-upstream
-      ref: v1.9.0
+      ref: v1.9.2
     includePaths:
       - charts/kyverno/**
     newRootPath: charts/kyverno
@@ -15,7 +15,7 @@ directories:
   - path: .
     git:
       url: https://github.com/giantswarm/policy-reporter-upstream
-      ref: policy-reporter-2.16.0
+      ref: v2.13.0
     includePaths:
       - charts/policy-reporter/**
     newRootPath: charts/policy-reporter
