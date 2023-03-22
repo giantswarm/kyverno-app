@@ -31,7 +31,7 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          git checkout -b $branch
+          git checkout -b $branch && git pull origin $branch --rebase
 
           # Modify the version in Vendir config
           sed -i "/policy-reporter/{n;s/ref: .*/ref: $POLICY_REPORTER_LAST_TAG/}" vendir.yml
