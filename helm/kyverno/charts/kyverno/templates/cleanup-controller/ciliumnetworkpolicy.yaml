@@ -1,0 +1,17 @@
+{{ if .Values.ciliumNetworkPolicy.enabled }}
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  namespace: {{ template "kyverno.namespace" . }}
+  name:  {{ template "kyverno.cleanup-controller.name" . }}
+  labels:
+    {{- include "kyverno.cleanup-controller.labels" . | nindent 4 }}
+spec:
+  endpointSelector:
+    matchLabels:
+      {{- include "kyverno.cleanup-controller.matchLabels" . | nindent 6 }}
+  egress:
+    # To scrape the vault token expiration
+    - toEntities:
+        - kube-apiserver
+{{ end }}

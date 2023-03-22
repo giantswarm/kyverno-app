@@ -1,0 +1,17 @@
+{{ if .Values.ciliumNetworkPolicy.enabled }}
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  namespace: {{ .Release.Namespace | quote }}
+  name: {{ include "kyverno-stack.crdInstall" . }}
+  labels:
+    {{- include "certExporter.daemonset.labels" . | nindent 4 }}
+spec:
+  endpointSelector:
+    matchLabels:
+      {{- include "kyverno-stack.selectorLabels" . | nindent 6 }}
+  egress:
+    # To scrape the vault token expiration
+    - toEntities:
+        - kube-apiserver
+{{ end }}

@@ -184,3 +184,8 @@ policy-reporter:
   # Create a PSP and ClusterRoleBinding for PolicyReporter.
   psp:
     enabled: true
+
+
+# Cilium Network Policy
+ciliumNetworkPolicy:
+  enabled: false

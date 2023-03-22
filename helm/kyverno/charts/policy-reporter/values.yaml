@@ -530,3 +530,7 @@ extraVolumes:
   volumeMounts: []
 
   volumes: []
+
+# -- Cilium Network Policy
+ciliumNetworkPolicy:
+  enabled: false
