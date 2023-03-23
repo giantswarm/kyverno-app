@@ -87,7 +87,6 @@ kyverno:
     - -clientRateLimitBurst=150
     - -enablePolicyException=true
     - --loggingFormat=text
-    - --exceptionNamespace=default
 
   cleanupController:
     # -- Enable cleanup controller.
