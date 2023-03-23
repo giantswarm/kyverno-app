@@ -9,7 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Don't push to `openstack-app-collection`.
+- Rename `vmware-app-collection` to `vsphere-app-collection`.
 - Removed `exceptionNamespace` as `extraArgs` from `kyverno` helm values.
+
+## [0.14.1] - 2023-03-22
+
+### Changed
+
+- Update `kyverno` to upstream version 1.9.2 / chart version 2.7.2.
 
 ## [0.14.0] - 2023-02-23
 
@@ -258,7 +266,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.14.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.14.1...HEAD
+[0.14.1]: https://github.com/giantswarm/kyverno-app/compare/v0.14.0...v0.14.1
 [0.14.0]: https://github.com/giantswarm/kyverno-app/compare/v0.13.1...v0.14.0
 [0.13.1]: https://github.com/giantswarm/kyverno-app/compare/v0.13.0...v0.13.1
 [0.13.0]: https://github.com/giantswarm/kyverno-app/compare/v0.12.2...v0.13.0

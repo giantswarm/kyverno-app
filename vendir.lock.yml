@@ -2,18 +2,19 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: tag v1.9.0 (#6186)...
-      sha: a1534cc2f581bbc93c15fa5ac42fe5c59f03d66a
+      commitTitle: 'fix: skip duplicate PSa checks for the latest version (#6634)
+        (#6636)...'
+      sha: 4dbffc57a124d14e681874b9839a8c14a41edfe0
       tags:
-      - v1.9.0
+      - v1.9.2
     path: .
   path: helm/kyverno/charts/kyverno
 - contents:
   - git:
-      commitTitle: 'Merge pull request #254 from mjnagel/name-override...'
-      sha: 440d72bcacec54aaeed2ba7118ae8f6b8f85e4f1
+      commitTitle: 'Merge pull request #267 from kyverno/ui-update...'
+      sha: d589d7a7bb5e90db3ec51dca988ae6cb0dba6598
       tags:
-      - policy-reporter-2.16.0
+      - v2.13.0
     path: .
   path: helm/kyverno/charts/policy-reporter
 kind: LockConfig
