@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Removed `exceptionNamespace` as `extraArgs` from `kyverno` helm values.
+
 ## [0.14.0] - 2023-02-23
 
 ### Changed
