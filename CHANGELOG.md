@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Don't push to `openstack-app-collection`.
 - Rename `vmware-app-collection` to `vsphere-app-collection`.
+- Consider PolicyExceptions from all namespaces.
 
 ## [0.14.1] - 2023-03-22
 

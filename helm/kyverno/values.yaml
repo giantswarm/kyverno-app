@@ -85,7 +85,6 @@ kyverno:
   extraArgs:
     - --enablePolicyException=true
     - --loggingFormat=text
-    - --exceptionNamespace={{ include "kyverno.namespace" . }}
 
   cleanupController:
     # -- Enable cleanup controller.
