@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Adds `VerticalPodAutoscaler` for `kyverno-plugin` and `kyverno` deployments.
+- Adds `VerticalPodAutoscaler` for `kyverno-plugin` deployment.
 
 ### Changed
 

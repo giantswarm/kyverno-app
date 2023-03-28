@@ -13,9 +13,6 @@ image:
   registry: docker.io
 
 verticalPodAutoscaler:
-  kyverno:
-    enabled: false
-    containerPolicies: {}
   kyvernoPlugin:
     enabled: true
     containerPolicies: {}
