@@ -3,6 +3,29 @@
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
 metadata:
+  name: {{ include "kyverno-stack.fullname" . }}-kyverno-plugin-vpa
+  namespace: {{ include "kyverno-stack.namespace" . }}
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+spec:
+  resourcePolicy:
+    containerPolicies:
+    - containerName: '*'
+    {{- if .Values.verticalPodAutoscaler.kyvernoPlugin.containerPolicies }}
+      {{- with .Values.verticalPodAutoscaler.kyvernoPlugin.containerPolicies -}}
+        {{ tpl (toYaml .) $ | nindent 6 }}
+      {{- end }}
+    {{- end }}
+  targetRef:
+    apiVersion: "apps/v1"
+    kind:       Deployment
+    name:       {{ include "kyverno-stack.fullname" . }}-kyverno-plugin
+  updatePolicy:
+    updateMode: Auto
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
   name: {{ include "kyverno-stack.fullname" . }}-policyreporter-vpa
   namespace: {{ include "kyverno-stack.namespace" . }}
   labels:
