@@ -13,12 +13,17 @@ image:
   registry: docker.io
 
 verticalPodAutoscaler:
-  enabled: true
+  kyverno:
+    enabled: false
+    containerPolicies: {}
   kyvernoPlugin:
+    enabled: true
     containerPolicies: {}
   policyReporter:
+    enabled: true
     containerPolicies: {}
   ui:
+    enabled: true
     containerPolicies: {}
 
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
