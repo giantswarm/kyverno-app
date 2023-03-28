@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.14.2] - 2023-03-28
+
 ### Changed
 
 - Don't push to `openstack-app-collection`.
@@ -266,7 +268,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.14.1...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.14.2...HEAD
+[0.14.2]: https://github.com/giantswarm/kyverno-app/compare/v0.14.1...v0.14.2
 [0.14.1]: https://github.com/giantswarm/kyverno-app/compare/v0.14.0...v0.14.1
 [0.14.0]: https://github.com/giantswarm/kyverno-app/compare/v0.13.1...v0.14.0
 [0.13.1]: https://github.com/giantswarm/kyverno-app/compare/v0.13.0...v0.13.1
