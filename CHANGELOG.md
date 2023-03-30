@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Adds `VerticalPodAutoscaler` for `kyverno-plugin` deployment.
+
+### Changed
+
+- `VericalPodAutoscaler` can now be enabled for individual components.
+
 ## [0.14.2] - 2023-03-28
 
 ### Changed
