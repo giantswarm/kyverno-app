@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - `VericalPodAutoscaler` can now be enabled for individual components.
+- Removes GiantSwarm specific labels from `monitoring` ServiceMonitors.
 
 ## [0.14.2] - 2023-03-28
 
