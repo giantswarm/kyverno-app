@@ -173,11 +173,6 @@ policy-reporter:
     plugins:
       kyverno: true
 
-    labels:
-      giantswarm.io/service-type: "managed"
-      giantswarm.io/monitoring_basic_sli: "true"
-      application.giantswarm.io/team: "shield"
-
   monitoring:
     enabled: false
     namespace: monitoring
