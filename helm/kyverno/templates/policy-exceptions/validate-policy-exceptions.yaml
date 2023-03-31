@@ -1,0 +1,25 @@
+{{- if and (.Values.validatePolicyExceptions.enabled) (has "--enablePolicyException=true" .Values.kyverno.extraArgs) }}
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: validate-policy-exceptions-namespace
+spec:
+  validationFailureAction: Enforce
+  rules:
+  - name: validate-policy-exception-namespace
+    match:
+      any:
+      - resources:
+          kinds:
+          - PolicyException
+    preconditions:
+        all:
+        - key: "{{`{{ request.operation }}`}}"
+          operator: AnyIn
+          value: ["CREATE", "UPDATE"]
+    validate:
+      message: "Kyverno PolicyExceptions can only be installed inside the `{{ .Values.validatePolicyExceptions.namespace | default "giantswarm" }}` namespace."
+      pattern:
+        metadata:
+          namespace: {{ .Values.validatePolicyExceptions.namespace | default "giantswarm" | quote }}
+{{- end -}}

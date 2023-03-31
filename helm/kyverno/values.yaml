@@ -9,6 +9,10 @@ crds:
       cpu: 750m
       memory: 1024Mi
 
+validatePolicyExceptions:
+  enabled: true
+  namespace: "giantswarm"
+
 image:
   registry: docker.io
 
