@@ -25,6 +25,8 @@ verticalPodAutoscaler:
 
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
 kyverno:
+  serviceMonitor:
+    enabled: false
   service:
     annotations:
       giantswarm.io/monitoring: "true"
