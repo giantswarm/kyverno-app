@@ -2,7 +2,7 @@ image:
   registry: ghcr.io
   repository: kyverno/policy-reporter-kyverno-plugin
   pullPolicy: IfNotPresent
-  tag: 1.5.0
+  tag: 1.5.1
 
 imagePullSecrets: []
 
@@ -44,7 +44,27 @@ service:
   annotations: {}
   # key/value
   labels: {}
+  port: 8080
   type: ClusterIP
+
+## Set to true to enable ingress record generation
+# ref to: https://kubernetes.io/docs/concepts/services-networking/ingress/
+ingress:
+  enabled: false
+  className: ""
+  # key/value
+  labels: {}
+  # key/value
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths: []
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
 
 securityContext:
   runAsUser: 1234
@@ -109,6 +129,14 @@ rest:
 # Prometheus Metrics API
 metrics:
   enabled: true
+
+logging:
+  encoding: console # possible encodings are console and json
+  logLevel: 0 # default info
+  development: false # more human readable structure, enables stacktraces and removes log sampling
+
+api:
+  logging: false # enable debug API access logging, sets logLevel to debug
 
 # create PolicyReports for enforce policies, 
 # based on Events created by Kyverno (>= v1.7.0)
