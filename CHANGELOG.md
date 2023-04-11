@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - `VericalPodAutoscaler` can now be enabled for individual components.
+- Removes GiantSwarm specific labels from `monitoring` ServiceMonitors.
 - Update `kyverno-policy-reporter` to upstream version 2.14.0 / chart version 2.18.0.
 
 

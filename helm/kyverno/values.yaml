@@ -25,9 +25,6 @@ verticalPodAutoscaler:
 
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
 kyverno:
-  service:
-    annotations:
-      giantswarm.io/monitoring: "true"
   # Labels on the Deployment. See podLabels for Pod-level labels.
   customLabels:
     giantswarm.io/service-type: "managed"
@@ -66,6 +63,7 @@ kyverno:
     annotations:
       giantswarm.io/monitoring-port: "8000"
       giantswarm.io/monitoring-app-label: "kyverno"
+      giantswarm.io/monitoring: "true"
   podDisruptionBudget:
     maxUnavailable: 1
     minAvailable: ""
@@ -172,11 +170,6 @@ policy-reporter:
   global:
     plugins:
       kyverno: true
-
-    labels:
-      giantswarm.io/service-type: "managed"
-      giantswarm.io/monitoring_basic_sli: "true"
-      application.giantswarm.io/team: "shield"
 
   monitoring:
     enabled: false
