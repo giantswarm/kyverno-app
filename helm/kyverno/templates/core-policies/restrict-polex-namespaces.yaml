@@ -1,4 +1,4 @@
-{{- if .Values.kyvernoPolicyExceptions.enabled }}
+{{- if .Values.policyExceptions.enablePolexPolicy }}
 apiVersion: kyverno.io/v2beta1
 kind: ClusterPolicy
 metadata:
