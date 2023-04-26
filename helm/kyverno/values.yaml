@@ -39,6 +39,8 @@ policyExceptions:
 
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
 kyverno:
+  service:
+    annotations: {}
   # Labels on the Deployment. See podLabels for Pod-level labels.
   customLabels:
     giantswarm.io/service-type: "managed"
@@ -184,6 +186,8 @@ policy-reporter:
   global:
     plugins:
       kyverno: true
+
+    labels: {}
 
   monitoring:
     enabled: false

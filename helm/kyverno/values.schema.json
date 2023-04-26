@@ -222,6 +222,9 @@
                         "annotations": {
                             "type": "object",
                             "properties": {
+                                "giantswarm.io/monitoring": {
+                                    "type": "string"
+                                },
                                 "giantswarm.io/monitoring-app-label": {
                                     "type": "string"
                                 },
@@ -307,12 +310,7 @@
                     "type": "object",
                     "properties": {
                         "annotations": {
-                            "type": "object",
-                            "properties": {
-                                "giantswarm.io/monitoring": {
-                                    "type": "string"
-                                }
-                            }
+                            "type": "object"
                         }
                     }
                 }
@@ -325,18 +323,7 @@
                     "type": "object",
                     "properties": {
                         "labels": {
-                            "type": "object",
-                            "properties": {
-                                "application.giantswarm.io/team": {
-                                    "type": "string"
-                                },
-                                "giantswarm.io/monitoring_basic_sli": {
-                                    "type": "string"
-                                },
-                                "giantswarm.io/service-type": {
-                                    "type": "string"
-                                }
-                            }
+                            "type": "object"
                         },
                         "plugins": {
                             "type": "object",
@@ -542,20 +529,26 @@
                 }
             }
         },
+        "policyExceptions": {
+            "type": "object",
+            "properties": {
+                "allowedPolexNamespaces": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "enablePolexPolicy": {
+                    "type": "boolean"
+                },
+                "polexPolicyMessage": {
+                    "type": "string"
+                }
+            }
+        },
         "verticalPodAutoscaler": {
             "type": "object",
             "properties": {
-                "kyverno": {
-                    "type": "object",
-                    "properties": {
-                        "containerPolicies": {
-                            "type": "object"
-                        },
-                        "enabled": {
-                            "type": "boolean"
-                        }
-                    }
-                },
                 "kyvernoPlugin": {
                     "type": "object",
                     "properties": {
