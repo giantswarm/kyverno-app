@@ -36,7 +36,7 @@ spec:
             value:
             - giantswarm
             - kube-system
-            {{- with .Values.policyExceptions.allowedPolexNamespaces }}
-              {{- toYaml . | indent 12}}
+            {{- range .Values.policyExceptions.allowedPolexNamespaces }}
+            - {{ . }}
             {{- end }}
 {{- end }}
