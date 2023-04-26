@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add Kyverno policy controlling `PolicyException` namespaces.
+
 ## [0.14.3] - 2023-04-11
 
 ### Added
@@ -18,7 +22,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `VericalPodAutoscaler` can now be enabled for individual components.
 - Removes GiantSwarm specific labels from `monitoring` ServiceMonitors.
 - Update `kyverno-policy-reporter` to upstream version 2.14.0 / chart version 2.18.0.
-
 
 ## [0.14.2] - 2023-03-28
 
