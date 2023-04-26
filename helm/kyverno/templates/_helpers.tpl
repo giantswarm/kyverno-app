@@ -150,5 +150,4 @@ app.kubernetes.io/instance: "{{ template "kyverno-stack.name" . }}"
 
 {{- define "kyverno-stack.policyInstallAnnotations" -}}
 "helm.sh/hook": "post-install,post-upgrade"
-"helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
 {{- end -}}
