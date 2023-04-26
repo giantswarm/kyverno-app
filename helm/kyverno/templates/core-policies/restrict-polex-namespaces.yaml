@@ -28,7 +28,7 @@ spec:
           - PolicyException
     preconditions:
       all:
-      - key: "{{request.operation || 'BACKGROUND'}}"
+      - key: "{{`{{ request.operation || 'BACKGROUND'}}`}}"
         operator: NotEquals
         value: DELETE
     validate:
