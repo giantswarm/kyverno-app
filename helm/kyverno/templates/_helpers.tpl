@@ -147,3 +147,7 @@ app.kubernetes.io/instance: "{{ template "kyverno-stack.name" . }}"
 {{- define "kyverno-stack.CRDInstallSelector" -}}
 {{- printf "%s" "crd-install-hook" -}}
 {{- end -}}
+
+{{- define "kyverno-stack.policyInstallAnnotations" -}}
+"helm.sh/hook": "post-install,post-upgrade"
+{{- end -}}

@@ -1,0 +1,48 @@
+{{- if .Values.policyExceptions.enablePolexPolicy }}
+apiVersion: kyverno.io/v2beta1
+kind: ClusterPolicy
+metadata:
+  name: restrict-polex-namespaces
+  annotations:
+    policies.kyverno.io/title: Restrict PolicyException Namespaces
+    policies.kyverno.io/category: Security
+    policies.kyverno.io/minversion: 1.9.0
+    kyverno.io/kyverno-version: 1.9.0
+    kyverno.io/kubernetes-version: "1.24"
+    policies.kyverno.io/subject: PolicyException
+    policies.kyverno.io/description: >-
+      A PolicyException grants the applicable resource(s) or subject(s) the ability
+      to bypass an existing Kyverno policy. This policy limits the namespaces where
+      a PolicyException may be created. This limits the creation of new exceptions,
+      but existing exceptions in namespaces other than those allowed here will still
+      be honored by Kyverno until they are deleted.
+    {{- include "kyverno-stack.policyInstallAnnotations" . | nindent 4 }}
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+  - name: restrict-namespaces
+    match:
+      any:
+      - resources:
+          kinds:
+          - PolicyException
+    preconditions:
+      all:
+      - key: "{{`{{ request.operation || 'BACKGROUND'}}`}}"
+        operator: NotEquals
+        value: DELETE
+    validate:
+      message: {{ .Values.policyExceptions.polexPolicyMessage }}
+      deny:
+        conditions:
+          any:
+          - key: "{{`{{request.namespace}}`}}"
+            operator: AnyNotIn
+            value:
+            - giantswarm
+            - kube-system
+            {{- range .Values.policyExceptions.allowedPolexNamespaces }}
+            - {{ . }}
+            {{- end }}
+{{- end }}

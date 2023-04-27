@@ -23,8 +23,23 @@ verticalPodAutoscaler:
     enabled: true
     containerPolicies: {}
 
+policyExceptions:
+  # Kyverno will accept PolicyExceptions from all namespaces.
+  # If enablePolexPolicy is true, this chart will deploy an additional
+  # ClusterPolicy which rejects PolicyException objects created outside
+  # of the namespaces listed in allowedPolexNamespaces.
+  enablePolexPolicy: true
+  allowedPolexNamespaces: []
+  # For security reasons, we don't disclose the allowed namespaces when a polex is rejected.
+  # The message shown to users can be customized to direct them to an exception process.
+  polexPolicyMessage: >-
+    PolicyExceptions are not allowed to be created in the {{ request.namespace }} namespace.
+    Pleaes contact a cluster administrator for assistance.
+
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
 kyverno:
+  service:
+    annotations: {}
   # Labels on the Deployment. See podLabels for Pod-level labels.
   customLabels:
     giantswarm.io/service-type: "managed"
@@ -170,6 +185,8 @@ policy-reporter:
   global:
     plugins:
       kyverno: true
+
+    labels: {}
 
   monitoring:
     enabled: false
