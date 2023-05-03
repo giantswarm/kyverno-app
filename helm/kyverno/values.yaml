@@ -29,7 +29,8 @@ policyExceptions:
   # ClusterPolicy which rejects PolicyException objects created outside
   # of the namespaces listed in allowedPolexNamespaces.
   enablePolexPolicy: true
-  allowedPolexNamespaces: []
+  allowedPolexNamespaces:
+  - policy-exceptions
   # For security reasons, we don't disclose the allowed namespaces when a polex is rejected.
   # The message shown to users can be customized to direct them to an exception process.
   polexPolicyMessage: >-
