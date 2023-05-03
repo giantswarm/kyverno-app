@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add Kyverno policy controlling `PolicyException` namespaces.
+- Set a default namespace of `policy-exceptions` for customer `PolicyException` resources.
 
 ## [0.14.3] - 2023-04-11
 
