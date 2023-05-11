@@ -53,6 +53,7 @@ elasticsearch:
 
 slack:
   webhook: {{ .Values.target.slack.webhook | quote }}
+  channel: {{ .Values.target.slack.channel | quote }}
   secretRef: {{ .Values.target.slack.secretRef | quote }}
   minimumPriority: {{ .Values.target.slack.minimumPriority | quote }}
   skipExistingOnStartup: {{ .Values.target.slack.skipExistingOnStartup }}
@@ -158,9 +159,13 @@ s3:
   accessKeyID: {{ .Values.target.s3.accessKeyID }}
   secretAccessKey:  {{ .Values.target.s3.secretAccessKey }}
   secretRef: {{ .Values.target.s3.secretRef | quote }}
+  mountedSecret: {{ .Values.target.s3.mountedSecret }}
   region: {{ .Values.target.s3.region }}
   endpoint: {{ .Values.target.s3.endpoint }}
   bucket: {{ .Values.target.s3.bucket }}
+  bucketKeyEnabled: {{ .Values.target.s3.bucketKeyEnabled }}
+  kmsKeyId: {{ .Values.target.s3.kmsKeyId }}
+  serverSideEncryption: {{ .Values.target.s3.serverSideEncryption }}
   pathStyle: {{ .Values.target.s3.pathStyle }}
   prefix: {{ .Values.target.s3.prefix }}
   minimumPriority: {{ .Values.target.s3.minimumPriority | quote }}
@@ -204,6 +209,33 @@ kinesis:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   {{- with .Values.target.kinesis.channels }}
+  channels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+securityHub:
+  accountID: {{ .Values.target.securityHub.accountID }}
+  accessKeyID: {{ .Values.target.securityHub.accessKeyID }}
+  secretAccessKey:  {{ .Values.target.securityHub.secretAccessKey }}
+  secretRef: {{ .Values.target.securityHub.secretRef | quote }}
+  region: {{ .Values.target.securityHub.region }}
+  endpoint: {{ .Values.target.securityHub.endpoint }}
+  streamName: {{ .Values.target.securityHub.streamName }}
+  minimumPriority: {{ .Values.target.securityHub.minimumPriority | quote }}
+  skipExistingOnStartup: {{ .Values.target.securityHub.skipExistingOnStartup }}
+  {{- with .Values.target.securityHub.sources }}
+  sources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.securityHub.customFields }}
+  customFields:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.securityHub.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.securityHub.channels }}
   channels:
     {{- toYaml . | nindent 4 }}
   {{- end }}
@@ -282,3 +314,14 @@ logging:
 
 api:
   logging: {{ .Values.api.logging }}
+
+database:
+  type: {{ .Values.database.type }}
+  database: {{ .Values.database.database }}
+  username: {{ .Values.database.username }}
+  password: {{ .Values.database.password }}
+  host: {{ .Values.database.host }}
+  enableSSL: {{ .Values.database.enableSSL }}
+  dsn: {{ .Values.database.dsn }}
+  secretRef: {{ .Values.database.secretRef }}
+  mountedSecret: {{ .Values.database.mountedSecret }}
