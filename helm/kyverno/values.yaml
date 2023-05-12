@@ -202,7 +202,7 @@ kyverno:
 
       serviceAccount:
         # -- The ServiceAccount name
-        name:
+        name: "kyverno"
 
         # -- Annotations for the ServiceAccount
         annotations: {}
@@ -245,7 +245,7 @@ kyverno:
       type: RollingUpdate
 
     # -- Optional priority class
-    priorityClassName: ''
+    priorityClassName: 'giantswarm-critical'
 
     # -- Node labels for pod assignment
     nodeSelector: {}
@@ -491,7 +491,7 @@ kyverno:
 
       serviceAccount:
         # -- Service account name
-        name:
+        name: "kyverno"
 
         # -- Annotations for the ServiceAccount
         annotations: {}
@@ -536,7 +536,7 @@ kyverno:
       type: RollingUpdate
 
     # -- Optional priority class
-    priorityClassName: ''
+    priorityClassName: 'giantswarm-critical'
 
     # -- Change `hostNetwork` to `true` when you want the pod to share its host's network namespace.
     # Useful for situations like when you end up dealing with a custom CNI over Amazon EKS.
@@ -703,7 +703,7 @@ kyverno:
 
       serviceAccount:
         # -- Service account name
-        name:
+        name: "kyverno"
 
         # -- Annotations for the ServiceAccount
         annotations: {}
@@ -749,7 +749,7 @@ kyverno:
       type: RollingUpdate
 
     # -- Optional priority class
-    priorityClassName: ''
+    priorityClassName: 'giantswarm-critical'
 
     # -- Change `hostNetwork` to `true` when you want the pod to share its host's network namespace.
     # Useful for situations like when you end up dealing with a custom CNI over Amazon EKS.
@@ -926,7 +926,7 @@ kyverno:
 
       serviceAccount:
         # -- Service account name
-        name:
+        name: "kyverno"
 
         # -- Annotations for the ServiceAccount
         annotations: {}
@@ -968,7 +968,7 @@ kyverno:
       type: RollingUpdate
 
     # -- Optional priority class
-    priorityClassName: ''
+    priorityClassName: 'giantswarm-critical'
 
     # -- Change `hostNetwork` to `true` when you want the pod to share its host's network namespace.
     # Useful for situations like when you end up dealing with a custom CNI over Amazon EKS.
