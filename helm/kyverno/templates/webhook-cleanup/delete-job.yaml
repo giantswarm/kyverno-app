@@ -15,6 +15,12 @@ spec:
     spec:
       restartPolicy: Never
       serviceAccountName: {{ include "kyverno-stack.webhookCleanup.serviceAccount" . }}
+      securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
+      tolerations:
+      - key: node-role.kubernetes.io/control-plane
+        effect: NoSchedule
       containers:
         - name: kubectl
           image: "{{ .Values.image.registry }}/giantswarm/docker-kubectl:latest"
