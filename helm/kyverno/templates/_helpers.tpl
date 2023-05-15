@@ -153,6 +153,6 @@ app.kubernetes.io/instance: "{{ template "kyverno-stack.name" . }}"
 {{- end -}}
 
 {{/* Define webhook deletion ServiceAccount */}}
-{{- define "kyverno-stack.webhookCleanup.serviceAccount"-}}
-{{ .Values.kyverno.rbac.serviceAccount.name | default "kyverno" }}
+{{- define "kyverno-stack.webhookCleanup.serviceAccount" -}}
+{{- .Values.kyverno.rbac.serviceAccount.name | default "kyverno" -}}
 {{- end -}}
