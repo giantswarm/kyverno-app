@@ -151,3 +151,8 @@ app.kubernetes.io/instance: "{{ template "kyverno-stack.name" . }}"
 {{- define "kyverno-stack.policyInstallAnnotations" -}}
 "helm.sh/hook": "post-install,post-upgrade"
 {{- end -}}
+
+{{/* Define webhook deletion ServiceAccount */}}
+{{- define "kyverno-stack.webhookCleanup.serviceAccount"-}}
+{{ .Values.kyverno.rbac.serviceAccount.name | default "kyverno" }}
+{{- end -}}
