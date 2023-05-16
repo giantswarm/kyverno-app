@@ -37,6 +37,11 @@ policyExceptions:
     PolicyExceptions are not allowed to be created in the {{ request.namespace }} namespace.
     Please contact a cluster administrator for assistance.
 
+# Delete orphaned webhooks on chart uninstall
+# This will be removed in Kyverno 1.10 release.
+webhooksCleanup:
+  enabled: true
+
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
 kyverno:
   service:
