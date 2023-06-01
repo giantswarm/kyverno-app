@@ -1,0 +1,49 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: restrict-policy-kind-wildcards
+  annotations:
+    policies.kyverno.io/title: Restrict Wildcard in Kinds Matched by Policies
+    policies.kyverno.io/category: Security, Best Practices
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/subject: Policy, ClusterPolicy
+    kyverno.io/kyverno-version: 1.6.2
+    policies.kyverno.io/minversion: 1.6.0
+    kyverno.io/kubernetes-version: "1.23"
+    policies.kyverno.io/description: >-
+      Using wildcards ('*') in a Kyverno (Cluster)Policy matches all possible API types.
+      This includes cluster-critical resources, informational events, and internal API types
+      used by running workloads. Sending all Kinds through admission review can create
+      significant load on Kyverno, and is almost certainly not necessary for a particular policy.
+      Please explicitly list the Kinds to be matched by a (Cluster)Policy, or consider whether
+      native Kubernetes RBAC can be used instead for policies which truly apply to every type.
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: wildcard-kinds
+      match:
+        any:
+        - resources:
+            kinds:
+              - Policy
+              - ClusterPolicy
+      preconditions:
+        all:
+        - key: "{{`{{ request.operation || 'BACKGROUND' }}`}}"
+          operator: NotEquals
+          value: DELETE
+      validate:
+        message: >-
+          Using a wildcard ('*') in a Policy or ClusterPolicy kinds match causes excessive admission review load and is generally not necessary.
+          Instead, (Cluster)Policies should explicitly match only the resource types to which they are truly relevant.
+        deny:
+          conditions:
+            any:
+            - key: "{{`{{ contains(request.object.spec.rules[].match[].any[].resources[].kinds[], '*') }}`}}"
+              operator: Equals
+              value: true
+            - key: "{{`{{ contains(request.object.spec.rules[].match[].all[].resources[].kinds[], '*') }}`}}"
+              operator: Equals
+              value: true
+
