@@ -36,6 +36,8 @@ policyExceptions:
   polexPolicyMessage: >-
     PolicyExceptions are not allowed to be created in the {{ request.namespace }} namespace.
     Please contact a cluster administrator for assistance.
+  # Deploy a PolicyException for chart-operator (required for Giant Swarm clusters).
+  enableChartOperatorPolex: true
 
 # Delete orphaned webhooks on chart uninstall
 # This will be removed in Kyverno 1.10 release.
