@@ -48,6 +48,29 @@ kyverno:
     # -- We manage CRDs with an outside job so this needs to be disabled
     install: false
 
+  config:
+    # -- Exclude Kyverno namespace
+    # Determines if default Kyverno namespace exclusion is enabled for webhooks and resourceFilters
+    excludeKyvernoNamespace: true
+
+    # -- Enable registry mutation for container images. Enabled by default.
+    enableDefaultRegistryMutation: true
+
+    # -- The registry hostname used for the image mutation.
+    defaultRegistry: docker.io
+
+    # -- Defines the `namespaceSelector` in the webhook configurations.
+    # Note that it takes a list of `namespaceSelector` and/or `objectSelector` in the JSON format, and only the first element
+    # will be forwarded to the webhook configurations.
+    # The Kyverno namespace is excluded if `excludeKyvernoNamespace` is `true` (default)
+    webhooks:
+      - namespaceSelector:
+          matchExpressions:
+          - key: kubernetes.io/metadata.name
+            operator: NotIn
+            values:
+              - kube-system
+
   features:
     admissionReports:
       # -- Enables the feature
@@ -75,7 +98,7 @@ kyverno:
       enabled: false
     policyExceptions:
       # -- Enables the feature
-      enabled: false
+      enabled: true
       # -- Restrict policy exceptions to a single namespace
       namespace: ''
     protectManagedResources:
@@ -307,7 +330,7 @@ kyverno:
 
       image:
         # -- Image registry
-        registry: docker.io
+        registry: ~
         # -- Image repository
         repository: giantswarm/kyvernopre
         # -- (string) Image tag
@@ -349,7 +372,7 @@ kyverno:
 
       image:
         # -- Image registry
-        registry: docker.io
+        registry: ~
         # -- Image repository
         repository: giantswarm/kyverno
         # -- (string) Image tag
@@ -507,9 +530,9 @@ kyverno:
 
     image:
       # -- (string) Image registry
-      registry: docker.io
+      registry: ~
       # If you want to manage the registry you should remove it from the repository
-      # registry: ghcr.io
+      # registry: ~
       # repository: kyverno/background-controller
       # -- Image repository
       repository: giantswarm/background-controller
@@ -723,7 +746,7 @@ kyverno:
 
     image:
       # -- Image registry
-      registry: docker.io
+      registry: ~
       # -- Image repository
       repository: giantswarm/cleanup-controller
       # -- (string) Image tag
@@ -942,7 +965,7 @@ kyverno:
 
     image:
       # -- Image registry
-      registry: docker.io
+      registry: ~
       # -- Image repository
       repository: giantswarm/reports-controller
       # -- (string) Image tag
@@ -1129,7 +1152,7 @@ kyverno:
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
   image:
-    registry: docker.io
+    registry: ~
     repository: giantswarm/policy-reporter
   resources:
     limits:
@@ -1144,7 +1167,7 @@ policy-reporter:
   ui:
     enabled: true
     image:
-      registry: docker.io
+      registry: ~
       repository: giantswarm/policy-reporter-ui
     plugins:
       kyverno: true
@@ -1164,7 +1187,7 @@ policy-reporter:
     annotations:
       giantswarm.io/monitoring: "true"
     image:
-      registry: docker.io
+      registry: ~
       repository: giantswarm/policy-reporter-kyverno-plugin
     resources:
       limits:
