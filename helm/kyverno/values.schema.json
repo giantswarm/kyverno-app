@@ -428,7 +428,7 @@
                                             "type": "object"
                                         },
                                         "name": {
-                                            "type": "null"
+                                            "type": "string"
                                         }
                                     }
                                 }
@@ -750,7 +750,7 @@
                                             "type": "object"
                                         },
                                         "name": {
-                                            "type": "null"
+                                            "type": "string"
                                         }
                                     }
                                 }
@@ -1107,7 +1107,7 @@
                                             "type": "object"
                                         },
                                         "name": {
-                                            "type": "null"
+                                            "type": "string"
                                         }
                                     }
                                 }
@@ -1778,7 +1778,7 @@
                                             "type": "object"
                                         },
                                         "name": {
-                                            "type": "null"
+                                            "type": "string"
                                         }
                                     }
                                 }
