@@ -2,7 +2,7 @@
 
 Kubernetes Native Policy Management
 
-![Version: 3.0.0-beta.1](https://img.shields.io/badge/Version-3.0.0--beta.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.10.0-beta.1](https://img.shields.io/badge/AppVersion-v1.10.0--beta.1-informational?style=flat-square)
+![Version: 3.0.0](https://img.shields.io/badge/Version-3.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.10.0](https://img.shields.io/badge/AppVersion-v1.10.0-informational?style=flat-square)
 
 ## About
 
@@ -154,7 +154,7 @@ Follow the procedure below.
 1. READ THE COMPLETE RELEASE NOTES FIRST
 2. Scale the `kyverno` Deployment to zero replicas.
 3. If coming from 1.9 and you have install the cleanup controller, scale the `kyverno-cleanup-controller` Deployment to zero replicas.
-4. If step 2 applied to you, now delete the cleanup Deployment.
+4. If step 3 applied to you, now delete the cleanup Deployment.
 5. Review the [New Chart Values](#new-chart-values) section and translate your desired features and configurations to the new format.
 6. Upgrade to the v3 chart by passing the mandatory flag `upgrade.fromV2=true`.
 
@@ -258,8 +258,8 @@ The chart values are organised per component.
 | config.annotations | object | `{}` | Additional annotations to add to the configmap. |
 | config.enableDefaultRegistryMutation | bool | `true` | Enable registry mutation for container images. Enabled by default. |
 | config.defaultRegistry | string | `"docker.io"` | The registry hostname used for the image mutation. |
-| config.excludeGroups | list | `["system:serviceaccounts:kube-system","system:nodes"]` | Exclude groups |
-| config.excludeUsernames | list | `["!system:kube-scheduler"]` | Exclude usernames |
+| config.excludeGroups | list | `["system:nodes"]` | Exclude groups |
+| config.excludeUsernames | list | `[]` | Exclude usernames |
 | config.excludeRoles | list | `[]` | Exclude roles |
 | config.excludeClusterRoles | list | `[]` | Exclude roles |
 | config.generateSuccessEvents | bool | `false` | Generate success events. |
@@ -293,6 +293,9 @@ The chart values are organised per component.
 | features.configMapCaching.enabled | bool | `true` | Enables the feature |
 | features.dumpPayload.enabled | bool | `false` | Enables the feature |
 | features.forceFailurePolicyIgnore.enabled | bool | `false` | Enables the feature |
+| features.logging.format | string | `"text"` | Logging format |
+| features.logging.verbosity | int | `2` | Logging verbosity |
+| features.omitEvents.eventTypes | list | `[]` | Events which should not be emitted (possible values `PolicyViolation`, `PolicyApplied`, `PolicyError`, and `PolicySkipped`) |
 | features.policyExceptions.enabled | bool | `false` | Enables the feature |
 | features.policyExceptions.namespace | string | `""` | Restrict policy exceptions to a single namespace |
 | features.protectManagedResources.enabled | bool | `false` | Enables the feature |
@@ -375,8 +378,6 @@ The chart values are organised per component.
 | admissionController.tracing.address | string | `nil` | Traces receiver address |
 | admissionController.tracing.port | string | `nil` | Traces receiver port |
 | admissionController.tracing.creds | string | `""` | Traces receiver credentials |
-| admissionController.logging.format | string | `"text"` | Logging format |
-| admissionController.logging.verbosity | int | `2` | Logging verbosity |
 | admissionController.metering.disabled | bool | `false` | Disable metrics export |
 | admissionController.metering.config | string | `"prometheus"` | Otel configuration, can be `prometheus` or `grpc` |
 | admissionController.metering.port | int | `8000` | Prometheus endpoint port |
@@ -393,12 +394,14 @@ The chart values are organised per component.
 | backgroundController.rbac.serviceAccount.name | string | `nil` | Service account name |
 | backgroundController.rbac.serviceAccount.annotations | object | `{}` | Annotations for the ServiceAccount |
 | backgroundController.rbac.clusterRole.extraResources | list | `[]` | Extra resource permissions to add in the cluster role |
-| backgroundController.image.registry | string | `nil` | Image registry |
-| backgroundController.image.repository | string | `"ghcr.io/kyverno/background-controller"` | Image repository |
+| backgroundController.image.registry | string | `"ghcr.io"` | Image registry |
+| backgroundController.image.repository | string | `"kyverno/background-controller"` | Image repository |
 | backgroundController.image.tag | string | `nil` | Image tag Defaults to appVersion in Chart.yaml if omitted |
 | backgroundController.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | backgroundController.imagePullSecrets | list | `[]` | Image pull secrets |
 | backgroundController.replicas | int | `nil` | Desired number of pods |
+| backgroundController.podLabels | object | `{}` | Additional labels to add to each pod |
+| backgroundController.podAnnotations | object | `{}` | Additional annotations to add to each pod |
 | backgroundController.updateStrategy | object | See [values.yaml](values.yaml) | Deployment update strategy. Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy |
 | backgroundController.priorityClassName | string | `""` | Optional priority class |
 | backgroundController.hostNetwork | bool | `false` | Change `hostNetwork` to `true` when you want the pod to share its host's network namespace. Useful for situations like when you end up dealing with a custom CNI over Amazon EKS. Update the `dnsPolicy` accordingly as well to suit the host network mode. |
@@ -435,8 +438,6 @@ The chart values are organised per component.
 | backgroundController.tracing.address | string | `nil` | Traces receiver address |
 | backgroundController.tracing.port | string | `nil` | Traces receiver port |
 | backgroundController.tracing.creds | string | `""` | Traces receiver credentials |
-| backgroundController.logging.format | string | `"text"` | Logging format |
-| backgroundController.logging.verbosity | int | `2` | Logging verbosity |
 | backgroundController.metering.disabled | bool | `false` | Disable metrics export |
 | backgroundController.metering.config | string | `"prometheus"` | Otel configuration, can be `prometheus` or `grpc` |
 | backgroundController.metering.port | int | `8000` | Prometheus endpoint port |
@@ -460,6 +461,8 @@ The chart values are organised per component.
 | cleanupController.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | cleanupController.imagePullSecrets | list | `[]` | Image pull secrets |
 | cleanupController.replicas | int | `nil` | Desired number of pods |
+| cleanupController.podLabels | object | `{}` | Additional labels to add to each pod |
+| cleanupController.podAnnotations | object | `{}` | Additional annotations to add to each pod |
 | cleanupController.updateStrategy | object | See [values.yaml](values.yaml) | Deployment update strategy. Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy |
 | cleanupController.priorityClassName | string | `""` | Optional priority class |
 | cleanupController.hostNetwork | bool | `false` | Change `hostNetwork` to `true` when you want the pod to share its host's network namespace. Useful for situations like when you end up dealing with a custom CNI over Amazon EKS. Update the `dnsPolicy` accordingly as well to suit the host network mode. |
@@ -503,8 +506,6 @@ The chart values are organised per component.
 | cleanupController.tracing.address | string | `nil` | Traces receiver address |
 | cleanupController.tracing.port | string | `nil` | Traces receiver port |
 | cleanupController.tracing.creds | string | `""` | Traces receiver credentials |
-| cleanupController.logging.format | string | `"text"` | Logging format |
-| cleanupController.logging.verbosity | int | `2` | Logging verbosity |
 | cleanupController.metering.disabled | bool | `false` | Disable metrics export |
 | cleanupController.metering.config | string | `"prometheus"` | Otel configuration, can be `prometheus` or `grpc` |
 | cleanupController.metering.port | int | `8000` | Prometheus endpoint port |
@@ -527,6 +528,8 @@ The chart values are organised per component.
 | reportsController.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | reportsController.imagePullSecrets | list | `[]` | Image pull secrets |
 | reportsController.replicas | int | `nil` | Desired number of pods |
+| reportsController.podLabels | object | `{}` | Additional labels to add to each pod |
+| reportsController.podAnnotations | object | `{}` | Additional annotations to add to each pod |
 | reportsController.updateStrategy | object | See [values.yaml](values.yaml) | Deployment update strategy. Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy |
 | reportsController.priorityClassName | string | `""` | Optional priority class |
 | reportsController.hostNetwork | bool | `false` | Change `hostNetwork` to `true` when you want the pod to share its host's network namespace. Useful for situations like when you end up dealing with a custom CNI over Amazon EKS. Update the `dnsPolicy` accordingly as well to suit the host network mode. |
@@ -565,8 +568,6 @@ The chart values are organised per component.
 | reportsController.tracing.address | string | `nil` | Traces receiver address |
 | reportsController.tracing.port | string | `nil` | Traces receiver port |
 | reportsController.tracing.creds | string | `nil` | Traces receiver credentials |
-| reportsController.logging.format | string | `"text"` | Logging format |
-| reportsController.logging.verbosity | int | `2` | Logging verbosity |
 | reportsController.metering.disabled | bool | `false` | Disable metrics export |
 | reportsController.metering.config | string | `"prometheus"` | Otel configuration, can be `prometheus` or `grpc` |
 | reportsController.metering.port | int | `8000` | Prometheus endpoint port |

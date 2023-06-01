@@ -2,18 +2,18 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: tag v1.10.0-beta.1 (#7157)...
-      sha: 8a350ab5cb1f2af024510ae2c2ee723efb8b964c
+      commitTitle: release 1.10.0 (#7326)...
+      sha: da6f5c18132f773af15d0e09cbf2e16a36725232
       tags:
-      - v1.10.0-beta.1
+      - v1.10.0
     path: .
   path: helm/kyverno/charts/kyverno
 - contents:
   - git:
-      commitTitle: dependency updates...
-      sha: 416d4897cf4d1a69f0b38e7293c2defabfa0c069
+      commitTitle: 'Merge pull request #309 from kyverno/aws-irsa-support...'
+      sha: 498bc4c3e69ee31905adf19a24a08d8e90bdf422
       tags:
-      - v2.15.0
+      - v2.15.1
     path: .
   path: helm/kyverno/charts/policy-reporter
 kind: LockConfig
