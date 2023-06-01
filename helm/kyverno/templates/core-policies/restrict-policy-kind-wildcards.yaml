@@ -1,3 +1,4 @@
+{{- if .Values.policyExceptions.enableWildcardMatchPolicy }}
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
@@ -46,4 +47,4 @@ spec:
             - key: "{{`{{ contains(request.object.spec.rules[].match[].all[].resources[].kinds[], '*') }}`}}"
               operator: Equals
               value: true
-
+{{- end }}

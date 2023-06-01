@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add ClusterPolicy `restrict-policy-kind-wildcards` to prevent running (Cluster)Policies which match all API Kinds.
+
 ## [0.14.5] - 2023-05-16
 
 ### Added
