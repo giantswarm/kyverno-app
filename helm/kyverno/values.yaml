@@ -39,6 +39,10 @@ policyExceptions:
   # Deploy a PolicyException for chart-operator (required for Giant Swarm clusters).
   enableChartOperatorPolex: true
 
+  # Deploy a ClusterPolicy which prevents other Policies and ClusterPolicies from matching all resource types.
+  # Matching all (*) kinds results in excessive and unnecessary admission review load.
+  enableWildcardMatchPolicy: true
+
 # Delete orphaned webhooks on chart uninstall
 # This will be removed in Kyverno 1.10 release.
 webhooksCleanup:
