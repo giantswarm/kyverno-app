@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: v1.9.2
 annotations:
   application.giantswarm.io/team: shield
-  config.giantswarm.io/version: 1.x.x
+  config.giantswarm.io/version: "first-pss-gauss"
 dependencies:
   - name: policy-reporter
     version: 2.18.0
