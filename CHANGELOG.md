@@ -13,8 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add ClusterPolicy `restrict-policy-kind-wildcards` to prevent running (Cluster)Policies which match all API Kinds.
 - Add PolicyException for Giant Swarm's `chart-operator`.
-- Add resourceFilter for excluding Giant Swarm's `chart-operator` and `etcd-kubernetes-resources-count-exporter` from custom policies.
-
+- Add resourceFilter for excluding Giant Swarm's `chart-operator` from custom policies.
 
 ## [0.14.5] - 2023-05-16
 
