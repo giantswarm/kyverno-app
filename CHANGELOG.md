@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Modified the PSPs logic and moved the value to the parent chart.
+
 ## [0.14.7] - 2023-06-09
 
 ### Added
