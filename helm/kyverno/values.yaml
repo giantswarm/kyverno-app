@@ -12,6 +12,10 @@ crds:
 image:
   registry: docker.io
 
+# Create PSPs for every component including the CRD install job
+psp:
+  enabled: true
+
 verticalPodAutoscaler:
   kyvernoPlugin:
     enabled: true
@@ -106,8 +110,6 @@ kyverno:
             operator: NotIn
             values:
               - kube-system
-  psp:
-    enabled: true
   rbac:
     serviceAccount:
       name: "kyverno"  # Added so that we can create a PSP allowing emptyDir and seccomp profiles. Can be removed when PSPs are removed.
@@ -203,7 +205,3 @@ policy-reporter:
   monitoring:
     enabled: false
     namespace: monitoring
-
-  # Create a PSP and ClusterRoleBinding for PolicyReporter.
-  psp:
-    enabled: true
