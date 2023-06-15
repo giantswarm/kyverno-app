@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Modified the PSPs logic and moved the value to the parent chart.
 
+## [0.14.7] - 2023-06-09
+
 ### Added
 
 - Add resourceFilter for excluding Giant Swarm's `chart-operator` from custom policies.
@@ -312,7 +314,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.14.6...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.14.7...HEAD
+[0.14.7]: https://github.com/giantswarm/kyverno-app/compare/v0.14.6...v0.14.7
 [0.14.6]: https://github.com/giantswarm/kyverno-app/compare/v0.14.5...v0.14.6
 [0.14.5]: https://github.com/giantswarm/kyverno-app/compare/v0.14.4...v0.14.5
 [0.14.4]: https://github.com/giantswarm/kyverno-app/compare/v0.14.3...v0.14.4
