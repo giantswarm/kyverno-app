@@ -26,6 +26,7 @@ spec:
     {{- if .Values.kyverno.serviceMonitor.interval }}
     interval: {{ .Values.kyverno.serviceMonitor.interval }}
     {{- end }}
+    relabelings:
     - action: labeldrop
       regex: pod|service|container
     - targetLabel: instance
