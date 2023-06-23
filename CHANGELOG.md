@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add push to `capz-app-collection` on release to circleci
+- Make `scrapeTimeout` and `interval` fields configurable on Policy Reporter monitoring ServiceMonitors.
 
 ## [0.14.8] - 2023-06-15
 
