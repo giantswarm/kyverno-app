@@ -18,6 +18,10 @@ serviceMonitor:
   relabelings: []
   # see serviceMonitor.relabelings
   metricRelabelings: []
+  # optional scrapeTimeout
+  scrapeTimeout:
+  # optional scrape interval
+  interval:
 
 kyverno:
   serviceMonitor:
@@ -27,6 +31,10 @@ kyverno:
     relabelings: []
     # see serviceMonitor.relabelings
     metricRelabelings: []
+    # optional scrapeTimeout
+    scrapeTimeout:
+    # optional scrape interval
+    interval:
 
 grafana:
   # namespace for configMap of grafana dashboards
