@@ -739,3 +739,6 @@ cleanupController:
     collector: ''
     # -- Otel collector credentials
     creds: ''
+
+ciliumNetworkPolicy:
+  enabled: false

@@ -146,6 +146,9 @@ kyverno:
       repository: giantswarm/cleanup-controller  # kyverno: replaced in e2e tests
       pullPolicy: IfNotPresent
 
+  ciliumNetworkPolicy:
+    enabled: false
+
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
   image:
