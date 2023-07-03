@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add cilium network policies support (enabled with `kyverno.ciliumNetworkPolicy.enabled=true`).
+- Add cilium network policies support (enabled with `ciliumNetworkPolicy.enabled=true`).
 
 ## [0.14.9] - 2023-06-26
 
