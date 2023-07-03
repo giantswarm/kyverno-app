@@ -1,3 +1,6 @@
+ciliumNetworkPolicy:
+  enabled: false
+
 # We install CRDs through a Job with the helm specific crd folder.
 crds:
   install: true
@@ -145,9 +148,6 @@ kyverno:
       registry: docker.io
       repository: giantswarm/cleanup-controller  # kyverno: replaced in e2e tests
       pullPolicy: IfNotPresent
-
-  ciliumNetworkPolicy:
-    enabled: false
 
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:

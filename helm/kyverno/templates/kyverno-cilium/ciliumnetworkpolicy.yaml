@@ -2,14 +2,14 @@
 apiVersion: "cilium.io/v2"
 kind: CiliumNetworkPolicy
 metadata:
-  name: {{ template "kyverno.fullname" . }}
+  name: {{ template "kyverno-stack.fullname" . }}-psp
   labels:
-    {{- include "kyverno.labels" . | nindent 4 }}
-  namespace: {{ template "kyverno.namespace" . }}
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+  namespace: {{ include "kyverno-stack.namespace" . }}
 spec:
   endpointSelector:
     matchLabels:
-      {{- include "kyverno.matchLabels" . | nindent 6 }}
+      {{- include "kyverno-stack.selectorLabels" . | nindent 6 }}
   egress:
     - toEntities:
         - kube-apiserver
