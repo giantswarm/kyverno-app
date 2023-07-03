@@ -16,4 +16,5 @@ spec:
   ingress:
     - fromEntities:
         - kube-apiserver
+        - cluster
 {{- end }}
