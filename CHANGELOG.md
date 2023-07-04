@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add cilium network policies support (enabled with `ciliumNetworkPolicy.enabled=true`).
 
+### Changed
+
+- Allow PolicyExceptions in `flux-giantswarm` namespace.
+
 ## [0.14.9] - 2023-06-26
 
 ### Added
@@ -125,7 +129,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added `CiliumNetworkPolicy` for the CRD install job. 
+- Added `CiliumNetworkPolicy` for the CRD install job.
 
 ## [0.11.7] - 2022-11-07
 
