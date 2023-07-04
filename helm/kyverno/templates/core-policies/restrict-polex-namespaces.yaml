@@ -43,6 +43,7 @@ spec:
             operator: AnyNotIn
             value:
             - giantswarm
+            - flux-giantswarm
             - kube-system
             {{- range .Values.policyExceptions.allowedPolexNamespaces }}
             - {{ . }}
