@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.14.10] - 2023-07-04
+
 ### Added
 
 - Add cilium network policies support (enabled with `ciliumNetworkPolicy.enabled=true`).
@@ -331,7 +333,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.14.9...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.14.10...HEAD
+[0.14.10]: https://github.com/giantswarm/kyverno-app/compare/v0.14.9...v0.14.10
 [0.14.9]: https://github.com/giantswarm/kyverno-app/compare/v0.14.8...v0.14.9
 [0.14.8]: https://github.com/giantswarm/kyverno-app/compare/v0.14.7...v0.14.8
 [0.14.7]: https://github.com/giantswarm/kyverno-app/compare/v0.14.6...v0.14.7
