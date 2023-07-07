@@ -90,12 +90,27 @@ kyverno:
     configMapCaching:
       # -- Enables the feature
       enabled: true
+    deferredLoading:
+      # -- Enables the feature
+      enabled: true
     dumpPayload:
       # -- Enables the feature
       enabled: false
     forceFailurePolicyIgnore:
       # -- Enables the feature
       enabled: false
+    logging:
+      # -- Logging format
+      format: text
+      # -- Logging verbosity
+      verbosity: 2
+    omitEvents:
+      # -- Events which should not be emitted (possible values `PolicyViolation`, `PolicyApplied`, `PolicyError`, and `PolicySkipped`)
+      eventTypes: []
+        # - PolicyViolation
+        # - PolicyApplied
+        # - PolicyError
+        # - PolicySkipped
     policyExceptions:
       # -- Enables the feature
       enabled: true
@@ -117,6 +132,7 @@ kyverno:
     reports:
       # -- Reports chunk size
       chunkSize: 1000
+
 
   customLabels:
     giantswarm.io/service-type: "managed"
