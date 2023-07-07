@@ -134,7 +134,7 @@ kyverno:
 
       image:
         # -- (string) Image registry
-        registry: ~
+        registry: docker.io
         # -- Image repository
         repository: bitnami/kubectl
         # -- Image tag
@@ -177,7 +177,7 @@ kyverno:
 
       image:
         # -- (string) Image registry
-        registry: ~
+        registry: docker.io
         # -- Image repository
         repository: bitnami/kubectl
         # -- Image tag
@@ -330,7 +330,7 @@ kyverno:
 
       image:
         # -- Image registry
-        registry: ~
+        registry: docker.io
         # -- Image repository
         repository: giantswarm/kyvernopre
         # -- (string) Image tag
@@ -372,7 +372,7 @@ kyverno:
 
       image:
         # -- Image registry
-        registry: ~
+        registry: docker.io
         # -- Image repository
         repository: giantswarm/kyverno
         # -- (string) Image tag
@@ -530,9 +530,9 @@ kyverno:
 
     image:
       # -- (string) Image registry
-      registry: ~
+      registry: docker.io
       # If you want to manage the registry you should remove it from the repository
-      # registry: ~
+      # registry: docker.io
       # repository: kyverno/background-controller
       # -- Image repository
       repository: giantswarm/background-controller
@@ -746,7 +746,7 @@ kyverno:
 
     image:
       # -- Image registry
-      registry: ~
+      registry: docker.io
       # -- Image repository
       repository: giantswarm/cleanup-controller
       # -- (string) Image tag
@@ -965,7 +965,7 @@ kyverno:
 
     image:
       # -- Image registry
-      registry: ~
+      registry: docker.io
       # -- Image repository
       repository: giantswarm/reports-controller
       # -- (string) Image tag
@@ -1152,7 +1152,7 @@ kyverno:
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
   image:
-    registry: ~
+    registry: docker.io
     repository: giantswarm/policy-reporter
   resources:
     limits:
@@ -1167,7 +1167,7 @@ policy-reporter:
   ui:
     enabled: true
     image:
-      registry: ~
+      registry: docker.io
       repository: giantswarm/policy-reporter-ui
     plugins:
       kyverno: true
@@ -1187,7 +1187,7 @@ policy-reporter:
     annotations:
       giantswarm.io/monitoring: "true"
     image:
-      registry: ~
+      registry: docker.io
       repository: giantswarm/policy-reporter-kyverno-plugin
     resources:
       limits:
