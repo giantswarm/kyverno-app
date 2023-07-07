@@ -75,7 +75,7 @@
                                             "type": "string"
                                         },
                                         "registry": {
-                                            "type": ["null", "string"]
+                                            "type": "string"
                                         },
                                         "repository": {
                                             "type": "string"
@@ -178,7 +178,7 @@
                                             "type": "null"
                                         },
                                         "registry": {
-                                            "type": ["null", "string"]
+                                            "type": "string"
                                         },
                                         "repository": {
                                             "type": "string"
@@ -467,7 +467,7 @@
                                     "type": "string"
                                 },
                                 "namespace": {
-                                    "type": ["null", "string"]
+                                    "type": "null"
                                 },
                                 "scrapeTimeout": {
                                     "type": "string"
@@ -568,7 +568,7 @@
                                     "type": "string"
                                 },
                                 "registry": {
-                                    "type": ["null", "string"]
+                                    "type": "string"
                                 },
                                 "repository": {
                                     "type": "string"
@@ -832,7 +832,7 @@
                                     "type": "string"
                                 },
                                 "namespace": {
-                                    "type": ["null", "string"]
+                                    "type": "null"
                                 },
                                 "scrapeTimeout": {
                                     "type": "string"
@@ -925,7 +925,7 @@
                                     "type": "string"
                                 },
                                 "registry": {
-                                    "type": ["null", "string"]
+                                    "type": "string"
                                 },
                                 "repository": {
                                     "type": "string"
@@ -1290,7 +1290,7 @@
                                             "type": "null"
                                         },
                                         "registry": {
-                                            "type": ["null", "string"]
+                                            "type": "string"
                                         },
                                         "repository": {
                                             "type": "string"
@@ -1371,7 +1371,7 @@
                                             "type": "null"
                                         },
                                         "registry": {
-                                            "type": ["null", "string"]
+                                            "type": "string"
                                         },
                                         "repository": {
                                             "type": "string"
@@ -1543,6 +1543,14 @@
                                 }
                             }
                         },
+                        "deferredLoading": {
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                }
+                            }
+                        },
                         "dumpPayload": {
                             "type": "object",
                             "properties": {
@@ -1556,6 +1564,25 @@
                             "properties": {
                                 "enabled": {
                                     "type": "boolean"
+                                }
+                            }
+                        },
+                        "logging": {
+                            "type": "object",
+                            "properties": {
+                                "format": {
+                                    "type": "string"
+                                },
+                                "verbosity": {
+                                    "type": "integer"
+                                }
+                            }
+                        },
+                        "omitEvents": {
+                            "type": "object",
+                            "properties": {
+                                "eventTypes": {
+                                    "type": "array"
                                 }
                             }
                         },
@@ -1643,7 +1670,7 @@
                                     "type": "string"
                                 },
                                 "registry": {
-                                    "type": ["null", "string"]
+                                    "type": "string"
                                 },
                                 "repository": {
                                     "type": "string"
@@ -2000,7 +2027,7 @@
                     "type": "object",
                     "properties": {
                         "registry": {
-                            "type": ["null", "string"]
+                            "type": "string"
                         },
                         "repository": {
                             "type": "string"
@@ -2025,7 +2052,7 @@
                             "type": "object",
                             "properties": {
                                 "registry": {
-                                    "type": ["null", "string"]
+                                    "type": "string"
                                 },
                                 "repository": {
                                     "type": "string"
@@ -2133,7 +2160,7 @@
                             "type": "object",
                             "properties": {
                                 "registry": {
-                                    "type": ["null", "string"]
+                                    "type": "string"
                                 },
                                 "repository": {
                                     "type": "string"
