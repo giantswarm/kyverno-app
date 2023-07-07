@@ -14,7 +14,7 @@ spec:
   backoffLimit: 2
   template:
     spec:
-      serviceAccountName: {{ template "kyverno.admission-controller.serviceAccountName" . }}
+      serviceAccount: {{ template "kyverno.admission-controller.serviceAccountName" . }}
       restartPolicy: Never
       {{- with .Values.webhooksCleanup.imagePullSecrets }}
       imagePullSecrets: 
