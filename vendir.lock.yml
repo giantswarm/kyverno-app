@@ -10,10 +10,10 @@ directories:
   path: helm/kyverno/charts/kyverno
 - contents:
   - git:
-      commitTitle: 'Merge pull request #315 from kyverno/fix-secret-usage...'
-      sha: 5b15f4f15c8b6b46ec252b36a18e5bebe34a7b5c
+      commitTitle: fix TLS template rendering...
+      sha: 3f943cd8ed3e67a73a7937bfd1d4279ecf544282
       tags:
-      - v2.15.2
+      - policy-reporter-2.19.4
     path: .
   path: helm/kyverno/charts/policy-reporter
 kind: LockConfig
