@@ -448,7 +448,7 @@ kyverno:
 
     metricsService:
       # -- Create service.
-      create: true
+      create: false
       # -- Service port.
       # Kyverno's metrics server will be exposed at this port.
       port: 8000
@@ -657,7 +657,7 @@ kyverno:
 
     metricsService:
       # -- Create service.
-      create: true
+      create: false
       # -- Service port.
       # Metrics server will be exposed at this port.
       port: 8000
@@ -684,7 +684,7 @@ kyverno:
 
     serviceMonitor:
       # -- Create a `ServiceMonitor` to collect Prometheus metrics.
-      enabled: false
+      enabled: true
       # -- Additional labels
       additionalLabels: {}
       # -- (string) Override namespace
@@ -881,7 +881,7 @@ kyverno:
 
     metricsService:
       # -- Create service.
-      create: true
+      create: false
       # -- Service port.
       # Metrics server will be exposed at this port.
       port: 8000
@@ -1096,7 +1096,7 @@ kyverno:
 
     metricsService:
       # -- Create service.
-      create: true
+      create: false
       # -- Service port.
       # Metrics server will be exposed at this port.
       port: 8000
