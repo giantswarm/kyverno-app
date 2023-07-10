@@ -81,7 +81,7 @@
                                             "type": "string"
                                         },
                                         "tag": {
-                                            "type": "null"
+                                            "type": ["null", "integer"]
                                         }
                                     }
                                 },
@@ -175,7 +175,7 @@
                                     "type": "object",
                                     "properties": {
                                         "pullPolicy": {
-                                            "type": "null"
+                                            "type": ["null", "integer"]
                                         },
                                         "registry": {
                                             "type": "string"
@@ -184,7 +184,7 @@
                                             "type": "string"
                                         },
                                         "tag": {
-                                            "type": "null"
+                                            "type": ["null", "integer"]
                                         }
                                     }
                                 },
@@ -305,7 +305,7 @@
                                     "type": "boolean"
                                 },
                                 "nodePort": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "port": {
                                     "type": "integer"
@@ -391,7 +391,7 @@
                             "type": "object",
                             "properties": {
                                 "maxUnavailable": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "minAvailable": {
                                     "type": "integer"
@@ -435,7 +435,7 @@
                             }
                         },
                         "replicas": {
-                            "type": "null"
+                            "type": "integer"
                         },
                         "service": {
                             "type": "object",
@@ -444,7 +444,7 @@
                                     "type": "object"
                                 },
                                 "nodePort": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "port": {
                                     "type": "integer"
@@ -467,7 +467,7 @@
                                     "type": "string"
                                 },
                                 "namespace": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "scrapeTimeout": {
                                     "type": "string"
@@ -498,7 +498,7 @@
                             "type": "object",
                             "properties": {
                                 "address": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "creds": {
                                     "type": "string"
@@ -507,7 +507,7 @@
                                     "type": "boolean"
                                 },
                                 "port": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 }
                             }
                         },
@@ -574,7 +574,7 @@
                                     "type": "string"
                                 },
                                 "tag": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 }
                             }
                         },
@@ -633,7 +633,7 @@
                                     "type": "boolean"
                                 },
                                 "nodePort": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "port": {
                                     "type": "integer"
@@ -716,7 +716,7 @@
                             "type": "object",
                             "properties": {
                                 "maxUnavailable": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "minAvailable": {
                                     "type": "integer"
@@ -757,7 +757,7 @@
                             }
                         },
                         "replicas": {
-                            "type": "null"
+                            "type": ["null", "integer"]
                         },
                         "resources": {
                             "type": "object",
@@ -832,7 +832,7 @@
                                     "type": "string"
                                 },
                                 "namespace": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "scrapeTimeout": {
                                     "type": "string"
@@ -855,7 +855,7 @@
                             "type": "object",
                             "properties": {
                                 "address": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "creds": {
                                     "type": "string"
@@ -864,7 +864,7 @@
                                     "type": "boolean"
                                 },
                                 "port": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 }
                             }
                         },
@@ -931,7 +931,7 @@
                                     "type": "string"
                                 },
                                 "tag": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 }
                             }
                         },
@@ -990,7 +990,7 @@
                                     "type": "boolean"
                                 },
                                 "nodePort": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "port": {
                                     "type": "integer"
@@ -1073,7 +1073,7 @@
                             "type": "object",
                             "properties": {
                                 "maxUnavailable": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "minAvailable": {
                                     "type": "integer"
@@ -1114,7 +1114,7 @@
                             }
                         },
                         "replicas": {
-                            "type": "null"
+                            "type": ["null", "integer"]
                         },
                         "resources": {
                             "type": "object",
@@ -1183,7 +1183,7 @@
                                     "type": "object"
                                 },
                                 "nodePort": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "port": {
                                     "type": "integer"
@@ -1206,7 +1206,7 @@
                                     "type": "string"
                                 },
                                 "namespace": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "scrapeTimeout": {
                                     "type": "string"
@@ -1229,7 +1229,7 @@
                             "type": "object",
                             "properties": {
                                 "address": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "creds": {
                                     "type": "string"
@@ -1238,7 +1238,7 @@
                                     "type": "boolean"
                                 },
                                 "port": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 }
                             }
                         },
@@ -1287,7 +1287,7 @@
                                     "type": "object",
                                     "properties": {
                                         "pullPolicy": {
-                                            "type": "null"
+                                            "type": ["null", "integer"]
                                         },
                                         "registry": {
                                             "type": "string"
@@ -1368,7 +1368,7 @@
                                     "type": "object",
                                     "properties": {
                                         "pullPolicy": {
-                                            "type": "null"
+                                            "type": ["null", "integer"]
                                         },
                                         "registry": {
                                             "type": "string"
@@ -1676,7 +1676,7 @@
                                     "type": "string"
                                 },
                                 "tag": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 }
                             }
                         },
@@ -1698,13 +1698,13 @@
                             "type": "object",
                             "properties": {
                                 "collector": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "config": {
                                     "type": "string"
                                 },
                                 "creds": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "disabled": {
                                     "type": "boolean"
@@ -1735,7 +1735,7 @@
                                     "type": "boolean"
                                 },
                                 "nodePort": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "port": {
                                     "type": "integer"
@@ -1818,7 +1818,7 @@
                             "type": "object",
                             "properties": {
                                 "maxUnavailable": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "minAvailable": {
                                     "type": "integer"
@@ -1859,7 +1859,7 @@
                             }
                         },
                         "replicas": {
-                            "type": "null"
+                            "type": ["null", "integer"]
                         },
                         "resources": {
                             "type": "object",
@@ -1934,7 +1934,7 @@
                                     "type": "string"
                                 },
                                 "namespace": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "scrapeTimeout": {
                                     "type": "string"
@@ -1965,16 +1965,16 @@
                             "type": "object",
                             "properties": {
                                 "address": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "creds": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 },
                                 "enabled": {
                                     "type": "boolean"
                                 },
                                 "port": {
-                                    "type": "null"
+                                    "type": ["null", "integer"]
                                 }
                             }
                         },
