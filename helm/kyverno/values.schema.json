@@ -2,14 +2,14 @@
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
     "properties": {
-	"ciliumNetworkPolicy": {
-	    "type": "object",
-	    "properties": {
-		"enabled": {
-		    "type": "boolean"
-		}
-	    }
-	},
+        "ciliumNetworkPolicy": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                }
+            }
+        },
         "crds": {
             "type": "object",
             "properties": {
@@ -266,14 +266,6 @@
                 "priorityClassName": {
                     "type": "string"
                 },
-                "psp": {
-                    "type": "object",
-                    "properties": {
-                        "enabled": {
-                            "type": "boolean"
-                        }
-                    }
-                },
                 "rbac": {
                     "type": "object",
                     "properties": {
@@ -427,14 +419,6 @@
                         }
                     }
                 },
-                "psp": {
-                    "type": "object",
-                    "properties": {
-                        "enabled": {
-                            "type": "boolean"
-                        }
-                    }
-                },
                 "resources": {
                     "type": "object",
                     "properties": {
@@ -546,7 +530,13 @@
                         "type": "string"
                     }
                 },
+                "enableChartOperatorPolex": {
+                    "type": "boolean"
+                },
                 "enablePolexPolicy": {
+                    "type": "boolean"
+                },
+                "enableWildcardMatchPolicy": {
                     "type": "boolean"
                 },
                 "polexPolicyMessage": {
@@ -554,9 +544,28 @@
                 }
             }
         },
+        "psp": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                }
+            }
+        },
         "verticalPodAutoscaler": {
             "type": "object",
             "properties": {
+                "kyverno": {
+                    "type": "object",
+                    "properties": {
+                        "containerPolicies": {
+                            "type": "object"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        }
+                    }
+                },
                 "kyvernoPlugin": {
                     "type": "object",
                     "properties": {
@@ -589,6 +598,14 @@
                             "type": "boolean"
                         }
                     }
+                }
+            }
+        },
+        "webhooksCleanup": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
                 }
             }
         }

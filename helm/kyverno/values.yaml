@@ -29,6 +29,9 @@ verticalPodAutoscaler:
   ui:
     enabled: true
     containerPolicies: {}
+  kyverno:
+    enabled: true
+    containerPolicies: {}
 
 policyExceptions:
   # Kyverno will accept PolicyExceptions from all namespaces.
