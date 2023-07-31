@@ -35,7 +35,8 @@ spec:
         - key: "{{`{{ request.operation || 'BACKGROUND' }}`}}"
           operator: NotEquals
           value: DELETE
-        - key: "{{`{{ request.object.spec.rules[].match[].any[].resources[].kinds[] || '[]' }}`}}"
+          # Check if the policy matches Pods (or other high-volume types).
+        - key: "{{`{{ request.object.spec.rules[].match.[any, all][][].resources[].kinds[] || '[]' }}`}}"
           operator: AnyIn
           value:
           - Pod
@@ -46,6 +47,7 @@ spec:
         deny:
           conditions:
             any:
+            # Check if the policy includes context types that send requests to external services.
             - key: "{{`{{ request.object.spec.rules[].context[].keys(@)[] || 'empty' }}`}}"
               operator: AnyIn
               value:
