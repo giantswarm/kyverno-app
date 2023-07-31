@@ -35,19 +35,19 @@ spec:
         - key: "{{`{{ request.operation || 'BACKGROUND' }}`}}"
           operator: NotEquals
           value: DELETE
-          # Check if the policy matches Pods (or other high-volume types).
-        - key: "{{`{{ request.object.spec.rules[].match.[any, all][][].resources[].kinds[] || '[]' }}`}}"
-          operator: AnyIn
-          value:
-          - Pod
       validate:
         message: >-
           Making API or external service calls for every admission increases API server load and compounds load-related issues.
           When possible, policies should use ConfigMap data for contexts, or be written for higher level objects (e.g. Deployments instead of Pods).
         deny:
           conditions:
-            any:
-            # Check if the policy includes context types that send requests to external services.
+            all:
+              # Check if the policy matches Pods (or other high-volume types).
+            - key: "{{`{{ request.object.spec.rules[].match.[any, all][][].resources[].kinds[] || '[]' }}`}}"
+              operator: AnyIn
+              value:
+              - Pod
+              # Check if the policy includes context types that send requests to external services.
             - key: "{{`{{ request.object.spec.rules[].context[].keys(@)[] || 'empty' }}`}}"
               operator: AnyIn
               value:
