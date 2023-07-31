@@ -50,6 +50,10 @@ policyExceptions:
   # Matching all (*) kinds results in excessive and unnecessary admission review load.
   enableWildcardMatchPolicy: true
 
+  # Deploy a ClusterPolicy which prevents other Policies and ClusterPolicies from making API or external service calls for every Pod.
+  # Most Pod-level policies shouldn't depend on external calls, and the extra API calls can cause cascading issues under heavy cluster load.
+  enableNoisyContextsPolicy: true
+
 # Delete orphaned webhooks on chart uninstall
 # This will be removed in Kyverno 1.10 release.
 webhooksCleanup:
