@@ -151,3 +151,13 @@ app.kubernetes.io/instance: "{{ template "kyverno-stack.name" . }}"
 {{- define "kyverno-stack.policyInstallAnnotations" -}}
 "helm.sh/hook": "post-install,post-upgrade"
 {{- end -}}
+
+{{/* Define webhook deletion variables */}}
+{{- define "kyverno-stack.webhooksCleanup.name" -}}
+{{- printf "%s-%s" ( include "kyverno-stack.name" . ) "webhooks-cleanup" | replace "+" "_" | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "kyverno-stack.webhooksCleanup.annotations" -}}
+"helm.sh/hook": "pre-delete"
+"helm.sh/hook-delete-policy": hook-succeeded,hook-failed
+{{- end -}}

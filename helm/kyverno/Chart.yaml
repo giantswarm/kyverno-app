@@ -27,4 +27,4 @@ restrictions:
 sources:
   - https://github.com/kyverno/kyverno
 type: application
-version: 0.14.4
+version: 0.14.10

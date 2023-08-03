@@ -7,6 +7,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add core Policy `disallow-noisy-policy-contexts`.
+
+## [0.14.10] - 2023-07-04
+
+### Added
+
+- Add cilium network policies support (enabled with `ciliumNetworkPolicy.enabled=true`).
+
+### Changed
+
+- Allow PolicyExceptions in `flux-giantswarm` namespace.
+
+## [0.14.9] - 2023-06-26
+
+### Added
+
+- Add push to `capz-app-collection` on release to circleci
+- Make `scrapeTimeout` and `interval` fields configurable on Policy Reporter monitoring ServiceMonitors.
+
+## [0.14.8] - 2023-06-15
+
+### Changed
+
+- Modified the PSPs logic and moved the value to the parent chart.
+
+## [0.14.7] - 2023-06-09
+
+### Added
+
+- Add resourceFilter for excluding Giant Swarm's `chart-operator` from custom policies.
+
+## [0.14.6] - 2023-06-06
+
+### Added
+
+- Add ClusterPolicy `restrict-policy-kind-wildcards` to prevent running (Cluster)Policies which match all API Kinds.
+- Add PolicyException for Giant Swarm's `chart-operator`.
+
+## [0.14.5] - 2023-05-16
+
+### Added
+
+- Add a webhooks cleanup job for ensuring deletion of Kyverno webhooks on chart uninstall.
+
 ### Changed
 
 - Replace deprecated toleration `node-role.kubernetes.io/master` with `node-role.kubernetes.io/control-plane` on `CRD` install job.
@@ -89,7 +135,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added `CiliumNetworkPolicy` for the CRD install job. 
+- Added `CiliumNetworkPolicy` for the CRD install job.
 
 ## [0.11.7] - 2022-11-07
 
@@ -291,7 +337,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.14.4...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.14.10...HEAD
+[0.14.10]: https://github.com/giantswarm/kyverno-app/compare/v0.14.9...v0.14.10
+[0.14.9]: https://github.com/giantswarm/kyverno-app/compare/v0.14.8...v0.14.9
+[0.14.8]: https://github.com/giantswarm/kyverno-app/compare/v0.14.7...v0.14.8
+[0.14.7]: https://github.com/giantswarm/kyverno-app/compare/v0.14.6...v0.14.7
+[0.14.6]: https://github.com/giantswarm/kyverno-app/compare/v0.14.5...v0.14.6
+[0.14.5]: https://github.com/giantswarm/kyverno-app/compare/v0.14.4...v0.14.5
 [0.14.4]: https://github.com/giantswarm/kyverno-app/compare/v0.14.3...v0.14.4
 [0.14.3]: https://github.com/giantswarm/kyverno-app/compare/v0.14.2...v0.14.3
 [0.14.2]: https://github.com/giantswarm/kyverno-app/compare/v0.14.1...v0.14.2
