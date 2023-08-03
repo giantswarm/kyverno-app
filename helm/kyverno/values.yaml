@@ -1,3 +1,6 @@
+ciliumNetworkPolicy:
+  enabled: false
+
 # We install CRDs through a Job with the helm specific crd folder.
 crds:
   install: true
@@ -11,6 +14,10 @@ crds:
 
 image:
   registry: docker.io
+
+# Create PSPs for every component including the CRD install job
+psp:
+  enabled: true
 
 verticalPodAutoscaler:
   kyvernoPlugin:
@@ -36,6 +43,21 @@ policyExceptions:
   polexPolicyMessage: >-
     PolicyExceptions are not allowed to be created in the {{ request.namespace }} namespace.
     Please contact a cluster administrator for assistance.
+  # Deploy a PolicyException for chart-operator (required for Giant Swarm clusters).
+  enableChartOperatorPolex: true
+
+  # Deploy a ClusterPolicy which prevents other Policies and ClusterPolicies from matching all resource types.
+  # Matching all (*) kinds results in excessive and unnecessary admission review load.
+  enableWildcardMatchPolicy: true
+
+  # Deploy a ClusterPolicy which prevents other Policies and ClusterPolicies from making API or external service calls for every Pod.
+  # Most Pod-level policies shouldn't depend on external calls, and the extra API calls can cause cascading issues under heavy cluster load.
+  enableNoisyContextsPolicy: true
+
+# Delete orphaned webhooks on chart uninstall
+# This will be removed in Kyverno 1.10 release.
+webhooksCleanup:
+  enabled: true
 
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
 kyverno:
