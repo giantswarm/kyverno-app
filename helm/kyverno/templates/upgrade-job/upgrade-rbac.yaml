@@ -1,15 +1,15 @@
-{{- if .Values.webhooksCleanup.enabled }}
+{{- if .Values.upgradeJob.enabled }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ include "kyverno-stack.webhooksCleanup.name" . }}
+  name: {{ include "kyverno-stack.upgradeJob.name" . }}
   namespace: {{ .Release.Namespace | quote }}
   annotations:
     # create hook dependencies in the right order
     "helm.sh/hook-weight": "-2"
-    {{- include "kyverno-stack.webhooksCleanup.annotations" . | nindent 4 }}
+    {{- include "kyverno-stack.upgradeJob.annotations" . | nindent 4 }}
   labels:
-    app.kubernetes.io/component: {{ include "kyverno-stack.webhooksCleanup.name" . | quote }}
+    app.kubernetes.io/component: {{ include "kyverno-stack.upgradeJob.name" . | quote }}
 rules:
 - apiGroups:
   - ""
@@ -42,21 +42,21 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ include "kyverno-stack.webhooksCleanup.name" . }}
+  name: {{ include "kyverno-stack.upgradeJob.name" . }}
   namespace: {{ .Release.Namespace | quote }}
   annotations:
     # create hook dependencies in the right order
     "helm.sh/hook-weight": "-1"
-    {{- include "kyverno-stack.webhooksCleanup.annotations" . | nindent 4 }}
+    {{- include "kyverno-stack.upgradeJob.annotations" . | nindent 4 }}
   labels:
-    app.kubernetes.io/component: {{ include "kyverno-stack.webhooksCleanup.name" . | quote }}
+    app.kubernetes.io/component: {{ include "kyverno-stack.upgradeJob.name" . | quote }}
     {{- include "kyverno-stack.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: {{ include "kyverno-stack.webhooksCleanup.name" . }}
+  name: {{ include "kyverno-stack.upgradeJob.name" . }}
 subjects:
   - kind: ServiceAccount
-    name: {{ include "kyverno-stack.webhooksCleanup.name" . }}
+    name: {{ include "kyverno-stack.upgradeJob.name" . }}
     namespace: {{ .Release.Namespace | quote }}
 {{- end }}
