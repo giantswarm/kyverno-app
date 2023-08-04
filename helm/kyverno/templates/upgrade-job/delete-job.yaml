@@ -1,20 +1,20 @@
-{{- if .Values.webhooksCleanup.enabled -}}
+{{- if .Values.upgradeJob.enabled -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ template "kyverno-stack.webhooksCleanup.name" . }}
+  name: {{ template "kyverno-stack.upgradeJob.name" . }}
   namespace: {{ template "kyverno-stack.namespace" . }}
   labels:
-    app.kubernetes.io/component: {{ include "kyverno-stack.webhooksCleanup.name" . | quote }}
+    app.kubernetes.io/component: {{ include "kyverno-stack.upgradeJob.name" . | quote }}
     {{- include "kyverno-stack.labels" . | nindent 4 }}
   annotations:
-    {{- include "kyverno-stack.webhooksCleanup.annotations" . | nindent 4 }}
+    {{- include "kyverno-stack.upgradeJob.annotations" . | nindent 4 }}
 spec:
   backoffLimit: 2
   template:
     spec:
       restartPolicy: Never
-      serviceAccountName: {{ include "kyverno-stack.webhooksCleanup.name" . }}
+      serviceAccountName: {{ include "kyverno-stack.upgradeJob.name" . }}
       securityContext:
         runAsUser: 65534
         runAsGroup: 65534

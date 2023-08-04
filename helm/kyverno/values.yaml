@@ -54,9 +54,8 @@ policyExceptions:
   # Most Pod-level policies shouldn't depend on external calls, and the extra API calls can cause cascading issues under heavy cluster load.
   enableNoisyContextsPolicy: true
 
-# Delete orphaned webhooks on chart uninstall
-# This will be removed in Kyverno 1.10 release.
-webhooksCleanup:
+# Upgrade job for Kyverno < 1.10.0 upgrades.
+upgradeJob:
   enabled: true
 
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
