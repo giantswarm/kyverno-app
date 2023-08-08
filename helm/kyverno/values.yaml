@@ -60,6 +60,10 @@ upgradeJob:
 
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
 kyverno:
+  # Enable upgrade from v2 to v3 chart
+  upgrade:
+    fromV2: true
+
   # Create a PSP and ClusterRoleBinding for Kyverno.
   psp:
     enabled: true
