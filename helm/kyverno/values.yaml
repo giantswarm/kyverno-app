@@ -265,7 +265,7 @@ kyverno:
 
       serviceAccount:
         # -- The ServiceAccount name
-        name: "kyverno"
+        name: "kyverno-admission-controller"
 
         # -- Annotations for the ServiceAccount
         annotations: {}
@@ -554,7 +554,7 @@ kyverno:
 
       serviceAccount:
         # -- Service account name
-        name: "kyverno"
+        name: "kyverno-background-controller"
 
         # -- Annotations for the ServiceAccount
         annotations: {}
@@ -766,7 +766,7 @@ kyverno:
 
       serviceAccount:
         # -- Service account name
-        name: "kyverno"
+        name: "kyverno-cleanup-controller"
 
         # -- Annotations for the ServiceAccount
         annotations: {}
@@ -989,7 +989,7 @@ kyverno:
 
       serviceAccount:
         # -- Service account name
-        name: "kyverno"
+        name: "kyverno-reports-controller"
 
         # -- Annotations for the ServiceAccount
         annotations: {}
