@@ -497,7 +497,7 @@ kyverno:
 
     serviceMonitor:
       # -- Create a `ServiceMonitor` to collect Prometheus metrics.
-      enabled: false
+      enabled: true
       # -- Additional labels
       additionalLabels: {}
       # -- (string) Override namespace
@@ -709,7 +709,7 @@ kyverno:
 
     serviceMonitor:
       # -- Create a `ServiceMonitor` to collect Prometheus metrics.
-      enabled: false
+      enabled: true
       # -- Additional labels
       additionalLabels: {}
       # -- (string) Override namespace
@@ -932,7 +932,7 @@ kyverno:
 
     serviceMonitor:
       # -- Create a `ServiceMonitor` to collect Prometheus metrics.
-      enabled: false
+      enabled: true
       # -- Additional labels
       additionalLabels: {}
       # -- (string) Override namespace
@@ -1147,7 +1147,7 @@ kyverno:
 
     serviceMonitor:
       # -- Create a `ServiceMonitor` to collect Prometheus metrics.
-      enabled: false
+      enabled: true
       # -- Additional labels
       additionalLabels: {}
       # -- (string) Override namespace
