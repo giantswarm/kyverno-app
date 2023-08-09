@@ -60,6 +60,9 @@ subjects:
   - kind: ServiceAccount
     name: {{ .Values.kyverno.admissionController.rbac.serviceAccount.name }}
     namespace: {{ include "kyverno-stack.namespace"  . }}
+  - kind: ServiceAccount
+    name: {{ .Values.kyverno.reportsController.rbac.serviceAccount.name }}
+    namespace: {{ include "kyverno-stack.namespace"  . }}
 roleRef:
   kind: ClusterRole
   name: {{ template "kyverno-stack.fullname" . }}-psp
