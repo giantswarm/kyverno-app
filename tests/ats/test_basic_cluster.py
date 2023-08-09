@@ -47,7 +47,7 @@ def test_cluster_info(
 def app_deployment(kube_cluster: Cluster) -> List[pykube.Deployment]:
     deployments = wait_for_deployments_to_run(
         kube_cluster.kube_client,   
-        ["kyverno-admission-controller", "kyverno-background-controller"],
+        ["kyverno-admission-controller", "kyverno-background-controller", "kyverno-reports-controller"],
         "default",
         timeout,
     )
