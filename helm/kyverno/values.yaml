@@ -473,7 +473,7 @@ kyverno:
 
     metricsService:
       # -- Create service.
-      create: false
+      create: true
       # -- Service port.
       # Kyverno's metrics server will be exposed at this port.
       port: 8000
@@ -682,7 +682,7 @@ kyverno:
 
     metricsService:
       # -- Create service.
-      create: false
+      create: true
       # -- Service port.
       # Metrics server will be exposed at this port.
       port: 8000
@@ -906,7 +906,7 @@ kyverno:
 
     metricsService:
       # -- Create service.
-      create: false
+      create: true
       # -- Service port.
       # Metrics server will be exposed at this port.
       port: 8000
@@ -1121,7 +1121,7 @@ kyverno:
 
     metricsService:
       # -- Create service.
-      create: false
+      create: true
       # -- Service port.
       # Metrics server will be exposed at this port.
       port: 8000
