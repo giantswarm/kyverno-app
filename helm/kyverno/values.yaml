@@ -483,10 +483,7 @@ kyverno:
       # Only used if `type` is `NodePort`.
       nodePort:
       # -- Service annotations.
-      annotations:
-        giantswarm.io/monitoring-port: "8000"
-        giantswarm.io/monitoring-app-label: "kyverno"
-        giantswarm.io/monitoring: "true"
+      annotations: {}
 
     networkPolicy:
       # -- When true, use a NetworkPolicy to allow ingress to the webhook
@@ -692,11 +689,7 @@ kyverno:
       # Only used if `metricsService.type` is `NodePort`.
       nodePort:
       # -- Service annotations.
-      # -- Service annotations.
-      annotations:
-        giantswarm.io/monitoring-port: "8000"
-        giantswarm.io/monitoring-app-label: "kyverno"
-        giantswarm.io/monitoring: "true"
+      annotations: {}
 
     networkPolicy:
 
@@ -916,10 +909,7 @@ kyverno:
       # Only used if `metricsService.type` is `NodePort`.
       nodePort:
       # -- Service annotations.
-      annotations:
-        giantswarm.io/monitoring-port: "8000"
-        giantswarm.io/monitoring-app-label: "kyverno"
-        giantswarm.io/monitoring: "true"
+      annotations: {}
 
     networkPolicy:
 
@@ -1131,10 +1121,7 @@ kyverno:
       # Only used if `type` is `NodePort`.
       nodePort: ~
       # -- Service annotations.
-      annotations:
-        giantswarm.io/monitoring-port: "8000"
-        giantswarm.io/monitoring-app-label: "kyverno"
-        giantswarm.io/monitoring: "true"
+      annotations: {}
 
     networkPolicy:
 
@@ -1224,8 +1211,7 @@ policy-reporter:
 
   kyvernoPlugin:
     enabled: true
-    annotations:
-      giantswarm.io/monitoring: "true"
+    annotations: {}
     image:
       registry: docker.io
       repository: giantswarm/policy-reporter-kyverno-plugin
