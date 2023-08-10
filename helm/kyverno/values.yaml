@@ -23,10 +23,7 @@ psp:
 verticalPodAutoscaler:
   admissionController:
     enabled: true
-    containerPolicies:
-      maxAllowed:
-        cpu: "1000m"
-        memory: "1Gi"
+    containerPolicies: {}
   backgroundController:
     enabled: true
     containerPolicies: {}
