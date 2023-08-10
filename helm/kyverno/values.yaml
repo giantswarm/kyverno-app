@@ -19,7 +19,20 @@ image:
 psp:
   enabled: true
 
+# VerticalPodAutoscaler settings for individual controllers
 verticalPodAutoscaler:
+  admissionController:
+    enabled: true
+    containerPolicies:
+      maxAllowed:
+        cpu: "1000m"
+        memory: "1Gi"
+  backgroundController:
+    enabled: true
+    containerPolicies: {}
+  cleanupController:
+    enabled: true
+    containerPolicies: {}
   kyvernoPlugin:
     enabled: true
     containerPolicies: {}
