@@ -33,10 +33,10 @@ verticalPodAutoscaler:
   cleanupController:
     enabled: true
     containerPolicies: {}
-  reportsController: 
+  reportsController:
     enabled: true
     containerPolicies: {}
-  # VPA settings for Policy Reporter components 
+  # VPA settings for Policy Reporter components
   kyvernoPlugin:
     enabled: true
     containerPolicies: {}
