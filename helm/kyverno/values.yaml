@@ -457,7 +457,9 @@ kyverno:
           type: RuntimeDefault
 
       # -- Additional container args.
-      extraArgs: {}
+      extraArgs:
+        omit-events: "PolicyViolation,PolicyApplied"
+
 
       # -- Additional container environment variables.
       extraEnvVars: []
@@ -623,7 +625,8 @@ kyverno:
     dnsPolicy: ClusterFirst
 
     # -- Extra arguments passed to the container on the command line
-    extraArgs: {}
+    extraArgs:
+      omit-events: "PolicyViolation,PolicyApplied"
 
     resources:
       # -- Pod resource limits
@@ -1048,7 +1051,8 @@ kyverno:
     dnsPolicy: ClusterFirst
 
     # -- Extra arguments passed to the container on the command line
-    extraArgs: {}
+    extraArgs:
+      omit-events: "PolicyViolation,PolicyApplied"
 
     resources:
       # -- Pod resource limits
