@@ -2,14 +2,14 @@
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
     "properties": {
-	"ciliumNetworkPolicy": {
-	    "type": "object",
-	    "properties": {
-		"enabled": {
-		    "type": "boolean"
-		}
-	    }
-	},
+        "ciliumNetworkPolicy": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                }
+            }
+        },
         "crds": {
             "type": "object",
             "properties": {
@@ -71,7 +71,12 @@
                             "type": "object",
                             "properties": {
                                 "extraArgs": {
-                                    "type": "object"
+                                    "type": "object",
+                                    "properties": {
+                                        "omit-events": {
+                                            "type": "string"
+                                        }
+                                    }
                                 },
                                 "extraEnvVars": {
                                     "type": "array"
@@ -89,7 +94,7 @@
                                             "type": "string"
                                         },
                                         "tag": {
-                                            "type": ["null", "integer"]
+                                            "type": "null"
                                         }
                                     }
                                 },
@@ -183,7 +188,7 @@
                                     "type": "object",
                                     "properties": {
                                         "pullPolicy": {
-                                            "type": ["null", "integer"]
+                                            "type": "null"
                                         },
                                         "registry": {
                                             "type": "string"
@@ -192,7 +197,7 @@
                                             "type": "string"
                                         },
                                         "tag": {
-                                            "type": ["null", "integer"]
+                                            "type": "null"
                                         }
                                     }
                                 },
@@ -296,24 +301,13 @@
                             "type": "object",
                             "properties": {
                                 "annotations": {
-                                    "type": "object",
-                                    "properties": {
-                                        "giantswarm.io/monitoring": {
-                                            "type": "string"
-                                        },
-                                        "giantswarm.io/monitoring-app-label": {
-                                            "type": "string"
-                                        },
-                                        "giantswarm.io/monitoring-port": {
-                                            "type": "string"
-                                        }
-                                    }
+                                    "type": "object"
                                 },
                                 "create": {
                                     "type": "boolean"
                                 },
                                 "nodePort": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "port": {
                                     "type": "integer"
@@ -399,7 +393,7 @@
                             "type": "object",
                             "properties": {
                                 "maxUnavailable": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "minAvailable": {
                                     "type": "integer"
@@ -452,7 +446,7 @@
                                     "type": "object"
                                 },
                                 "nodePort": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "port": {
                                     "type": "integer"
@@ -475,7 +469,7 @@
                                     "type": "string"
                                 },
                                 "namespace": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "scrapeTimeout": {
                                     "type": "string"
@@ -506,7 +500,7 @@
                             "type": "object",
                             "properties": {
                                 "address": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "creds": {
                                     "type": "string"
@@ -515,7 +509,7 @@
                                     "type": "boolean"
                                 },
                                 "port": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 }
                             }
                         },
@@ -561,7 +555,12 @@
                             "type": "boolean"
                         },
                         "extraArgs": {
-                            "type": "object"
+                            "type": "object",
+                            "properties": {
+                                "omit-events": {
+                                    "type": "string"
+                                }
+                            }
                         },
                         "featuresOverride": {
                             "type": "object"
@@ -582,7 +581,7 @@
                                     "type": "string"
                                 },
                                 "tag": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 }
                             }
                         },
@@ -624,24 +623,13 @@
                             "type": "object",
                             "properties": {
                                 "annotations": {
-                                    "type": "object",
-                                    "properties": {
-                                        "giantswarm.io/monitoring": {
-                                            "type": "string"
-                                        },
-                                        "giantswarm.io/monitoring-app-label": {
-                                            "type": "string"
-                                        },
-                                        "giantswarm.io/monitoring-port": {
-                                            "type": "string"
-                                        }
-                                    }
+                                    "type": "object"
                                 },
                                 "create": {
                                     "type": "boolean"
                                 },
                                 "nodePort": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "port": {
                                     "type": "integer"
@@ -724,7 +712,7 @@
                             "type": "object",
                             "properties": {
                                 "maxUnavailable": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "minAvailable": {
                                     "type": "integer"
@@ -765,7 +753,7 @@
                             }
                         },
                         "replicas": {
-                            "type": ["null", "integer"]
+                            "type": "null"
                         },
                         "resources": {
                             "type": "object",
@@ -840,7 +828,7 @@
                                     "type": "string"
                                 },
                                 "namespace": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "scrapeTimeout": {
                                     "type": "string"
@@ -863,7 +851,7 @@
                             "type": "object",
                             "properties": {
                                 "address": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "creds": {
                                     "type": "string"
@@ -872,7 +860,7 @@
                                     "type": "boolean"
                                 },
                                 "port": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 }
                             }
                         },
@@ -939,7 +927,7 @@
                                     "type": "string"
                                 },
                                 "tag": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 }
                             }
                         },
@@ -981,24 +969,13 @@
                             "type": "object",
                             "properties": {
                                 "annotations": {
-                                    "type": "object",
-                                    "properties": {
-                                        "giantswarm.io/monitoring": {
-                                            "type": "string"
-                                        },
-                                        "giantswarm.io/monitoring-app-label": {
-                                            "type": "string"
-                                        },
-                                        "giantswarm.io/monitoring-port": {
-                                            "type": "string"
-                                        }
-                                    }
+                                    "type": "object"
                                 },
                                 "create": {
                                     "type": "boolean"
                                 },
                                 "nodePort": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "port": {
                                     "type": "integer"
@@ -1081,7 +1058,7 @@
                             "type": "object",
                             "properties": {
                                 "maxUnavailable": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "minAvailable": {
                                     "type": "integer"
@@ -1122,7 +1099,7 @@
                             }
                         },
                         "replicas": {
-                            "type": ["null", "integer"]
+                            "type": "null"
                         },
                         "resources": {
                             "type": "object",
@@ -1191,7 +1168,7 @@
                                     "type": "object"
                                 },
                                 "nodePort": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "port": {
                                     "type": "integer"
@@ -1214,7 +1191,7 @@
                                     "type": "string"
                                 },
                                 "namespace": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "scrapeTimeout": {
                                     "type": "string"
@@ -1237,7 +1214,7 @@
                             "type": "object",
                             "properties": {
                                 "address": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "creds": {
                                     "type": "string"
@@ -1246,7 +1223,7 @@
                                     "type": "boolean"
                                 },
                                 "port": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 }
                             }
                         },
@@ -1295,7 +1272,7 @@
                                     "type": "object",
                                     "properties": {
                                         "pullPolicy": {
-                                            "type": ["null", "integer"]
+                                            "type": "null"
                                         },
                                         "registry": {
                                             "type": "string"
@@ -1376,7 +1353,7 @@
                                     "type": "object",
                                     "properties": {
                                         "pullPolicy": {
-                                            "type": ["null", "integer"]
+                                            "type": "null"
                                         },
                                         "registry": {
                                             "type": "string"
@@ -1663,7 +1640,12 @@
                             "type": "boolean"
                         },
                         "extraArgs": {
-                            "type": "object"
+                            "type": "object",
+                            "properties": {
+                                "omit-events": {
+                                    "type": "string"
+                                }
+                            }
                         },
                         "featuresOverride": {
                             "type": "object"
@@ -1684,7 +1666,7 @@
                                     "type": "string"
                                 },
                                 "tag": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 }
                             }
                         },
@@ -1706,13 +1688,13 @@
                             "type": "object",
                             "properties": {
                                 "collector": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "config": {
                                     "type": "string"
                                 },
                                 "creds": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "disabled": {
                                     "type": "boolean"
@@ -1726,24 +1708,13 @@
                             "type": "object",
                             "properties": {
                                 "annotations": {
-                                    "type": "object",
-                                    "properties": {
-                                        "giantswarm.io/monitoring": {
-                                            "type": "string"
-                                        },
-                                        "giantswarm.io/monitoring-app-label": {
-                                            "type": "string"
-                                        },
-                                        "giantswarm.io/monitoring-port": {
-                                            "type": "string"
-                                        }
-                                    }
+                                    "type": "object"
                                 },
                                 "create": {
                                     "type": "boolean"
                                 },
                                 "nodePort": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "port": {
                                     "type": "integer"
@@ -1826,7 +1797,7 @@
                             "type": "object",
                             "properties": {
                                 "maxUnavailable": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "minAvailable": {
                                     "type": "integer"
@@ -1867,7 +1838,7 @@
                             }
                         },
                         "replicas": {
-                            "type": ["null", "integer"]
+                            "type": "null"
                         },
                         "resources": {
                             "type": "object",
@@ -1942,7 +1913,7 @@
                                     "type": "string"
                                 },
                                 "namespace": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "scrapeTimeout": {
                                     "type": "string"
@@ -1973,16 +1944,16 @@
                             "type": "object",
                             "properties": {
                                 "address": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "creds": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 },
                                 "enabled": {
                                     "type": "boolean"
                                 },
                                 "port": {
-                                    "type": ["null", "integer"]
+                                    "type": "null"
                                 }
                             }
                         },
@@ -2007,6 +1978,14 @@
                                     "type": "string"
                                 }
                             }
+                        }
+                    }
+                },
+                "upgrade": {
+                    "type": "object",
+                    "properties": {
+                        "fromV2": {
+                            "type": "boolean"
                         }
                     }
                 }
@@ -2046,12 +2025,7 @@
                     "type": "object",
                     "properties": {
                         "annotations": {
-                            "type": "object",
-                            "properties": {
-                                "giantswarm.io/monitoring": {
-                                    "type": "string"
-                                }
-                            }
+                            "type": "object"
                         },
                         "enabled": {
                             "type": "boolean"
@@ -2234,7 +2208,16 @@
                         "type": "string"
                     }
                 },
+                "enableChartOperatorPolex": {
+                    "type": "boolean"
+                },
+                "enableNoisyContextsPolicy": {
+                    "type": "boolean"
+                },
                 "enablePolexPolicy": {
+                    "type": "boolean"
+                },
+                "enableWildcardMatchPolicy": {
                     "type": "boolean"
                 },
                 "polexPolicyMessage": {
@@ -2242,9 +2225,58 @@
                 }
             }
         },
+        "psp": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "upgradeJob": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                }
+            }
+        },
         "verticalPodAutoscaler": {
             "type": "object",
             "properties": {
+                "admissionController": {
+                    "type": "object",
+                    "properties": {
+                        "containerPolicies": {
+                            "type": "object"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        }
+                    }
+                },
+                "backgroundController": {
+                    "type": "object",
+                    "properties": {
+                        "containerPolicies": {
+                            "type": "object"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        }
+                    }
+                },
+                "cleanupController": {
+                    "type": "object",
+                    "properties": {
+                        "containerPolicies": {
+                            "type": "object"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        }
+                    }
+                },
                 "kyvernoPlugin": {
                     "type": "object",
                     "properties": {
@@ -2257,6 +2289,17 @@
                     }
                 },
                 "policyReporter": {
+                    "type": "object",
+                    "properties": {
+                        "containerPolicies": {
+                            "type": "object"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        }
+                    }
+                },
+                "reportsController": {
                     "type": "object",
                     "properties": {
                         "containerPolicies": {
