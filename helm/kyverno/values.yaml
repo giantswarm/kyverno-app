@@ -458,7 +458,7 @@ kyverno:
 
       # -- Additional container args.
       extraArgs:
-        omit-events: "PolicyViolation,PolicyApplied,PolicySkipped,PolicyError"
+        omit-events: "PolicyApplied,PolicySkipped,PolicyError"
 
 
       # -- Additional container environment variables.
