@@ -7,12 +7,11 @@ annotations:
 apiVersion: v2
 appVersion: v1.10.2
 dependencies:
-- name: policy-reporter
-  version: 2.19.4
-- name: kyverno
-  version: 3.0.3
-description: 'Kyverno is a policy engine designed for Kubernetes. It can validate,
-  mutate,
+  - name: policy-reporter
+    version: 2.19.4
+  - name: kyverno
+    version: 3.0.3
+description: 'Kyverno is a policy engine designed for Kubernetes. It can validate, mutate,
 
   and generate configurations using admission controls and background scans.
 
@@ -20,19 +19,19 @@ description: 'Kyverno is a policy engine designed for Kubernetes. It can validat
 
   language.
 
-  '
+'
 engine: gotpl
 home: https://github.com/giantswarm/kyverno-app
 icon: https://s.giantswarm.io/app-icons/kyverno/1/light.svg
 keywords:
-- kubernetes
-- policy agent
-- validating webhook
-- admissions controller
+  - kubernetes
+  - policy agent
+  - validating webhook
+  - admissions controller
 name: kyverno
 restrictions:
   clusterSingleton: true
 sources:
-- https://github.com/kyverno/kyverno
+  - https://github.com/kyverno/kyverno
 type: application
-version: 0.14.10-1657bb8295e1ae79d41ba0f6a4b00d81d5b6d842
+version: 0.15.0
