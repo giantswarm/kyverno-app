@@ -145,11 +145,11 @@ kyverno:
       verbosity: 2
     omitEvents:
       # -- Events which should not be emitted (possible values `PolicyViolation`, `PolicyApplied`, `PolicyError`, and `PolicySkipped`)
-      eventTypes: []
+      eventTypes:
+        - PolicyApplied
+        - PolicyError
+        - PolicySkipped
         # - PolicyViolation
-        # - PolicyApplied
-        # - PolicyError
-        # - PolicySkipped
     policyExceptions:
       # -- Enables the feature
       enabled: true
@@ -214,6 +214,8 @@ kyverno:
 
       # -- Security context for the containers
       securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
         runAsNonRoot: true
         privileged: false
         allowPrivilegeEscalation: false
@@ -457,9 +459,7 @@ kyverno:
           type: RuntimeDefault
 
       # -- Additional container args.
-      extraArgs:
-        omit-events: "PolicyApplied,PolicySkipped,PolicyError"
-
+      extraArgs: {}
 
       # -- Additional container environment variables.
       extraEnvVars: []
@@ -626,7 +626,7 @@ kyverno:
 
     # -- Extra arguments passed to the container on the command line
     extraArgs:
-      omit-events: "PolicyViolation,PolicyApplied,PolicySkipped,PolicyError"
+      omit-events: {}
 
     resources:
       # -- Pod resource limits
@@ -1052,7 +1052,7 @@ kyverno:
 
     # -- Extra arguments passed to the container on the command line
     extraArgs:
-      omit-events: "PolicyViolation,PolicyApplied,PolicySkipped,PolicyError"
+      omit-events: {}
 
     resources:
       # -- Pod resource limits
