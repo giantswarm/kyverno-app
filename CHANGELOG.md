@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.15.1] - 2023-08-16
+
 ### Changed
 
 - Added non-root UID/GID for the cleanup jobs.
@@ -345,7 +347,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.15.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.15.1...HEAD
+[0.15.1]: https://github.com/giantswarm/kyverno-app/compare/v0.15.0...v0.15.1
 [0.15.0]: https://github.com/giantswarm/kyverno-app/compare/v0.14.10...v0.15.0
 [0.14.10]: https://github.com/giantswarm/kyverno-app/compare/v0.14.9...v0.14.10
 [0.14.9]: https://github.com/giantswarm/kyverno-app/compare/v0.14.8...v0.14.9
