@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Updated Kyverno to upstream version v1.10.2.
 - Add core Policy `disallow-noisy-policy-contexts`.
 
 ## [0.14.10] - 2023-07-04

@@ -31,6 +31,9 @@ spec:
           {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
+      {{- with .Values.priorityClassName }}
+      priorityClassName: {{ . }}
+      {{- end }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -49,6 +52,9 @@ spec:
             - -policy-reporter=http://{{ include "ui.policyReportServiceName" . }}:{{ .Values.policyReporter.port }}
             {{- if or .Values.plugins.kyverno .Values.global.plugins.kyverno }}
             - -kyverno-plugin=http://{{ include "ui.kyvernoPluginServiceName" . }}:{{ .Values.kyvernoPlugin.port }}
+            {{- end }}
+            {{- if .Values.api.overwriteHost }}
+            - -overwrite-host
             {{- end }}
           ports:
             - name: http

@@ -21,3 +21,5 @@ checks:
   - "wildcard-in-rules"
   - "dnsconfig-options"
   - "no-node-affinity"
+# Temporary
+  - "deprecated-service-account-field"

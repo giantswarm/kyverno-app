@@ -60,12 +60,15 @@ jobs:
           git rm -f *.yaml
           
           # Move new CRDs to crd directory
-          cp ../charts/kyverno/templates/crds.yaml .
+          cp ../charts/kyverno/templates/crds/crds.yaml .
 
           # Remove helm content from CRDs
-          APP_VERSION=$(yq '.appVersion' ../charts/kyverno/Chart.yaml)
+          APP_VERSION=$(yq '.appVersion' ../charts/kyverno/Chart.yaml | cut -b 2-)
           sed -i -e "s/{{.Chart.AppVersion}}/$APP_VERSION/g" crds.yaml
           sed -i -e "/{{/d" crds.yaml
+
+          # Add labels
+          yq -i '.metadata.labels = {"app.kubernetes.io/name": "kyverno", "app.kubernetes.io/part-of": "kyverno", "app.kubernetes.io/version": env(APP_VERSION)}' crds.yaml
 
           # Split CRDs into multiple files
           yq -s '"crd-" + $index + ".yaml"' crds.yaml

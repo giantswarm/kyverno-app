@@ -1,8 +1,8 @@
 apiVersion: v2
 type: application
 name: kyverno
-version: 2.7.2
-appVersion: v1.9.2
+version: 3.0.3
+appVersion: v1.10.2
 icon: https://github.com/kyverno/kyverno/raw/main/img/logo.png
 description: Kubernetes Native Policy Management
 keywords:
@@ -26,7 +26,19 @@ annotations:
       url: https://kyverno.io/docs
   # valid kinds are: added, changed, deprecated, removed, fixed and security
   artifacthub.io/changes: |
-    - kind: changed
-      description: Syntax change for webhooksCleanup switch to match with the rest of the file
     - kind: fixed
-      description: Handle multiple extraArgs in init container
+      description: rbac templating issues
+    - kind: added
+      description: define resources for cleanupJobs
+    - kind: changed
+      description: change to enable webhook cleanup hook by default
+    - kind: added
+      description: allow pod labels for cleanup jobs
+    - kind: added
+      description: allow nodeSelector for cleanup jobs
+    - kind: added
+      description: allow nodeSelector, tolerations and affinity settings for webhooksCleanup
+    - kind: added
+      description: allow affinity settings for cleanup jobs
+    - kind: added
+      description: Add helper to handle the labels for cleanup jobs, add component label

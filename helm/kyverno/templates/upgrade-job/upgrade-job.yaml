@@ -1,0 +1,36 @@
+{{- if and .Values.kyverno.upgrade.fromV2 .Values.upgradeJob.enabled -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "kyverno-stack.upgradeJob.name" . }}
+  namespace: {{ template "kyverno-stack.namespace" . }}
+  labels:
+    app.kubernetes.io/component: {{ include "kyverno-stack.upgradeJob.name" . | quote }}
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook-weight": "-2"
+    {{- include "kyverno-stack.upgradeJob.annotations" . | nindent 4 }}
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: {{ include "kyverno-stack.upgradeJob.name" . }}
+      securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
+      tolerations:
+      - key: node-role.kubernetes.io/control-plane
+        effect: NoSchedule
+      containers:
+        - name: kubectl
+          image: "{{ .Values.image.registry }}/giantswarm/docker-kubectl:latest"
+          command:
+            - sh
+            - '-c'
+            - |-
+              kubectl scale -n {{ template "kyverno-stack.namespace" . }} deployment --all --replicas=0
+              sleep 30
+              kubectl delete validatingwebhookconfiguration -l webhook.kyverno.io/managed-by=kyverno
+              kubectl delete mutatingwebhookconfiguration -l webhook.kyverno.io/managed-by=kyverno
+{{- end -}}

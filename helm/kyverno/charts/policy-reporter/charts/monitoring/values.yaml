@@ -18,11 +18,13 @@ serviceMonitor:
   relabelings: []
   # see serviceMonitor.relabelings
   metricRelabelings: []
+  # optional namespaceSelector
+  namespaceSelector: {}
   # optional scrapeTimeout
   scrapeTimeout:
   # optional scrape interval
   interval:
-
+  
 kyverno:
   serviceMonitor:
     # HonorLabels chooses the metrics labels on collisions with target labels
@@ -31,6 +33,8 @@ kyverno:
     relabelings: []
     # see serviceMonitor.relabelings
     metricRelabelings: []
+    # optional namespaceSelector
+    namespaceSelector: {}
     # optional scrapeTimeout
     scrapeTimeout:
     # optional scrape interval

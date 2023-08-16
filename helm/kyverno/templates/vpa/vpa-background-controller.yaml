@@ -1,0 +1,26 @@
+{{- if .Capabilities.APIVersions.Has "autoscaling.k8s.io/v1" -}}
+{{- if .Values.verticalPodAutoscaler.backgroundController.enabled -}}
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: {{ include "kyverno-stack.fullname" . }}-background-controller
+  namespace: {{ include "kyverno-stack.namespace" . }}
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+spec:
+  resourcePolicy:
+    containerPolicies:
+    - containerName: '*'
+    {{- if .Values.verticalPodAutoscaler.backgroundController.containerPolicies }}
+      {{- with .Values.verticalPodAutoscaler.backgroundController.containerPolicies -}}
+        {{ tpl (toYaml .) $ | nindent 6 }}
+      {{- end }}
+    {{- end }}
+  targetRef:
+    apiVersion: "apps/v1"
+    kind:       Deployment
+    name:       {{ include "kyverno-stack.fullname" . }}-background-controller
+  updatePolicy:
+    updateMode: Auto
+{{- end -}}
+{{- end -}}
