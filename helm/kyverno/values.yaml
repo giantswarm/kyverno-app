@@ -145,11 +145,11 @@ kyverno:
       verbosity: 2
     omitEvents:
       # -- Events which should not be emitted (possible values `PolicyViolation`, `PolicyApplied`, `PolicyError`, and `PolicySkipped`)
-      eventTypes: []
+      eventTypes:
+        - PolicyApplied
+        - PolicyError
+        - PolicySkipped
         # - PolicyViolation
-        # - PolicyApplied
-        # - PolicyError
-        # - PolicySkipped
     policyExceptions:
       # -- Enables the feature
       enabled: true
@@ -210,10 +210,14 @@ kyverno:
         failure: 1
 
       # -- Security context for the pod
-      podSecurityContext: {}
+      podSecurityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
 
       # -- Security context for the containers
       securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
         runAsNonRoot: true
         privileged: false
         allowPrivilegeEscalation: false
@@ -253,10 +257,14 @@ kyverno:
         failure: 1
 
       # -- Security context for the pod
-      podSecurityContext: {}
+      podSecurityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
 
       # -- Security context for the cont
       securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
         runAsNonRoot: true
         privileged: false
         allowPrivilegeEscalation: false
@@ -457,9 +465,7 @@ kyverno:
           type: RuntimeDefault
 
       # -- Additional container args.
-      extraArgs:
-        omit-events: "PolicyApplied,PolicySkipped,PolicyError"
-
+      extraArgs: {}
 
       # -- Additional container environment variables.
       extraEnvVars: []
@@ -625,8 +631,7 @@ kyverno:
     dnsPolicy: ClusterFirst
 
     # -- Extra arguments passed to the container on the command line
-    extraArgs:
-      omit-events: "PolicyViolation,PolicyApplied,PolicySkipped,PolicyError"
+    extraArgs: {}
 
     resources:
       # -- Pod resource limits
@@ -1051,8 +1056,7 @@ kyverno:
     dnsPolicy: ClusterFirst
 
     # -- Extra arguments passed to the container on the command line
-    extraArgs:
-      omit-events: "PolicyViolation,PolicyApplied,PolicySkipped,PolicyError"
+    extraArgs: {}
 
     resources:
       # -- Pod resource limits

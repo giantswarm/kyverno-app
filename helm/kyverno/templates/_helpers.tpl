@@ -159,5 +159,5 @@ app.kubernetes.io/instance: "{{ template "kyverno-stack.name" . }}"
 
 {{- define "kyverno-stack.upgradeJob.annotations" -}}
 "helm.sh/hook": "pre-upgrade"
-"helm.sh/hook-delete-policy": hook-succeeded,hook-failed
+"helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
 {{- end -}}
