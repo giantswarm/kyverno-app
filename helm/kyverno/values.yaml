@@ -210,7 +210,9 @@ kyverno:
         failure: 1
 
       # -- Security context for the pod
-      podSecurityContext: {}
+      podSecurityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
 
       # -- Security context for the containers
       securityContext:
@@ -255,7 +257,9 @@ kyverno:
         failure: 1
 
       # -- Security context for the pod
-      podSecurityContext: {}
+      podSecurityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
 
       # -- Security context for the cont
       securityContext:
