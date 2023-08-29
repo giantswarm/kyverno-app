@@ -1,4 +1,3 @@
-{{- if .Capabilities.APIVersions.Has "autoscaling.k8s.io/v1" -}}
 {{- if .Values.verticalPodAutoscaler.reportsController.enabled -}}
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
@@ -22,5 +21,4 @@ spec:
     name:       {{ include "kyverno-stack.fullname" . }}-reports-controller
   updatePolicy:
     updateMode: Auto
-{{- end -}}
 {{- end -}}
