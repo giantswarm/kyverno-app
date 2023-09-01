@@ -32,7 +32,8 @@ verticalPodAutoscaler:
     containerPolicies: {}
   reportsController:
     enabled: true
-    containerPolicies: {}
+    containerPolicies:
+      controlledResources: ["memory"]
   # VPA settings for Policy Reporter components
   kyvernoPlugin:
     enabled: true

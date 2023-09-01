@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Removed check capabilities from VerticalPodAutoscaler resources.
+- Dropped `CPU` from Reports Controller VerticalPodAutoscaler controlled resources.
+
 ## [0.15.1] - 2023-08-16
 
 ### Changed
