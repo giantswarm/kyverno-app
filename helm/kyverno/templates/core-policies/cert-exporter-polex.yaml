@@ -37,6 +37,7 @@ spec:
         - ReplicaSet
         - Pod
         namespaces:
+        - kube-system 
         - giantswarm
         - monitoring
         names:

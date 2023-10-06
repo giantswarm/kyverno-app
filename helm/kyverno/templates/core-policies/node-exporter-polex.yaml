@@ -54,6 +54,7 @@ spec:
         - DaemonSet
         - Pod
         namespaces:
+        - kube-system
         - monitoring
         - giantswarm
         names:
