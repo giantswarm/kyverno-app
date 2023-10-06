@@ -51,6 +51,7 @@ spec:
     any:
     - resources:
         kinds:
+        - DaemonSet
         - Deployment
         - ReplicaSet
         - Pod
