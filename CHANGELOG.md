@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Adding PolicyExceptions for `Cilium`, `Cluster Autoscaler`, `Node Exporter`, `K8s Audit Metrics`, `ETCD Kubernetes Resources Count Exporter` and `Cert Exporter`.
+- Adding PolicyExceptions for `Cilium`.
 
 ## [0.15.2] - 2023-09-01
 
