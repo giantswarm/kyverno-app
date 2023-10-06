@@ -60,6 +60,16 @@ policyExceptions:
     Please contact a cluster administrator for assistance.
   # Deploy a PolicyException for chart-operator (required for Giant Swarm clusters).
   enableChartOperatorPolex: true
+  # Deploy a PolicyException for cilium (required for Giant Swarm clusters).
+  enableCiliumPolex: true
+  # Deploy a PolicyException for cert-operator (required for Giant Swarm clusters).
+  enableCertExporterPolex: true
+  # Deploy a PolicyException for node-exporter (required for Giant Swarm clusters).
+  enableNodeExporterPolex: true
+  # Deploy a PolicyException for etcd-kubernetes-resources-count-exporter (required for Giant Swarm clusters).
+  enableEtcdExporterPolex: true
+  # Deploy a PolicyException for k8s-audit-metrics (required for Giant Swarm clusters).
+  enableK8sAuditMetrics: true
 
   # Deploy a ClusterPolicy which prevents other Policies and ClusterPolicies from matching all resource types.
   # Matching all (*) kinds results in excessive and unnecessary admission review load.
