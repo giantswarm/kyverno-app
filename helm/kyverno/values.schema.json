@@ -2224,22 +2224,10 @@
                         "type": "string"
                     }
                 },
-                "enableCertExporterPolex": {
-                    "type": "boolean"
-                },
                 "enableChartOperatorPolex": {
                     "type": "boolean"
                 },
                 "enableCiliumPolex": {
-                    "type": "boolean"
-                },
-                "enableEtcdExporterPolex": {
-                    "type": "boolean"
-                },
-                "enableK8sAuditMetrics": {
-                    "type": "boolean"
-                },
-                "enableNodeExporterPolex": {
                     "type": "boolean"
                 },
                 "enableNoisyContextsPolicy": {
