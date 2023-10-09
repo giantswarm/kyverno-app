@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added Policy Exceptions for `aws-cloud-controller-manager`.
+
 ## [0.15.2] - 2023-09-01
 
 ### Changed
