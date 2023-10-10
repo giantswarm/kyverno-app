@@ -1,0 +1,57 @@
+{{- if .Values.policyExceptions.enableVsphereProviderPolex }}
+apiVersion: kyverno.io/v2alpha1
+kind: PolicyException
+metadata:
+  name: kube-vip-exceptions
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+  annotations:
+    {{- include "kyverno-stack.policyInstallAnnotations" . | nindent 4 }}
+spec:
+  exceptions:
+  - policyName: disallow-capabilities
+    ruleNames:
+    - autogen-adding-capabilities
+    - adding-capabilities
+  - policyName: disallow-capabilities-strict
+    ruleNames:
+    - autogen-require-drop-all
+    - require-drop-all
+    - autogen-adding-capabilities-strict
+    - adding-capabilities-strict
+  - policyName: disallow-host-namespaces
+    ruleNames:
+    - autogen-host-namespaces
+    - host-namespaces
+  - policyName: disallow-privilege-escalation
+    ruleNames:
+    - autogen-privilege-escalation
+    - privilege-escalation
+  - policyName: require-run-as-nonroot
+    ruleNames:
+    - autogen-run-as-non-root
+    - run-as-non-root
+  - policyName: restrict-seccomp-strict
+    ruleNames:
+    - autogen-check-seccomp-strict
+    - check-seccomp-strict
+  - policyName: restrict-image-registries
+    ruleNames:
+    - autogen-validate-registries
+    - validate-registries
+  - policyName: restrict-volume-types
+    ruleNames:
+    - autogen-restricted-volumes
+    - restricted-volumes
+  match:
+    any:
+    - resources:
+        kinds:
+        - DaemonSet
+        - Pod
+        namespaces:
+        - kube-system
+        names:
+        - kube-vip-svc-lb*
+{{- end }}
