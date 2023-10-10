@@ -21,12 +21,6 @@
       "matchStrings": ["repo: (?<depName>.*)\n(\\s)*version: (?<currentValue>.*?)\n"],
       "datasourceTemplate": "github-releases",
       "extractVersionTemplate": "^v(?<version>.*)$"
-    },
-    {
-      "fileMatch": ["^.circleci\\/config\\.yaml$"],
-      "matchStrings": ["architect: giantswarm/(?<depName>.*)\n(\\s)*@(?<currentValue>.*?)\n"],
-      "datasourceTemplate": "github-releases",
-      "extractVersionTemplate": "^(?<version>.*)$"
     }
   ]
 }
