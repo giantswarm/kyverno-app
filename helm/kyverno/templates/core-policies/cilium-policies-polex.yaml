@@ -57,5 +57,6 @@ spec:
         - kube-system 
         names:
         - cilium-create-extra-policies*
-        - cilium-*default-policies*
+        - cilium-remove-default-policies*
+        - cilium-create-default-policies*
 {{- end -}}
