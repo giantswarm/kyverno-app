@@ -2211,6 +2211,9 @@
                 "enableChartOperatorPolex": {
                     "type": "boolean"
                 },
+                "enableCloudDirectorProviderPolex": {
+                    "type": "boolean"
+                },
                 "enableNoisyContextsPolicy": {
                     "type": "boolean"
                 },

@@ -1,0 +1,50 @@
+{{- if .Values.policyExceptions.enableCloudDirectorProviderPolex }}
+apiVersion: kyverno.io/v2alpha1
+kind: PolicyException
+metadata:
+  name: csi-vcd-controller-exceptions
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+  annotations:
+    {{- include "kyverno-stack.policyInstallAnnotations" . | nindent 4 }}
+spec:
+  exceptions:
+  - policyName: disallow-host-path
+    ruleNames:
+    - host-path
+    - autogen-host-path
+  - policyName: require-run-as-nonroot
+    ruleNames:
+    - run-as-non-root 
+    - autogen-run-as-non-root
+  - policyName: restrict-seccomp-strict
+    ruleNames:
+    - check-seccomp-strict
+    - autogen-check-seccomp-strict
+  - policyName: disallow-capabilities-strict
+    ruleNames:
+    - adding-capabilities-strict
+    - autogen-adding-capabilities-strict
+    - require-drop-all
+    - autogen-require-drop-all
+  - policyName: disallow-privilege-escalation
+    ruleNames:
+    - privilege-escalation
+    - autogen-privilege-escalation
+  - policyName: restrict-volume-types
+    ruleNames:
+    - restricted-volumes
+    - autogen-restricted-volumes
+  match:
+    any:
+    - resources:
+        kinds:
+        - StatefulSet
+        - ReplicaSet
+        - Pod
+        namespaces:
+        - kube-system
+        names:
+        - csi-vcd-controllerplugin*
+{{- end -}}
