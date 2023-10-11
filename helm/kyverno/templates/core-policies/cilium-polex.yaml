@@ -10,14 +10,6 @@ metadata:
     {{- include "kyverno-stack.policyInstallAnnotations" . | nindent 4 }}
 spec:
   exceptions:
-  - policyName: disallow-capabilities-strict 
-    ruleNames:
-    - require-drop-all 
-    - autogen-require-drop-all
-  - policyName: disallow-privilege-escalation
-    ruleNames:
-    - privilege-escalation 
-    - autogen-privilege-escalation
   - policyName: require-run-as-non-root-user
     ruleNames:
     - run-as-non-root-user 
@@ -46,6 +38,24 @@ spec:
     ruleNames:
     - host-ports-none
     - autogen-host-ports-none
+  - policyName: disallow-capabilities
+    ruleNames:
+    - adding-capabilities
+    - autogen-adding-capabilities
+  - policyName: disallow-capabilities-strict
+    ruleNames:
+    - adding-capabilities-strict
+    - autogen-adding-capabilities-strict
+    - require-drop-all
+    - autogen-require-drop-all
+  - policyName: disallow-privilege-escalation
+    ruleNames:
+    - privilege-escalation
+    - autogen-privilege-escalation
+  - policyName: disallow-selinux
+    ruleNames:
+    - seLinux
+    - autogen-seLinux
 
   match:
     any:
