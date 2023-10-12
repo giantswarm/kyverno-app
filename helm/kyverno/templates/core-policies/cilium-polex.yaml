@@ -55,11 +55,17 @@ spec:
   - policyName: disallow-selinux
     ruleNames:
     - seLinux
+    - selinux-type
     - autogen-seLinux
+    - autogen-selinux-type
   - policyName: restrict-apparmor-profiles
     ruleNames:
     - app-armor
     - autogen-app-armor
+  - policyName: disallow-privileged-containers
+    ruleNames:
+    - privileged-containers
+    - autogen-privileged-containers
 
   match:
     any:
@@ -72,6 +78,7 @@ spec:
         namespaces:
         - kube-system 
         names:
+        - cilium*
         - cilium-agent*
         - cilium-operator*
         - hubble*
