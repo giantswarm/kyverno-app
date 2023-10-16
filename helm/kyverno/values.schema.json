@@ -1580,7 +1580,7 @@
                                 "namespace": {
                                     "type": "string"
                                 },
-                                "enableAwsCloudControllerManagerPolex" {
+                                "enableAwsCloudControllerManagerPolex": {
                                     "type": "boolean"
                                 }
                             }
