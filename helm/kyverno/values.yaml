@@ -69,6 +69,9 @@ policyExceptions:
   # Most Pod-level policies shouldn't depend on external calls, and the extra API calls can cause cascading issues under heavy cluster load.
   enableNoisyContextsPolicy: true
 
+  # Deploy a PolicyException for AWS Cloud Controller Manager (required for Giant Swarm clusters).
+  enableAwsCloudControllerManagerPolex: true
+
 # Upgrade job for Kyverno < 1.10.0 upgrades.
 upgradeJob:
   enabled: true
