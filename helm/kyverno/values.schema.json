@@ -2235,7 +2235,6 @@
                 "enableAzureScheduledEventsPolex": {
                     "type": "boolean"
                 }
-
             }
         },
         "psp": {
