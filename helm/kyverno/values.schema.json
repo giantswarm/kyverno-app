@@ -2231,7 +2231,11 @@
                 },
                 "enableAzureCloudControllerManagerPolex": {
                     "type": "boolean"
+                },
+                "enableAzureScheduledEventsPolex": {
+                    "type": "boolean"
                 }
+
             }
         },
         "psp": {

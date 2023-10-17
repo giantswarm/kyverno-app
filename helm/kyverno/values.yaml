@@ -78,6 +78,9 @@ policyExceptions:
   # Deploy a PolicyException for Azure Cloud Controller Manager (required for Giant Swarm clusters).
   enableAzureCloudControllerManagerPolex: true
 
+  # Deploy a PolicyException for Azure Scheduled Events (required for Giant Swarm clusters).
+  enableAzureScheduledEventsPolex: true
+
 # Upgrade job for Kyverno < 1.10.0 upgrades.
 upgradeJob:
   enabled: true
