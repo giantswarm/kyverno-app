@@ -1582,6 +1582,9 @@
                                 },
                                 "enableAwsCloudControllerManagerPolex": {
                                     "type": "boolean"
+                                },
+                                "enableAwsEbsCsiDriverPolex": {
+                                    "type": "boolean"
                                 }
                             }
                         },
@@ -2225,6 +2228,12 @@
                 },
                 "polexPolicyMessage": {
                     "type": "string"
+                },
+                "enableAwsCloudControllerManagerPolex": {
+                    "type": "boolean"
+                },
+                "enableAwsEbsCsiDriverPolex": {
+                    "type": "boolean"
                 }
             }
         },
