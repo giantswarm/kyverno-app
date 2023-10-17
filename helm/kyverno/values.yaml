@@ -75,6 +75,9 @@ policyExceptions:
   # Deploy a PolicyException for AWS Ebs Csi Driver (required for Giant Swarm clusters).
   enableAwsEbsCsiDriverPolex: true
 
+  # Deploy a PolicyException for Azure Cloud Controller Manager (required for Giant Swarm clusters).
+  enableAzureCloudControllerManagerPolex: true
+
 # Upgrade job for Kyverno < 1.10.0 upgrades.
 upgradeJob:
   enabled: true

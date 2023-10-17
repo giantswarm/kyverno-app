@@ -1579,12 +1579,6 @@
                                 },
                                 "namespace": {
                                     "type": "string"
-                                },
-                                "enableAwsCloudControllerManagerPolex": {
-                                    "type": "boolean"
-                                },
-                                "enableAwsEbsCsiDriverPolex": {
-                                    "type": "boolean"
                                 }
                             }
                         },
@@ -2233,6 +2227,9 @@
                     "type": "boolean"
                 },
                 "enableAwsEbsCsiDriverPolex": {
+                    "type": "boolean"
+                },
+                "enableAzureCloudControllerManagerPolex": {
                     "type": "boolean"
                 }
             }
