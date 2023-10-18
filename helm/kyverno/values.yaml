@@ -60,6 +60,8 @@ policyExceptions:
     Please contact a cluster administrator for assistance.
   # Deploy a PolicyException for chart-operator (required for Giant Swarm clusters).
   enableChartOperatorPolex: true
+  # Deploy a PolicyException for cilium (required for Giant Swarm clusters).
+  enableCiliumPolex: true
 
   # Deploy a ClusterPolicy which prevents other Policies and ClusterPolicies from matching all resource types.
   # Matching all (*) kinds results in excessive and unnecessary admission review load.
