@@ -67,7 +67,6 @@ spec:
     - privileged-containers
     - autogen-privileged-containers
 
-
   match:
     any:
     - resources:
