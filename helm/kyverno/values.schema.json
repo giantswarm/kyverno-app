@@ -71,12 +71,7 @@
                             "type": "object",
                             "properties": {
                                 "extraArgs": {
-                                    "type": "object",
-                                    "properties": {
-                                        "omit-events": {
-                                            "type": "string"
-                                        }
-                                    }
+                                    "type": "object"
                                 },
                                 "extraEnvVars": {
                                     "type": "array"
@@ -555,12 +550,7 @@
                             "type": "boolean"
                         },
                         "extraArgs": {
-                            "type": "object",
-                            "properties": {
-                                "omit-events": {
-                                    "type": "string"
-                                }
-                            }
+                            "type": "object"
                         },
                         "featuresOverride": {
                             "type": "object"
@@ -1286,7 +1276,15 @@
                                     }
                                 },
                                 "podSecurityContext": {
-                                    "type": "object"
+                                    "type": "object",
+                                    "properties": {
+                                        "runAsGroup": {
+                                            "type": "integer"
+                                        },
+                                        "runAsUser": {
+                                            "type": "integer"
+                                        }
+                                    }
                                 },
                                 "schedule": {
                                     "type": "string"
@@ -1314,8 +1312,14 @@
                                         "readOnlyRootFilesystem": {
                                             "type": "boolean"
                                         },
+                                        "runAsGroup": {
+                                            "type": "integer"
+                                        },
                                         "runAsNonRoot": {
                                             "type": "boolean"
+                                        },
+                                        "runAsUser": {
+                                            "type": "integer"
                                         },
                                         "seccompProfile": {
                                             "type": "object",
@@ -1367,7 +1371,15 @@
                                     }
                                 },
                                 "podSecurityContext": {
-                                    "type": "object"
+                                    "type": "object",
+                                    "properties": {
+                                        "runAsGroup": {
+                                            "type": "integer"
+                                        },
+                                        "runAsUser": {
+                                            "type": "integer"
+                                        }
+                                    }
                                 },
                                 "schedule": {
                                     "type": "string"
@@ -1395,8 +1407,14 @@
                                         "readOnlyRootFilesystem": {
                                             "type": "boolean"
                                         },
+                                        "runAsGroup": {
+                                            "type": "integer"
+                                        },
                                         "runAsNonRoot": {
                                             "type": "boolean"
+                                        },
+                                        "runAsUser": {
+                                            "type": "integer"
                                         },
                                         "seccompProfile": {
                                             "type": "object",
@@ -1567,7 +1585,10 @@
                             "type": "object",
                             "properties": {
                                 "eventTypes": {
-                                    "type": "array"
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
                                 }
                             }
                         },
@@ -1640,12 +1661,7 @@
                             "type": "boolean"
                         },
                         "extraArgs": {
-                            "type": "object",
-                            "properties": {
-                                "omit-events": {
-                                    "type": "string"
-                                }
-                            }
+                            "type": "object"
                         },
                         "featuresOverride": {
                             "type": "object"
@@ -2211,6 +2227,9 @@
                 "enableChartOperatorPolex": {
                     "type": "boolean"
                 },
+                "enableCiliumPolex": {
+                    "type": "boolean"
+                },
                 "enableNoisyContextsPolicy": {
                     "type": "boolean"
                 },
@@ -2312,7 +2331,15 @@
                     "type": "object",
                     "properties": {
                         "containerPolicies": {
-                            "type": "object"
+                            "type": "object",
+                            "properties": {
+                                "controlledResources": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
                         },
                         "enabled": {
                             "type": "boolean"
