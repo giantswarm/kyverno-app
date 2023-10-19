@@ -1,4 +1,4 @@
-{{- if .Values.policyExceptions.enableAwsEbsCsiDriverPolex }}
+{{- if .Values.policyExceptions.enableAzureScheduledEventsPolex }}
 apiVersion: kyverno.io/v2alpha1
 kind: PolicyException
 metadata:
