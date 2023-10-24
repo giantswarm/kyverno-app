@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added Policy Exceptions for `aws-cloud-controller-manager`, `aws-ebs-csi-driver`, `azure-cloud-controller-manager` and `cilium`.
+- Add PolicyException for `chart-operator` ServiceAccount.
 
 ## [0.15.2] - 2023-09-01
 
