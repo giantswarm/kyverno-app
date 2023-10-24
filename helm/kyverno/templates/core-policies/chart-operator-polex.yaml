@@ -19,7 +19,7 @@ spec:
     - host-namespaces
     - autogen-host-namespaces
   match:
-    any:
+    all:
     - resources:
         kinds:
         - Deployment
@@ -46,7 +46,7 @@ spec:
     ruleNames:
     - restrict-namespaces
   match:
-    any:
+    all:
     - resources:
         kinds:
         - PolicyException

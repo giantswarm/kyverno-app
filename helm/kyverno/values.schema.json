@@ -45,6 +45,19 @@
                 }
             }
         },
+        "global": {
+            "type": "object",
+            "properties": {
+                "podSecurityStandards": {
+                    "type": "object",
+                    "properties": {
+                        "enforced": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            }
+        },
         "image": {
             "type": "object",
             "properties": {
@@ -2224,6 +2237,15 @@
                         "type": "string"
                     }
                 },
+                "enableAwsCloudControllerManagerPolex": {
+                    "type": "boolean"
+                },
+                "enableAwsEbsCsiDriverPolex": {
+                    "type": "boolean"
+                },
+                "enableAzureCloudControllerManagerPolex": {
+                    "type": "boolean"
+                },
                 "enableChartOperatorPolex": {
                     "type": "boolean"
                 },
@@ -2241,23 +2263,6 @@
                 },
                 "polexPolicyMessage": {
                     "type": "string"
-                },
-                "enableAwsCloudControllerManagerPolex": {
-                    "type": "boolean"
-                },
-                "enableAwsEbsCsiDriverPolex": {
-                    "type": "boolean"
-                },
-                "enableAzureCloudControllerManagerPolex": {
-                    "type": "boolean"
-                }
-            }
-        },
-        "psp": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean"
                 }
             }
         },
