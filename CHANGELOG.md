@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.16.0] - 2023-10-24
+
 ### Added
 
 - Added Policy Exceptions for `aws-cloud-controller-manager`, `aws-ebs-csi-driver`, `azure-cloud-controller-manager` and `cilium`.
@@ -360,7 +362,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.15.2...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.16.0...HEAD
+[0.16.0]: https://github.com/giantswarm/kyverno-app/compare/v0.15.2...v0.16.0
 [0.15.2]: https://github.com/giantswarm/kyverno-app/compare/v0.15.1...v0.15.2
 [0.15.1]: https://github.com/giantswarm/kyverno-app/compare/v0.15.0...v0.15.1
 [0.15.0]: https://github.com/giantswarm/kyverno-app/compare/v0.14.10...v0.15.0
