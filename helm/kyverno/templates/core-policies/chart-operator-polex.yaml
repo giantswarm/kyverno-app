@@ -18,9 +18,8 @@ spec:
     ruleNames:
     - host-namespaces
     - autogen-host-namespaces
-
   match:
-    any:
+    all:
     - resources:
         kinds:
         - Deployment
@@ -30,4 +29,32 @@ spec:
         - giantswarm
         names:
         - chart-operator*
+---
+apiVersion: kyverno.io/v2alpha1
+kind: PolicyException
+metadata:
+  name: kyverno-app-chart-operator-sa-policy-exception
+  namespace: giantswarm
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+  annotations:
+    {{- include "kyverno-stack.policyInstallAnnotations" . | nindent 4 }}
+spec:
+  background: false
+  exceptions:
+  - policyName: restrict-polex-namespaces
+    ruleNames:
+    - restrict-namespaces
+  match:
+    all:
+    - resources:
+        kinds:
+        - PolicyException
+        operations:
+        - CREATE
+        - UPDATE
+      subjects:
+      - kind: ServiceAccount
+        name: chart-operator
+        namespace: giantswarm
 {{- end -}}

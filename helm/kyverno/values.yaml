@@ -1,3 +1,9 @@
+# Create PSPs for every component including the CRD install job
+global:
+  podSecurityStandards:
+    enforced: false
+
+# Create CiliumNetworkPolicy
 ciliumNetworkPolicy:
   enabled: false
 
@@ -14,10 +20,6 @@ crds:
 
 image:
   registry: docker.io
-
-# Create PSPs for every component including the CRD install job
-psp:
-  enabled: true
 
 # VerticalPodAutoscaler settings for individual controllers
 verticalPodAutoscaler:
