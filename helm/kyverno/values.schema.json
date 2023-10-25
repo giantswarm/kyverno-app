@@ -100,9 +100,6 @@
                                         },
                                         "repository": {
                                             "type": "string"
-                                        },
-                                        "tag": {
-                                            "type": "null"
                                         }
                                     }
                                 },
@@ -195,17 +192,11 @@
                                 "image": {
                                     "type": "object",
                                     "properties": {
-                                        "pullPolicy": {
-                                            "type": "null"
-                                        },
                                         "registry": {
                                             "type": "string"
                                         },
                                         "repository": {
                                             "type": "string"
-                                        },
-                                        "tag": {
-                                            "type": "null"
                                         }
                                     }
                                 },
@@ -285,26 +276,6 @@
                                 }
                             }
                         },
-                        "metering": {
-                            "type": "object",
-                            "properties": {
-                                "collector": {
-                                    "type": "string"
-                                },
-                                "config": {
-                                    "type": "string"
-                                },
-                                "creds": {
-                                    "type": "string"
-                                },
-                                "disabled": {
-                                    "type": "boolean"
-                                },
-                                "port": {
-                                    "type": "integer"
-                                }
-                            }
-                        },
                         "metricsService": {
                             "type": "object",
                             "properties": {
@@ -313,9 +284,6 @@
                                 },
                                 "create": {
                                     "type": "boolean"
-                                },
-                                "nodePort": {
-                                    "type": "null"
                                 },
                                 "port": {
                                     "type": "integer"
@@ -400,9 +368,6 @@
                         "podDisruptionBudget": {
                             "type": "object",
                             "properties": {
-                                "maxUnavailable": {
-                                    "type": "null"
-                                },
                                 "minAvailable": {
                                     "type": "integer"
                                 }
@@ -453,9 +418,6 @@
                                 "annotations": {
                                     "type": "object"
                                 },
-                                "nodePort": {
-                                    "type": "null"
-                                },
                                 "port": {
                                     "type": "integer"
                                 },
@@ -475,9 +437,6 @@
                                 },
                                 "interval": {
                                     "type": "string"
-                                },
-                                "namespace": {
-                                    "type": "null"
                                 },
                                 "scrapeTimeout": {
                                     "type": "string"
@@ -503,23 +462,6 @@
                         },
                         "topologySpreadConstraints": {
                             "type": "array"
-                        },
-                        "tracing": {
-                            "type": "object",
-                            "properties": {
-                                "address": {
-                                    "type": "null"
-                                },
-                                "creds": {
-                                    "type": "string"
-                                },
-                                "enabled": {
-                                    "type": "boolean"
-                                },
-                                "port": {
-                                    "type": "null"
-                                }
-                            }
                         },
                         "tufRootMountPath": {
                             "type": "string"
@@ -582,9 +524,6 @@
                                 },
                                 "repository": {
                                     "type": "string"
-                                },
-                                "tag": {
-                                    "type": "null"
                                 }
                             }
                         },
@@ -602,26 +541,6 @@
                                 }
                             }
                         },
-                        "metering": {
-                            "type": "object",
-                            "properties": {
-                                "collector": {
-                                    "type": "string"
-                                },
-                                "config": {
-                                    "type": "string"
-                                },
-                                "creds": {
-                                    "type": "string"
-                                },
-                                "disabled": {
-                                    "type": "boolean"
-                                },
-                                "port": {
-                                    "type": "integer"
-                                }
-                            }
-                        },
                         "metricsService": {
                             "type": "object",
                             "properties": {
@@ -630,9 +549,6 @@
                                 },
                                 "create": {
                                     "type": "boolean"
-                                },
-                                "nodePort": {
-                                    "type": "null"
                                 },
                                 "port": {
                                     "type": "integer"
@@ -714,9 +630,6 @@
                         "podDisruptionBudget": {
                             "type": "object",
                             "properties": {
-                                "maxUnavailable": {
-                                    "type": "null"
-                                },
                                 "minAvailable": {
                                     "type": "integer"
                                 }
@@ -754,9 +667,6 @@
                                     }
                                 }
                             }
-                        },
-                        "replicas": {
-                            "type": "null"
                         },
                         "resources": {
                             "type": "object",
@@ -830,9 +740,6 @@
                                 "interval": {
                                     "type": "string"
                                 },
-                                "namespace": {
-                                    "type": "null"
-                                },
                                 "scrapeTimeout": {
                                     "type": "string"
                                 },
@@ -849,23 +756,6 @@
                         },
                         "topologySpreadConstraints": {
                             "type": "array"
-                        },
-                        "tracing": {
-                            "type": "object",
-                            "properties": {
-                                "address": {
-                                    "type": "null"
-                                },
-                                "creds": {
-                                    "type": "string"
-                                },
-                                "enabled": {
-                                    "type": "boolean"
-                                },
-                                "port": {
-                                    "type": "null"
-                                }
-                            }
                         },
                         "updateStrategy": {
                             "type": "object",
@@ -928,9 +818,6 @@
                                 },
                                 "repository": {
                                     "type": "string"
-                                },
-                                "tag": {
-                                    "type": "null"
                                 }
                             }
                         },
@@ -948,26 +835,6 @@
                                 }
                             }
                         },
-                        "metering": {
-                            "type": "object",
-                            "properties": {
-                                "collector": {
-                                    "type": "string"
-                                },
-                                "config": {
-                                    "type": "string"
-                                },
-                                "creds": {
-                                    "type": "string"
-                                },
-                                "disabled": {
-                                    "type": "boolean"
-                                },
-                                "port": {
-                                    "type": "integer"
-                                }
-                            }
-                        },
                         "metricsService": {
                             "type": "object",
                             "properties": {
@@ -976,9 +843,6 @@
                                 },
                                 "create": {
                                     "type": "boolean"
-                                },
-                                "nodePort": {
-                                    "type": "null"
                                 },
                                 "port": {
                                     "type": "integer"
@@ -1060,9 +924,6 @@
                         "podDisruptionBudget": {
                             "type": "object",
                             "properties": {
-                                "maxUnavailable": {
-                                    "type": "null"
-                                },
                                 "minAvailable": {
                                     "type": "integer"
                                 }
@@ -1100,9 +961,6 @@
                                     }
                                 }
                             }
-                        },
-                        "replicas": {
-                            "type": "null"
                         },
                         "resources": {
                             "type": "object",
@@ -1170,9 +1028,6 @@
                                 "annotations": {
                                     "type": "object"
                                 },
-                                "nodePort": {
-                                    "type": "null"
-                                },
                                 "port": {
                                     "type": "integer"
                                 },
@@ -1193,9 +1048,6 @@
                                 "interval": {
                                     "type": "string"
                                 },
-                                "namespace": {
-                                    "type": "null"
-                                },
                                 "scrapeTimeout": {
                                     "type": "string"
                                 },
@@ -1212,23 +1064,6 @@
                         },
                         "topologySpreadConstraints": {
                             "type": "array"
-                        },
-                        "tracing": {
-                            "type": "object",
-                            "properties": {
-                                "address": {
-                                    "type": "null"
-                                },
-                                "creds": {
-                                    "type": "string"
-                                },
-                                "enabled": {
-                                    "type": "boolean"
-                                },
-                                "port": {
-                                    "type": "null"
-                                }
-                            }
                         },
                         "updateStrategy": {
                             "type": "object",
@@ -1275,7 +1110,7 @@
                                     "type": "object",
                                     "properties": {
                                         "pullPolicy": {
-                                            "type": "null"
+                                            "type": "string"
                                         },
                                         "registry": {
                                             "type": "string"
@@ -1370,7 +1205,7 @@
                                     "type": "object",
                                     "properties": {
                                         "pullPolicy": {
-                                            "type": "null"
+                                            "type": "string"
                                         },
                                         "registry": {
                                             "type": "string"
@@ -1693,9 +1528,6 @@
                                 },
                                 "repository": {
                                     "type": "string"
-                                },
-                                "tag": {
-                                    "type": "null"
                                 }
                             }
                         },
@@ -1713,26 +1545,6 @@
                                 }
                             }
                         },
-                        "metering": {
-                            "type": "object",
-                            "properties": {
-                                "collector": {
-                                    "type": "null"
-                                },
-                                "config": {
-                                    "type": "string"
-                                },
-                                "creds": {
-                                    "type": "null"
-                                },
-                                "disabled": {
-                                    "type": "boolean"
-                                },
-                                "port": {
-                                    "type": "integer"
-                                }
-                            }
-                        },
                         "metricsService": {
                             "type": "object",
                             "properties": {
@@ -1741,9 +1553,6 @@
                                 },
                                 "create": {
                                     "type": "boolean"
-                                },
-                                "nodePort": {
-                                    "type": "null"
                                 },
                                 "port": {
                                     "type": "integer"
@@ -1825,9 +1634,6 @@
                         "podDisruptionBudget": {
                             "type": "object",
                             "properties": {
-                                "maxUnavailable": {
-                                    "type": "null"
-                                },
                                 "minAvailable": {
                                     "type": "integer"
                                 }
@@ -1865,9 +1671,6 @@
                                     }
                                 }
                             }
-                        },
-                        "replicas": {
-                            "type": "null"
                         },
                         "resources": {
                             "type": "object",
@@ -1941,9 +1744,6 @@
                                 "interval": {
                                     "type": "string"
                                 },
-                                "namespace": {
-                                    "type": "null"
-                                },
                                 "scrapeTimeout": {
                                     "type": "string"
                                 },
@@ -1968,23 +1768,6 @@
                         },
                         "topologySpreadConstraints": {
                             "type": "array"
-                        },
-                        "tracing": {
-                            "type": "object",
-                            "properties": {
-                                "address": {
-                                    "type": "null"
-                                },
-                                "creds": {
-                                    "type": "null"
-                                },
-                                "enabled": {
-                                    "type": "boolean"
-                                },
-                                "port": {
-                                    "type": "null"
-                                }
-                            }
                         },
                         "tufRootMountPath": {
                             "type": "string"
