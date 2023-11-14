@@ -2,12 +2,9 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  annotations:
-    controller-gen.kubebuilder.io/version: v0.11.3
   labels:
-    app.kubernetes.io/name: kyverno
-    app.kubernetes.io/part-of: kyverno
-    app.kubernetes.io/version: 1.10.2
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.12.0
   name: updaterequests.kyverno.io
 spec:
   group: kyverno.io
@@ -295,7 +292,7 @@ spec:
                     type: object
                   type: array
                 handler:
-                  description: Handler represents the instance ID that handles the UR Deprecated
+                  description: Deprecated
                   type: string
                 message:
                   description: Specifies request status message.
