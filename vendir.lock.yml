@@ -2,18 +2,18 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: release 1.10.2 (#7928)...
-      sha: 25f091412be6e335690d97e15013124f1846337e
+      commitTitle: 'chore: bump kubectl-validate (#8548) (#8551)...'
+      sha: 65527e2b4ef23aef3be7ecac41e4ffe4f5c8c7fc
       tags:
-      - v1.10.2
+      - kyverno-policies-chart-3.1.0-beta.4
     path: .
   path: helm/kyverno/charts/kyverno
 - contents:
   - git:
-      commitTitle: fix TLS template rendering...
-      sha: 3f943cd8ed3e67a73a7937bfd1d4279ecf544282
+      commitTitle: update cosign...
+      sha: 1c68da379796c80132784aa4ef3a74148a66528a
       tags:
-      - policy-reporter-2.19.4
+      - v2.17.1
     path: .
   path: helm/kyverno/charts/policy-reporter
 kind: LockConfig

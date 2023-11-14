@@ -5,7 +5,7 @@ image:
   registry: ghcr.io
   repository: kyverno/policy-reporter
   pullPolicy: IfNotPresent
-  tag: 2.15.2
+  tag: 2.17.0
 
 imagePullSecrets: []
 
@@ -201,6 +201,14 @@ global:
   namespace: ""
   # additional labels added on each resource
   labels: {}
+  # basicAuth for APIs and metrics
+  basicAuth:
+    # HTTP BasicAuth username
+    username: ""
+    # HTTP BasicAuth password
+    password: ""
+    # read credentials from secret
+    secretRef: ""
 
 # configure mappings from policy to priority
 # you can use default to configure a default priority for fail results
@@ -211,6 +219,7 @@ policyPriorities: {}
 
 emailReports:
   clusterName: "" # (optional) - displayed in the email report if configured
+  titlePrefix: "Report" # title prefix in the email subject
   smtp:
     secret: "" # (optional) secret name to provide the complete or partial SMTP configuration
     host: ""
@@ -480,6 +489,64 @@ target:
     # filter results send by namespaces, policies and priorities
     filter: {}
     # add additional webhook channels with different configurations and filters
+    channels: []
+
+  telegram:
+    # telegram bot token
+    token: ""
+    # telegram chat id
+    chatID: ""
+    # optional telegram proxy host
+    host: ""
+    # path to your custom certificate
+    # can be added under extraVolumes
+    certificate: ""
+    # skip TLS verification if necessary
+    skipTLS: false
+    # receive the host and/or token from an existing secret, the token is added as Authorization header
+    secretRef: ""
+    # Mounted secret path by Secrets Controller, secret should be in json format
+    mountedSecret: ""
+    # additional http headers
+    headers: {}
+    # minimum priority "" < info < warning < critical < error
+    minimumPriority: ""
+    # list of sources which should send to telegram
+    sources: []
+    # Skip already existing PolicyReportResults on startup
+    skipExistingOnStartup: true
+    # Added as additional properties to each notification
+    customFields: {}
+    # filter results send by namespaces, policies and priorities
+    filter: {}
+    # add additional telegram channels with different configurations and filters
+    channels: []
+
+  googleChat:
+    # GoogleChat webhook
+    webhook: ""
+    # path to your custom certificate
+    # can be added under extraVolumes
+    certificate: ""
+    # skip TLS verification if necessary
+    skipTLS: false
+    # receive the host and/or token from an existing secret, the token is added as Authorization header
+    secretRef: ""
+    # Mounted secret path by Secrets Controller, secret should be in json format
+    mountedSecret: ""
+    # additional http headers
+    headers: {}
+    # minimum priority "" < info < warning < critical < error
+    minimumPriority: ""
+    # list of sources which should send to telegram
+    sources: []
+    # Skip already existing PolicyReportResults on startup
+    skipExistingOnStartup: true
+    # Added as additional properties to each notification
+    customFields: {}
+    # filter results send by namespaces, policies and priorities
+    filter: {}
+    # add additional telegram channels with different configurations and filters
     channels: []
 
   s3:
