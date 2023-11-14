@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Removed unused values and update schema.
+- Changed the `kubectl apply` command of the `crd-install` job to use the `--force-conflicts` flag.
 
 ## [0.16.0] - 2023-10-24
 
