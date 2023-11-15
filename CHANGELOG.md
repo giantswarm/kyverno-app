@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Change the `kubectl apply` command of the `crd-install` job to use the `--force-conflicts` flag.
+
 ## [0.16.1] - 2023-10-25
 
 ### Changed
