@@ -46,8 +46,8 @@ The longest name that gets created adds and extra 37 characters, so truncation s
 
 {{/* Generate basic labels */}}
 {{- define "kyverno-stack.labels" }}
+{{- include "kyverno-stack.selectorLabels" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/version: "{{ .Chart.Version }}"
 app.kubernetes.io/part-of: {{ template "kyverno-stack.name" . }}
 chart: {{ template "kyverno-stack.chartref" . }}
