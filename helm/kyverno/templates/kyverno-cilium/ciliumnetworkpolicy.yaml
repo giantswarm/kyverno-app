@@ -9,6 +9,7 @@ metadata:
 spec:
   endpointSelector:
     matchLabels:
+      # This would match only the pre-install and pre-upgrade jobs
       {{- include "kyverno-stack.selectorLabels" . | nindent 6 }}
   egress:
     - toEntities:
@@ -17,6 +18,26 @@ spec:
     - fromEntities:
         - kube-apiserver
         - cluster
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-kyverno-cleanup-jobs-talk-to-apiserver
+  namespace: {{ include "kyverno-stack.namespace" . }}
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/component: cleanup-jobs
+      app.kubernetes.io/instance: kyverno
+  egress:
+    - toEntities:
+      - kube-apiserver
+      toPorts:
+        - ports:
+          - port: "443"
+            protocol: TCP
+          - port: "6443"
+            protocol: TCP
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
@@ -87,6 +108,26 @@ spec:
   endpointSelector:
     matchLabels:
       app.kubernetes.io/component: background-controller
+      app.kubernetes.io/instance: kyverno
+  egress:
+    - toEntities:
+      - kube-apiserver
+      toPorts:
+        - ports:
+          - port: "443"
+            protocol: TCP
+          - port: "6443"
+            protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-kyverno-cleanup-controller-talk-to-apiserver
+  namespace: {{ include "kyverno-stack.namespace" . }}
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/component: cleanup-controller
       app.kubernetes.io/instance: kyverno
   egress:
     - toEntities:
