@@ -6,13 +6,17 @@ metadata:
   namespace: {{ template "kyverno-stack.namespace" . }}
   labels:
     app.kubernetes.io/component: {{ include "kyverno-stack.upgradeJob.name" . | quote }}
-    {{- include "kyverno-stack.labels" . | nindent 4 }}
+    {{- include "kyverno-stack.selectorLabels" . | nindent 4 }}
   annotations:
     "helm.sh/hook-weight": "-2"
     {{- include "kyverno-stack.upgradeJob.annotations" . | nindent 4 }}
 spec:
   backoffLimit: 2
   template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: {{ include "kyverno-stack.upgradeJob.name" . | quote }}
+        {{- include "kyverno-stack.selectorLabels" . | nindent 8 }}
     spec:
       restartPolicy: Never
       serviceAccountName: {{ include "kyverno-stack.upgradeJob.name" . }}

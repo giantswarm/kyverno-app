@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add missing `app.kubernetes.io/` labels to all the pods.
 - `CiliumNetworkPolicy` for:
   - `kyverno-admission-controller`
   - `kyverno-plugin`
