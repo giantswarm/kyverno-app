@@ -2,7 +2,7 @@
 apiVersion: "cilium.io/v2"
 kind: CiliumNetworkPolicy
 metadata:
-  name: {{ template "kyverno-stack.fullname" . }}
+  name: allow-kyverno-install-jobs-talk-to-apiserver
   labels:
     {{- include "kyverno-stack.labels" . | nindent 4 }}
   namespace: {{ include "kyverno-stack.namespace" . }}
