@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `CiliumNetworkPolicy` for:
+  - `kyverno-admission-controller`
+  - `kyverno-plugin`
+  - `kyverno-policy-reporter`
+  - `kyverno-background-controller`
+  - `kyverno-reports-controller`
+
 ## [0.16.3] - 2023-11-29
 
 ### Added
