@@ -245,6 +245,11 @@ kyverno:
         seccompProfile:
           type: RuntimeDefault
 
+      # -- Labels for the CleanupJob
+      podLabels:
+        app.kubernetes.io/component: cleanup-jobs
+        app.kubernetes.io/instance: kyverno
+
     clusterAdmissionReports:
 
       # -- Enable cleanup cronjob
@@ -291,6 +296,11 @@ kyverno:
             - ALL
         seccompProfile:
           type: RuntimeDefault
+
+      # -- Labels for the CleanupJob
+      podLabels:
+        app.kubernetes.io/component: cleanup-jobs
+        app.kubernetes.io/instance: kyverno
 
   # Admission controller configuration
   admissionController:
