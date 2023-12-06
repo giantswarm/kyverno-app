@@ -58,6 +58,22 @@ spec:
             protocol: TCP
           - port: "6443"
             protocol: TCP
+  ingress:
+    - fromEntities:
+        - kube-apiserver
+        - remote-node
+      toPorts:
+        - ports:
+          - port: "443"
+            protocol: TCP
+          - port: "6443"
+            protocol: TCP
+    - fromEntities:
+        - cluster
+      toPorts:
+      - ports:
+        - port: "8000"
+          protocol: TCP
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
