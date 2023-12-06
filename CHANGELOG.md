@@ -10,12 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add missing `app.kubernetes.io/` labels to all the pods.
-- `CiliumNetworkPolicy` for:
+- Add `CiliumNetworkPolicy` for individual controllers:
   - `kyverno-admission-controller`
-  - `kyverno-plugin`
-  - `kyverno-policy-reporter`
   - `kyverno-background-controller`
   - `kyverno-reports-controller`
+  - `kyverno-cleanup-controller`
+  - `kyverno-cleanup-jobs`
+  - `kyverno-plugin`
+  - `kyverno-policy-reporter`
 
 ## [0.16.3] - 2023-11-29
 
