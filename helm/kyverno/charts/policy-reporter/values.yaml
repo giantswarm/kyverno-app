@@ -5,13 +5,15 @@ image:
   registry: ghcr.io
   repository: kyverno/policy-reporter
   pullPolicy: IfNotPresent
-  tag: 2.17.0
+  tag: 2.17.2
 
 imagePullSecrets: []
 
 priorityClassName: ""
 
 replicaCount: 1
+
+revisionHistoryLimit: 10
 
 deploymentStrategy: {}
   # rollingUpdate:
