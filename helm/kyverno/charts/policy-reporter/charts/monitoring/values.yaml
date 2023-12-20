@@ -24,7 +24,6 @@ serviceMonitor:
   scrapeTimeout:
   # optional scrape interval
   interval:
-  
 kyverno:
   serviceMonitor:
     # HonorLabels chooses the metrics labels on collisions with target labels

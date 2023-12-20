@@ -145,7 +145,7 @@ api:
 blockReports:
   enabled: false
   eventNamespace: default
-  results: 
+  results:
     maxPerReport: 200
     keepOnlyLatest: false
 
@@ -174,8 +174,8 @@ networkPolicy:
   enabled: false
   # Kubernetes API Server
   egress:
-  - to:
-    ports:
-    - protocol: TCP
-      port: 6443
+    - to:
+      ports:
+        - protocol: TCP
+          port: 6443
   ingress: []

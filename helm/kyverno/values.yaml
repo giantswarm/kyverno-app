@@ -19,7 +19,7 @@ crds:
       memory: 1024Mi
 
 image:
-  registry: docker.io
+  registry: gsoci.azurecr.io
 
 # VerticalPodAutoscaler settings for individual controllers
 verticalPodAutoscaler:
@@ -54,11 +54,12 @@ policyExceptions:
   # of the namespaces listed in allowedPolexNamespaces.
   enablePolexPolicy: true
   allowedPolexNamespaces:
-  - policy-exceptions
+    - policy-exceptions
   # For security reasons, we don't disclose the allowed namespaces when a polex is rejected.
   # The message shown to users can be customized to direct them to an exception process.
   polexPolicyMessage: >-
-    PolicyExceptions are not allowed to be created in the {{ request.namespace }} namespace.
+    PolicyExceptions are not allowed to be created in the {{ request.namespace }}
+    namespace.
     Please contact a cluster administrator for assistance.
   # Deploy a PolicyException for chart-operator (required for Giant Swarm clusters).
   enableChartOperatorPolex: true
@@ -113,7 +114,7 @@ kyverno:
     enableDefaultRegistryMutation: true
 
     # -- The registry hostname used for the image mutation.
-    defaultRegistry: docker.io
+    defaultRegistry: gsoci.azurecr.io
 
     # -- Defines the `namespaceSelector` in the webhook configurations.
     # Note that it takes a list of `namespaceSelector` and/or `objectSelector` in the JSON format, and only the first element
@@ -122,10 +123,10 @@ kyverno:
     webhooks:
       - namespaceSelector:
           matchExpressions:
-          - key: kubernetes.io/metadata.name
-            operator: NotIn
-            values:
-              - kube-system
+            - key: kubernetes.io/metadata.name
+              operator: NotIn
+              values:
+                - kube-system
 
   features:
     admissionReports:
@@ -180,11 +181,11 @@ kyverno:
       allowInsecure: false
       # -- Enable registry client helpers
       credentialHelpers:
-      - default
-      - google
-      - amazon
-      - azure
-      - github
+        - default
+        - google
+        - amazon
+        - azure
+        - github
     reports:
       # -- Reports chunk size
       chunkSize: 1000
@@ -205,7 +206,7 @@ kyverno:
 
       image:
         # -- (string) Image registry
-        registry: docker.io
+        registry: gsoci.azurecr.io
         # -- Image repository
         repository: giantswarm/docker-kubectl
         # -- Image tag
@@ -257,7 +258,7 @@ kyverno:
 
       image:
         # -- (string) Image registry
-        registry: docker.io
+        registry: gsoci.azurecr.io
         # -- Image repository
         repository: giantswarm/docker-kubectl
         # -- Image tag
@@ -419,7 +420,7 @@ kyverno:
 
       image:
         # -- Image registry
-        registry: docker.io
+        registry: gsoci.azurecr.io
         # -- Image repository
         repository: giantswarm/kyvernopre
 
@@ -455,7 +456,7 @@ kyverno:
 
       image:
         # -- Image registry
-        registry: docker.io
+        registry: gsoci.azurecr.io
         # -- Image repository
         repository: giantswarm/kyverno
         # -- Image pull policy
@@ -585,7 +586,7 @@ kyverno:
 
     image:
       # -- (string) Image registry
-      registry: docker.io
+      registry: gsoci.azurecr.io
       # If you want to manage the registry you should remove it from the repository
       # registry: docker.io
       # repository: kyverno/background-controller
@@ -772,7 +773,7 @@ kyverno:
 
     image:
       # -- Image registry
-      registry: docker.io
+      registry: gsoci.azurecr.io
       # -- Image repository
       repository: giantswarm/cleanup-controller
       # -- Image pull policy
@@ -963,7 +964,7 @@ kyverno:
 
     image:
       # -- Image registry
-      registry: docker.io
+      registry: gsoci.azurecr.io
       # -- Image repository
       repository: giantswarm/reports-controller
       # -- Image pull policy
@@ -1124,7 +1125,7 @@ policy-reporter:
   podLabels:
     app.kubernetes.io/component: policy-reporter
   image:
-    registry: docker.io
+    registry: gsoci.azurecr.io
     repository: giantswarm/policy-reporter
   resources:
     limits:
@@ -1141,7 +1142,7 @@ policy-reporter:
     podLabels:
       app.kubernetes.io/component: ui
     image:
-      registry: docker.io
+      registry: gsoci.azurecr.io
       repository: giantswarm/policy-reporter-ui
     plugins:
       kyverno: true
@@ -1162,7 +1163,7 @@ policy-reporter:
     podLabels:
       app.kubernetes.io/component: plugin
     image:
-      registry: docker.io
+      registry: gsoci.azurecr.io
       repository: giantswarm/policy-reporter-kyverno-plugin
     resources:
       limits:

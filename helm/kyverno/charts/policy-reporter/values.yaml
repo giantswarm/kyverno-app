@@ -92,10 +92,10 @@ networkPolicy:
   enabled: false
   # Kubernetes API Server
   egress:
-  - to:
-    ports:
-    - protocol: TCP
-      port: 6443
+    - to:
+      ports:
+        - protocol: TCP
+          port: 6443
   ingress: []
 
 ## Set to true to enable ingress record generation
