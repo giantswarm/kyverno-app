@@ -2,6 +2,8 @@
 global:
   podSecurityStandards:
     enforced: false
+  image:
+    registry: gsoci.azurecr.io
 
 # Create CiliumNetworkPolicy
 ciliumNetworkPolicy:
