@@ -21,7 +21,7 @@ crds:
       memory: 1024Mi
 
 image:
-  registry: docker.io
+  registry: gsoci.azurecr.io
 
 # VerticalPodAutoscaler settings for individual controllers
 verticalPodAutoscaler:
@@ -204,9 +204,9 @@ kyverno:
 
       image:
         # -- (string) Image registry
-        registry: docker.io
+        registry: gsoci.azurecr.io
         # -- Image repository
-        repository: giantswarm/docker-kubectl
+        repository: giantswarm/kubectl
         # -- Image tag
         # Defaults to `latest` if omitted
         tag: '1.28.1'
@@ -251,9 +251,9 @@ kyverno:
 
       image:
         # -- (string) Image registry
-        registry: docker.io
+        registry: gsoci.azurecr.io
         # -- Image repository
-        repository: giantswarm/docker-kubectl
+        repository: giantswarm/kubectl
         # -- Image tag
         # Defaults to `latest` if omitted
         tag: '1.28.1'
@@ -408,7 +408,7 @@ kyverno:
 
       image:
         # -- Image registry
-        registry: docker.io
+        registry: gsoci.azurecr.io
         # -- Image repository
         repository: giantswarm/kyvernopre
 
@@ -444,7 +444,7 @@ kyverno:
 
       image:
         # -- Image registry
-        registry: docker.io
+        registry: gsoci.azurecr.io
         # -- Image repository
         repository: giantswarm/kyverno
         # -- Image pull policy
@@ -574,10 +574,7 @@ kyverno:
 
     image:
       # -- (string) Image registry
-      registry: docker.io
-      # If you want to manage the registry you should remove it from the repository
-      # registry: docker.io
-      # repository: kyverno/background-controller
+      registry: gsoci.azurecr.io
       # -- Image repository
       repository: giantswarm/background-controller
       # -- Image pull policy
@@ -761,7 +758,7 @@ kyverno:
 
     image:
       # -- Image registry
-      registry: docker.io
+      registry: gsoci.azurecr.io
       # -- Image repository
       repository: giantswarm/cleanup-controller
       # -- Image pull policy
@@ -952,7 +949,7 @@ kyverno:
 
     image:
       # -- Image registry
-      registry: docker.io
+      registry: gsoci.azurecr.io
       # -- Image repository
       repository: giantswarm/reports-controller
       # -- Image pull policy
@@ -1108,10 +1105,17 @@ kyverno:
       # -- Logging verbosity
       verbosity: 2
 
+  policyReportsCleanup:
+    image:
+    # -- (string) Image registry
+    registry: gsoci.azurecr.io 
+    # -- Image repository
+    repository: giantswarm/kubectl
+
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
   image:
-    registry: docker.io
+    registry: gsoci.azurecr.io
     repository: giantswarm/policy-reporter
   resources:
     limits:
@@ -1126,7 +1130,7 @@ policy-reporter:
   ui:
     enabled: true
     image:
-      registry: docker.io
+      registry: gsoci.azurecr.io
       repository: giantswarm/policy-reporter-ui
     plugins:
       kyverno: true
@@ -1145,7 +1149,7 @@ policy-reporter:
     enabled: true
     annotations: {}
     image:
-      registry: docker.io
+      registry: gsoci.azurecr.io
       repository: giantswarm/policy-reporter-kyverno-plugin
     resources:
       limits:
