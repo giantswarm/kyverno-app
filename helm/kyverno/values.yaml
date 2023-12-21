@@ -22,6 +22,9 @@ crds:
 
 image:
   registry: gsoci.azurecr.io
+  # Tag for kubectl image
+  # giantswarm/kubectl
+  tag: 1.28.5
 
 # VerticalPodAutoscaler settings for individual controllers
 verticalPodAutoscaler:
@@ -1107,10 +1110,10 @@ kyverno:
 
   policyReportsCleanup:
     image:
-    # -- (string) Image registry
-    registry: gsoci.azurecr.io
-    # -- Image repository
-    repository: giantswarm/kubectl
+      # -- (string) Image registry
+      registry: gsoci.azurecr.io
+      # -- Image repository
+      repository: giantswarm/kubectl
 
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
