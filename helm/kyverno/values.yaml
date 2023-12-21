@@ -1108,7 +1108,7 @@ kyverno:
   policyReportsCleanup:
     image:
     # -- (string) Image registry
-    registry: gsoci.azurecr.io 
+    registry: gsoci.azurecr.io
     # -- Image repository
     repository: giantswarm/kubectl
 
