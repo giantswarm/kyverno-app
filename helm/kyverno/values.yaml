@@ -23,7 +23,7 @@ crds:
 image:
   registry: gsoci.azurecr.io
   # Tag for kubectl image
-  # giantswarm/kubectl
+  # repo: giantswarm/kubectl
   tag: 1.28.5
 
 # VerticalPodAutoscaler settings for individual controllers
@@ -212,7 +212,7 @@ kyverno:
         repository: giantswarm/kubectl
         # -- Image tag
         # Defaults to `latest` if omitted
-        tag: '1.28.1'
+        tag: '1.28.5'
         # -- (string) Image pull policy
         # Defaults to image.pullPolicy if omitted
         pullPolicy: IfNotPresent
@@ -259,7 +259,8 @@ kyverno:
         repository: giantswarm/kubectl
         # -- Image tag
         # Defaults to `latest` if omitted
-        tag: '1.28.1'
+        # repo: giantswarm/kubectl
+        tag: '1.28.5'
         # -- (string) Image pull policy
         # Defaults to image.pullPolicy if omitted
         pullPolicy: IfNotPresent
@@ -1115,6 +1116,13 @@ kyverno:
       # -- Image repository
       repository: giantswarm/kubectl
 
+  webhooksCleanup:
+    image:
+      # -- (string) Image registry
+      registry: gsoci.azurecr.io
+      # -- Image repository
+      repository: giantswarm/kubectl
+
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
   image:
@@ -1171,8 +1179,8 @@ policy-reporter:
     labels: {}
 
   monitoring:
-    enabled: false
-    namespace: monitoring
+    enabled: true
+    namespace: kyverno
 
   # Create a PSP and ClusterRoleBinding for PolicyReporter.
   psp:

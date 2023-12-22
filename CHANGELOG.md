@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Bump to upstream version v1.11.0.
+- Bump to upstream version v1.11.1.
 
 ## [0.16.1] - 2023-10-25
 
