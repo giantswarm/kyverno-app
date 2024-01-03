@@ -5,7 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: kyverno
     app.kubernetes.io/part-of: kyverno
-    app.kubernetes.io/version: 1.11.0
+    app.kubernetes.io/version: 1.11.2
   annotations:
     controller-gen.kubebuilder.io/version: v0.12.0
   name: admissionreports.kyverno.io
@@ -43,11 +43,9 @@ spec:
           type: integer
         - jsonPath: .metadata.labels['audit\.kyverno\.io/resource\.gvr']
           name: GVR
-          priority: 1
           type: string
         - jsonPath: .metadata.labels['audit\.kyverno\.io/resource\.name']
           name: REF
-          priority: 1
           type: string
         - jsonPath: .metadata.labels['audit\.kyverno\.io/report\.aggregate']
           name: AGGREGATE

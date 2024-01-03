@@ -5,7 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: kyverno
     app.kubernetes.io/part-of: kyverno
-    app.kubernetes.io/version: 1.11.0
+    app.kubernetes.io/version: 1.11.2
   annotations:
     controller-gen.kubebuilder.io/version: v0.12.0
   name: clusterpolicies.kyverno.io
@@ -1556,6 +1556,10 @@ spec:
                       preconditions:
                         description: 'Preconditions are used to determine if a policy rule should be applied by evaluating a set of conditions. The declaration can contain nested `any` or `all` statements. A direct list of conditions (without `any` or `all` statements is supported for backwards compatibility but will be deprecated in the next major release. See: https://kyverno.io/docs/writing-policies/preconditions/'
                         x-kubernetes-preserve-unknown-fields: true
+                      skipBackgroundRequests:
+                        default: true
+                        description: SkipBackgroundRequests bypasses admission requests that are sent by the background controller. The default value is set to "true", it must be set to "false" to apply generate and mutateExisting rules to those requests.
+                        type: boolean
                       validate:
                         description: Validation is used to validate matching resources.
                         properties:
@@ -2057,7 +2061,7 @@ spec:
                                                 type: object
                                               signatureAlgorithm:
                                                 default: sha256
-                                                description: Specify signature algorithm for public keys. Supported values are sha256 and sha512.
+                                                description: Specify signature algorithm for public keys. Supported values are sha224, sha256, sha384 and sha512.
                                                 type: string
                                             type: object
                                           repository:
@@ -2335,7 +2339,7 @@ spec:
                                                     type: object
                                                   signatureAlgorithm:
                                                     default: sha256
-                                                    description: Specify signature algorithm for public keys. Supported values are sha256 and sha512.
+                                                    description: Specify signature algorithm for public keys. Supported values are sha224, sha256, sha384 and sha512.
                                                     type: string
                                                 type: object
                                               repository:
@@ -2579,7 +2583,7 @@ spec:
                                               type: object
                                             signatureAlgorithm:
                                               default: sha256
-                                              description: Specify signature algorithm for public keys. Supported values are sha256 and sha512.
+                                              description: Specify signature algorithm for public keys. Supported values are sha224, sha256, sha384 and sha512.
                                               type: string
                                           type: object
                                         repository:
@@ -4189,6 +4193,10 @@ spec:
                           preconditions:
                             description: 'Preconditions are used to determine if a policy rule should be applied by evaluating a set of conditions. The declaration can contain nested `any` or `all` statements. A direct list of conditions (without `any` or `all` statements is supported for backwards compatibility but will be deprecated in the next major release. See: https://kyverno.io/docs/writing-policies/preconditions/'
                             x-kubernetes-preserve-unknown-fields: true
+                          skipBackgroundRequests:
+                            default: true
+                            description: SkipBackgroundRequests bypasses admission requests that are sent by the background controller. The default value is set to "true", it must be set to "false" to apply generate and mutateExisting rules to those requests.
+                            type: boolean
                           validate:
                             description: Validation is used to validate matching resources.
                             properties:
@@ -4690,7 +4698,7 @@ spec:
                                                     type: object
                                                   signatureAlgorithm:
                                                     default: sha256
-                                                    description: Specify signature algorithm for public keys. Supported values are sha256 and sha512.
+                                                    description: Specify signature algorithm for public keys. Supported values are sha224, sha256, sha384 and sha512.
                                                     type: string
                                                 type: object
                                               repository:
@@ -4968,7 +4976,7 @@ spec:
                                                         type: object
                                                       signatureAlgorithm:
                                                         default: sha256
-                                                        description: Specify signature algorithm for public keys. Supported values are sha256 and sha512.
+                                                        description: Specify signature algorithm for public keys. Supported values are sha224, sha256, sha384 and sha512.
                                                         type: string
                                                     type: object
                                                   repository:
@@ -5212,7 +5220,7 @@ spec:
                                                   type: object
                                                 signatureAlgorithm:
                                                   default: sha256
-                                                  description: Specify signature algorithm for public keys. Supported values are sha256 and sha512.
+                                                  description: Specify signature algorithm for public keys. Supported values are sha224, sha256, sha384 and sha512.
                                                   type: string
                                               type: object
                                             repository:
@@ -6723,6 +6731,10 @@ spec:
                               type: object
                             type: array
                         type: object
+                      skipBackgroundRequests:
+                        default: true
+                        description: SkipBackgroundRequests bypasses admission requests that are sent by the background controller. The default value is set to "true", it must be set to "false" to apply generate and mutateExisting rules to those requests.
+                        type: boolean
                       validate:
                         description: Validation is used to validate matching resources.
                         properties:
@@ -7291,7 +7303,7 @@ spec:
                                                 type: object
                                               signatureAlgorithm:
                                                 default: sha256
-                                                description: Specify signature algorithm for public keys. Supported values are sha256 and sha512.
+                                                description: Specify signature algorithm for public keys. Supported values are sha224, sha256, sha384 and sha512.
                                                 type: string
                                             type: object
                                           repository:
@@ -7559,7 +7571,7 @@ spec:
                                                     type: object
                                                   signatureAlgorithm:
                                                     default: sha256
-                                                    description: Specify signature algorithm for public keys. Supported values are sha256 and sha512.
+                                                    description: Specify signature algorithm for public keys. Supported values are sha224, sha256, sha384 and sha512.
                                                     type: string
                                                 type: object
                                               repository:
@@ -7803,7 +7815,7 @@ spec:
                                               type: object
                                             signatureAlgorithm:
                                               default: sha256
-                                              description: Specify signature algorithm for public keys. Supported values are sha256 and sha512.
+                                              description: Specify signature algorithm for public keys. Supported values are sha224, sha256, sha384 and sha512.
                                               type: string
                                           type: object
                                         repository:
@@ -9398,6 +9410,10 @@ spec:
                           preconditions:
                             description: 'Preconditions are used to determine if a policy rule should be applied by evaluating a set of conditions. The declaration can contain nested `any` or `all` statements. A direct list of conditions (without `any` or `all` statements is supported for backwards compatibility but will be deprecated in the next major release. See: https://kyverno.io/docs/writing-policies/preconditions/'
                             x-kubernetes-preserve-unknown-fields: true
+                          skipBackgroundRequests:
+                            default: true
+                            description: SkipBackgroundRequests bypasses admission requests that are sent by the background controller. The default value is set to "true", it must be set to "false" to apply generate and mutateExisting rules to those requests.
+                            type: boolean
                           validate:
                             description: Validation is used to validate matching resources.
                             properties:
@@ -9899,7 +9915,7 @@ spec:
                                                     type: object
                                                   signatureAlgorithm:
                                                     default: sha256
-                                                    description: Specify signature algorithm for public keys. Supported values are sha256 and sha512.
+                                                    description: Specify signature algorithm for public keys. Supported values are sha224, sha256, sha384 and sha512.
                                                     type: string
                                                 type: object
                                               repository:
@@ -10177,7 +10193,7 @@ spec:
                                                         type: object
                                                       signatureAlgorithm:
                                                         default: sha256
-                                                        description: Specify signature algorithm for public keys. Supported values are sha256 and sha512.
+                                                        description: Specify signature algorithm for public keys. Supported values are sha224, sha256, sha384 and sha512.
                                                         type: string
                                                     type: object
                                                   repository:
@@ -10421,7 +10437,7 @@ spec:
                                                   type: object
                                                 signatureAlgorithm:
                                                   default: sha256
-                                                  description: Specify signature algorithm for public keys. Supported values are sha256 and sha512.
+                                                  description: Specify signature algorithm for public keys. Supported values are sha224, sha256, sha384 and sha512.
                                                   type: string
                                               type: object
                                             repository:
