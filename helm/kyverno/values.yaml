@@ -2,6 +2,8 @@
 global:
   podSecurityStandards:
     enforced: false
+  image:
+    registry: gsoci.azurecr.io
 
 # Create CiliumNetworkPolicy
 ciliumNetworkPolicy:
@@ -19,7 +21,10 @@ crds:
       memory: 1024Mi
 
 image:
-  registry: docker.io
+  registry: gsoci.azurecr.io
+  # Tag for kubectl image
+  # repo: giantswarm/kubectl
+  tag: 1.28.5
 
 # VerticalPodAutoscaler settings for individual controllers
 verticalPodAutoscaler:
@@ -205,12 +210,12 @@ kyverno:
 
       image:
         # -- (string) Image registry
-        registry: docker.io
+        registry: gsoci.azurecr.io
         # -- Image repository
-        repository: giantswarm/docker-kubectl
+        repository: giantswarm/kubectl
         # -- Image tag
         # Defaults to `latest` if omitted
-        tag: '1.28.4'
+        tag: '1.28.5'
         # -- (string) Image pull policy
         # Defaults to image.pullPolicy if omitted
         pullPolicy: IfNotPresent
@@ -257,12 +262,13 @@ kyverno:
 
       image:
         # -- (string) Image registry
-        registry: docker.io
+        registry: gsoci.azurecr.io
         # -- Image repository
-        repository: giantswarm/docker-kubectl
+        repository: giantswarm/kubectl
         # -- Image tag
         # Defaults to `latest` if omitted
-        tag: '1.28.4'
+        # repo: giantswarm/kubectl
+        tag: '1.28.5'
         # -- (string) Image pull policy
         # Defaults to image.pullPolicy if omitted
         pullPolicy: IfNotPresent
@@ -419,7 +425,7 @@ kyverno:
 
       image:
         # -- Image registry
-        registry: docker.io
+        registry: gsoci.azurecr.io
         # -- Image repository
         repository: giantswarm/kyvernopre
 
@@ -455,7 +461,7 @@ kyverno:
 
       image:
         # -- Image registry
-        registry: docker.io
+        registry: gsoci.azurecr.io
         # -- Image repository
         repository: giantswarm/kyverno
         # -- Image pull policy
@@ -585,10 +591,7 @@ kyverno:
 
     image:
       # -- (string) Image registry
-      registry: docker.io
-      # If you want to manage the registry you should remove it from the repository
-      # registry: docker.io
-      # repository: kyverno/background-controller
+      registry: gsoci.azurecr.io
       # -- Image repository
       repository: giantswarm/background-controller
       # -- Image pull policy
@@ -772,7 +775,7 @@ kyverno:
 
     image:
       # -- Image registry
-      registry: docker.io
+      registry: gsoci.azurecr.io
       # -- Image repository
       repository: giantswarm/cleanup-controller
       # -- Image pull policy
@@ -963,7 +966,7 @@ kyverno:
 
     image:
       # -- Image registry
-      registry: docker.io
+      registry: gsoci.azurecr.io
       # -- Image repository
       repository: giantswarm/reports-controller
       # -- Image pull policy
@@ -1119,12 +1122,26 @@ kyverno:
       # -- Logging verbosity
       verbosity: 2
 
+  policyReportsCleanup:
+    image:
+      # -- (string) Image registry
+      registry: gsoci.azurecr.io
+      # -- Image repository
+      repository: giantswarm/kubectl
+
+  webhooksCleanup:
+    image:
+      # -- (string) Image registry
+      registry: gsoci.azurecr.io
+      # -- Image repository
+      repository: giantswarm/kubectl
+
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
   podLabels:
     app.kubernetes.io/component: policy-reporter
   image:
-    registry: docker.io
+    registry: gsoci.azurecr.io
     repository: giantswarm/policy-reporter
   resources:
     limits:
@@ -1141,7 +1158,7 @@ policy-reporter:
     podLabels:
       app.kubernetes.io/component: ui
     image:
-      registry: docker.io
+      registry: gsoci.azurecr.io
       repository: giantswarm/policy-reporter-ui
     plugins:
       kyverno: true
@@ -1162,7 +1179,7 @@ policy-reporter:
     podLabels:
       app.kubernetes.io/component: plugin
     image:
-      registry: docker.io
+      registry: gsoci.azurecr.io
       repository: giantswarm/policy-reporter-kyverno-plugin
     resources:
       limits:
@@ -1181,8 +1198,8 @@ policy-reporter:
     labels: {}
 
   monitoring:
-    enabled: false
-    namespace: monitoring
+    enabled: true
+    namespace: kyverno
 
   # Create a PSP and ClusterRoleBinding for PolicyReporter.
   psp:

@@ -2,13 +2,15 @@ image:
   registry: ghcr.io
   repository: kyverno/policy-reporter-kyverno-plugin
   pullPolicy: IfNotPresent
-  tag: 1.5.1
+  tag: 1.6.1
 
 imagePullSecrets: []
 
 priorityClassName: ""
 
 replicaCount: 1
+
+revisionHistoryLimit: 10
 
 deploymentStrategy: {}
   # rollingUpdate:
@@ -67,6 +69,9 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+podSecurityContext:
+  runAsUser: 1234
+  runAsGroup: 1234
 
 securityContext:
   runAsUser: 1234
@@ -140,12 +145,12 @@ logging:
 api:
   logging: false # enable debug API access logging, sets logLevel to debug
 
-# create PolicyReports for enforce policies, 
+# create PolicyReports for enforce policies,
 # based on Events created by Kyverno (>= v1.7.0)
 blockReports:
   enabled: false
   eventNamespace: default
-  results: 
+  results:
     maxPerReport: 200
     keepOnlyLatest: false
 
@@ -179,3 +184,25 @@ networkPolicy:
     - protocol: TCP
       port: 6443
   ingress: []
+
+# Should be set in the parent chart only
+global:
+  # available plugins
+  plugins:
+    # enable kyverno for Policy Reporter UI and monitoring
+    kyverno: false
+  # overwrite the fullname of all resources including subcharts
+  fullnameOverride: ""
+  # configure the namespace of all resources including subcharts
+  namespace: ""
+  # additional labels added on each resource
+  labels: {}
+  # basicAuth for APIs and metrics
+  basicAuth:
+    # HTTP BasicAuth username
+    username: ""
+    # HTTP BasicAuth password
+    password: ""
+    # read credentials from secret
+    secretRef: ""
+
