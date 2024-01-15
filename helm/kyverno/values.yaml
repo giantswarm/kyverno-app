@@ -87,6 +87,9 @@ policyExceptions:
   # Deploy a PolicyException for Azure Cloud Controller Manager (required for Giant Swarm clusters).
   enableAzureCloudControllerManagerPolex: true
 
+  # Deploy a PolicyException for Azure Cloud Node Manager (required for Giant Swarm clusters).
+  enableAzureCloudNodeManagerPolex: true
+
 # Upgrade job for Kyverno < 1.10.0 upgrades.
 upgradeJob:
   enabled: true
@@ -247,6 +250,11 @@ kyverno:
         seccompProfile:
           type: RuntimeDefault
 
+      # -- Labels for the CleanupJob
+      podLabels:
+        app.kubernetes.io/component: cleanup-jobs
+        app.kubernetes.io/instance: kyverno
+
     clusterAdmissionReports:
 
       # -- Enable cleanup cronjob
@@ -295,6 +303,11 @@ kyverno:
         seccompProfile:
           type: RuntimeDefault
 
+      # -- Labels for the CleanupJob
+      podLabels:
+        app.kubernetes.io/component: cleanup-jobs
+        app.kubernetes.io/instance: kyverno
+
   # Admission controller configuration
   admissionController:
 
@@ -333,8 +346,8 @@ kyverno:
     replicas: 3
 
     # -- Additional labels to add to each pod
-    podLabels: {}
-      # example.com/label: foo
+    podLabels:
+      app.kubernetes.io/name: kyverno
 
     # -- Additional annotations to add to each pod
     podAnnotations: {}
@@ -1125,6 +1138,8 @@ kyverno:
 
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
+  podLabels:
+    app.kubernetes.io/component: policy-reporter
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/policy-reporter
@@ -1140,6 +1155,8 @@ policy-reporter:
 
   ui:
     enabled: true
+    podLabels:
+      app.kubernetes.io/component: ui
     image:
       registry: gsoci.azurecr.io
       repository: giantswarm/policy-reporter-ui
@@ -1159,6 +1176,8 @@ policy-reporter:
   kyvernoPlugin:
     enabled: true
     annotations: {}
+    podLabels:
+      app.kubernetes.io/component: plugin
     image:
       registry: gsoci.azurecr.io
       repository: giantswarm/policy-reporter-kyverno-plugin

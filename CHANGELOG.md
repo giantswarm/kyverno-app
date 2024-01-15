@@ -11,6 +11,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Bump to upstream version v1.11.2.
 
+## [0.16.4] - 2023-12-06
+
+### Added
+
+- Add missing `app.kubernetes.io/` labels to all the pods.
+- Add `CiliumNetworkPolicy` for individual controllers:
+  - `kyverno-admission-controller`
+  - `kyverno-background-controller`
+  - `kyverno-reports-controller`
+  - `kyverno-cleanup-controller`
+  - `kyverno-cleanup-jobs`
+  - `kyverno-plugin`
+  - `kyverno-policy-reporter`
+
+## [0.16.3] - 2023-11-29
+
+### Added
+
+- Added Policy Exceptions for `azure-cloud-node-manager`.
+
+## [0.16.2] - 2023-11-16
+
+### Changed
+
+- Change the `kubectl apply` command of the `crd-install` job to use the `--force-conflicts` flag.
+
 ## [0.16.1] - 2023-10-25
 
 ### Changed
@@ -372,7 +398,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.16.1...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.16.4...HEAD
+[0.16.4]: https://github.com/giantswarm/kyverno-app/compare/v0.16.3...v0.16.4
+[0.16.3]: https://github.com/giantswarm/kyverno-app/compare/v0.16.2...v0.16.3
+[0.16.2]: https://github.com/giantswarm/kyverno-app/compare/v0.16.1...v0.16.2
 [0.16.1]: https://github.com/giantswarm/kyverno-app/compare/v0.16.0...v0.16.1
 [0.16.0]: https://github.com/giantswarm/kyverno-app/compare/v0.15.2...v0.16.0
 [0.15.2]: https://github.com/giantswarm/kyverno-app/compare/v0.15.1...v0.15.2
