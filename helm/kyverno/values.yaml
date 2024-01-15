@@ -199,7 +199,6 @@ kyverno:
     giantswarm.io/monitoring_basic_sli: "true"
     application.giantswarm.io/team: "shield"
 
-
   # Cleanup cronjobs to prevent internal resources from stacking up in the cluster
   cleanupJobs:
 
