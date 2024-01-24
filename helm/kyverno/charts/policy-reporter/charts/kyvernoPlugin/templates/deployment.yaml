@@ -3,10 +3,10 @@ kind: Deployment
 metadata:
   name: {{ include "kyvernoplugin.fullname" . }}
   namespace: {{ include "kyvernoplugin.namespace" . }}
+  {{- if .Values.annotations }}
   annotations:
-    {{- if .Values.annotations }}
-      {{- toYaml .Values.annotations | nindent 4 }}
-    {{- end }}
+    {{- toYaml .Values.annotations | nindent 4 }}
+  {{- end }}
   labels:
     {{- include "kyvernoplugin.labels" . | nindent 4 }}
 spec:
@@ -102,6 +102,9 @@ spec:
                 name: {{ .Values.global.basicAuth.secretRef }}
                 key: password
                 optional: false
+          {{- end }}
+          {{- with .Values.envVars }}
+          {{- . | toYaml | trim | nindent 10 }}
           {{- end }}
       volumes:
       - name: config-file
