@@ -7,7 +7,7 @@ global:
 
 # Create CiliumNetworkPolicy
 ciliumNetworkPolicy:
-  enabled: false
+  enabled: true
 
 # We install CRDs through a Job with the helm specific crd folder.
 crds:
