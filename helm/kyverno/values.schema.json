@@ -91,6 +91,9 @@
                                 }
                             }
                         },
+                        "apiPriorityAndFairness": {
+                            "type": "boolean"
+                        },
                         "container": {
                             "type": "object",
                             "properties": {
@@ -1555,6 +1558,9 @@
                                     "type": "boolean"
                                 }
                             }
+                        },
+                        "apiPriorityAndFairness": {
+                            "type": "boolean"
                         },
                         "dnsPolicy": {
                             "type": "string"

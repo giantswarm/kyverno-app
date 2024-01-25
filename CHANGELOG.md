@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Enable CiliumNetworkPolicies by default.
+- Enable API Priority and Fairness.
+
 ## [0.17.1] - 2024-01-25
 
 ### Changed
