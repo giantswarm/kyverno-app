@@ -107,6 +107,13 @@ spec:
             protocol: TCP
           - port: "6443"
             protocol: TCP
+  ingress:
+    - fromEntities:
+        - cluster
+      toPorts:
+      - ports:
+        - port: "8080"
+          protocol: TCP
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
@@ -127,6 +134,13 @@ spec:
             protocol: TCP
           - port: "6443"
             protocol: TCP
+  ingress:
+    - fromEntities:
+        - cluster
+      toPorts:
+      - ports:
+        - port: "8080"
+          protocol: TCP
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
@@ -148,14 +162,6 @@ spec:
           - port: "6443"
             protocol: TCP
   ingress:
-    - fromEntities:
-        - kube-apiserver
-      toPorts:
-        - ports:
-          - port: "443"
-            protocol: TCP
-          - port: "6443"
-            protocol: TCP
     - fromEntities:
         - cluster
       toPorts:
@@ -184,14 +190,6 @@ spec:
             protocol: TCP
   ingress:
     - fromEntities:
-        - kube-apiserver
-      toPorts:
-        - ports:
-          - port: "443"
-            protocol: TCP
-          - port: "6443"
-            protocol: TCP
-    - fromEntities:
         - cluster
       toPorts:
       - ports:
@@ -218,14 +216,6 @@ spec:
           - port: "6443"
             protocol: TCP
   ingress:
-    - fromEntities:
-        - kube-apiserver
-      toPorts:
-        - ports:
-          - port: "443"
-            protocol: TCP
-          - port: "6443"
-            protocol: TCP
     - fromEntities:
         - cluster
       toPorts:
