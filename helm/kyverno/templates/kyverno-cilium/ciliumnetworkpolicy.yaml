@@ -222,4 +222,23 @@ spec:
       - ports:
         - port: "8000"
           protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-kyverno-policy-reporter-talk-to-kyverno-ui
+  namespace: {{ include "kyverno-stack.namespace" . }}
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/component: ui
+      app.kubernetes.io/instance: kyverno
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/component: policy-reporter
+      toPorts:
+      - ports:
+        - port: "8080"
+          protocol: TCP
 {{- end }}
