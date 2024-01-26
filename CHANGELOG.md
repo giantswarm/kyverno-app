@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Allow `kyverno-policy-reporter` to talk to `kyverno-ui`.
+
 ## [0.17.2] - 2024-01-25
 
 ### Changed
