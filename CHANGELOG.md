@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.17.3] - 2024-01-26
+
 ### Changed
 
 - Allow `kyverno-policy-reporter` to talk to `kyverno-ui`.
@@ -418,7 +420,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.17.2...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.17.3...HEAD
+[0.17.3]: https://github.com/giantswarm/kyverno-app/compare/v0.17.2...v0.17.3
 [0.17.2]: https://github.com/giantswarm/kyverno-app/compare/v0.17.1...v0.17.2
 [0.17.1]: https://github.com/giantswarm/kyverno-app/compare/v0.17.0...v0.17.1
 [0.17.0]: https://github.com/giantswarm/kyverno-app/compare/v0.16.4...v0.17.0
