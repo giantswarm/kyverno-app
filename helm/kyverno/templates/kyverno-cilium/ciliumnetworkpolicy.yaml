@@ -236,7 +236,8 @@ spec:
   ingress:
     - fromEndpoints:
         - matchLabels:
-            app.kubernetes.io/component: policy-reporter
+            app.kubernetes.io/component: reporting
+            app.kubernetes.io/instance: kyverno
       toPorts:
       - ports:
         - port: "8080"
