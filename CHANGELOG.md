@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Fix label selector `kyverno-policy-reporter` to talk to `kyverno-ui` rule.
+- Add `policy-exceptions` namespace if it doesn't exist.
 
 ## [0.17.3] - 2024-01-26
 
