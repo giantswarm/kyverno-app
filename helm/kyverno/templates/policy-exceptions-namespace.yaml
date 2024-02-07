@@ -6,5 +6,5 @@ metadata:
   annotations:
     "helm.sh/resource-policy": keep
   labels:
-    {{- include "labels.common" . | nindent 4 }}
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
 {{- end }}
