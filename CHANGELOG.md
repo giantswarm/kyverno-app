@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add `CiliumNetworkPolicy` for Kyverno hook jobs.
+
 ## [0.17.4] - 2024-02-07
 
 ### Changed
