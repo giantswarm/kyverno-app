@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Add missing CiliumNetworkPolicies for pre-delete and post-ugprade hooks.
+
 ## [0.17.4] - 2024-02-07
 
 ### Changed
