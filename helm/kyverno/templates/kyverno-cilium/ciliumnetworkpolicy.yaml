@@ -242,4 +242,35 @@ spec:
       - ports:
         - port: "8080"
           protocol: TCP
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-kyverno-hook-jobs-talk-to-apiserver
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+  namespace: {{ include "kyverno-stack.namespace" . }}
+spec:
+  endpointSelector:
+    matchLabels:
+      # This would match only the pre-delete and post-upgrade jobs
+      {{- include "kyverno.hook.labels" . | nindent 6 }}
+  egress:
+    - toEntities:
+        - kube-apiserver
+      toPorts:
+        - ports:
+          - port: "443"
+            protocol: TCP
+          - port: "6443"
+            protocol: TCP
+  ingress:
+    - fromEntities:
+        - kube-apiserver
+      toPorts:
+        - ports:
+          - port: "443"
+            protocol: TCP
+          - port: "6443"
+            protocol: TCP
 {{- end }}
