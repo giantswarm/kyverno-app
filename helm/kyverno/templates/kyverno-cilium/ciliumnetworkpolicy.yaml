@@ -252,7 +252,8 @@ metadata:
 spec:
   endpointSelector:
     matchLabels:
-      {{- include "kyverno.hooks.labels" . | nindent 6 }}
+      app.kubernetes.io/component: hooks
+      app.kubernetes.io/instance: kyverno
   egress:
     - toEntities:
       - kube-apiserver
