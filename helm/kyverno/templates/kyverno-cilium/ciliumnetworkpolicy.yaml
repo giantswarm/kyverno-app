@@ -253,8 +253,8 @@ metadata:
 spec:
   endpointSelector:
     matchLabels:
-      # This would match only the pre-delete and post-upgrade jobs
-      {{- include "kyverno.hook.labels" . | nindent 6 }}
+      app.kubernetes.io/component: hooks
+      app.kubernetes.io/instance: kyverno
   egress:
     - toEntities:
         - kube-apiserver
