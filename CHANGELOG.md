@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Add missing ingress to Cleanup Controller CiliumNetworkPolicy.
+
 ## [0.17.5] - 2024-02-08
 
 ### Fixed
