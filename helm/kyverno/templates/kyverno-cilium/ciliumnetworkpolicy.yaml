@@ -107,6 +107,13 @@ spec:
             protocol: TCP
           - port: "6443"
             protocol: TCP
+  ingress:
+    - fromEntities:
+        - cluster
+      toPorts:
+      - ports:
+        - port: "8080"
+          protocol: TCP
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
@@ -127,6 +134,13 @@ spec:
             protocol: TCP
           - port: "6443"
             protocol: TCP
+  ingress:
+    - fromEntities:
+        - cluster
+      toPorts:
+      - ports:
+        - port: "8080"
+          protocol: TCP
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
@@ -148,14 +162,6 @@ spec:
           - port: "6443"
             protocol: TCP
   ingress:
-    - fromEntities:
-        - kube-apiserver
-      toPorts:
-        - ports:
-          - port: "443"
-            protocol: TCP
-          - port: "6443"
-            protocol: TCP
     - fromEntities:
         - cluster
       toPorts:
@@ -184,14 +190,6 @@ spec:
             protocol: TCP
   ingress:
     - fromEntities:
-        - kube-apiserver
-      toPorts:
-        - ports:
-          - port: "443"
-            protocol: TCP
-          - port: "6443"
-            protocol: TCP
-    - fromEntities:
         - cluster
       toPorts:
       - ports:
@@ -219,6 +217,46 @@ spec:
             protocol: TCP
   ingress:
     - fromEntities:
+        - cluster
+      toPorts:
+      - ports:
+        - port: "8000"
+          protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-kyverno-policy-reporter-talk-to-kyverno-ui
+  namespace: {{ include "kyverno-stack.namespace" . }}
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/component: ui
+      app.kubernetes.io/instance: kyverno
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/component: reporting
+            app.kubernetes.io/instance: kyverno
+      toPorts:
+      - ports:
+        - port: "8080"
+          protocol: TCP
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-kyverno-hook-jobs-talk-to-apiserver
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+  namespace: {{ include "kyverno-stack.namespace" . }}
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/component: hooks
+      app.kubernetes.io/instance: kyverno
+  egress:
+    - toEntities:
         - kube-apiserver
       toPorts:
         - ports:
@@ -226,10 +264,13 @@ spec:
             protocol: TCP
           - port: "6443"
             protocol: TCP
+  ingress:
     - fromEntities:
-        - cluster
+        - kube-apiserver
       toPorts:
-      - ports:
-        - port: "8000"
-          protocol: TCP
+        - ports:
+          - port: "443"
+            protocol: TCP
+          - port: "6443"
+            protocol: TCP
 {{- end }}

@@ -7,7 +7,7 @@ global:
 
 # Create CiliumNetworkPolicy
 ciliumNetworkPolicy:
-  enabled: false
+  enabled: true
 
 # We install CRDs through a Job with the helm specific crd folder.
 crds:
@@ -363,6 +363,11 @@ kyverno:
 
     # -- Optional priority class
     priorityClassName: 'giantswarm-critical'
+
+    # -- Change `apiPriorityAndFairness` to `true` if you want to insulate the API calls made by Kyverno admission controller activities.
+    # This will help ensure Kyverno stability in busy clusters.
+    # Ref: https://kubernetes.io/docs/concepts/cluster-administration/flow-control/
+    apiPriorityAndFairness: true
 
     # -- Node labels for pod assignment
     nodeSelector: {}
@@ -989,6 +994,11 @@ kyverno:
 
     # -- Optional priority class
     priorityClassName: 'giantswarm-critical'
+
+    # -- Change `apiPriorityAndFairness` to `true` if you want to insulate the API calls made by Kyverno reports controller activities.
+    # This will help ensure Kyverno reports stability in busy clusters.
+    # Ref: https://kubernetes.io/docs/concepts/cluster-administration/flow-control/
+    apiPriorityAndFairness: true
 
     # -- Change `hostNetwork` to `true` when you want the pod to share its host's network namespace.
     # Useful for situations like when you end up dealing with a custom CNI over Amazon EKS.
