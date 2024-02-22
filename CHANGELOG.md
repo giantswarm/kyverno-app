@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.17.6] - 2024-02-22
+
 ### Fixed
 
 - Add missing ingress to Cleanup Controller CiliumNetworkPolicy.
@@ -437,7 +439,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.17.5...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.17.6...HEAD
+[0.17.6]: https://github.com/giantswarm/kyverno-app/compare/v0.17.5...v0.17.6
 [0.17.5]: https://github.com/giantswarm/kyverno-app/compare/v0.17.4...v0.17.5
 [0.17.4]: https://github.com/giantswarm/kyverno-app/compare/v0.17.3...v0.17.4
 [0.17.3]: https://github.com/giantswarm/kyverno-app/compare/v0.17.2...v0.17.3
