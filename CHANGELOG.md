@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Disable v1.10 upgrade jobs. They are not needed when migrating from v1.10 to v1.11+.
+
 ## [0.17.6] - 2024-02-22
 
 ### Fixed

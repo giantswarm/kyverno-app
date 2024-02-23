@@ -92,13 +92,13 @@ policyExceptions:
 
 # Upgrade job for Kyverno < 1.10.0 upgrades.
 upgradeJob:
-  enabled: true
+  enabled: false
 
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
 kyverno:
   # Enable upgrade from v2 to v3 chart
   upgrade:
-    fromV2: true
+    fromV2: false
 
   # Create a PSP and ClusterRoleBinding for Kyverno.
   psp:
