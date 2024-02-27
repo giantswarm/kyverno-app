@@ -411,7 +411,7 @@ kyverno:
     podDisruptionBudget:
       # -- Configures the minimum available pods for disruptions.
       # Cannot be used if `maxUnavailable` is set.
-      minAvailable: 1
+      minAvailable: 2
       # -- Configures the maximum unavailable pods for disruptions.
       # Cannot be used if `minAvailable` is set.
       # maxUnavailable:
