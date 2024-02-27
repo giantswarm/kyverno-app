@@ -214,7 +214,7 @@ kyverno:
         repository: giantswarm/kubectl
         # -- Image tag
         # Defaults to `latest` if omitted
-        tag: '1.28.5'
+        tag: '1.29.2'
         # -- (string) Image pull policy
         # Defaults to image.pullPolicy if omitted
         pullPolicy: IfNotPresent
@@ -267,7 +267,7 @@ kyverno:
         # -- Image tag
         # Defaults to `latest` if omitted
         # repo: giantswarm/kubectl
-        tag: '1.28.5'
+        tag: '1.29.2'
         # -- (string) Image pull policy
         # Defaults to image.pullPolicy if omitted
         pullPolicy: IfNotPresent
