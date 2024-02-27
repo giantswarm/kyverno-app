@@ -23,8 +23,10 @@ crds:
 image:
   registry: gsoci.azurecr.io
   # Tag for kubectl image
-  # repo: giantswarm/kubectl
-  tag: 1.28.5
+  repository: giantswarm/kubectl
+  # -- Image tag
+  # Defaults to `latest` if omitted
+  tag: '1.29.2'
 
 # VerticalPodAutoscaler settings for individual controllers
 verticalPodAutoscaler:
@@ -1137,6 +1139,9 @@ kyverno:
       registry: gsoci.azurecr.io
       # -- Image repository
       repository: giantswarm/kubectl
+      # -- Image tag
+      # Defaults to `latest` if omitted
+      tag: '1.29.2'
 
   webhooksCleanup:
     image:
@@ -1144,6 +1149,9 @@ kyverno:
       registry: gsoci.azurecr.io
       # -- Image repository
       repository: giantswarm/kubectl
+      # -- Image tag
+      # Defaults to `latest` if omitted
+      tag: '1.29.2'
 
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
