@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.17.7] - 2024-02-28
+
 ### Changed
 
 - Disable v1.10 upgrade jobs. They are not needed when migrating from v1.10 to v1.11+.
@@ -443,7 +445,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.17.6...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.17.7...HEAD
+[0.17.7]: https://github.com/giantswarm/kyverno-app/compare/v0.17.6...v0.17.7
 [0.17.6]: https://github.com/giantswarm/kyverno-app/compare/v0.17.5...v0.17.6
 [0.17.5]: https://github.com/giantswarm/kyverno-app/compare/v0.17.4...v0.17.5
 [0.17.4]: https://github.com/giantswarm/kyverno-app/compare/v0.17.3...v0.17.4
