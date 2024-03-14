@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Don't push to vsphere-app-collection, cloud-director-app-collection and cloud-director-app-collection. We started to consume kyverno-app from security-bundle.
+- Don't push to vsphere-app-collection, capz-app-collection, capa-app-collection or cloud-director-app-collection. We started to consume kyverno-app from security-bundle.
 
 ## [0.17.7] - 2024-02-28
 
