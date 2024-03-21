@@ -8,6 +8,23 @@ global:
 # Create CiliumNetworkPolicy
 ciliumNetworkPolicy:
   enabled: true
+  admissionControllerExtraEgress:
+    enabled: true
+    dnsSelector:
+      - toEndpoints:
+        - matchLabels:
+            "k8s:io.kubernetes.pod.namespace": kube-system
+            "k8s:k8s-app": coredns
+        toPorts:
+        - ports:
+            - port: "53"
+              protocol: ANY
+          rules:
+            dns:
+              - matchPattern: "*"
+    fqdnsRules:
+      - matchName: "github.com"
+      - matchExpressions: "*.k8s.io"
 
 # We install CRDs through a Job with the helm specific crd folder.
 crds:

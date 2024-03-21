@@ -5,6 +5,90 @@
         "ciliumNetworkPolicy": {
             "type": "object",
             "properties": {
+                "admissionControllerExtraEgress": {
+                    "type": "object",
+                    "properties": {
+                        "dnsSelector": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "toEndpoints": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "matchLabels": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "k8s:io.kubernetes.pod.namespace": {
+                                                            "type": "string"
+                                                        },
+                                                        "k8s:k8s-app": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "toPorts": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "ports": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "port": {
+                                                                "type": "string"
+                                                            },
+                                                            "protocol": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "rules": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "dns": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "matchPattern": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "fqdnsRules": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "matchName": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "enabled": {
                     "type": "boolean"
                 }
@@ -70,6 +154,9 @@
             "type": "object",
             "properties": {
                 "registry": {
+                    "type": "string"
+                },
+                "repository": {
                     "type": "string"
                 },
                 "tag": {
@@ -1535,6 +1622,9 @@
                                 },
                                 "repository": {
                                     "type": "string"
+                                },
+                                "tag": {
+                                    "type": "string"
                                 }
                             }
                         }
@@ -1871,6 +1961,9 @@
                                     "type": "string"
                                 },
                                 "repository": {
+                                    "type": "string"
+                                },
+                                "tag": {
                                     "type": "string"
                                 }
                             }
