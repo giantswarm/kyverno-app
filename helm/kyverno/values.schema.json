@@ -9,81 +9,36 @@
                     "type": "object",
                     "properties": {
                         "dnsSelector": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "toEndpoints": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "object",
-                                            "properties": {
-                                                "matchLabels": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "k8s:io.kubernetes.pod.namespace": {
-                                                            "type": "string"
-                                                        },
-                                                        "k8s:k8s-app": {
-                                                            "type": "string"
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    },
-                                    "toPorts": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "object",
-                                            "properties": {
-                                                "ports": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "port": {
-                                                                "type": "string"
-                                                            },
-                                                            "protocol": {
-                                                                "type": "string"
-                                                            }
-                                                        }
-                                                    }
-                                                },
-                                                "rules": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "dns": {
-                                                            "type": "array",
-                                                            "items": {
-                                                                "type": "object",
-                                                                "properties": {
-                                                                    "matchPattern": {
-                                                                        "type": "string"
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
+                            "type": "object",
+                            "properties": {
+                                "matchLabels": {
+                                    "type": "object"
+                                },
+                                "port": {
+                                    "type": "string"
+                                },
+                                "protocol": {
+                                    "type": "string"
+                                },
+                                "rules": {
+                                    "type": "array"
                                 }
                             }
                         },
                         "enabled": {
                             "type": "boolean"
                         },
-                        "fqdnsRules": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "matchName": {
-                                        "type": "string"
-                                    }
+                        "fqdnsConnection": {
+                            "type": "object",
+                            "properties": {
+                                "port": {
+                                    "type": "string"
+                                },
+                                "protocol": {
+                                    "type": "string"
+                                },
+                                "rules": {
+                                    "type": "array"
                                 }
                             }
                         }

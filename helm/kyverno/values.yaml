@@ -11,20 +11,20 @@ ciliumNetworkPolicy:
   admissionControllerExtraEgress:
     enabled: true
     dnsSelector:
-      - toEndpoints:
-        - matchLabels:
-            "k8s:io.kubernetes.pod.namespace": kube-system
-            "k8s:k8s-app": coredns
-        toPorts:
-        - ports:
-            - port: "53"
-              protocol: ANY
-          rules:
-            dns:
-              - matchPattern: "*"
-    fqdnsRules:
-      - matchName: "github.com"
-      - matchExpressions: "*.k8s.io"
+      port: "53"      # Defaults to 53 if not set
+      protocol: ANY   # Defaults to ANY if not set
+      matchLabels:
+        "k8s:io.kubernetes.pod.namespace": kube-system
+        "k8s:k8s-app": coredns
+      rules: []
+      # - matchPattern: "*"
+      # - matchPattern: "*.google.com"
+    fqdnsConnection:
+      port: "443"     # Defaults to 443 if not set
+      protocol: TCP   # Defaults to TCP if not set
+      rules: []
+      # - matchName: "github.com"
+      # - matchExpressions: "*.k8s.io"
 
 # We install CRDs through a Job with the helm specific crd folder.
 crds:

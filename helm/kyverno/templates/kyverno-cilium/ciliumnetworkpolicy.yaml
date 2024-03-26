@@ -63,18 +63,31 @@ spec:
   egress:
   {{- if .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.enabled }}
     # Allow DNS for FQDN resolution
-    {{- toYaml .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.dnsSelector | nindent 4 }}
-    # Specify FQDNs
+    - toEndpoints:
+      - matchLabels:
+      {{- toYaml .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.dnsSelector.matchLabels | nindent 10 }}
+      toPorts:
+      - ports:
+        - port: {{ default "53" .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.dnsSelector.port | quote }}
+          protocol: {{ default "ANY" .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.dnsSelector.protocol }}
+        rules:
+          dns:
+          {{- if .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.dnsSelector.rules -}}
+            {{- with .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.dnsSelector.rules -}}
+            {{ toYaml . | nindent 12 }}
+            {{- end }}
+          {{- else }}
+            - matchPattern: "*"
+          {{- end }}
+    # Allow FQDNS connection
     - toFQDNs:
-    {{- with .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsRules }}
-    {{- range . }}
-      - {{ toYaml .}}
-    {{- end -}}
+    {{- with .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.rules -}}
+      {{ toYaml .| nindent 6 }}
     {{- end }}
       toPorts:
         - ports:
-            - port: "443"
-              protocol: TCP
+            - port: {{ default "443" .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.port | quote }}
+              protocol: {{ default "TCP" .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.protocol }}
   {{- end }}
     - toEntities:
       - kube-apiserver
