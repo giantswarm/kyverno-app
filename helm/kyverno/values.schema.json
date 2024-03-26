@@ -5,6 +5,45 @@
         "ciliumNetworkPolicy": {
             "type": "object",
             "properties": {
+                "admissionControllerExtraEgress": {
+                    "type": "object",
+                    "properties": {
+                        "dnsSelector": {
+                            "type": "object",
+                            "properties": {
+                                "matchLabels": {
+                                    "type": "object"
+                                },
+                                "port": {
+                                    "type": "string"
+                                },
+                                "protocol": {
+                                    "type": "string"
+                                },
+                                "rules": {
+                                    "type": "array"
+                                }
+                            }
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "fqdnsConnection": {
+                            "type": "object",
+                            "properties": {
+                                "port": {
+                                    "type": "string"
+                                },
+                                "protocol": {
+                                    "type": "string"
+                                },
+                                "rules": {
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    }
+                },
                 "enabled": {
                     "type": "boolean"
                 }
@@ -70,6 +109,9 @@
             "type": "object",
             "properties": {
                 "registry": {
+                    "type": "string"
+                },
+                "repository": {
                     "type": "string"
                 },
                 "tag": {
@@ -1535,6 +1577,9 @@
                                 },
                                 "repository": {
                                     "type": "string"
+                                },
+                                "tag": {
+                                    "type": "string"
                                 }
                             }
                         }
@@ -1871,6 +1916,9 @@
                                     "type": "string"
                                 },
                                 "repository": {
+                                    "type": "string"
+                                },
+                                "tag": {
                                     "type": "string"
                                 }
                             }
