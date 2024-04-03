@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.17.8] - 2024-04-03
+
 ### Added
 
 - Add new CiliumNetworkPolicy section to allow for DNS and FQDNs connections.
@@ -453,7 +455,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.17.7...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.17.8...HEAD
+[0.17.8]: https://github.com/giantswarm/kyverno-app/compare/v0.17.7...v0.17.8
 [0.17.7]: https://github.com/giantswarm/kyverno-app/compare/v0.17.6...v0.17.7
 [0.17.6]: https://github.com/giantswarm/kyverno-app/compare/v0.17.5...v0.17.6
 [0.17.5]: https://github.com/giantswarm/kyverno-app/compare/v0.17.4...v0.17.5
