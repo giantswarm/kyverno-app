@@ -8,6 +8,19 @@ global:
 # Create CiliumNetworkPolicy
 ciliumNetworkPolicy:
   enabled: true
+  admissionControllerExtraEgress:
+    enabled: false
+    dnsSelector:
+      rules: []
+      # - matchPattern: "*"
+      # - matchPattern: "*.amazonaws.com"
+    fqdnsConnection:
+      port: "443"     # Defaults to 443 if not set
+      protocol: TCP   # Defaults to TCP if not set
+      rules: []
+      # - matchPattern: "*"
+      # - matchPattern: "s3.*.amazonaws.com"
+      # - matchName: "s3.eu-west-1.amazonaws.com"
 
 # We install CRDs through a Job with the helm specific crd folder.
 crds:
