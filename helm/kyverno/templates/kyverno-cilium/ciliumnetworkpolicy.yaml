@@ -65,24 +65,34 @@ spec:
     # Allow DNS for FQDN resolution
     - toEndpoints:
       - matchLabels:
-      {{- toYaml .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.dnsSelector.matchLabels | nindent 10 }}
+          "k8s:io.kubernetes.pod.namespace": kube-system
+          "k8s:k8s-app": coredns
+      - matchLabels:
+          "k8s:io.kubernetes.pod.namespace": kube-system
+          "k8s:k8s-app": k8s-dns-node-cache
       toPorts:
       - ports:
-        - port: {{ default "53" .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.dnsSelector.port | quote }}
-          protocol: {{ default "ANY" .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.dnsSelector.protocol }}
+          - port: "1053"
+            protocol: ANY
+          - port: "53"
+            protocol: ANY
         rules:
           dns:
           {{- if .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.dnsSelector.rules -}}
             {{- with .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.dnsSelector.rules -}}
-            {{ toYaml . | nindent 12 }}
+            {{ toYaml . | nindent 10 }}
             {{- end }}
           {{- else }}
-            - matchPattern: "*"
+          - matchPattern: "*"
           {{- end }}
-    # Allow FQDNS connection
+    # Allow FQDNs connection
     - toFQDNs:
-    {{- with .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.rules -}}
+    {{- if .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.rules -}}
+      {{- with .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.rules -}}
       {{ toYaml .| nindent 6 }}
+      {{- end }}
+    {{- else }}
+      - matchPattern: "*"
     {{- end }}
       toPorts:
         - ports:

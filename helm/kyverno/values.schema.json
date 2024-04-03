@@ -11,15 +11,6 @@
                         "dnsSelector": {
                             "type": "object",
                             "properties": {
-                                "matchLabels": {
-                                    "type": "object"
-                                },
-                                "port": {
-                                    "type": "string"
-                                },
-                                "protocol": {
-                                    "type": "string"
-                                },
                                 "rules": {
                                     "type": "array"
                                 }
