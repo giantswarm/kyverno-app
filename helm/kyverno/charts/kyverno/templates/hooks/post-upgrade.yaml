@@ -13,9 +13,6 @@ metadata:
 spec:
   backoffLimit: 2
   template:
-    metadata:
-      labels:
-        {{- include "kyverno.hooks.labels" . | nindent 8 }}
     spec:
       serviceAccount: {{ template "kyverno.admission-controller.serviceAccountName" . }}
       {{- with .Values.policyReportsCleanup.podSecurityContext }}
