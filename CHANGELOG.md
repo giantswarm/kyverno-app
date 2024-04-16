@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Adapt Kyverno Policy Reporter CiliumNetworkPolicy to allow for DNS resolution of the `kyverno-ui` service.
+
 ## [0.17.9] - 2024-04-03
 
 ### Changed
