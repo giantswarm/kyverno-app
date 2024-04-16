@@ -287,9 +287,6 @@ spec:
         protocol: ANY
       - port: "53"
         protocol: ANY
-      rules:
-        dns:
-        - matchName: kyverno-ui.{{ include "kyverno-stack.namespace" . }}.svc.cluster.local
   - toEndpoints:
     - matchLabels:
         app.kubernetes.io/component: ui
