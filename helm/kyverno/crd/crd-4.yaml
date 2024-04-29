@@ -7,7 +7,9 @@ metadata:
     app.kubernetes.io/part-of: kyverno
     app.kubernetes.io/version: 1.11.2
   annotations:
-    controller-gen.kubebuilder.io/version: v0.12.0
+    app.kubernetes.io/managed-by: Helm
+    meta.helm.sh/release-name: kyverno-crds
+    meta.helm.sh/release-namespace: kyverno
   name: clusterbackgroundscanreports.kyverno.io
 spec:
   group: kyverno.io
