@@ -219,7 +219,7 @@ kyverno:
     admissionReports:
 
       # -- Enable cleanup cronjob
-      enabled: true
+      enabled: false
 
       image:
         # -- (string) Image registry
@@ -271,7 +271,7 @@ kyverno:
     clusterAdmissionReports:
 
       # -- Enable cleanup cronjob
-      enabled: true
+      enabled: false
 
       image:
         # -- (string) Image registry
