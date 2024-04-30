@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add Helm labels and annotations for easy CRD adoption in the future.
+
 ### Changed
 
 - Adapt Kyverno Policy Reporter CiliumNetworkPolicy to allow for DNS resolution of the `kyverno-ui` service.
