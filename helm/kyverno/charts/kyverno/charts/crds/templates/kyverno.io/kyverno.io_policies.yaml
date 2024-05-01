@@ -197,8 +197,9 @@ spec:
                               entry.
                             properties:
                               data:
-                                description: Data specifies the POST data sent to
-                                  the server.
+                                description: The data object specifies the POST data
+                                  sent to the server. Only applicable when the method
+                                  field is set to POST.
                                 items:
                                   description: RequestData contains the HTTP POST
                                     data
@@ -234,7 +235,9 @@ spec:
                                 type: string
                               service:
                                 description: Service is an API call to a JSON web
-                                  service
+                                  service. This is used for non-Kubernetes API server
+                                  calls. It's mutually exclusive with the URLPath
+                                  field.
                                 properties:
                                   caBundle:
                                     description: CABundle is a PEM encoded CA bundle
@@ -253,7 +256,8 @@ spec:
                                   server (e.g. "/api/v1/namespaces" or  "/apis/apps/v1/deployments").
                                   The format required is the same format used by the
                                   `kubectl get --raw` command. See https://kyverno.io/docs/writing-policies/external-data-sources/#variables-from-kubernetes-api-server-calls
-                                  for details.
+                                  for details. It's mutually exclusive with the Service
+                                  field.
                                 type: string
                             type: object
                           configMap:
@@ -1917,8 +1921,9 @@ spec:
                                         with the name for the context entry.
                                       properties:
                                         data:
-                                          description: Data specifies the POST data
-                                            sent to the server.
+                                          description: The data object specifies the
+                                            POST data sent to the server. Only applicable
+                                            when the method field is set to POST.
                                           items:
                                             description: RequestData contains the
                                               HTTP POST data
@@ -1955,7 +1960,9 @@ spec:
                                           type: string
                                         service:
                                           description: Service is an API call to a
-                                            JSON web service
+                                            JSON web service. This is used for non-Kubernetes
+                                            API server calls. It's mutually exclusive
+                                            with the URLPath field.
                                           properties:
                                             caBundle:
                                               description: CABundle is a PEM encoded
@@ -1977,7 +1984,8 @@ spec:
                                             format required is the same format used
                                             by the `kubectl get --raw` command. See
                                             https://kyverno.io/docs/writing-policies/external-data-sources/#variables-from-kubernetes-api-server-calls
-                                            for details.
+                                            for details. It's mutually exclusive with
+                                            the Service field.
                                           type: string
                                       type: object
                                     configMap:
@@ -2269,8 +2277,9 @@ spec:
                                         with the name for the context entry.
                                       properties:
                                         data:
-                                          description: Data specifies the POST data
-                                            sent to the server.
+                                          description: The data object specifies the
+                                            POST data sent to the server. Only applicable
+                                            when the method field is set to POST.
                                           items:
                                             description: RequestData contains the
                                               HTTP POST data
@@ -2307,7 +2316,9 @@ spec:
                                           type: string
                                         service:
                                           description: Service is an API call to a
-                                            JSON web service
+                                            JSON web service. This is used for non-Kubernetes
+                                            API server calls. It's mutually exclusive
+                                            with the URLPath field.
                                           properties:
                                             caBundle:
                                               description: CABundle is a PEM encoded
@@ -2329,7 +2340,8 @@ spec:
                                             format required is the same format used
                                             by the `kubectl get --raw` command. See
                                             https://kyverno.io/docs/writing-policies/external-data-sources/#variables-from-kubernetes-api-server-calls
-                                            for details.
+                                            for details. It's mutually exclusive with
+                                            the Service field.
                                           type: string
                                       type: object
                                     configMap:
@@ -2853,8 +2865,9 @@ spec:
                                         with the name for the context entry.
                                       properties:
                                         data:
-                                          description: Data specifies the POST data
-                                            sent to the server.
+                                          description: The data object specifies the
+                                            POST data sent to the server. Only applicable
+                                            when the method field is set to POST.
                                           items:
                                             description: RequestData contains the
                                               HTTP POST data
@@ -2891,7 +2904,9 @@ spec:
                                           type: string
                                         service:
                                           description: Service is an API call to a
-                                            JSON web service
+                                            JSON web service. This is used for non-Kubernetes
+                                            API server calls. It's mutually exclusive
+                                            with the URLPath field.
                                           properties:
                                             caBundle:
                                               description: CABundle is a PEM encoded
@@ -2913,7 +2928,8 @@ spec:
                                             format required is the same format used
                                             by the `kubectl get --raw` command. See
                                             https://kyverno.io/docs/writing-policies/external-data-sources/#variables-from-kubernetes-api-server-calls
-                                            for details.
+                                            for details. It's mutually exclusive with
+                                            the Service field.
                                           type: string
                                       type: object
                                     configMap:
@@ -3279,8 +3295,6 @@ spec:
                                                     to the public Rekor log instance
                                                     https://rekor.sigstore.dev.
                                                   type: string
-                                              required:
-                                              - url
                                               type: object
                                           type: object
                                         keyless:
@@ -3344,8 +3358,6 @@ spec:
                                                     to the public Rekor log instance
                                                     https://rekor.sigstore.dev.
                                                   type: string
-                                              required:
-                                              - url
                                               type: object
                                             roots:
                                               description: Roots is an optional set
@@ -3432,8 +3444,6 @@ spec:
                                                     to the public Rekor log instance
                                                     https://rekor.sigstore.dev.
                                                   type: string
-                                              required:
-                                              - url
                                               type: object
                                             secret:
                                               description: Reference to a Secret resource
@@ -3739,8 +3749,6 @@ spec:
                                                         to the public Rekor log instance
                                                         https://rekor.sigstore.dev.
                                                       type: string
-                                                  required:
-                                                  - url
                                                   type: object
                                               type: object
                                             keyless:
@@ -3808,8 +3816,6 @@ spec:
                                                         to the public Rekor log instance
                                                         https://rekor.sigstore.dev.
                                                       type: string
-                                                  required:
-                                                  - url
                                                   type: object
                                                 roots:
                                                   description: Roots is an optional
@@ -3903,8 +3909,6 @@ spec:
                                                         to the public Rekor log instance
                                                         https://rekor.sigstore.dev.
                                                       type: string
-                                                  required:
-                                                  - url
                                                   type: object
                                                 secret:
                                                   description: Reference to a Secret
@@ -4171,8 +4175,6 @@ spec:
                                                   the transparency log. Defaults to
                                                   the public Rekor log instance https://rekor.sigstore.dev.
                                                 type: string
-                                            required:
-                                            - url
                                             type: object
                                         type: object
                                       keyless:
@@ -4235,8 +4237,6 @@ spec:
                                                   the transparency log. Defaults to
                                                   the public Rekor log instance https://rekor.sigstore.dev.
                                                 type: string
-                                            required:
-                                            - url
                                             type: object
                                           roots:
                                             description: Roots is an optional set
@@ -4321,8 +4321,6 @@ spec:
                                                   the transparency log. Defaults to
                                                   the public Rekor log instance https://rekor.sigstore.dev.
                                                 type: string
-                                            required:
-                                            - url
                                             type: object
                                           secret:
                                             description: Reference to a Secret resource
@@ -4693,8 +4691,9 @@ spec:
                                   for the context entry.
                                 properties:
                                   data:
-                                    description: Data specifies the POST data sent
-                                      to the server.
+                                    description: The data object specifies the POST
+                                      data sent to the server. Only applicable when
+                                      the method field is set to POST.
                                     items:
                                       description: RequestData contains the HTTP POST
                                         data
@@ -4730,7 +4729,9 @@ spec:
                                     type: string
                                   service:
                                     description: Service is an API call to a JSON
-                                      web service
+                                      web service. This is used for non-Kubernetes
+                                      API server calls. It's mutually exclusive with
+                                      the URLPath field.
                                     properties:
                                       caBundle:
                                         description: CABundle is a PEM encoded CA
@@ -4750,7 +4751,8 @@ spec:
                                       API server (e.g. "/api/v1/namespaces" or  "/apis/apps/v1/deployments").
                                       The format required is the same format used
                                       by the `kubectl get --raw` command. See https://kyverno.io/docs/writing-policies/external-data-sources/#variables-from-kubernetes-api-server-calls
-                                      for details.
+                                      for details. It's mutually exclusive with the
+                                      Service field.
                                     type: string
                                 type: object
                               configMap:
@@ -6488,8 +6490,10 @@ spec:
                                             the context entry.
                                           properties:
                                             data:
-                                              description: Data specifies the POST
-                                                data sent to the server.
+                                              description: The data object specifies
+                                                the POST data sent to the server.
+                                                Only applicable when the method field
+                                                is set to POST.
                                               items:
                                                 description: RequestData contains
                                                   the HTTP POST data
@@ -6528,7 +6532,10 @@ spec:
                                               type: string
                                             service:
                                               description: Service is an API call
-                                                to a JSON web service
+                                                to a JSON web service. This is used
+                                                for non-Kubernetes API server calls.
+                                                It's mutually exclusive with the URLPath
+                                                field.
                                               properties:
                                                 caBundle:
                                                   description: CABundle is a PEM encoded
@@ -6551,7 +6558,8 @@ spec:
                                                 The format required is the same format
                                                 used by the `kubectl get --raw` command.
                                                 See https://kyverno.io/docs/writing-policies/external-data-sources/#variables-from-kubernetes-api-server-calls
-                                                for details.
+                                                for details. It's mutually exclusive
+                                                with the Service field.
                                               type: string
                                           type: object
                                         configMap:
@@ -6857,8 +6865,10 @@ spec:
                                             the context entry.
                                           properties:
                                             data:
-                                              description: Data specifies the POST
-                                                data sent to the server.
+                                              description: The data object specifies
+                                                the POST data sent to the server.
+                                                Only applicable when the method field
+                                                is set to POST.
                                               items:
                                                 description: RequestData contains
                                                   the HTTP POST data
@@ -6897,7 +6907,10 @@ spec:
                                               type: string
                                             service:
                                               description: Service is an API call
-                                                to a JSON web service
+                                                to a JSON web service. This is used
+                                                for non-Kubernetes API server calls.
+                                                It's mutually exclusive with the URLPath
+                                                field.
                                               properties:
                                                 caBundle:
                                                   description: CABundle is a PEM encoded
@@ -6920,7 +6933,8 @@ spec:
                                                 The format required is the same format
                                                 used by the `kubectl get --raw` command.
                                                 See https://kyverno.io/docs/writing-policies/external-data-sources/#variables-from-kubernetes-api-server-calls
-                                                for details.
+                                                for details. It's mutually exclusive
+                                                with the Service field.
                                               type: string
                                           type: object
                                         configMap:
@@ -7473,8 +7487,10 @@ spec:
                                             the context entry.
                                           properties:
                                             data:
-                                              description: Data specifies the POST
-                                                data sent to the server.
+                                              description: The data object specifies
+                                                the POST data sent to the server.
+                                                Only applicable when the method field
+                                                is set to POST.
                                               items:
                                                 description: RequestData contains
                                                   the HTTP POST data
@@ -7513,7 +7529,10 @@ spec:
                                               type: string
                                             service:
                                               description: Service is an API call
-                                                to a JSON web service
+                                                to a JSON web service. This is used
+                                                for non-Kubernetes API server calls.
+                                                It's mutually exclusive with the URLPath
+                                                field.
                                               properties:
                                                 caBundle:
                                                   description: CABundle is a PEM encoded
@@ -7536,7 +7555,8 @@ spec:
                                                 The format required is the same format
                                                 used by the `kubectl get --raw` command.
                                                 See https://kyverno.io/docs/writing-policies/external-data-sources/#variables-from-kubernetes-api-server-calls
-                                                for details.
+                                                for details. It's mutually exclusive
+                                                with the Service field.
                                               type: string
                                           type: object
                                         configMap:
@@ -7919,8 +7939,6 @@ spec:
                                                         to the public Rekor log instance
                                                         https://rekor.sigstore.dev.
                                                       type: string
-                                                  required:
-                                                  - url
                                                   type: object
                                               type: object
                                             keyless:
@@ -7988,8 +8006,6 @@ spec:
                                                         to the public Rekor log instance
                                                         https://rekor.sigstore.dev.
                                                       type: string
-                                                  required:
-                                                  - url
                                                   type: object
                                                 roots:
                                                   description: Roots is an optional
@@ -8083,8 +8099,6 @@ spec:
                                                         to the public Rekor log instance
                                                         https://rekor.sigstore.dev.
                                                       type: string
-                                                  required:
-                                                  - url
                                                   type: object
                                                 secret:
                                                   description: Reference to a Secret
@@ -8405,8 +8419,6 @@ spec:
                                                             log. Defaults to the public
                                                             Rekor log instance https://rekor.sigstore.dev.
                                                           type: string
-                                                      required:
-                                                      - url
                                                       type: object
                                                   type: object
                                                 keyless:
@@ -8480,8 +8492,6 @@ spec:
                                                             log. Defaults to the public
                                                             Rekor log instance https://rekor.sigstore.dev.
                                                           type: string
-                                                      required:
-                                                      - url
                                                       type: object
                                                     roots:
                                                       description: Roots is an optional
@@ -8585,8 +8595,6 @@ spec:
                                                             log. Defaults to the public
                                                             Rekor log instance https://rekor.sigstore.dev.
                                                           type: string
-                                                      required:
-                                                      - url
                                                       type: object
                                                     secret:
                                                       description: Reference to a
@@ -8864,8 +8872,6 @@ spec:
                                                       to the public Rekor log instance
                                                       https://rekor.sigstore.dev.
                                                     type: string
-                                                required:
-                                                - url
                                                 type: object
                                             type: object
                                           keyless:
@@ -8932,8 +8938,6 @@ spec:
                                                       to the public Rekor log instance
                                                       https://rekor.sigstore.dev.
                                                     type: string
-                                                required:
-                                                - url
                                                 type: object
                                               roots:
                                                 description: Roots is an optional
@@ -9025,8 +9029,6 @@ spec:
                                                       to the public Rekor log instance
                                                       https://rekor.sigstore.dev.
                                                     type: string
-                                                required:
-                                                - url
                                                 type: object
                                               secret:
                                                 description: Reference to a Secret
@@ -9471,8 +9473,9 @@ spec:
                               entry.
                             properties:
                               data:
-                                description: Data specifies the POST data sent to
-                                  the server.
+                                description: The data object specifies the POST data
+                                  sent to the server. Only applicable when the method
+                                  field is set to POST.
                                 items:
                                   description: RequestData contains the HTTP POST
                                     data
@@ -9508,7 +9511,9 @@ spec:
                                 type: string
                               service:
                                 description: Service is an API call to a JSON web
-                                  service
+                                  service. This is used for non-Kubernetes API server
+                                  calls. It's mutually exclusive with the URLPath
+                                  field.
                                 properties:
                                   caBundle:
                                     description: CABundle is a PEM encoded CA bundle
@@ -9527,7 +9532,8 @@ spec:
                                   server (e.g. "/api/v1/namespaces" or  "/apis/apps/v1/deployments").
                                   The format required is the same format used by the
                                   `kubectl get --raw` command. See https://kyverno.io/docs/writing-policies/external-data-sources/#variables-from-kubernetes-api-server-calls
-                                  for details.
+                                  for details. It's mutually exclusive with the Service
+                                  field.
                                 type: string
                             type: object
                           configMap:
@@ -10765,8 +10771,9 @@ spec:
                                         with the name for the context entry.
                                       properties:
                                         data:
-                                          description: Data specifies the POST data
-                                            sent to the server.
+                                          description: The data object specifies the
+                                            POST data sent to the server. Only applicable
+                                            when the method field is set to POST.
                                           items:
                                             description: RequestData contains the
                                               HTTP POST data
@@ -10803,7 +10810,9 @@ spec:
                                           type: string
                                         service:
                                           description: Service is an API call to a
-                                            JSON web service
+                                            JSON web service. This is used for non-Kubernetes
+                                            API server calls. It's mutually exclusive
+                                            with the URLPath field.
                                           properties:
                                             caBundle:
                                               description: CABundle is a PEM encoded
@@ -10825,7 +10834,8 @@ spec:
                                             format required is the same format used
                                             by the `kubectl get --raw` command. See
                                             https://kyverno.io/docs/writing-policies/external-data-sources/#variables-from-kubernetes-api-server-calls
-                                            for details.
+                                            for details. It's mutually exclusive with
+                                            the Service field.
                                           type: string
                                       type: object
                                     configMap:
@@ -11117,8 +11127,9 @@ spec:
                                         with the name for the context entry.
                                       properties:
                                         data:
-                                          description: Data specifies the POST data
-                                            sent to the server.
+                                          description: The data object specifies the
+                                            POST data sent to the server. Only applicable
+                                            when the method field is set to POST.
                                           items:
                                             description: RequestData contains the
                                               HTTP POST data
@@ -11155,7 +11166,9 @@ spec:
                                           type: string
                                         service:
                                           description: Service is an API call to a
-                                            JSON web service
+                                            JSON web service. This is used for non-Kubernetes
+                                            API server calls. It's mutually exclusive
+                                            with the URLPath field.
                                           properties:
                                             caBundle:
                                               description: CABundle is a PEM encoded
@@ -11177,7 +11190,8 @@ spec:
                                             format required is the same format used
                                             by the `kubectl get --raw` command. See
                                             https://kyverno.io/docs/writing-policies/external-data-sources/#variables-from-kubernetes-api-server-calls
-                                            for details.
+                                            for details. It's mutually exclusive with
+                                            the Service field.
                                           type: string
                                       type: object
                                     configMap:
@@ -11880,8 +11894,9 @@ spec:
                                         with the name for the context entry.
                                       properties:
                                         data:
-                                          description: Data specifies the POST data
-                                            sent to the server.
+                                          description: The data object specifies the
+                                            POST data sent to the server. Only applicable
+                                            when the method field is set to POST.
                                           items:
                                             description: RequestData contains the
                                               HTTP POST data
@@ -11918,7 +11933,9 @@ spec:
                                           type: string
                                         service:
                                           description: Service is an API call to a
-                                            JSON web service
+                                            JSON web service. This is used for non-Kubernetes
+                                            API server calls. It's mutually exclusive
+                                            with the URLPath field.
                                           properties:
                                             caBundle:
                                               description: CABundle is a PEM encoded
@@ -11940,7 +11957,8 @@ spec:
                                             format required is the same format used
                                             by the `kubectl get --raw` command. See
                                             https://kyverno.io/docs/writing-policies/external-data-sources/#variables-from-kubernetes-api-server-calls
-                                            for details.
+                                            for details. It's mutually exclusive with
+                                            the Service field.
                                           type: string
                                       type: object
                                     configMap:
@@ -12306,8 +12324,6 @@ spec:
                                                     to the public Rekor log instance
                                                     https://rekor.sigstore.dev.
                                                   type: string
-                                              required:
-                                              - url
                                               type: object
                                           type: object
                                         keyless:
@@ -12371,8 +12387,6 @@ spec:
                                                     to the public Rekor log instance
                                                     https://rekor.sigstore.dev.
                                                   type: string
-                                              required:
-                                              - url
                                               type: object
                                             roots:
                                               description: Roots is an optional set
@@ -12459,8 +12473,6 @@ spec:
                                                     to the public Rekor log instance
                                                     https://rekor.sigstore.dev.
                                                   type: string
-                                              required:
-                                              - url
                                               type: object
                                             secret:
                                               description: Reference to a Secret resource
@@ -12755,8 +12767,6 @@ spec:
                                                         to the public Rekor log instance
                                                         https://rekor.sigstore.dev.
                                                       type: string
-                                                  required:
-                                                  - url
                                                   type: object
                                               type: object
                                             keyless:
@@ -12824,8 +12834,6 @@ spec:
                                                         to the public Rekor log instance
                                                         https://rekor.sigstore.dev.
                                                       type: string
-                                                  required:
-                                                  - url
                                                   type: object
                                                 roots:
                                                   description: Roots is an optional
@@ -12919,8 +12927,6 @@ spec:
                                                         to the public Rekor log instance
                                                         https://rekor.sigstore.dev.
                                                       type: string
-                                                  required:
-                                                  - url
                                                   type: object
                                                 secret:
                                                   description: Reference to a Secret
@@ -13187,8 +13193,6 @@ spec:
                                                   the transparency log. Defaults to
                                                   the public Rekor log instance https://rekor.sigstore.dev.
                                                 type: string
-                                            required:
-                                            - url
                                             type: object
                                         type: object
                                       keyless:
@@ -13251,8 +13255,6 @@ spec:
                                                   the transparency log. Defaults to
                                                   the public Rekor log instance https://rekor.sigstore.dev.
                                                 type: string
-                                            required:
-                                            - url
                                             type: object
                                           roots:
                                             description: Roots is an optional set
@@ -13337,8 +13339,6 @@ spec:
                                                   the transparency log. Defaults to
                                                   the public Rekor log instance https://rekor.sigstore.dev.
                                                 type: string
-                                            required:
-                                            - url
                                             type: object
                                           secret:
                                             description: Reference to a Secret resource
@@ -13693,8 +13693,9 @@ spec:
                                   for the context entry.
                                 properties:
                                   data:
-                                    description: Data specifies the POST data sent
-                                      to the server.
+                                    description: The data object specifies the POST
+                                      data sent to the server. Only applicable when
+                                      the method field is set to POST.
                                     items:
                                       description: RequestData contains the HTTP POST
                                         data
@@ -13730,7 +13731,9 @@ spec:
                                     type: string
                                   service:
                                     description: Service is an API call to a JSON
-                                      web service
+                                      web service. This is used for non-Kubernetes
+                                      API server calls. It's mutually exclusive with
+                                      the URLPath field.
                                     properties:
                                       caBundle:
                                         description: CABundle is a PEM encoded CA
@@ -13750,7 +13753,8 @@ spec:
                                       API server (e.g. "/api/v1/namespaces" or  "/apis/apps/v1/deployments").
                                       The format required is the same format used
                                       by the `kubectl get --raw` command. See https://kyverno.io/docs/writing-policies/external-data-sources/#variables-from-kubernetes-api-server-calls
-                                      for details.
+                                      for details. It's mutually exclusive with the
+                                      Service field.
                                     type: string
                                 type: object
                               configMap:
@@ -15488,8 +15492,10 @@ spec:
                                             the context entry.
                                           properties:
                                             data:
-                                              description: Data specifies the POST
-                                                data sent to the server.
+                                              description: The data object specifies
+                                                the POST data sent to the server.
+                                                Only applicable when the method field
+                                                is set to POST.
                                               items:
                                                 description: RequestData contains
                                                   the HTTP POST data
@@ -15528,7 +15534,10 @@ spec:
                                               type: string
                                             service:
                                               description: Service is an API call
-                                                to a JSON web service
+                                                to a JSON web service. This is used
+                                                for non-Kubernetes API server calls.
+                                                It's mutually exclusive with the URLPath
+                                                field.
                                               properties:
                                                 caBundle:
                                                   description: CABundle is a PEM encoded
@@ -15551,7 +15560,8 @@ spec:
                                                 The format required is the same format
                                                 used by the `kubectl get --raw` command.
                                                 See https://kyverno.io/docs/writing-policies/external-data-sources/#variables-from-kubernetes-api-server-calls
-                                                for details.
+                                                for details. It's mutually exclusive
+                                                with the Service field.
                                               type: string
                                           type: object
                                         configMap:
@@ -15857,8 +15867,10 @@ spec:
                                             the context entry.
                                           properties:
                                             data:
-                                              description: Data specifies the POST
-                                                data sent to the server.
+                                              description: The data object specifies
+                                                the POST data sent to the server.
+                                                Only applicable when the method field
+                                                is set to POST.
                                               items:
                                                 description: RequestData contains
                                                   the HTTP POST data
@@ -15897,7 +15909,10 @@ spec:
                                               type: string
                                             service:
                                               description: Service is an API call
-                                                to a JSON web service
+                                                to a JSON web service. This is used
+                                                for non-Kubernetes API server calls.
+                                                It's mutually exclusive with the URLPath
+                                                field.
                                               properties:
                                                 caBundle:
                                                   description: CABundle is a PEM encoded
@@ -15920,7 +15935,8 @@ spec:
                                                 The format required is the same format
                                                 used by the `kubectl get --raw` command.
                                                 See https://kyverno.io/docs/writing-policies/external-data-sources/#variables-from-kubernetes-api-server-calls
-                                                for details.
+                                                for details. It's mutually exclusive
+                                                with the Service field.
                                               type: string
                                           type: object
                                         configMap:
@@ -16473,8 +16489,10 @@ spec:
                                             the context entry.
                                           properties:
                                             data:
-                                              description: Data specifies the POST
-                                                data sent to the server.
+                                              description: The data object specifies
+                                                the POST data sent to the server.
+                                                Only applicable when the method field
+                                                is set to POST.
                                               items:
                                                 description: RequestData contains
                                                   the HTTP POST data
@@ -16513,7 +16531,10 @@ spec:
                                               type: string
                                             service:
                                               description: Service is an API call
-                                                to a JSON web service
+                                                to a JSON web service. This is used
+                                                for non-Kubernetes API server calls.
+                                                It's mutually exclusive with the URLPath
+                                                field.
                                               properties:
                                                 caBundle:
                                                   description: CABundle is a PEM encoded
@@ -16536,7 +16557,8 @@ spec:
                                                 The format required is the same format
                                                 used by the `kubectl get --raw` command.
                                                 See https://kyverno.io/docs/writing-policies/external-data-sources/#variables-from-kubernetes-api-server-calls
-                                                for details.
+                                                for details. It's mutually exclusive
+                                                with the Service field.
                                               type: string
                                           type: object
                                         configMap:
@@ -16919,8 +16941,6 @@ spec:
                                                         to the public Rekor log instance
                                                         https://rekor.sigstore.dev.
                                                       type: string
-                                                  required:
-                                                  - url
                                                   type: object
                                               type: object
                                             keyless:
@@ -16988,8 +17008,6 @@ spec:
                                                         to the public Rekor log instance
                                                         https://rekor.sigstore.dev.
                                                       type: string
-                                                  required:
-                                                  - url
                                                   type: object
                                                 roots:
                                                   description: Roots is an optional
@@ -17083,8 +17101,6 @@ spec:
                                                         to the public Rekor log instance
                                                         https://rekor.sigstore.dev.
                                                       type: string
-                                                  required:
-                                                  - url
                                                   type: object
                                                 secret:
                                                   description: Reference to a Secret
@@ -17405,8 +17421,6 @@ spec:
                                                             log. Defaults to the public
                                                             Rekor log instance https://rekor.sigstore.dev.
                                                           type: string
-                                                      required:
-                                                      - url
                                                       type: object
                                                   type: object
                                                 keyless:
@@ -17480,8 +17494,6 @@ spec:
                                                             log. Defaults to the public
                                                             Rekor log instance https://rekor.sigstore.dev.
                                                           type: string
-                                                      required:
-                                                      - url
                                                       type: object
                                                     roots:
                                                       description: Roots is an optional
@@ -17585,8 +17597,6 @@ spec:
                                                             log. Defaults to the public
                                                             Rekor log instance https://rekor.sigstore.dev.
                                                           type: string
-                                                      required:
-                                                      - url
                                                       type: object
                                                     secret:
                                                       description: Reference to a
@@ -17864,8 +17874,6 @@ spec:
                                                       to the public Rekor log instance
                                                       https://rekor.sigstore.dev.
                                                     type: string
-                                                required:
-                                                - url
                                                 type: object
                                             type: object
                                           keyless:
@@ -17932,8 +17940,6 @@ spec:
                                                       to the public Rekor log instance
                                                       https://rekor.sigstore.dev.
                                                     type: string
-                                                required:
-                                                - url
                                                 type: object
                                               roots:
                                                 description: Roots is an optional
@@ -18025,8 +18031,6 @@ spec:
                                                       to the public Rekor log instance
                                                       https://rekor.sigstore.dev.
                                                     type: string
-                                                required:
-                                                - url
                                                 type: object
                                               secret:
                                                 description: Reference to a Secret
