@@ -54,7 +54,6 @@ jobs:
     needs: sync-app-kyverno-with-fork
     with:
       branch: 'main#update-chart'
-      GITHUB_TOKEN: ${{ needs.sync-app-kyverno-with-fork.outputs.token }}
   copy-kyverno-crds:
     runs-on: ubuntu-latest
     needs: call-update-chart
