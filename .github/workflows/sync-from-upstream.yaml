@@ -15,8 +15,16 @@ jobs:
   sync-app-kyverno-with-fork:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Generate a token
+        id: generate_token
+        uses: actions/create-github-app-token@7bfa3a4717ef143a604ee0a99d859b8886a96d00 # v1.9.3
+        with:
+          app-id: ${{ secrets.HERALD_APP_ID }}
+          private-key: ${{ secrets.HERALD_APP_KEY }}
+      - name: Checkout code
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+        with:
+          token: ${{ steps.generate_token.outputs.token }}
       - run: |
           # Get the last tag from fork repo
           POLICY_REPORTER_LAST_TAG=$(git ls-remote --tags --sort='v:refname' --refs $policy_reporter_fork_repo \
@@ -28,8 +36,8 @@ jobs:
           echo "Kyverno last tag found is $KYVERNO_LAST_TAG"
 
           # Setup git config
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          git config --local user.email "149080493+heraldbot[bot]@users.noreply.github.com"
+          git config --local user.name "HeraldBot[bot]"
           
           git checkout -b $branch
 
