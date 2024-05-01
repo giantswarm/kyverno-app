@@ -7,6 +7,8 @@ loki:
   mountedSecret: {{ .Values.target.loki.mountedSecret | quote }}
   minimumPriority: {{ .Values.target.loki.minimumPriority | quote }}
   skipExistingOnStartup: {{ .Values.target.loki.skipExistingOnStartup }}
+  username: {{ .Values.target.loki.username | quote }}
+  password: {{ .Values.target.loki.password | quote }}
   {{- with .Values.target.loki.customLabels }}
   customLabels:
     {{- toYaml . | nindent 4 }}
@@ -280,9 +282,9 @@ securityHub:
   secretAccessKey:  {{ .Values.target.securityHub.secretAccessKey }}
   secretRef: {{ .Values.target.securityHub.secretRef | quote }}
   mountedSecret: {{ .Values.target.securityHub.mountedSecret | quote }}
+  productName: {{ .Values.target.securityHub.productName | quote }}
   region: {{ .Values.target.securityHub.region }}
   endpoint: {{ .Values.target.securityHub.endpoint }}
-  streamName: {{ .Values.target.securityHub.streamName }}
   minimumPriority: {{ .Values.target.securityHub.minimumPriority | quote }}
   skipExistingOnStartup: {{ .Values.target.securityHub.skipExistingOnStartup }}
   {{- with .Values.target.securityHub.sources }}
