@@ -33,7 +33,7 @@ metadata:
     app.kubernetes.io/component: cleanup-controller
     app.kubernetes.io/instance: kyverno
     app.kubernetes.io/part-of: kyverno
-  name: kyverno:cleanup-rbacassesment
+  name: kyverno:cleanup-trivy-operator-reports
 rules:
 - apiGroups:
   - aquasecurity.github.io
