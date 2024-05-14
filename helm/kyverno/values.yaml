@@ -50,7 +50,7 @@ verticalPodAutoscaler:
     enabled: true
     containerPolicies: {}
   cleanupController:
-    enabled: false
+    enabled: true
     containerPolicies: {}
   reportsController:
     enabled: true
@@ -765,7 +765,7 @@ kyverno:
     featuresOverride: {}
 
     # -- Enable cleanup controller.
-    enabled: false
+    enabled: true
 
     rbac:
       # -- Create RBAC resources
