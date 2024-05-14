@@ -50,7 +50,7 @@ verticalPodAutoscaler:
     enabled: true
     containerPolicies: {}
   cleanupController:
-    enabled: false
+    enabled: true
     containerPolicies: {}
   reportsController:
     enabled: true
