@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Enable `cleanup-controller` with VericalPodAutoscaler by default.
+- Add missing ingress to `cleanup-controller` CiliumNetworkPolicy.
+
 ## [0.17.10] - 2024-04-30
 
 ### Added
