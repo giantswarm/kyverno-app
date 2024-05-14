@@ -227,6 +227,8 @@ spec:
   ingress:
     - fromEntities:
         - cluster
+        - remote-node
+        - kube-apiserver
       toPorts:
       - ports:
         - port: "9443"
