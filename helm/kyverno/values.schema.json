@@ -40,6 +40,25 @@
                 }
             }
         },
+        "cleanupPolicies": {
+            "type": "object",
+            "properties": {
+                "trivyOperator": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "olderThan": {
+                            "type": "string"
+                        },
+                        "schedule": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "crds": {
             "type": "object",
             "properties": {
@@ -1414,9 +1433,6 @@
                     "type": "object",
                     "properties": {
                         "application.giantswarm.io/team": {
-                            "type": "string"
-                        },
-                        "giantswarm.io/monitoring_basic_sli": {
                             "type": "string"
                         },
                         "giantswarm.io/service-type": {

@@ -67,6 +67,15 @@ verticalPodAutoscaler:
     enabled: true
     containerPolicies: {}
 
+cleanupPolicies:
+  trivyOperator:
+    # -- Enable Trivy cleanup policy to delete old Trivy Operator reports
+    enabled: true
+    # -- Cronjob schedule
+    schedule: '0 * * * *'
+    # -- Reports older than this duration will be deleted. Needs to be specified in hours. Defaults to 2 weeks (336 hours).
+    olderThan: 336h
+
 policyExceptions:
   # Kyverno will accept PolicyExceptions from all namespaces.
   # If enablePolexPolicy is true, this chart will deploy an additional
@@ -765,7 +774,7 @@ kyverno:
     featuresOverride: {}
 
     # -- Enable cleanup controller.
-    enabled: false
+    enabled: true
 
     rbac:
       # -- Create RBAC resources

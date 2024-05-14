@@ -1,0 +1,57 @@
+{{- if and .Values.cleanupPolicies.trivyOperator.enabled .Values.kyverno.cleanupController.enabled -}}
+apiVersion: kyverno.io/v2beta1
+kind: ClusterCleanupPolicy
+metadata:
+  name: clean-trivy-operator-resources
+spec:
+  match:
+    any:
+    - resources:
+        kinds:
+          - RbacAssessmentReport.aquasecurity.github.io
+          - ClusterRbacAssessmentReport.aquasecurity.github.io
+          - ConfigAuditReport.aquasecurity.github.io
+          - ClusterConfigAuditReport.aquasecurity.github.io
+          - SbomReport.aquasecurity.github.io
+          - ClusterSbomReport.aquasecurity.github.io
+          - InfraAssementReport.aquasecurity.github.io
+          - ClusterInfraAssementReport.aquasecurity.github.io
+          - VulnerabilityReport.aquasecurity.github.io
+          - ClusterVulnerabilityReport.aquasecurity.github.io
+          - ExposedSecretReport.aquasecurity.github.io
+  conditions:
+    any:
+    - key: "{{`{{ time_since('', '{{target.metadata.creationTimestamp}}', '') }}`}}"
+      operator: GreaterThanOrEquals
+      value: {{ default "336h" .Values.cleanupPolicies.trivyOperator.olderThan }}
+  schedule: {{ quote .Values.cleanupPolicies.trivyOperator.schedule }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/component: cleanup-controller
+    app.kubernetes.io/instance: kyverno
+    app.kubernetes.io/part-of: kyverno
+  name: kyverno:cleanup-rbacassesment
+rules:
+- apiGroups:
+  - aquasecurity.github.io
+  resources:
+  - RbacAssessmentReport
+  - ClusterRbacAssessmentReport
+  - ConfigAuditReport
+  - ClusterConfigAuditReport
+  - SbomReport
+  - ClusterSbomReport
+  - InfraAssementReport
+  - ClusterInfraAssementReport
+  - VulnerabilityReport
+  - ClusterVulnerabilityReport
+  - ExposedSecretReport
+  verbs:
+  - get
+  - watch
+  - list
+  - delete
+{{- end -}}
