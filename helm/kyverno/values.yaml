@@ -72,7 +72,7 @@ cleanupPolicies:
     # -- Enable Trivy cleanup policy to delete old Trivy Operator reports
     enabled: true
     # -- Cleanup schedule
-    schedule: '0 * * * *'
+    schedule: '37 * * * *'
     # -- Reports older than this duration will be deleted. Needs to be specified in hours. Defaults to 2 weeks (336 hours).
     olderThan: 336h
 
