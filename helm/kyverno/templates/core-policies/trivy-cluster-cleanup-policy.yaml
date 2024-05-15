@@ -12,17 +12,17 @@ spec:
     any:
     - resources:
         kinds:
-          - RbacAssessmentReport.aquasecurity.github.io
-          - ClusterRbacAssessmentReport.aquasecurity.github.io
-          - ConfigAuditReport.aquasecurity.github.io
-          - ClusterConfigAuditReport.aquasecurity.github.io
-          - SbomReport.aquasecurity.github.io
-          - ClusterSbomReport.aquasecurity.github.io
-          - InfraAssementReport.aquasecurity.github.io
-          - ClusterInfraAssementReport.aquasecurity.github.io
-          - VulnerabilityReport.aquasecurity.github.io
-          - ClusterVulnerabilityReport.aquasecurity.github.io
-          - ExposedSecretReport.aquasecurity.github.io
+          - aquasecurity.github.io/*/RbacAssessmentReport
+          - aquasecurity.github.io/*/ClusterRbacAssessmentReport
+          - aquasecurity.github.io/*/ConfigAuditReport
+          - aquasecurity.github.io/*/ClusterConfigAuditReport
+          - aquasecurity.github.io/*/SbomReport
+          - aquasecurity.github.io/*/ClusterSbomReport
+          - aquasecurity.github.io/*/InfraAssementReport
+          - aquasecurity.github.io/*/ClusterInfraAssementReport
+          - aquasecurity.github.io/*/VulnerabilityReport
+          - aquasecurity.github.io/*/ClusterVulnerabilityReport
+          - aquasecurity.github.io/*/ExposedSecretReport
   conditions:
     any:
     - key: "{{`{{ time_since('', '{{target.metadata.creationTimestamp}}', '') }}`}}"
