@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.17.11] - 2024-05-16
+
 ### Added
 
 - Add cleanup policy to remove old `trivy-operator` resources.
@@ -482,7 +484,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.17.10...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.17.11...HEAD
+[0.17.11]: https://github.com/giantswarm/kyverno-app/compare/v0.17.10...v0.17.11
 [0.17.10]: https://github.com/giantswarm/kyverno-app/compare/v0.17.9...v0.17.10
 [0.17.9]: https://github.com/giantswarm/kyverno-app/compare/v0.17.8...v0.17.9
 [0.17.8]: https://github.com/giantswarm/kyverno-app/compare/v0.17.7...v0.17.8
