@@ -39,7 +39,7 @@ image:
   repository: giantswarm/kubectl
   # -- Image tag
   # Defaults to `latest` if omitted
-  tag: '1.29.2'
+  tag: '1.30.1'
 
 # VerticalPodAutoscaler settings for individual controllers
 verticalPodAutoscaler:
@@ -237,7 +237,7 @@ kyverno:
         repository: giantswarm/kubectl
         # -- Image tag
         # Defaults to `latest` if omitted
-        tag: '1.29.2'
+        tag: '1.30.1'
         # -- (string) Image pull policy
         # Defaults to image.pullPolicy if omitted
         pullPolicy: IfNotPresent
@@ -290,7 +290,7 @@ kyverno:
         # -- Image tag
         # Defaults to `latest` if omitted
         # repo: giantswarm/kubectl
-        tag: '1.29.2'
+        tag: '1.30.1'
         # -- (string) Image pull policy
         # Defaults to image.pullPolicy if omitted
         pullPolicy: IfNotPresent
@@ -1162,7 +1162,7 @@ kyverno:
       repository: giantswarm/kubectl
       # -- Image tag
       # Defaults to `latest` if omitted
-      tag: '1.29.2'
+      tag: '1.30.1'
 
   webhooksCleanup:
     image:
@@ -1172,7 +1172,7 @@ kyverno:
       repository: giantswarm/kubectl
       # -- Image tag
       # Defaults to `latest` if omitted
-      tag: '1.29.2'
+      tag: '1.30.1'
 
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
