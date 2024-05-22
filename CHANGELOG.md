@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Fix template issue with DNS rules on the `admission-controller` CiliumNetworkPolicy.
+
 ## [0.17.11] - 2024-05-16
 
 ### Added

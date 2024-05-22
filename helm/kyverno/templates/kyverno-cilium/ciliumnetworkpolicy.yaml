@@ -76,7 +76,7 @@ spec:
             protocol: ANY
           - port: "53"
             protocol: ANY
-        {{- if .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.dnsSelector.rules -}}
+        {{- if .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.dnsSelector.rules }}
         rules:
           dns:
             {{- with .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.dnsSelector.rules -}}
