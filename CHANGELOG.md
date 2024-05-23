@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Disable Trivy cleanup policy by default.
+
 ## [0.17.12] - 2024-05-22
 
 ### Changed
