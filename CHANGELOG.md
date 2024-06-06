@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Remove duplicated key from the `allow-kyverno-policy-reporter-talk-to-kyverno-ui` CiliumNetworkPolicy.
+
 ## [0.17.13] - 2024-05-23
 
 ### Changed
