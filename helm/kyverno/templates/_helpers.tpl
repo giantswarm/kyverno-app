@@ -150,6 +150,8 @@ app.kubernetes.io/instance: "{{ template "kyverno-stack.name" . }}"
 
 {{- define "kyverno-stack.policyInstallAnnotations" -}}
 "helm.sh/hook": "post-install,post-upgrade"
+"meta.helm.sh/release-name": {{ .Release.Name | quote }}
+"meta.helm.sh/release-namespace" : {{ .Release.Namespace | quote }}
 {{- end -}}
 
 {{/* Define upgrade job variables */}}
