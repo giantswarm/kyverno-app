@@ -20,7 +20,6 @@ metadata:
       significant load on Kyverno, and is almost certainly not necessary for a particular policy.
       Please explicitly list the Kinds to be matched by a (Cluster)Policy, or consider whether
       native Kubernetes RBAC can be used instead for policies which truly apply to every type.
-    {{- include "kyverno-stack.policyInstallAnnotations" . | nindent 4 }}
 spec:
   validationFailureAction: Enforce
   background: true
