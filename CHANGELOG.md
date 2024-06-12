@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Remove duplicated key from the `allow-kyverno-policy-reporter-talk-to-kyverno-ui` CiliumNetworkPolicy.
+- Add Helm annotations to core policies.
 
 ## [0.17.13] - 2024-05-23
 
