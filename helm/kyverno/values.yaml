@@ -49,26 +49,24 @@ verticalPodAutoscaler:
   backgroundController:
     enabled: true
     containerPolicies:
-      - containerName: "*"
-        minAllowed:
-          cpu: 100m
-          memory: 100Mi
-        maxAllowed:
-          cpu: 4
-          memory: 8Gi
+      minAllowed:
+        cpu: 100m
+        memory: 100Mi
+      maxAllowed:
+        cpu: 4
+        memory: 8Gi
   cleanupController:
     enabled: true
     containerPolicies: {}
   reportsController:
     enabled: true
     containerPolicies:
-      - containerName: "*"
-        minAllowed:
-          cpu: 100m
-          memory: 100Mi
-        maxAllowed:
-          cpu: 6
-          memory: 24Gi
+      minAllowed:
+        cpu: 100m
+        memory: 100Mi
+      maxAllowed:
+        cpu: 6
+        memory: 24Gi
 
   # VPA settings for Policy Reporter components
   kyvernoPlugin:
