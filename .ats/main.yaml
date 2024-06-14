@@ -4,5 +4,6 @@ smoke-tests-cluster-config-file: tests/ats/kind_config.yaml
 skip-steps: [functional]
 
 upgrade-tests-cluster-type: kind
+# We aren't sure if it's truly required to set this config file, or if the config is re-used from `smoke-tests-cluster-config-file`, but this at least doesn't break.
 upgrade-tests-cluster-config-file: tests/ats/kind_config.yaml
 upgrade-tests-app-catalog-url: https://giantswarm.github.io/giantswarm-catalog
