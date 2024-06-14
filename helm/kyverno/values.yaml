@@ -48,14 +48,26 @@ verticalPodAutoscaler:
     containerPolicies: {}
   backgroundController:
     enabled: true
-    containerPolicies: {}
+    containerPolicies:
+      minAllowed:
+        cpu: 100m
+        memory: 100Mi
+      maxAllowed:
+        cpu: 4
+        memory: 8Gi
   cleanupController:
     enabled: true
     containerPolicies: {}
   reportsController:
     enabled: true
     containerPolicies:
-      controlledResources: ["memory"]
+      minAllowed:
+        cpu: 100m
+        memory: 100Mi
+      maxAllowed:
+        cpu: 6
+        memory: 24Gi
+
   # VPA settings for Policy Reporter components
   kyvernoPlugin:
     enabled: true
@@ -659,11 +671,12 @@ kyverno:
     resources:
       # -- Pod resource limits
       limits:
-        memory: 128Mi
+        cpu: 750m
+        memory: 2Gi
       # -- Pod resource requests
       requests:
-        cpu: 100m
-        memory: 64Mi
+        cpu: 500m
+        memory: 1Gi
 
     # -- Node labels for pod assignment
     nodeSelector: {}
@@ -843,6 +856,7 @@ kyverno:
     resources:
       # -- Pod resource limits
       limits:
+        cpu: 125m
         memory: 128Mi
       # -- Pod resource requests
       requests:
@@ -1039,11 +1053,12 @@ kyverno:
     resources:
       # -- Pod resource limits
       limits:
-        memory: 128Mi
+        cpu: 750m
+        memory: 2Gi
       # -- Pod resource requests
       requests:
-        cpu: 100m
-        memory: 64Mi
+        cpu: 500m
+        memory: 1Gi
 
     # -- Node labels for pod assignment
     nodeSelector: {}
