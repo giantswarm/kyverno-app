@@ -18,7 +18,6 @@ metadata:
       API calls and external service calls add latency to each admission review, which can compound problems during
       periods of heavy cluster admission activity or CrashLoopBackOffs. When possible, policies requiring external uncached context variables
       should be written for equivalent higher-level controllers (e.g. Deployments instead of Pods), or use a ConfigMap instead.
-    {{- include "kyverno-stack.policyInstallAnnotations" . | nindent 4 }}
 spec:
   validationFailureAction: Enforce
   background: true

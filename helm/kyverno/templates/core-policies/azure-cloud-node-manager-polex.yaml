@@ -6,8 +6,6 @@ metadata:
   namespace: giantswarm
   labels:
     {{- include "kyverno-stack.labels" . | nindent 4 }}
-  annotations:
-    {{- include "kyverno-stack.policyInstallAnnotations" . | nindent 4 }}
 spec:
   exceptions:
   - policyName: require-run-as-nonroot
