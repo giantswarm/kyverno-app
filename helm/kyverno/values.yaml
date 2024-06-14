@@ -49,6 +49,7 @@ verticalPodAutoscaler:
   backgroundController:
     enabled: true
     containerPolicies:
+      controlledResources: ["memory"]
       minAllowed:
         cpu: 100m
         memory: 100Mi
@@ -61,6 +62,7 @@ verticalPodAutoscaler:
   reportsController:
     enabled: true
     containerPolicies:
+      controlledResources: ["memory"]
       minAllowed:
         cpu: 100m
         memory: 100Mi
