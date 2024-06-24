@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Set VPA max 6 CPU / 24Gi memory and adjust default requests/limits for `reports-controller`.
 - Set VPA max 4 CPU / 8Gi memory and adjust default requests/limits for `background-controller`.
 - Set starting CPU limit of request+25% for `cleanup-controller`.
+- Add Prometheus to `config.resourceFilters` in charts/kyverno.
 
 ## [0.17.14] - 2024-06-12
 

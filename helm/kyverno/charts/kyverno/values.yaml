@@ -194,6 +194,7 @@ config:
     - '[ServiceMonitor,{{ if .Values.admissionController.serviceMonitor.namespace }}{{ .Values.admissionController.serviceMonitor.namespace }}{{ else }}{{ template "kyverno.namespace" . }}{{ end }},{{ template "kyverno.reports-controller.name" . }}]'
     - '[Secret,{{ include "kyverno.namespace" . }},{{ template "kyverno.admission-controller.serviceName" . }}.{{ template "kyverno.namespace" . }}.svc.*]'
     - '[Secret,{{ include "kyverno.namespace" . }},{{ template "kyverno.cleanup-controller.name" . }}.{{ template "kyverno.namespace" . }}.svc.*]'
+    - '[Prometheus,mimir,*]'
 
   # -- Defines the `namespaceSelector` in the webhook configurations.
   # Note that it takes a list of `namespaceSelector` and/or `objectSelector` in the JSON format, and only the first element
