@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add vpa for kyverno deployment
 
+### Changed
+
+- Add Prometheus to `config.resourceFilters` in charts/kyverno.
+
 ## [0.14.10] - 2023-07-04
 
 ### Added
