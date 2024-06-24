@@ -10,8 +10,8 @@ metadata:
     {{- include "kyverno-stack.CRDInstallAnnotations" . | nindent 4 }}
   labels:
     app.kubernetes.io/component: {{ include "kyverno-stack.crdInstall" . | quote }}
-    {{- include "kyverno-stack.selectorLabels" . | nindent 4 }}
     role: {{ include "kyverno-stack.CRDInstallSelector" . | quote }}
+    {{- include "kyverno-stack.selectorLabels" . | nindent 4 }}
 spec:
   template:
     metadata:
@@ -28,7 +28,7 @@ spec:
         effect: NoSchedule
       containers:
       - name: kubectl
-        image: "{{ .Values.image.registry }}/giantswarm/docker-kubectl:latest"
+        image: "{{ default (.Values.global).image.registry .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         command:
         - sh
         - -c
@@ -37,7 +37,7 @@ spec:
 
           # piping stderr to stdout means kubectl's errors are surfaced
           # in the pod's logs.
-          kubectl apply --server-side -f /data/ 2>&1
+          kubectl apply --force-conflicts --server-side -f /data/ 2>&1
         volumeMounts:
 {{- range $path, $_ := .Files.Glob "crd/**" }}
         - name: {{ $path | base | trimSuffix ".yaml" }}

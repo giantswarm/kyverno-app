@@ -2,19 +2,18 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'fix: skip duplicate PSa checks for the latest version (#6634)
-        (#6636)...'
-      sha: 4dbffc57a124d14e681874b9839a8c14a41edfe0
+      commitTitle: release 1.11.4 (#9453)...
+      sha: 6c88cf5ee12dcf0c3ecfc29b893864216a05b828
       tags:
-      - v1.9.2
+      - v1.11.4
     path: .
   path: helm/kyverno/charts/kyverno
 - contents:
   - git:
-      commitTitle: update UI tag...
-      sha: dfe8fbf1a42f684885576a065da1bdd4f6ea6d9b
+      commitTitle: Update Dependencies and Components (#393)...
+      sha: b0a513cb20b5ab466e34fa7c2a442264d5d7aafd
       tags:
-      - v2.14.0
+      - policy-reporter-2.21.6
     path: .
   path: helm/kyverno/charts/policy-reporter
 kind: LockConfig

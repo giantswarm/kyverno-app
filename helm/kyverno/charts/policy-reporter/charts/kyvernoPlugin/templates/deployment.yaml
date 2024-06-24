@@ -3,14 +3,15 @@ kind: Deployment
 metadata:
   name: {{ include "kyvernoplugin.fullname" . }}
   namespace: {{ include "kyvernoplugin.namespace" . }}
+  {{- if .Values.annotations }}
   annotations:
-    {{- if .Values.annotations }}
-      {{- toYaml .Values.annotations | nindent 4 }}
-    {{- end }}
+    {{- toYaml .Values.annotations | nindent 4 }}
+  {{- end }}
   labels:
     {{- include "kyvernoplugin.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   {{- if .Values.deploymentStrategy }}
   strategy:
     {{- toYaml .Values.deploymentStrategy | nindent 4 }}
@@ -38,9 +39,15 @@ spec:
           {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
+      {{- with .Values.priorityClassName }}
+      priorityClassName: {{ . }}
+      {{- end }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.podSecurityContext }}
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "kyvernoplugin.serviceAccountName" . }}
       automountServiceAccountToken: true
@@ -71,16 +78,33 @@ spec:
             mountPath: /app/config.yaml
             subPath: config.yaml
             readOnly: true
-          {{- if or .Values.leaderElection.enabled (gt (int .Values.replicaCount) 1) }}
           env:
-          - name: POD_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
           - name: POD_NAMESPACE
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
+          {{- if or .Values.leaderElection.enabled (gt (int .Values.replicaCount) 1) }}
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          {{- end }}
+          {{- if .Values.global.basicAuth.secretRef }}
+          - name: API_AUTH_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.global.basicAuth.secretRef }}
+                key: username
+                optional: false
+          - name: API_AUTH_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.global.basicAuth.secretRef }}
+                key: password
+                optional: false
+          {{- end }}
+          {{- with .Values.envVars }}
+          {{- . | toYaml | trim | nindent 10 }}
           {{- end }}
       volumes:
       - name: config-file

@@ -16,8 +16,29 @@ spec:
   selector:
     matchLabels:
         {{- include "policyreporter.selectorLabels" . | nindent 8 }}
+  {{- with .Values.serviceMonitor.namespaceSelector }}
+  namespaceSelector:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   endpoints:
   - port: http
+    {{- if and .Values.global.basicAuth.username .Values.global.basicAuth.password }}
+    basicAuth:
+      password:
+        name: {{ include "monitoring.fullname" . }}-auth
+        key: password
+      username:
+        name: {{ include "monitoring.fullname" . }}-auth
+        key: username
+    {{- else if .Values.global.basicAuth.secretRef }}
+    basicAuth:
+      password:
+        name: {{ .Values.global.basicAuth.secretRef }}
+        key: password
+      username:
+        name: {{ .Values.global.basicAuth.secretRef }}
+        key: username
+    {{- end }}
     honorLabels: {{ .Values.serviceMonitor.honorLabels }}
     {{- if .Values.serviceMonitor.scrapeTimeout }}
     scrapeTimeout: {{ .Values.serviceMonitor.scrapeTimeout }}

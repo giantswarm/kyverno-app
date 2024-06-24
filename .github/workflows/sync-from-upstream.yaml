@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - run: |
           # Get the last tag from fork repo
           POLICY_REPORTER_LAST_TAG=$(git ls-remote --tags --sort='v:refname' --refs $policy_reporter_fork_repo \
@@ -42,6 +42,7 @@ jobs:
   call-update-chart:
     uses: ./.github/workflows/zz_generated.update_chart.yaml
     needs: sync-app-kyverno-with-fork
+    secrets: inherit
     with:
       branch: 'main#update-chart'
   copy-kyverno-crds:
@@ -49,7 +50,7 @@ jobs:
     needs: call-update-chart
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: 'main#update-chart'
       - name: Remove previous CRDs and install new ones
@@ -60,12 +61,17 @@ jobs:
           git rm -f *.yaml
           
           # Move new CRDs to crd directory
-          cp ../charts/kyverno/templates/crds.yaml .
+          cp ../charts/kyverno/templates/crds/crds.yaml .
 
           # Remove helm content from CRDs
-          APP_VERSION=$(yq '.appVersion' ../charts/kyverno/Chart.yaml)
+          APP_VERSION=$(yq '.appVersion' ../charts/kyverno/Chart.yaml | cut -b 2-)
           sed -i -e "s/{{.Chart.AppVersion}}/$APP_VERSION/g" crds.yaml
           sed -i -e "/{{/d" crds.yaml
+
+          # Add labels
+          yq -i '.metadata.labels = {"app.kubernetes.io/managed-by": "Helm, "app.kubernetes.io/name": "kyverno", "app.kubernetes.io/part-of": "kyverno", "app.kubernetes.io/version": env(APP_VERSION)}' crds.yaml
+          # Add annotations
+          yq -i '.metadata.annotations = {"meta.helm.sh/release-name": "kyverno-crds","meta.helm.sh/release-namespace": "kyverno"}' crds.yaml
 
           # Split CRDs into multiple files
           yq -s '"crd-" + $index + ".yaml"' crds.yaml

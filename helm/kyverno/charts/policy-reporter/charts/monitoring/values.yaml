@@ -18,11 +18,13 @@ serviceMonitor:
   relabelings: []
   # see serviceMonitor.relabelings
   metricRelabelings: []
+  # optional namespaceSelector
+  namespaceSelector: {}
   # optional scrapeTimeout
   scrapeTimeout:
   # optional scrape interval
   interval:
-
+  
 kyverno:
   serviceMonitor:
     # HonorLabels chooses the metrics labels on collisions with target labels
@@ -31,6 +33,8 @@ kyverno:
     relabelings: []
     # see serviceMonitor.relabelings
     metricRelabelings: []
+    # optional namespaceSelector
+    namespaceSelector: {}
     # optional scrapeTimeout
     scrapeTimeout:
     # optional scrape interval
@@ -114,3 +118,24 @@ policyReportOverview:
     height: 10
   failingClusterPolicyRuleTable:
     height: 10
+
+# Should be set in the parent chart only
+global:
+  # available plugins
+  plugins:
+    # enable kyverno for Policy Reporter UI and monitoring
+    kyverno: false
+  # overwrite the fullname of all resources including subcharts
+  fullnameOverride: ""
+  # configure the namespace of all resources including subcharts
+  namespace: ""
+  # additional labels added on each resource
+  labels: {}
+  # basicAuth for APIs and metrics
+  basicAuth:
+    # HTTP BasicAuth username
+    username: ""
+    # HTTP BasicAuth password
+    password: ""
+    # read credentials from secret
+    secretRef: ""

@@ -19,6 +19,11 @@ metadata:
   namespace: {{ include "policyreporter.namespace" . }}
   labels:
     {{- include "policyreporter.labels" . | nindent 4 }}
+    {{- if .Values.ingress.labels }}
+    {{- with .Values.ingress.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- end }}
   {{- if or .Values.annotations .Values.ingress.annotations }}
   annotations:
   {{- with .Values.ingress.annotations }}
@@ -34,13 +39,7 @@ spec:
   {{- end }}
   {{- if .Values.ingress.tls }}
   tls:
-    {{- range .Values.ingress.tls }}
-    - hosts:
-        {{- range .hosts }}
-        - {{ . | quote }}
-        {{- end }}
-      secretName: {{ .secretName }}
-    {{- end }}
+    {{- toYaml .Values.ingress.tls | nindent 4 }}
   {{- end }}
   rules:
     {{- range .Values.ingress.hosts }}

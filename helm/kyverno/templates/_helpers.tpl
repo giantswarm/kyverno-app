@@ -46,8 +46,8 @@ The longest name that gets created adds and extra 37 characters, so truncation s
 
 {{/* Generate basic labels */}}
 {{- define "kyverno-stack.labels" }}
+{{- include "kyverno-stack.selectorLabels" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/version: "{{ .Chart.Version }}"
 app.kubernetes.io/part-of: {{ template "kyverno-stack.name" . }}
 chart: {{ template "kyverno-stack.chartref" . }}
@@ -150,14 +150,16 @@ app.kubernetes.io/instance: "{{ template "kyverno-stack.name" . }}"
 
 {{- define "kyverno-stack.policyInstallAnnotations" -}}
 "helm.sh/hook": "post-install,post-upgrade"
+"meta.helm.sh/release-name": {{ .Release.Name | quote }}
+"meta.helm.sh/release-namespace" : {{ .Release.Namespace | quote }}
 {{- end -}}
 
-{{/* Define webhook deletion variables */}}
-{{- define "kyverno-stack.webhooksCleanup.name" -}}
-{{- printf "%s-%s" ( include "kyverno-stack.name" . ) "webhooks-cleanup" | replace "+" "_" | trimSuffix "-" -}}
+{{/* Define upgrade job variables */}}
+{{- define "kyverno-stack.upgradeJob.name" -}}
+{{- printf "%s-%s" ( include "kyverno-stack.name" . ) "upgrade-job" | replace "+" "_" | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "kyverno-stack.webhooksCleanup.annotations" -}}
-"helm.sh/hook": "pre-delete"
-"helm.sh/hook-delete-policy": hook-succeeded,hook-failed
+{{- define "kyverno-stack.upgradeJob.annotations" -}}
+"helm.sh/hook": "pre-upgrade"
+"helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
 {{- end -}}

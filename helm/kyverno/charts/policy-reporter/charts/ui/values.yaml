@@ -3,11 +3,13 @@ enabled: false
 # Override the chart name used for all resources
 nameOverride: ""
 
+priorityClassName: ""
+
 image:
   registry: ghcr.io
   repository: kyverno/policy-reporter-ui
   pullPolicy: IfNotPresent
-  tag: 1.8.2
+  tag: 1.9.2
 
 # possible default displayModes: light/dark
 displayMode: ""
@@ -48,6 +50,10 @@ clusters: []
 #   kyvernoApi: https://policy-reporter-kyverno-plugin.external.cluster # (optional) reachable external Policy Reporter Kyverno Plugin REST API
 #   skipTLS: false
 #   certificate: "/app/certs/root.ca"
+#   secreRef: "" # name of an existing secret to read the clusterconfiguration from, supported keys: api, kyvernoApi, username, password, skipTLS, certificate
+#   basicAuth:   # added as HTTP BasicAuthentication Header for all requests against api and kyvernoApi
+#     username: ""
+#     password: ""
 
 # define custom filter for policy report results based on (Cluster)PolicyReport labels
 # exmaple - use a owner label on all reports belonging to a dedicated team and add the label as additional custom filter
@@ -72,11 +78,12 @@ logging:
   development: false # more human readable structure, removes log sampling
 
 api:
-  logging: false # enables access logging for proxy requests, sets log level to debug
+  logging: false      # enables access logging for proxy requests, sets log level to debug
+  overwriteHost: true # overwrites request host and sets X-Forwarded--Host and X-Origin-Host headers
 
 # use redis as external log storage instead of an in memory store
 # recommended when using a HA setup with more then one replica
-# to get all logs on each instance 
+# to get all logs on each instance
 redis:
   enabled: false
   address: ""
@@ -100,6 +107,8 @@ volumeMounts: []
 imagePullSecrets: []
 
 replicaCount: 1
+
+revisionHistoryLimit: 10
 
 deploymentStrategy: {}
   # rollingUpdate:
@@ -125,6 +134,9 @@ podAnnotations: {}
 # Key/value pairs that are attached to pods.
 podLabels: {}
 
+# Allow additional env variables to be added
+envVars: []
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -139,12 +151,16 @@ resources: {}
 
 serviceAccount:
   # Specifies whether a service account should be created
-  create: false
+  create: true
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
+
+# Create secret reader role and rolebinding
+rbac:
+  enabled: true
 
 service:
   enabled: true
@@ -204,3 +220,24 @@ topologySpreadConstraints: []
 networkPolicy:
   enabled: false
   egress: []
+
+# Should be set in the parent chart only
+global:
+  # available plugins
+  plugins:
+    # enable kyverno for Policy Reporter UI and monitoring
+    kyverno: false
+  # overwrite the fullname of all resources including subcharts
+  fullnameOverride: ""
+  # configure the namespace of all resources including subcharts
+  namespace: ""
+  # additional labels added on each resource
+  labels: {}
+  # basicAuth for APIs and metrics
+  basicAuth:
+    # HTTP BasicAuth username
+    username: ""
+    # HTTP BasicAuth password
+    password: ""
+    # read credentials from secret
+    secretRef: ""

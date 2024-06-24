@@ -1,4 +1,4 @@
-{{ if .Values.psp.enabled }}
+{{- if not .Values.global.podSecurityStandards.enforced }}
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
@@ -58,7 +58,10 @@ metadata:
     {{- include "kyverno-stack.labels" . | nindent 4 }}
 subjects:
   - kind: ServiceAccount
-    name: {{ .Values.kyverno.rbac.serviceAccount.name }}
+    name: {{ .Values.kyverno.admissionController.rbac.serviceAccount.name }}
+    namespace: {{ include "kyverno-stack.namespace"  . }}
+  - kind: ServiceAccount
+    name: {{ .Values.kyverno.reportsController.rbac.serviceAccount.name }}
     namespace: {{ include "kyverno-stack.namespace"  . }}
 roleRef:
   kind: ClusterRole
