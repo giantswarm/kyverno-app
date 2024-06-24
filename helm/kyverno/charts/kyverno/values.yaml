@@ -343,6 +343,7 @@ config:
   - '[ServiceMonitor,{{ if .Values.serviceMonitor.namespace }}{{ .Values.serviceMonitor.namespace }}{{ else }}{{ template "kyverno.namespace" . }}{{ end }},{{ template "kyverno.serviceName" . }}-service-monitor]'
   - '[Pod,{{ include "kyverno.namespace" . }},{{ template "kyverno.fullname" . }}-test]'
   - '[*,giantswarm,chart-operator*]'
+  - '[Prometheus,mimir,*]'
   # -- Name of an existing config map (ignores default/provided resourceFilters)
   existingConfig: ''
   # -- Additional annotations to add to the configmap
