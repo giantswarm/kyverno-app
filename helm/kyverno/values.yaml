@@ -78,9 +78,6 @@ verticalPodAutoscaler:
   ui:
     enabled: true
     containerPolicies: {}
-  kyverno:
-    enabled: true
-    containerPolicies: {}
 
 cleanupPolicies:
   trivyOperator:

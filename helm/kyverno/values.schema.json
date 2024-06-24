@@ -2304,14 +2304,6 @@
                     }
                 }
             }
-        },
-        "webhooksCleanup": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean"
-                }
-            }
         }
     }
 }
