@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Set VPA max 4 CPU / 8Gi memory and adjust default requests/limits for `background-controller`.
 - Set starting CPU limit of request+25% for `cleanup-controller`.
 
+### Removed
+
+- Disable Kyverno CRDs install Job in favor of `kyverno-crds` App.
+
 ## [0.17.14] - 2024-06-12
 
 ### Changed
