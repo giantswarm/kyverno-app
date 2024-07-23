@@ -8,17 +8,16 @@ metadata:
   labels:
     {{- include "kyverno.hooks.labels" . | nindent 4 }}
   annotations:
-<<<<<<< HEAD:helm/kyverno/charts/kyverno/templates/hooks/post-upgrade.yaml
-    "helm.sh/hook": post-upgrade
-    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded,hook-failed
-=======
     helm.sh/hook: post-upgrade
     helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded,hook-failed
->>>>>>> 7fb0125f0 (Automated update from upstream):helm/kyverno/charts/kyverno/templates/hooks/post-upgrade-clean-reports.yaml
 spec:
   backoffLimit: 2
   template:
     metadata:
+      {{- with .Values.policyReportsCleanup.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.policyReportsCleanup.podLabels }}
       labels:
         {{- toYaml . | nindent 8 }}
