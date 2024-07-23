@@ -7,6 +7,8 @@ loki:
   mountedSecret: {{ .Values.target.loki.mountedSecret | quote }}
   minimumPriority: {{ .Values.target.loki.minimumPriority | quote }}
   skipExistingOnStartup: {{ .Values.target.loki.skipExistingOnStartup }}
+  username: {{ .Values.target.loki.username | quote }}
+  password: {{ .Values.target.loki.password | quote }}
   {{- with .Values.target.loki.customLabels }}
   customLabels:
     {{- toYaml . | nindent 4 }}
@@ -17,6 +19,10 @@ loki:
   {{- end }}
   {{- with .Values.target.loki.filter }}
   filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.loki.headers }}
+  headers:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   {{- with .Values.target.loki.channels }}
@@ -135,6 +141,10 @@ webhook:
   mountedSecret: {{ .Values.target.webhook.mountedSecret | quote }}
   minimumPriority: {{ .Values.target.webhook.minimumPriority | quote }}
   skipExistingOnStartup: {{ .Values.target.webhook.skipExistingOnStartup }}
+  {{- with .Values.target.webhook.headers }}
+  headers:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{- with .Values.target.webhook.sources }}
   sources:
     {{- toYaml . | nindent 4 }}
@@ -162,6 +172,10 @@ telegram:
   mountedSecret: {{ .Values.target.telegram.mountedSecret | quote }}
   minimumPriority: {{ .Values.target.telegram.minimumPriority | quote }}
   skipExistingOnStartup: {{ .Values.target.telegram.skipExistingOnStartup }}
+  {{- with .Values.target.telegram.headers }}
+  headers:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{- with .Values.target.telegram.sources }}
   sources:
     {{- toYaml . | nindent 4 }}
@@ -187,6 +201,10 @@ googleChat:
   mountedSecret: {{ .Values.target.googleChat.mountedSecret | quote }}
   minimumPriority: {{ .Values.target.googleChat.minimumPriority | quote }}
   skipExistingOnStartup: {{ .Values.target.googleChat.skipExistingOnStartup }}
+  {{- with .Values.target.googleChat.headers }}
+  headers:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{- with .Values.target.googleChat.sources }}
   sources:
     {{- toYaml . | nindent 4 }}
@@ -278,11 +296,14 @@ securityHub:
   accountID: {{ .Values.target.securityHub.accountID }}
   accessKeyID: {{ .Values.target.securityHub.accessKeyID }}
   secretAccessKey:  {{ .Values.target.securityHub.secretAccessKey }}
+  delayInSeconds: {{ .Values.target.securityHub.delayInSeconds }}
+  cleanup: {{ .Values.target.securityHub.cleanup }}
   secretRef: {{ .Values.target.securityHub.secretRef | quote }}
   mountedSecret: {{ .Values.target.securityHub.mountedSecret | quote }}
+  productName: {{ .Values.target.securityHub.productName | quote }}
+  companyName:  {{ .Values.target.securityHub.companyName | quote }}
   region: {{ .Values.target.securityHub.region }}
   endpoint: {{ .Values.target.securityHub.endpoint }}
-  streamName: {{ .Values.target.securityHub.streamName }}
   minimumPriority: {{ .Values.target.securityHub.minimumPriority | quote }}
   skipExistingOnStartup: {{ .Values.target.securityHub.skipExistingOnStartup }}
   {{- with .Values.target.securityHub.sources }}
@@ -327,11 +348,6 @@ gcs:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 
-{{- with .Values.policyPriorities }}
-priorityMap:
-  {{- toYaml . | nindent 2 }}
-{{- end }}
-
 worker: {{ .Values.worker }}
 
 metrics:
@@ -369,6 +385,12 @@ leaderElection:
 redis:
   {{- toYaml . | nindent 2 }}
 {{- end }}
+
+{{- with .Values.sourceConfig }}
+sourceConfig:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+
 
 logging:
   encoding: {{ .Values.logging.encoding }}
