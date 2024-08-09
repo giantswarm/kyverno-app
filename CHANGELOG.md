@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Split Cilium PolicyExceptions per component.
+
 ## [0.17.15] - 2024-07-18
 
 ### Changed
