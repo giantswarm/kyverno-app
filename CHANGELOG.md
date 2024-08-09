@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Split Cilium PolicyExceptions per component.
+- Add rules to cilium-agent PolicyException.
 
 ## [0.17.15] - 2024-07-18
 
