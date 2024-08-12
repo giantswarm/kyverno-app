@@ -10,6 +10,14 @@ metadata:
     {{- include "kyverno-stack.policyInstallAnnotations" . | nindent 4 }}
 spec:
   exceptions:
+  - policyName: require-non-root-groups
+    ruleNames:
+    - check-runasgroup
+    - autogen-check-runasgroup
+  - policyName: require-ro-rootfs
+    ruleNames:
+    - validate-read-only-root-filesystem
+    - autogen-validate-read-only-root-filesystem
   - policyName: require-run-as-non-root-user
     ruleNames:
     - run-as-non-root-user 
@@ -48,6 +56,10 @@ spec:
     - autogen-adding-capabilities-strict
     - require-drop-all
     - autogen-require-drop-all
+  - policyName: disallow-capabilities-not-strict
+    ruleNames:
+    - adding-capabilities
+    - autogen-adding-capabilities
   - policyName: disallow-privilege-escalation
     ruleNames:
     - privilege-escalation
