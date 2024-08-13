@@ -1,3 +1,5 @@
+app-tests-app-config-file: tests/test-values.yaml
+
 smoke-tests-cluster-type: kind
 smoke-tests-cluster-config-file: tests/ats/kind_config.yaml
 
