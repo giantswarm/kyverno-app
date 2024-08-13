@@ -9,13 +9,10 @@ metadata:
     {{- include "kyverno.hooks.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": pre-delete
-    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded,hook-failed
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed
 spec:
   backoffLimit: 2
   template:
-    metadata:
-      labels:
-        {{- include "kyverno.hooks.labels" . | nindent 8 }}
     spec:
       serviceAccount: {{ template "kyverno.admission-controller.serviceAccountName" . }}
       {{- with .Values.webhooksCleanup.podSecurityContext }}
