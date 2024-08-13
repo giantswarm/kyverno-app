@@ -2,12 +2,10 @@
 apiVersion: kyverno.io/v2beta1
 kind: PolicyException
 metadata:
-  name: kyverno-app-cilium-policy-exception
+  name: kyverno-app-cilium-operator-policy-exception
   namespace: giantswarm
   labels:
     {{- include "kyverno-stack.labels" . | nindent 4 }}
-  annotations:
-    {{- include "kyverno-stack.policyInstallAnnotations" . | nindent 4 }}
 spec:
   exceptions:
   - policyName: require-run-as-non-root-user
@@ -66,20 +64,15 @@ spec:
     ruleNames:
     - privileged-containers
     - autogen-privileged-containers
-
   match:
     any:
     - resources:
         kinds:
-        - DaemonSet
         - Deployment
         - ReplicaSet
         - Pod
         namespaces:
         - kube-system 
         names:
-        - cilium*
-        - cilium-agent*
         - cilium-operator*
-        - hubble*
 {{- end -}}

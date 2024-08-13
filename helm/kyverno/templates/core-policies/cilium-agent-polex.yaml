@@ -2,12 +2,20 @@
 apiVersion: kyverno.io/v2beta1
 kind: PolicyException
 metadata:
-  name: kyverno-app-cilium-policies-policy-exception
+  name: kyverno-app-cilium-agent-policy-exception
   namespace: giantswarm
   labels:
     {{- include "kyverno-stack.labels" . | nindent 4 }}
 spec:
   exceptions:
+  - policyName: require-non-root-groups
+    ruleNames:
+    - check-runasgroup
+    - autogen-check-runasgroup
+  - policyName: require-ro-rootfs
+    ruleNames:
+    - validate-read-only-root-filesystem
+    - autogen-validate-read-only-root-filesystem
   - policyName: require-run-as-non-root-user
     ruleNames:
     - run-as-non-root-user 
@@ -46,6 +54,10 @@ spec:
     - autogen-adding-capabilities-strict
     - require-drop-all
     - autogen-require-drop-all
+  - policyName: disallow-capabilities-not-strict
+    ruleNames:
+    - adding-capabilities
+    - autogen-adding-capabilities
   - policyName: disallow-privilege-escalation
     ruleNames:
     - privilege-escalation
@@ -64,17 +76,15 @@ spec:
     ruleNames:
     - privileged-containers
     - autogen-privileged-containers
-
   match:
     any:
     - resources:
         kinds:
-        - Job
+        - DaemonSet
         - Pod
         namespaces:
         - kube-system 
-        names:
-        - cilium-create-extra-policies*
-        - cilium-remove-default-policies*
-        - cilium-create-default-policies*
+        selector:
+          matchLabels:
+            k8s-app: cilium
 {{- end -}}

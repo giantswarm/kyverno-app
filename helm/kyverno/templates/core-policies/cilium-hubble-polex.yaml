@@ -1,13 +1,21 @@
-{{- if .Values.policyExceptions.enableAwsEbsCsiDriverPolex }}
+{{- if .Values.policyExceptions.enableCiliumPolex }}
 apiVersion: kyverno.io/v2beta1
 kind: PolicyException
 metadata:
-  name: kyverno-app-aws-ebs-csi-driver-policy-exception 
+  name: kyverno-app-cilium-hubble-policy-exception
   namespace: giantswarm
   labels:
     {{- include "kyverno-stack.labels" . | nindent 4 }}
 spec:
   exceptions:
+  - policyName: require-run-as-non-root-user
+    ruleNames:
+    - run-as-non-root-user 
+    - autogen-run-as-non-root-user
+  - policyName: require-run-as-nonroot 
+    ruleNames:
+    - run-as-non-root 
+    - autogen-run-as-non-root
   - policyName: disallow-host-path
     ruleNames:
     - host-path
@@ -16,14 +24,22 @@ spec:
     ruleNames:
     - restricted-volumes
     - autogen-restricted-volumes
-  - policyName: require-run-as-nonroot
+  - policyName: disallow-host-namespaces
     ruleNames:
-    - run-as-non-root 
-    - autogen-run-as-non-root
+    - host-namespaces
+    - autogen-host-namespaces
   - policyName: restrict-seccomp-strict
     ruleNames:
     - check-seccomp-strict
     - autogen-check-seccomp-strict
+  - policyName: disallow-host-ports
+    ruleNames:
+    - host-ports-none
+    - autogen-host-ports-none
+  - policyName: disallow-capabilities
+    ruleNames:
+    - adding-capabilities
+    - autogen-adding-capabilities
   - policyName: disallow-capabilities-strict
     ruleNames:
     - adding-capabilities-strict
@@ -34,10 +50,16 @@ spec:
     ruleNames:
     - privilege-escalation
     - autogen-privilege-escalation
-  - policyName: require-run-as-non-root-user
+  - policyName: disallow-selinux
     ruleNames:
-    - run-as-non-root-user
-    - autogen-run-as-non-root-user
+    - seLinux
+    - selinux-type
+    - autogen-seLinux
+    - autogen-selinux-type
+  - policyName: restrict-apparmor-profiles
+    ruleNames:
+    - app-armor
+    - autogen-app-armor
   - policyName: disallow-privileged-containers
     ruleNames:
     - privileged-containers
@@ -46,12 +68,11 @@ spec:
     any:
     - resources:
         kinds:
-        - DaemonSet
         - Deployment
         - ReplicaSet
         - Pod
         namespaces:
-        - kube-system
+        - kube-system 
         names:
-        - ebs-csi*
-{{- end }}
+        - hubble*
+{{- end -}}
