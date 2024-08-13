@@ -148,12 +148,6 @@ app.kubernetes.io/instance: "{{ template "kyverno-stack.name" . }}"
 {{- printf "%s" "crd-install-hook" -}}
 {{- end -}}
 
-{{- define "kyverno-stack.policyInstallAnnotations" -}}
-"helm.sh/hook": "post-install,post-upgrade"
-"meta.helm.sh/release-name": {{ .Release.Name | quote }}
-"meta.helm.sh/release-namespace" : {{ .Release.Namespace | quote }}
-{{- end -}}
-
 {{/* Define upgrade job variables */}}
 {{- define "kyverno-stack.upgradeJob.name" -}}
 {{- printf "%s-%s" ( include "kyverno-stack.name" . ) "upgrade-job" | replace "+" "_" | trimSuffix "-" -}}

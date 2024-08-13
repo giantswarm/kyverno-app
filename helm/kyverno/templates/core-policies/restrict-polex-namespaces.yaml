@@ -18,7 +18,6 @@ metadata:
       a PolicyException may be created. This limits the creation of new exceptions,
       but existing exceptions in namespaces other than those allowed here will still
       be honored by Kyverno until they are deleted.
-    {{- include "kyverno-stack.policyInstallAnnotations" . | nindent 4 }}
 spec:
   validationFailureAction: Enforce
   background: true
