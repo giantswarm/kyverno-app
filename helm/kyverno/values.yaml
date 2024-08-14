@@ -132,16 +132,16 @@ upgradeJob:
 
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
 kyverno:
-  # Enable CRD migration
-  migration:
-    enabled: true
-    image:
-      repository: giantswarm/kyverno-cli
 
   # CRDs configuration
   crds:
     # -- We manage CRDs with an outside job so this needs to be disabled
     install: false
+  # Enable CRD migration
+    migration:
+      enabled: true
+      image:
+        repository: giantswarm/kyverno-cli
 
   config:
     # -- Exclude Kyverno namespace

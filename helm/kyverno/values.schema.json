@@ -1783,6 +1783,22 @@
                     "properties": {
                         "install": {
                             "type": "boolean"
+                        },
+                        "migration": {
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                },
+                                "image": {
+                                    "type": "object",
+                                    "properties": {
+                                        "repository": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 },
@@ -1925,22 +1941,6 @@
                             "properties": {
                                 "chunkSize": {
                                     "type": "integer"
-                                }
-                            }
-                        }
-                    }
-                },
-                "migration": {
-                    "type": "object",
-                    "properties": {
-                        "enabled": {
-                            "type": "boolean"
-                        },
-                        "image": {
-                            "type": "object",
-                            "properties": {
-                                "repository": {
-                                    "type": "string"
                                 }
                             }
                         }
