@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Restrict Policy and ClusterPolicy to kyverno.io/v1 for wildcard policy matching
+
 ### Changed
 
 - Split Cilium PolicyExceptions per component.
