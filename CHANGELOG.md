@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Split Cilium PolicyExceptions per component.
 - Add rules to cilium-agent PolicyException.
+- Restrict Policy and ClusterPolicy to kyverno.io/v1 for wildcard policy matching
 
 ### Removed
 
