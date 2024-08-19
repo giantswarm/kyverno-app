@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add Keda `scaledObject` for `kyverno-admission-controller` Deployment.
+
 ### Changed
 
 - Split Cilium PolicyExceptions per component.

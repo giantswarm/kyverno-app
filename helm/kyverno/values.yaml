@@ -41,6 +41,24 @@ image:
   # Defaults to `latest` if omitted
   tag: '1.30.3'
 
+# Keda ScaledObject for Kyverno admission-controller
+kedaScaledObject:
+  enabled: false
+  minReplicas: 3
+  maxReplicas: 13
+  triggers: []
+  # https://keda.sh/docs/2.12/concepts/scaling-deployments/#triggers
+  # - type: prometheus
+  #   metadata:
+  #     serverAddress: <server, should be configurable, e.g. https://keda.svc.cluster.local:443>
+  #     metricName: <metric name, configurable, e.g. scrape_duration_seconds>
+  #     query: <exact query, e.g. avg_over_time(scrape_duration_seconds[1m])>
+  #     threshold: <threshold, e.g. "10">
+  #     authModes: <configurable, might not be required, for us it's "tls", but depends on the server https://keda.sh/docs/2.12/concepts/authentication/ )>
+  #   authenticationRef: # configurable block, might not be required, depends on the server
+  #     name: <auth resource name, created by prometheus owner>
+  #     kind: <configurable TriggerAuthentication or ClusterTriggerAuthentication>
+
 # VerticalPodAutoscaler settings for individual controllers
 verticalPodAutoscaler:
   admissionController:
