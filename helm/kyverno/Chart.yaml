@@ -25,13 +25,13 @@ home: https://github.com/giantswarm/kyverno-app
 icon: https://s.giantswarm.io/app-icons/kyverno/1/light.svg
 keywords:
   - kubernetes
-  - policy agent
-  - validating webhook
-  - admissions controller
+  - policy-agent
+  - validating-webhook
+  - admission-controller
 name: kyverno
 restrictions:
   clusterSingleton: true
 sources:
   - https://github.com/kyverno/kyverno
 type: application
-version: 0.17.15
+version: 0.17.16
