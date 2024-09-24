@@ -36,7 +36,7 @@ crds:
 image:
   registry: gsoci.azurecr.io
   # Tag for kubectl image
-  repository: giantswarm/kubectl
+  repository: &kubectlRepository giantswarm/kubectl
   # -- Image tag
   # Defaults to `latest` if omitted
   tag: '1.31.0'
@@ -132,18 +132,16 @@ upgradeJob:
 
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
 kyverno:
-  # Enable upgrade from v2 to v3 chart
-  upgrade:
-    fromV2: false
-
-  # Create a PSP and ClusterRoleBinding for Kyverno.
-  psp:
-    enabled: true
 
   # CRDs configuration
   crds:
     # -- We manage CRDs with an outside job so this needs to be disabled
     install: false
+  # Enable CRD migration
+    migration:
+      enabled: true
+      image:
+        repository: giantswarm/kyverno-cli
 
   config:
     # -- Exclude Kyverno namespace
@@ -246,7 +244,7 @@ kyverno:
         # -- (string) Image registry
         registry: gsoci.azurecr.io
         # -- Image repository
-        repository: giantswarm/kubectl
+        repository: *kubectlRepository
         # -- Image tag
         # Defaults to `latest` if omitted
         tag: '1.31.0'
@@ -341,6 +339,246 @@ kyverno:
       podLabels:
         app.kubernetes.io/component: cleanup-jobs
         app.kubernetes.io/instance: kyverno
+
+    updateRequests:
+
+      # -- Enable cleanup cronjob
+      enabled: true
+
+      # -- Maximum number of retries before considering a Job as failed. Defaults to 3.
+      backoffLimit: 3
+
+      # -- Time until the pod from the cronjob is deleted
+      ttlSecondsAfterFinished: ""
+
+      image:
+        # -- (string) Image registry
+        registry: ~
+        # -- Image repository
+        repository: *kubectlRepository
+        # -- Image tag
+        # Defaults to `latest` if omitted
+        tag: '1.31.0'
+        # -- (string) Image pull policy
+        # Defaults to image.pullPolicy if omitted
+        pullPolicy: ~
+
+      # -- Image pull secrets
+      imagePullSecrets: []
+        # - name: secretName
+
+      # -- Cronjob schedule
+      schedule: '*/10 * * * *'
+
+      # -- Reports threshold, if number of updateRequests are above this value the cronjob will start deleting them
+      threshold: 10000
+
+      # -- Cronjob history
+      history:
+        success: 1
+        failure: 1
+
+      # -- Security context for the pod
+      podSecurityContext: {}
+
+      # -- Security context for the containers
+      securityContext:
+        runAsNonRoot: true
+        privileged: false
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        capabilities:
+          drop:
+            - ALL
+        seccompProfile:
+          type: RuntimeDefault
+
+      # -- Pod PriorityClassName
+      priorityClassName: ""
+
+      # -- Job resources
+      resources: {}
+
+      # -- List of node taints to tolerate
+      tolerations: []
+
+      # -- Node labels for pod assignment
+      nodeSelector: {}
+
+      # -- Pod Annotations
+      podAnnotations: {}
+
+      # -- Pod labels
+      podLabels: {}
+
+      # -- Pod anti affinity constraints.
+      podAntiAffinity: {}
+
+      # -- Pod affinity constraints.
+      podAffinity: {}
+
+      # -- Node affinity constraints.
+      nodeAffinity: {}
+
+    ephemeralReports:
+
+      # -- Enable cleanup cronjob
+      enabled: true
+
+      # -- Maximum number of retries before considering a Job as failed. Defaults to 3.
+      backoffLimit: 3
+
+      # -- Time until the pod from the cronjob is deleted
+      ttlSecondsAfterFinished: ""
+
+      image:
+        # -- (string) Image registry
+        registry: ~
+        # -- Image repository
+        repository: *kubectlRepository
+        # -- Image tag
+        # Defaults to `latest` if omitted
+        tag: '1.31.0'
+        # -- (string) Image pull policy
+        # Defaults to image.pullPolicy if omitted
+        pullPolicy: ~
+
+      # -- Image pull secrets
+      imagePullSecrets: []
+        # - name: secretName
+
+      # -- Cronjob schedule
+      schedule: '*/10 * * * *'
+
+      # -- Reports threshold, if number of updateRequests are above this value the cronjob will start deleting them
+      threshold: 10000
+
+      # -- Cronjob history
+      history:
+        success: 1
+        failure: 1
+
+      # -- Security context for the pod
+      podSecurityContext: {}
+
+      # -- Security context for the containers
+      securityContext:
+        runAsNonRoot: true
+        privileged: false
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        capabilities:
+          drop:
+            - ALL
+        seccompProfile:
+          type: RuntimeDefault
+
+      # -- Pod PriorityClassName
+      priorityClassName: ""
+
+      # -- Job resources
+      resources: {}
+
+      # -- List of node taints to tolerate
+      tolerations: []
+
+      # -- Node labels for pod assignment
+      nodeSelector: {}
+
+      # -- Pod Annotations
+      podAnnotations: {}
+
+      # -- Pod labels
+      podLabels: {}
+
+      # -- Pod anti affinity constraints.
+      podAntiAffinity: {}
+
+      # -- Pod affinity constraints.
+      podAffinity: {}
+
+      # -- Node affinity constraints.
+      nodeAffinity: {}
+
+    clusterEphemeralReports:
+
+      # -- Enable cleanup cronjob
+      enabled: true
+
+      # -- Maximum number of retries before considering a Job as failed. Defaults to 3.
+      backoffLimit: 3
+
+      # -- Time until the pod from the cronjob is deleted
+      ttlSecondsAfterFinished: ""
+
+      image:
+        # -- (string) Image registry
+        registry: ~
+        # -- Image repository
+        repository: *kubectlRepository
+        # -- Image tag
+        # Defaults to `latest` if omitted
+        tag: '1.31.0'
+        # -- (string) Image pull policy
+        # Defaults to image.pullPolicy if omitted
+        pullPolicy: ~
+
+      # -- Image pull secrets
+      imagePullSecrets: []
+        # - name: secretName
+
+      # -- Cronjob schedule
+      schedule: '*/10 * * * *'
+
+      # -- Reports threshold, if number of reports are above this value the cronjob will start deleting them
+      threshold: 10000
+
+      # -- Cronjob history
+      history:
+        success: 1
+        failure: 1
+
+      # -- Security context for the pod
+      podSecurityContext: {}
+
+      # -- Security context for the containers
+      securityContext:
+        runAsNonRoot: true
+        privileged: false
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        capabilities:
+          drop:
+            - ALL
+        seccompProfile:
+          type: RuntimeDefault
+
+      # -- Pod PriorityClassName
+      priorityClassName: ""
+
+      # -- Job resources
+      resources: {}
+
+      # -- List of node taints to tolerate
+      tolerations: []
+
+      # -- Node labels for pod assignment
+      nodeSelector: {}
+
+      # -- Pod Annotations
+      podAnnotations: {}
+
+      # -- Pod Labels
+      podLabels: {}
+
+      # -- Pod anti affinity constraints.
+      podAntiAffinity: {}
+
+      # -- Pod affinity constraints.
+      podAffinity: {}
+
+      # -- Node affinity constraints.
+      nodeAffinity: {}
 
   # Admission controller configuration
   admissionController:
@@ -1174,7 +1412,7 @@ kyverno:
       # -- (string) Image registry
       registry: gsoci.azurecr.io
       # -- Image repository
-      repository: giantswarm/kubectl
+      repository: *kubectlRepository
       # -- Image tag
       # Defaults to `latest` if omitted
       tag: '1.31.0'
@@ -1184,7 +1422,7 @@ kyverno:
       # -- (string) Image registry
       registry: gsoci.azurecr.io
       # -- Image repository
-      repository: giantswarm/kubectl
+      repository: *kubectlRepository
       # -- Image tag
       # Defaults to `latest` if omitted
       tag: '1.31.0'
