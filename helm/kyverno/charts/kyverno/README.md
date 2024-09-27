@@ -2,7 +2,7 @@
 
 Kubernetes Native Policy Management
 
-![Version: 3.2.6](https://img.shields.io/badge/Version-3.2.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.12.5](https://img.shields.io/badge/AppVersion-v1.12.5-informational?style=flat-square)
+![Version: 3.2.7](https://img.shields.io/badge/Version-3.2.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.12.6](https://img.shields.io/badge/AppVersion-v1.12.6-informational?style=flat-square)
 
 ## About
 
@@ -769,7 +769,7 @@ The chart values are organised per component.
 | cleanupJobs.clusterAdmissionReports.podAntiAffinity | object | `{}` | Pod anti affinity constraints. |
 | cleanupJobs.clusterAdmissionReports.podAffinity | object | `{}` | Pod affinity constraints. |
 | cleanupJobs.clusterAdmissionReports.nodeAffinity | object | `{}` | Node affinity constraints. |
-| cleanupJobs.updateRequests.enabled | bool | `true` | Enable cleanup cronjob |
+| cleanupJobs.updateRequests.enabled | bool | `false` | Enable cleanup cronjob |
 | cleanupJobs.updateRequests.backoffLimit | int | `3` | Maximum number of retries before considering a Job as failed. Defaults to 3. |
 | cleanupJobs.updateRequests.ttlSecondsAfterFinished | string | `""` | Time until the pod from the cronjob is deleted |
 | cleanupJobs.updateRequests.image.registry | string | `nil` | Image registry |
@@ -927,8 +927,8 @@ Kubernetes: `>=1.25.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-|  | crds | 3.2.6 |
-|  | grafana | 3.2.6 |
+|  | crds | 3.2.7 |
+|  | grafana | 3.2.7 |
 
 ## Maintainers
 
