@@ -15,7 +15,7 @@ directories:
   - path: .
     git:
       url: https://github.com/giantswarm/policy-reporter-upstream
-      ref: v2.20.0
+      ref: v2.20.1
     includePaths:
       - charts/policy-reporter/**
     newRootPath: charts/policy-reporter
