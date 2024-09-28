@@ -10,10 +10,10 @@ directories:
   path: helm/kyverno/charts/kyverno
 - contents:
   - git:
-      commitTitle: Prepare Release v2.24.0...
-      sha: 7c5a3732584a2586469afa082e107d060b16516d
+      commitTitle: fix tags...
+      sha: 78599158d3582335960e3970eb6615c8cf4d0dd4
       tags:
-      - v2.20.0
+      - v2.20.2
     path: .
   path: helm/kyverno/charts/policy-reporter
 kind: LockConfig
