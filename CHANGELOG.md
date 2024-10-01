@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.18.1] - 2024-10-01
+
 ### Changed
 
 - Update `Kyverno` to upstream version v1.12.6.
@@ -538,7 +540,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.18.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.18.1...HEAD
+[0.18.1]: https://github.com/giantswarm/kyverno-app/compare/v0.18.0...v0.18.1
 [0.18.0]: https://github.com/giantswarm/kyverno-app/compare/v0.17.16...v0.18.0
 [0.17.16]: https://github.com/giantswarm/kyverno-app/compare/v0.17.15...v0.17.16
 [0.17.15]: https://github.com/giantswarm/kyverno-app/compare/v0.17.14...v0.17.15
