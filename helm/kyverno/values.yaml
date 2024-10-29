@@ -1,7 +1,7 @@
 # Create PSPs for every component including the CRD install job
 global:
   podSecurityStandards:
-    enforced: false
+    enforced: true
   image:
     registry: gsoci.azurecr.io
 
