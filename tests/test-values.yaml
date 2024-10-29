@@ -20,11 +20,11 @@ kyverno:
       # -- Install CRDs in group `reports.kyverno.io`
       # -- This field can be overwritten by setting crds.labels in the parent chart
       reports:
-        clusterephemeralreports: false # We don't need clusterephemeralreports for now
-        ephemeralreports: false # We don't need ephemeralreports for now
+        clusterephemeralreports: true
+        ephemeralreports: true
 
       # -- Install CRDs in group `wgpolicyk8s.io`
       # -- This field can be overwritten by setting crds.labels in the parent chart
       wgpolicyk8s:
         clusterpolicyreports: true
-        policyreports: false # We don't need regular policyreports for now
+        policyreports: true
