@@ -4,6 +4,33 @@ orbs:
   # repo: giantswarm/architect-orb
   architect: giantswarm/architect@5.11.1
 
+jobs:
+  setup-kind:
+    machine:
+      image: ubuntu-2204:current
+    environment:
+      KIND_VERSION: v0.24.0
+      KUBERNETES_VERSION: v1.29.8
+      KYVERNO_CRDS_VERSION: "1.12.0"
+    steps:
+      - checkout
+      - run:
+          name: Download kind
+          command: |
+            curl -sLo kind https://github.com/kubernetes-sigs/kind/releases/download/$KIND_VERSION/kind-linux-amd64 && chmod +x kind && sudo mv kind /usr/bin
+      - run:
+          name: Download kubectl
+          command: |
+            curl -sLO https://storage.googleapis.com/kubernetes-release/release/$KUBERNETES_VERSION/bin/linux/amd64/kubectl && chmod +x kubectl  && sudo mv kubectl /usr/bin
+      - run:
+          name: Install Helm
+          command: |
+            curl -s https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      - run:
+          name: Create kind cluster and install kyverno
+          command: |
+            make kind-create kind-get-kubeconfig install-kyverno
+
 workflows:
   package-and-push-chart-on-tag:
     jobs:
