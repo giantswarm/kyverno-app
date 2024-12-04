@@ -34,6 +34,16 @@ jobs:
 workflows:
   package-and-push-chart-on-tag:
     jobs:
+    - setup-kind:
+          # Needed to trigger job also on git tag.
+        filters:
+          tags:
+            only: /^v.*/
+
+      # Run app-test-suite tests.
+          branches:
+            ignore:
+            - main
     - architect/push-to-app-catalog:
         context: architect
         executor: app-build-suite
@@ -77,6 +87,7 @@ workflows:
             - main
         requires:
         - push-kyverno-chart-to-giantswarm-catalog
+        - setup-kind
 
     - architect/push-to-app-collection:
         name: aws-app-collection
