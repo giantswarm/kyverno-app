@@ -358,7 +358,7 @@ kyverno:
         repository: *kubectlRepository
         # -- Image tag
         # Defaults to `latest` if omitted
-        tag: '1.31.2'
+        tag: '1.31.3'
         # -- (string) Image pull policy
         # Defaults to image.pullPolicy if omitted
         pullPolicy: ~
@@ -438,7 +438,7 @@ kyverno:
         repository: *kubectlRepository
         # -- Image tag
         # Defaults to `latest` if omitted
-        tag: '1.31.2'
+        tag: '1.31.3'
         # -- (string) Image pull policy
         # Defaults to image.pullPolicy if omitted
         pullPolicy: ~
@@ -518,7 +518,7 @@ kyverno:
         repository: *kubectlRepository
         # -- Image tag
         # Defaults to `latest` if omitted
-        tag: '1.31.2'
+        tag: '1.31.3'
         # -- (string) Image pull policy
         # Defaults to image.pullPolicy if omitted
         pullPolicy: ~
