@@ -30,6 +30,10 @@ jobs:
           name: Create kind cluster and install kyverno
           command: |
             make kind-create kind-get-kubeconfig install-kyverno
+      - persist_to_workspace:
+          root: .
+          paths:
+            - kyverno-kubeconfig.yaml
 
 workflows:
   package-and-push-chart-on-tag:
