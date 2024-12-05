@@ -2,71 +2,140 @@ version: 2.1
 orbs:
   # used by renovate
   # repo: giantswarm/architect-orb
-  architect: giantswarm/architect@5.11.0
+  architect: giantswarm/architect@5.11.1
+
+commands:
+  run-ats:
+    parameters:
+      ats_version:
+        type: string
+        default: 0.10.2
+      chart_archive_prefix:
+        type: string
+      tests_dir:
+        type: string
+    steps:
+    - architect/run-tests-with-ats:
+        chart_archive_prefix: << parameters.chart_archive_prefix >>
+        app-test-suite_version: v<< parameters.ats_version >>
+        app-test-suite_container_tag: << parameters.ats_version >>
+        additional_app-test-suite_flags: --external-cluster-version $KUBERNETES_VERSION
+          --app-tests-pytest-tests-dir << parameters.tests_dir >>
+
+jobs:
+  run-tests:
+    machine:
+      image: ubuntu-2204:current
+    environment:
+      KIND_VERSION: v0.24.0
+      KUBERNETES_VERSION: v1.29.8
+      KYVERNO_CRDS_VERSION: "1.12.0"
+    steps:
+      - checkout
+      - run:
+          name: Download kind
+          command: |
+            curl -sLo kind https://github.com/kubernetes-sigs/kind/releases/download/$KIND_VERSION/kind-linux-amd64 && chmod +x kind && sudo mv kind /usr/bin
+      - run:
+          name: Download kubectl
+          command: |
+            curl -sLO https://storage.googleapis.com/kubernetes-release/release/$KUBERNETES_VERSION/bin/linux/amd64/kubectl && chmod +x kubectl  && sudo mv kubectl /usr/bin
+      - run:
+          name: Install Helm
+          command: |
+            curl -s https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      - run:
+          name: Create kind cluster and install kyverno
+          command: |
+            make kind-create kind-get-kubeconfig install-kyverno
+      - run-ats:
+          chart_archive_prefix: kyverno
+          tests_dir: tests/ats
 
 workflows:
   package-and-push-chart-on-tag:
     jobs:
-      - architect/push-to-app-catalog:
-          context: "architect"
-          executor: "app-build-suite"
-          name: push-kyverno-chart-to-control-plane-catalog
-          app_catalog: "control-plane-catalog"
-          app_catalog_test: "control-plane-test-catalog"
-          chart: "kyverno"
-          # Trigger job on git tag.
-          filters:
-            tags:
-              only: /^v.*/
+    - run-tests:
+          # Needed to trigger job also on git tag.
+        filters:
+          tags:
+            only: /^v.*/
+      # Run app-test-suite tests.
+          branches:
+            ignore:
+            - main
+        requires:
+        - push-kyverno-chart-to-giantswarm-catalog
 
-      - architect/push-to-app-catalog:
-          context: "architect"
-          executor: "app-build-suite"
-          name: push-kyverno-chart-to-giantswarm-catalog
-          app_catalog: "giantswarm-catalog"
-          app_catalog_test: "giantswarm-test-catalog"
-          persist_chart_archive: true
-          chart: "kyverno"
+    - architect/push-to-app-catalog:
+        context: architect
+        executor: app-build-suite
+        name: push-kyverno-chart-to-control-plane-catalog
+        app_catalog: control-plane-catalog
+        app_catalog_test: control-plane-test-catalog
+        chart: kyverno
           # Trigger job on git tag.
-          filters:
-            tags:
-              only: /^v.*/
+        filters:
+          tags:
+            only: /^v.*/
+
+          branches:
+            ignore:
+            - main
+            - master
+    - architect/push-to-app-catalog:
+        context: architect
+        executor: app-build-suite
+        name: push-kyverno-chart-to-giantswarm-catalog
+        app_catalog: giantswarm-catalog
+        app_catalog_test: giantswarm-test-catalog
+        persist_chart_archive: true
+        chart: kyverno
+          # Trigger job on git tag.
+        filters:
+          tags:
+            only: /^v.*/
 
       # Run app-test-suite tests.
-      - architect/run-tests-with-ats:
-          name: execute chart tests
-          filters:
-            # Do not trigger the job on merge to main.
-            branches:
-              ignore:
-                - main
-          requires:
-            - push-kyverno-chart-to-giantswarm-catalog
+          branches:
+            ignore:
+            - main
+            - master
+    # - architect/run-tests-with-ats:
+    #     name: execute chart tests
+    #     filters:
+    #         # Do not trigger the job on merge to main.
+    #       branches:
+    #         ignore:
+    #         - main
+    #     requires:
+    #     - push-kyverno-chart-to-giantswarm-catalog
+    #     - setup-kind
 
-      - architect/push-to-app-collection:
-          name: aws-app-collection
-          context: "architect"
-          app_name: "kyverno"
-          app_namespace: "kyverno"
-          app_collection_repo: "aws-app-collection"
-          requires:
-            - push-kyverno-chart-to-control-plane-catalog
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v.*/
+    - architect/push-to-app-collection:
+        name: aws-app-collection
+        context: architect
+        app_name: kyverno
+        app_namespace: kyverno
+        app_collection_repo: aws-app-collection
+        requires:
+        - push-kyverno-chart-to-control-plane-catalog
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^v.*/
 
-      - architect/push-to-app-collection:
-          name: azure-app-collection
-          context: "architect"
-          app_name: "kyverno"
-          app_namespace: "kyverno"
-          app_collection_repo: "azure-app-collection"
-          requires:
-            - push-kyverno-chart-to-control-plane-catalog
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v.*/
+    - architect/push-to-app-collection:
+        name: azure-app-collection
+        context: architect
+        app_name: kyverno
+        app_namespace: kyverno
+        app_collection_repo: azure-app-collection
+        requires:
+        - push-kyverno-chart-to-control-plane-catalog
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^v.*/
