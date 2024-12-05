@@ -2,7 +2,7 @@ app-tests-app-config-file: tests/test-values.yaml
 
 smoke-tests-cluster-type: external
 
-external-cluster-kubeconfig-path: build/kyverno-kubeconfig.yaml
+external-cluster-kubeconfig-path: ./kyverno-kubeconfig.yaml
 external-cluster-type: kind
 external-cluster-version: 1.29.8
 
