@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Use GVK for specifying Kinds in core-policies.
+
 ## [0.18.1] - 2024-10-01
 
 ### Changed
