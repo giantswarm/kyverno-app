@@ -39,7 +39,7 @@ annotations:
       description: Make admission reports breaker threshold configurable
 dependencies:
   - name: grafana
-    version: 3.2.7
+    version: 5.5.7
     condition: grafana.enabled
   - name: crds
     version: 3.2.7
