@@ -214,7 +214,7 @@ kyverno:
       # -- Enables the feature
       enabled: true
       # -- Restrict policy exceptions to a single namespace
-      namespace: ''
+      namespace: '*'
     protectManagedResources:
       # -- Enables the feature
       enabled: false
