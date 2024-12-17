@@ -4,6 +4,6 @@ dependencies:
   version: 2.24.1
 - name: kyverno
   repository: ""
-  version: 3.2.7
-digest: sha256:701472702b2e6fd3aca6414b59e0cb90819efcb6af6b32d148f668f7fd9d7e98
-generated: "2024-09-27T12:22:58.048222934Z"
+  version: 3.3.0
+digest: sha256:8ee58453604765bb266083d2c168ce007d5013b0db17e68c1e332bbaec445724
+generated: "2024-12-17T12:02:47.065587748Z"
