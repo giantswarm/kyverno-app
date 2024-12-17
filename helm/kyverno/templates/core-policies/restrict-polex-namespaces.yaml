@@ -27,7 +27,7 @@ spec:
       any:
       - resources:
           kinds:
-          - PolicyException
+          - kyverno.io/v2/PolicyException
     preconditions:
       all:
       - key: "{{`{{ request.operation || 'BACKGROUND'}}`}}"
