@@ -9,7 +9,7 @@ image:
   registry: ghcr.io
   repository: kyverno/policy-reporter-ui
   pullPolicy: IfNotPresent
-  tag: 1.9.2
+  tag: 2.0.0
 
 # sidecarContainers - add more containers to Kyverno ui
 # Key/Value where Key is the sidecar `- name: <Key>`
