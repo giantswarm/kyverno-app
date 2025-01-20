@@ -464,6 +464,7 @@ kyverno:
       # -- Security context for the containers
       securityContext:
         runAsNonRoot: true
+        runAsGroup: 65532
         privileged: false
         allowPrivilegeEscalation: false
         readOnlyRootFilesystem: true
