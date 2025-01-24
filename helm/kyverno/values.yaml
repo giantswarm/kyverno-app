@@ -383,6 +383,8 @@ kyverno:
 
       # -- Security context for the containers
       securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
         runAsNonRoot: true
         privileged: false
         allowPrivilegeEscalation: false
@@ -463,6 +465,8 @@ kyverno:
 
       # -- Security context for the containers
       securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
         runAsNonRoot: true
         privileged: false
         allowPrivilegeEscalation: false
@@ -543,6 +547,8 @@ kyverno:
 
       # -- Security context for the containers
       securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
         runAsNonRoot: true
         privileged: false
         allowPrivilegeEscalation: false
@@ -718,6 +724,8 @@ kyverno:
 
       # -- Container security context
       securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
         runAsNonRoot: true
         privileged: false
         allowPrivilegeEscalation: false
@@ -755,6 +763,8 @@ kyverno:
 
       # -- Container security context
       securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
         runAsNonRoot: true
         privileged: false
         allowPrivilegeEscalation: false
@@ -955,6 +965,8 @@ kyverno:
 
     # -- Security context for the containers
     securityContext:
+      runAsUser: 65534
+      runAsGroup: 65534
       runAsNonRoot: true
       privileged: false
       allowPrivilegeEscalation: false
@@ -1140,6 +1152,8 @@ kyverno:
 
     # -- Security context for the containers
     securityContext:
+      runAsUser: 65534
+      runAsGroup: 65534
       runAsNonRoot: true
       privileged: false
       allowPrivilegeEscalation: false
@@ -1337,6 +1351,8 @@ kyverno:
 
     # -- Security context for the containers
     securityContext:
+      runAsUser: 65534
+      runAsGroup: 65534
       runAsNonRoot: true
       privileged: false
       allowPrivilegeEscalation: false
