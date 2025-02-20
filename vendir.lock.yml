@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: release 1.13.2 (#11736)...
-      sha: a96b1a4794b4d25cb0c6d72c05fc6355e95cf65c
+      commitTitle: release v1.13.4 (#12126)...
+      sha: c6e3bcddee8648b95ab717e658e541809705f9bb
       tags:
-      - v1.13.2
+      - v1.13.4
     path: .
   path: helm/kyverno/charts/kyverno
 - contents:
