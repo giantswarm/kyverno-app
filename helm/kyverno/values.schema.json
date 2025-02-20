@@ -216,8 +216,14 @@
                                         "readOnlyRootFilesystem": {
                                             "type": "boolean"
                                         },
+                                        "runAsGroup": {
+                                            "type": "integer"
+                                        },
                                         "runAsNonRoot": {
                                             "type": "boolean"
+                                        },
+                                        "runAsUser": {
+                                            "type": "integer"
                                         },
                                         "seccompProfile": {
                                             "type": "object",
@@ -316,8 +322,14 @@
                                         "readOnlyRootFilesystem": {
                                             "type": "boolean"
                                         },
+                                        "runAsGroup": {
+                                            "type": "integer"
+                                        },
                                         "runAsNonRoot": {
                                             "type": "boolean"
+                                        },
+                                        "runAsUser": {
+                                            "type": "integer"
                                         },
                                         "seccompProfile": {
                                             "type": "object",
@@ -789,8 +801,14 @@
                                 "readOnlyRootFilesystem": {
                                     "type": "boolean"
                                 },
+                                "runAsGroup": {
+                                    "type": "integer"
+                                },
                                 "runAsNonRoot": {
                                     "type": "boolean"
+                                },
+                                "runAsUser": {
+                                    "type": "integer"
                                 },
                                 "seccompProfile": {
                                     "type": "object",
@@ -1086,8 +1104,14 @@
                                 "readOnlyRootFilesystem": {
                                     "type": "boolean"
                                 },
+                                "runAsGroup": {
+                                    "type": "integer"
+                                },
                                 "runAsNonRoot": {
                                     "type": "boolean"
+                                },
+                                "runAsUser": {
+                                    "type": "integer"
                                 },
                                 "seccompProfile": {
                                     "type": "object",
@@ -1628,8 +1652,14 @@
                                 "readOnlyRootFilesystem": {
                                     "type": "boolean"
                                 },
+                                "runAsGroup": {
+                                    "type": "integer"
+                                },
                                 "runAsNonRoot": {
                                     "type": "boolean"
+                                },
+                                "runAsUser": {
+                                    "type": "integer"
                                 },
                                 "seccompProfile": {
                                     "type": "object",

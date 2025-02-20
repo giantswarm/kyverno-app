@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update `kyverno` to upstream version v1.13.2.
 - Use GVK for specifying Kinds in core-policies.
+- Add `runAsGroup` to container security contexts.
 
 ## [0.18.1] - 2024-10-01
 

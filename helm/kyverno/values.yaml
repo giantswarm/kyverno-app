@@ -39,7 +39,7 @@ image:
   repository: &kubectlRepository giantswarm/kubectl
   # -- Image tag
   # Defaults to `latest` if omitted
-  tag: '1.31.3'
+  tag: '1.32.1'
 
 # VerticalPodAutoscaler settings for individual controllers
 verticalPodAutoscaler:
@@ -236,7 +236,7 @@ kyverno:
     giantswarm.io/service-type: "managed"
     application.giantswarm.io/team: "shield"
 
-  # Admission controller configuration
+# Admission controller configuration
   admissionController:
 
     # -- Overrides features defined at the root level
@@ -374,6 +374,8 @@ kyverno:
 
       # -- Container security context
       securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
         runAsNonRoot: true
         privileged: false
         allowPrivilegeEscalation: false
@@ -411,6 +413,8 @@ kyverno:
 
       # -- Container security context
       securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
         runAsNonRoot: true
         privileged: false
         allowPrivilegeEscalation: false
@@ -611,6 +615,8 @@ kyverno:
 
     # -- Security context for the containers
     securityContext:
+      runAsUser: 65534
+      runAsGroup: 65534
       runAsNonRoot: true
       privileged: false
       allowPrivilegeEscalation: false
@@ -796,6 +802,8 @@ kyverno:
 
     # -- Security context for the containers
     securityContext:
+      runAsUser: 65534
+      runAsGroup: 65534
       runAsNonRoot: true
       privileged: false
       allowPrivilegeEscalation: false
@@ -993,6 +1001,8 @@ kyverno:
 
     # -- Security context for the containers
     securityContext:
+      runAsUser: 65534
+      runAsGroup: 65534
       runAsNonRoot: true
       privileged: false
       allowPrivilegeEscalation: false
@@ -1071,7 +1081,7 @@ kyverno:
       repository: *kubectlRepository
       # -- Image tag
       # Defaults to `latest` if omitted
-      tag: '1.31.3'
+      tag: '1.32.1'
 
   webhooksCleanup:
     image:
@@ -1081,7 +1091,7 @@ kyverno:
       repository: *kubectlRepository
       # -- Image tag
       # Defaults to `latest` if omitted
-      tag: '1.31.3'
+      tag: '1.32.1'
 
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
