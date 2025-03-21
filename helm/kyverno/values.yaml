@@ -327,7 +327,7 @@ kyverno:
     podAffinity: {}
 
     # -- Node affinity constraints.
-    nodeAffinity: 
+    nodeAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
         - weight: 50
           preference:
@@ -336,8 +336,8 @@ kyverno:
               operator: NotIn
               values:
               - spot
-  
-    # -- Topology spread constraints.
+    
+    # -- Topology spread constraints
     topologySpreadConstraints: []
 
     # -- Security context for the pod
