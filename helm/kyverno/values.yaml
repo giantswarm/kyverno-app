@@ -335,7 +335,7 @@ kyverno:
             - key: karpenter.sh/capacity-type
               operator: NotIn
               values:
-              - spot 
+              - spot
 
     # -- Topology spread constraints
     topologySpreadConstraints: []
