@@ -336,7 +336,7 @@ kyverno:
                 operator: NotIn
                 values:
                   - spot
-  
+
     # -- Topology spread constraints
     topologySpreadConstraints: []
 
