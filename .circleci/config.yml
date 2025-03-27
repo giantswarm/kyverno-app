@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   # used by renovate
   # repo: giantswarm/architect-orb
-  architect: giantswarm/architect@dev:c53c29dfad0c192eb796fa9df722865c1b1a52bc
+  architect: giantswarm/architect@dev:e62335fa62431fc811b3c4d070bf035491fc51de
 
 commands:
   run-ats:
