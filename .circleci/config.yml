@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   # used by renovate
   # repo: giantswarm/architect-orb
-  architect: giantswarm/architect@dev:c0895e4616adda31646e4e7045d5766ab3af324c
+  architect: giantswarm/architect@dev:b44d928e300aa316f07512515ce923d210e14128
 
 commands:
   run-ats:
@@ -68,7 +68,6 @@ workflows:
         - push-kyverno-chart-to-giantswarm-catalog
     - architect/run-kyverno-tests:
         name: execute kyverno policy evaluation 
-        chart: "kyverno"
         filters:
           # Do not trigger the job on merge to master.
           branches:
