@@ -1,8 +1,8 @@
 {{- if .Values.policyExceptions.enableAwsCloudControllerManagerPolex }}
-apiVersion: kyverno.io/v2beta1
+apiVersion: kyverno.io/v2
 kind: PolicyException
 metadata:
-  name: kyverno-app-aws-cloud-controller-policy-exception 
+  name: kyverno-app-aws-cloud-controller-policy-exception
   namespace: giantswarm
   labels:
     {{- include "kyverno-stack.labels" . | nindent 4 }}
@@ -10,7 +10,7 @@ spec:
   exceptions:
   - policyName: require-run-as-nonroot
     ruleNames:
-    - run-as-non-root 
+    - run-as-non-root
     - autogen-run-as-non-root
   - policyName: restrict-seccomp-strict
     ruleNames:
