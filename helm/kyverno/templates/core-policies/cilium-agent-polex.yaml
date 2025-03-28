@@ -1,5 +1,5 @@
 {{- if .Values.policyExceptions.enableCiliumPolex }}
-apiVersion: kyverno.io/v2beta1
+apiVersion: kyverno.io/v2
 kind: PolicyException
 metadata:
   name: kyverno-app-cilium-agent-policy-exception
@@ -18,11 +18,11 @@ spec:
     - autogen-validate-read-only-root-filesystem
   - policyName: require-run-as-non-root-user
     ruleNames:
-    - run-as-non-root-user 
+    - run-as-non-root-user
     - autogen-run-as-non-root-user
-  - policyName: require-run-as-nonroot 
+  - policyName: require-run-as-nonroot
     ruleNames:
-    - run-as-non-root 
+    - run-as-non-root
     - autogen-run-as-non-root
   - policyName: disallow-host-path
     ruleNames:
@@ -83,7 +83,7 @@ spec:
         - DaemonSet
         - Pod
         namespaces:
-        - kube-system 
+        - kube-system
         selector:
           matchLabels:
             k8s-app: cilium

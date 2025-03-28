@@ -1,5 +1,5 @@
 {{- if .Values.policyExceptions.enableCiliumPolex }}
-apiVersion: kyverno.io/v2beta1
+apiVersion: kyverno.io/v2
 kind: PolicyException
 metadata:
   name: kyverno-app-cilium-operator-policy-exception
@@ -10,11 +10,11 @@ spec:
   exceptions:
   - policyName: require-run-as-non-root-user
     ruleNames:
-    - run-as-non-root-user 
+    - run-as-non-root-user
     - autogen-run-as-non-root-user
-  - policyName: require-run-as-nonroot 
+  - policyName: require-run-as-nonroot
     ruleNames:
-    - run-as-non-root 
+    - run-as-non-root
     - autogen-run-as-non-root
   - policyName: disallow-host-path
     ruleNames:
@@ -72,7 +72,7 @@ spec:
         - ReplicaSet
         - Pod
         namespaces:
-        - kube-system 
+        - kube-system
         names:
         - cilium-operator*
 {{- end -}}

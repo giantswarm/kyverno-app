@@ -1,5 +1,5 @@
 {{- if .Values.policyExceptions.enableChartOperatorPolex }}
-apiVersion: kyverno.io/v2beta1
+apiVersion: kyverno.io/v2
 kind: PolicyException
 metadata:
   name: kyverno-app-chart-operator-policy-exception

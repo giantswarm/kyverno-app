@@ -1,5 +1,5 @@
 {{- if .Values.policyExceptions.enableAzureCloudNodeManagerPolex }}
-apiVersion: kyverno.io/v2beta1
+apiVersion: kyverno.io/v2
 kind: PolicyException
 metadata:
   name: kyverno-app-azure-cloud-node-manager-policy-exception
