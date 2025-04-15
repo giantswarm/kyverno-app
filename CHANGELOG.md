@@ -10,7 +10,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Update PolicyExceptions from `v2beta1` to `v2`.
-- Update ClusterPolicy from `v2beta1` to `v1`.
 - Add karpenter spot anti-affinity to kyverno
 
 ## [0.19.0] - 2025-02-20
