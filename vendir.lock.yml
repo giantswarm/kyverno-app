@@ -10,10 +10,10 @@ directories:
   path: helm/kyverno/charts/kyverno
 - contents:
   - git:
-      commitTitle: fix tags...
-      sha: 78599158d3582335960e3970eb6615c8cf4d0dd4
+      commitTitle: Update Policy Reporter UI (#854)...
+      sha: c8aca0e4fdf2c8b982175a47c3e26b233dfe4fc0
       tags:
-      - v2.20.2
+      - v3.1.0
     path: .
   path: helm/kyverno/charts/policy-reporter
 kind: LockConfig
