@@ -1144,8 +1144,7 @@ policy-reporter:
         app.kubernetes.io/component: plugin
       image:
         registry: gsoci.azurecr.io
-        # Need to check and maybe retag ghcr.io/kyverno/policy-reporter/kyverno-plugin
-        repository: giantswarm/policy-reporter-kyverno-plugin
+        repository: giantswarm/kyverno-plugin
       resources:
         limits:
           cpu: 50m
