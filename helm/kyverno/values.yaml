@@ -1103,6 +1103,7 @@ kyverno:
 
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:
+  fullnameOverride: "kyverno-policy-reporter"
   podLabels:
     app.kubernetes.io/component: policy-reporter
   image:
@@ -1125,8 +1126,6 @@ policy-reporter:
     image:
       registry: gsoci.azurecr.io
       repository: giantswarm/policy-reporter-ui
-    plugins:
-      kyverno: true
     resources:
       limits:
         cpu: 10m
@@ -1138,34 +1137,33 @@ policy-reporter:
       create: true
       name: "policyreporter-ui-sa"  # Only needed to support adding a PSP. Can be removed when PSPs are disabled.
 
-  kyvernoPlugin:
-    enabled: true
-    annotations: {}
-    podLabels:
-      app.kubernetes.io/component: plugin
-    image:
-      registry: gsoci.azurecr.io
-      repository: giantswarm/policy-reporter-kyverno-plugin
-    resources:
-      limits:
-        cpu: 50m
-        memory: 100Mi
-      requests:
-        cpu: 10m
-        memory: 30Mi
-    serviceAccount:
-      name: "policyreporter-plugin-sa"  # Only needed to support adding a PSP. Can be removed when PSPs are disabled.
+  plugin:
+    kyverno:
+      enabled: true
+      annotations: {}
+      podLabels:
+        app.kubernetes.io/component: plugin
+      image:
+        registry: gsoci.azurecr.io
+        repository: giantswarm/kyverno-plugin
+      resources:
+        limits:
+          cpu: 50m
+          memory: 100Mi
+        requests:
+          cpu: 10m
+          memory: 30Mi
 
   global:
-    plugins:
-      kyverno: true
-
     labels: {}
 
   monitoring:
+    serviceMonitor:
+      relabelings:
+      - action: labeldrop
+        regex: pod|service|container
+      - targetLabel: instance
+        replacement: policy-reporter
+        action: replace
     enabled: true
     namespace: kyverno
-
-  # Create a PSP and ClusterRoleBinding for PolicyReporter.
-  psp:
-    enabled: true
