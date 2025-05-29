@@ -383,7 +383,45 @@
                             }
                         },
                         "nodeAffinity": {
-                            "type": "object"
+                            "type": "object",
+                            "properties": {
+                                "preferredDuringSchedulingIgnoredDuringExecution": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "preference": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "matchExpressions": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "key": {
+                                                                    "type": "string"
+                                                                },
+                                                                "operator": {
+                                                                    "type": "string"
+                                                                },
+                                                                "values": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "weight": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         },
                         "nodeSelector": {
                             "type": "object"
@@ -448,6 +486,9 @@
                             "properties": {
                                 "minAvailable": {
                                     "type": "integer"
+                                },
+                                "unhealthyPodEvictionPolicy": {
+                                    "type": "string"
                                 }
                             }
                         },
@@ -1756,19 +1797,14 @@
         "policy-reporter": {
             "type": "object",
             "properties": {
+                "fullnameOverride": {
+                    "type": "string"
+                },
                 "global": {
                     "type": "object",
                     "properties": {
                         "labels": {
                             "type": "object"
-                        },
-                        "plugins": {
-                            "type": "object",
-                            "properties": {
-                                "kyverno": {
-                                    "type": "boolean"
-                                }
-                            }
                         }
                     }
                 },
@@ -1783,71 +1819,6 @@
                         }
                     }
                 },
-                "kyvernoPlugin": {
-                    "type": "object",
-                    "properties": {
-                        "annotations": {
-                            "type": "object"
-                        },
-                        "enabled": {
-                            "type": "boolean"
-                        },
-                        "image": {
-                            "type": "object",
-                            "properties": {
-                                "registry": {
-                                    "type": "string"
-                                },
-                                "repository": {
-                                    "type": "string"
-                                }
-                            }
-                        },
-                        "podLabels": {
-                            "type": "object",
-                            "properties": {
-                                "app.kubernetes.io/component": {
-                                    "type": "string"
-                                }
-                            }
-                        },
-                        "resources": {
-                            "type": "object",
-                            "properties": {
-                                "limits": {
-                                    "type": "object",
-                                    "properties": {
-                                        "cpu": {
-                                            "type": "string"
-                                        },
-                                        "memory": {
-                                            "type": "string"
-                                        }
-                                    }
-                                },
-                                "requests": {
-                                    "type": "object",
-                                    "properties": {
-                                        "cpu": {
-                                            "type": "string"
-                                        },
-                                        "memory": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "serviceAccount": {
-                            "type": "object",
-                            "properties": {
-                                "name": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    }
-                },
                 "monitoring": {
                     "type": "object",
                     "properties": {
@@ -1856,6 +1827,87 @@
                         },
                         "namespace": {
                             "type": "string"
+                        },
+                        "serviceMonitor": {
+                            "type": "object",
+                            "properties": {
+                                "relabelings": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "action": {
+                                                "type": "string"
+                                            },
+                                            "regex": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "plugin": {
+                    "type": "object",
+                    "properties": {
+                        "kyverno": {
+                            "type": "object",
+                            "properties": {
+                                "annotations": {
+                                    "type": "object"
+                                },
+                                "enabled": {
+                                    "type": "boolean"
+                                },
+                                "image": {
+                                    "type": "object",
+                                    "properties": {
+                                        "registry": {
+                                            "type": "string"
+                                        },
+                                        "repository": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "podLabels": {
+                                    "type": "object",
+                                    "properties": {
+                                        "app.kubernetes.io/component": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "resources": {
+                                    "type": "object",
+                                    "properties": {
+                                        "limits": {
+                                            "type": "object",
+                                            "properties": {
+                                                "cpu": {
+                                                    "type": "string"
+                                                },
+                                                "memory": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "requests": {
+                                            "type": "object",
+                                            "properties": {
+                                                "cpu": {
+                                                    "type": "string"
+                                                },
+                                                "memory": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 },
@@ -1864,14 +1916,6 @@
                     "properties": {
                         "app.kubernetes.io/component": {
                             "type": "string"
-                        }
-                    }
-                },
-                "psp": {
-                    "type": "object",
-                    "properties": {
-                        "enabled": {
-                            "type": "boolean"
                         }
                     }
                 },
@@ -1924,14 +1968,6 @@
                                 },
                                 "repository": {
                                     "type": "string"
-                                }
-                            }
-                        },
-                        "plugins": {
-                            "type": "object",
-                            "properties": {
-                                "kyverno": {
-                                    "type": "boolean"
                                 }
                             }
                         },
