@@ -1,0 +1,69 @@
+{{- if .Values.policyExceptions.enableCiliumPolex }}
+apiVersion: kyverno.io/v2
+kind: PolicyException
+metadata:
+  name: kyverno-app-cilium-envoy-policy-exception
+  namespace: giantswarm
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+spec:
+  exceptions:
+  - policyName: disallow-capabilities
+    ruleNames:
+    - adding-capabilities
+    - autogen-adding-capabilities
+  - policyName: disallow-capabilities-strict
+    ruleNames:
+    - adding-capabilities-strict
+    - autogen-adding-capabilities-strict
+    - require-drop-all
+    - autogen-require-drop-all
+  - policyName: disallow-host-namespaces
+    ruleNames:
+    - host-namespaces
+    - autogen-host-namespaces
+  - policyName: disallow-host-path
+    ruleNames:
+    - host-path
+    - autogen-host-path
+  - policyName: disallow-host-ports
+    ruleNames:
+    - host-ports-none
+    - autogen-host-ports-none
+  - policyName: disallow-privilege-escalation
+    ruleNames:
+    - privilege-escalation
+    - autogen-privilege-escalation
+  - policyName: disallow-selinux
+    ruleNames:
+    - seLinux
+    - selinux-type
+    - autogen-seLinux
+    - autogen-selinux-type
+  - policyName: require-emptydir-requests-and-limits
+    ruleNames:
+    - check-emptydir-requests-limits
+    - autogen-check-emptydir-requests-limits
+  - policyName: require-run-as-nonroot
+    ruleNames:
+    - run-as-non-root
+    - autogen-run-as-non-root
+  - policyName: restrict-seccomp-strict
+    ruleNames:
+    - check-seccomp-strict
+    - autogen-check-seccomp-strict
+  - policyName: restrict-volume-types
+    ruleNames:
+    - restricted-volumes
+    - autogen-restricted-volumes
+  match:
+    any:
+    - resources:
+        kinds:
+        - DaemonSet
+        - Pod
+        namespaces:
+        - kube-system
+        names:
+        - cilium-envoy*
+{{- end -}}
