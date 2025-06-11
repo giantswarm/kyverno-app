@@ -28,7 +28,7 @@ jobs:
       image: ubuntu-2204:current
     environment:
       KIND_VERSION: v0.24.0
-      KUBERNETES_VERSION: v1.30.11
+      KUBERNETES_VERSION: v1.30.13
       KYVERNO_CRDS_VERSION: "1.14.0"
     steps:
       - checkout
