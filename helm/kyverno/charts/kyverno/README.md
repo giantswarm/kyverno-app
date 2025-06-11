@@ -2,7 +2,7 @@
 
 Kubernetes Native Policy Management
 
-![Version: 3.4.1](https://img.shields.io/badge/Version-3.4.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.14.1](https://img.shields.io/badge/AppVersion-v1.14.1-informational?style=flat-square)
+![Version: 3.4.2](https://img.shields.io/badge/Version-3.4.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.14.2](https://img.shields.io/badge/AppVersion-v1.14.2-informational?style=flat-square)
 
 ## About
 
@@ -384,6 +384,7 @@ The chart values are organised per component.
 | admissionController.replicas | int | `nil` | Desired number of pods |
 | admissionController.revisionHistoryLimit | int | `10` | The number of revisions to keep |
 | admissionController.resyncPeriod | string | `"15m"` | Resync period for informers |
+| admissionController.crdWatcher | bool | `false` | Enable/Disable custom resource watcher to invalidate cache |
 | admissionController.podLabels | object | `{}` | Additional labels to add to each pod |
 | admissionController.podAnnotations | object | `{}` | Additional annotations to add to each pod |
 | admissionController.annotations | object | `{}` | Deployment annotations. |
@@ -777,6 +778,7 @@ The chart values are organised per component.
 | global.image.registry | string | `nil` | Global value that allows to set a single image registry across all deployments. When set, it will override any values set under `.image.registry` across the chart. |
 | global.imagePullSecrets | list | `[]` | Global list of Image pull secrets When set, it will override any values set under `imagePullSecrets` under different components across the chart. |
 | global.resyncPeriod | string | `"15m"` | Resync period for informers |
+| global.crdWatcher | bool | `false` | Enable/Disable custom resource watcher to invalidate cache |
 | global.caCertificates.data | string | `nil` | Global CA certificates to use with Kyverno deployments This value is expected to be one large string of CA certificates Individual controller values will override this global value |
 | global.caCertificates.volume | object | `{}` | Global value to set single volume to be mounted for CA certificates for all deployments. Not used when `.Values.global.caCertificates.data` is defined Individual  controller values will override this global value |
 | global.extraEnvVars | list | `[]` | Additional container environment variables to apply to all containers and init containers |
@@ -867,8 +869,8 @@ Kubernetes: `>=1.25.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-|  | crds | 3.4.1 |
-|  | grafana | 3.4.1 |
+|  | crds | 3.4.2 |
+|  | grafana | 3.4.2 |
 
 ## Maintainers
 
