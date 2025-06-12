@@ -350,6 +350,7 @@ kyverno:
       # -- Configures the maximum unavailable pods for disruptions.
       # Cannot be used if `minAvailable` is set.
       # maxUnavailable:
+      unhealthyPodEvictionPolicy: AlwaysAllow
 
     # -- A writable volume to use for the TUF root initialization.
     tufRootMountPath: /.sigstore
