@@ -9,10 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Update `kyverno` to upstream version v1.14.2.
 - Update `kyverno-policy-reporter` to upstream version v3.1.0.
 - Update PolicyExceptions from `v2beta1` to `v2`.
 - Add karpenter spot anti-affinity to kyverno admission controller.
 - Update PolicyException for Cilium.
+
+### Notes
+
+This release includes an upstream update. Please refer to the following Release Notes from upstream for the latest changes:
+
+- [v1.14.0](https://github.com/kyverno/kyverno/releases/tag/v1.14.0)
+- [v1.14.1](https://github.com/kyverno/kyverno/releases/tag/v1.14.1)
+- [v1.14.2](https://github.com/kyverno/kyverno/releases/tag/v1.14.2)
 
 ## [0.19.0] - 2025-02-20
 
