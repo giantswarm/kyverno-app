@@ -1168,3 +1168,6 @@ policy-reporter:
         action: replace
     enabled: true
     namespace: kyverno
+
+    podLogs:
+      enabled: true 

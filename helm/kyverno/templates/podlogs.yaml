@@ -1,0 +1,191 @@
+{{- if and .Values.monitoring .Values.monitoring.podLog .Values.monitoring.podLog.enabled }}
+---
+# PodLogs for kyverno admission controller
+apiVersion: monitoring.grafana.com/v1alpha2
+kind: PodLogs
+metadata:
+  name: kyverno-admission-controller-logs
+  namespace: kyverno
+  labels:
+    app.kubernetes.io/name: kyverno
+    app.kubernetes.io/part-of: kyverno
+  annotations:
+    giantswarm.io/notes: "Log collection for Kyverno admission controller"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kyverno
+      app.kubernetes.io/component: admission-controller
+  relabelings:
+  - action: replace
+    replacement: giantswarm
+    targetLabel: giantswarm_observability_tenant
+  - action: replace
+    sourceLabels: [__meta_kubernetes_pod_node_name]
+    targetLabel: node_name
+  - action: replace
+    replacement: kyverno-admission-controller
+    targetLabel: component
+
+---
+# PodLogs for kyverno background controller
+apiVersion: monitoring.grafana.com/v1alpha2
+kind: PodLogs
+metadata:
+  name: kyverno-background-controller-logs
+  namespace: kyverno
+  labels:
+    app.kubernetes.io/name: kyverno
+    app.kubernetes.io/part-of: kyverno
+  annotations:
+    giantswarm.io/notes: "Log collection for Kyverno background controller"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kyverno
+      app.kubernetes.io/component: background-controller
+  relabelings:
+  - action: replace
+    replacement: giantswarm
+    targetLabel: giantswarm_observability_tenant
+  - action: replace
+    sourceLabels: [__meta_kubernetes_pod_node_name]
+    targetLabel: node_name
+  - action: replace
+    replacement: kyverno-background-controller
+    targetLabel: component
+
+---
+# PodLogs for kyverno cleanup controller
+apiVersion: monitoring.grafana.com/v1alpha2
+kind: PodLogs
+metadata:
+  name: kyverno-cleanup-controller-logs
+  namespace: kyverno
+  labels:
+    app.kubernetes.io/name: kyverno
+    app.kubernetes.io/part-of: kyverno
+  annotations:
+    giantswarm.io/notes: "Log collection for Kyverno cleanup controller"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kyverno
+      app.kubernetes.io/component: cleanup-controller
+  relabelings:
+  - action: replace
+    replacement: giantswarm
+    targetLabel: giantswarm_observability_tenant
+  - action: replace
+    sourceLabels: [__meta_kubernetes_pod_node_name]
+    targetLabel: node_name
+  - action: replace
+    replacement: kyverno-cleanup-controller
+    targetLabel: component
+
+---
+# PodLogs for kyverno reports controller
+apiVersion: monitoring.grafana.com/v1alpha2
+kind: PodLogs
+metadata:
+  name: kyverno-reports-controller-logs
+  namespace: kyverno
+  labels:
+    app.kubernetes.io/name: kyverno
+    app.kubernetes.io/part-of: kyverno
+  annotations:
+    giantswarm.io/notes: "Log collection for Kyverno reports controller"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kyverno
+      app.kubernetes.io/component: reports-controller
+  relabelings:
+  - action: replace
+    replacement: giantswarm
+    targetLabel: giantswarm_observability_tenant
+  - action: replace
+    sourceLabels: [__meta_kubernetes_pod_node_name]
+    targetLabel: node_name
+  - action: replace
+    replacement: kyverno-reports-controller
+    targetLabel: component
+
+---
+# PodLogs for kyverno policy reporter
+apiVersion: monitoring.grafana.com/v1alpha2
+kind: PodLogs
+metadata:
+  name: kyverno-policy-reporter-logs
+  namespace: kyverno
+  labels:
+    app.kubernetes.io/name: policy-reporter
+  annotations:
+    giantswarm.io/notes: "Log collection for Kyverno policy reporter"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: policy-reporter
+  relabelings:
+  - action: replace
+    replacement: giantswarm
+    targetLabel: giantswarm_observability_tenant
+  - action: replace
+    sourceLabels: [__meta_kubernetes_pod_node_name]
+    targetLabel: node_name
+  - action: replace
+    replacement: policy-reporter
+    targetLabel: component
+
+---
+# PodLogs for kyverno policy reporter kyverno plugin
+apiVersion: monitoring.grafana.com/v1alpha2
+kind: PodLogs
+metadata:
+  name: kyverno-policy-reporter-plugin-logs
+  namespace: kyverno
+  labels:
+    app.kubernetes.io/name: policy-reporter-kyverno-plugin
+  annotations:
+    giantswarm.io/notes: "Log collection for Kyverno policy reporter plugin"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: policy-reporter-kyverno-plugin
+  relabelings:
+  - action: replace
+    replacement: giantswarm
+    targetLabel: giantswarm_observability_tenant
+  - action: replace
+    sourceLabels: [__meta_kubernetes_pod_node_name]
+    targetLabel: node_name
+  - action: replace
+    replacement: policy-reporter-kyverno-plugin
+    targetLabel: component
+
+---
+# PodLogs for kyverno policy reporter UI
+apiVersion: monitoring.grafana.com/v1alpha2
+kind: PodLogs
+metadata:
+  name: kyverno-policy-reporter-ui-logs
+  namespace: kyverno
+  labels:
+    app.kubernetes.io/name: policy-reporter-ui
+  annotations:
+    giantswarm.io/notes: "Log collection for Kyverno policy reporter UI"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: policy-reporter-ui
+  relabelings:
+  - action: replace
+    replacement: giantswarm
+    targetLabel: giantswarm_observability_tenant
+  - action: replace
+    sourceLabels: [__meta_kubernetes_pod_node_name]
+    targetLabel: node_name
+  - action: replace
+    replacement: policy-reporter-ui
+    targetLabel: component
+{{- end }}
