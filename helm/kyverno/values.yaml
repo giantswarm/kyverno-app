@@ -1170,4 +1170,4 @@ policy-reporter:
     namespace: kyverno
 
     podLogs:
-      enabled: true 
+      enabled: true
