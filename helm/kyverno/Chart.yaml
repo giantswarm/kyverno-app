@@ -8,7 +8,7 @@ apiVersion: v2
 appVersion: v1.14.2
 dependencies:
   - name: policy-reporter
-    version: 3.1.0
+    version: 3.3.1
   - name: kyverno
     version: 3.4.2
 description: 'Kyverno is a policy engine designed for Kubernetes. It can validate, mutate,
