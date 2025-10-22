@@ -104,7 +104,7 @@ resources: {}
 networkPolicy:
   # -- Create NetworkPolicy
   enabled: false
-  # -- Egress rule to allowe Kubernetes API Server access
+  # -- Egress rule to allow Kubernetes API Server access
   egress:
   - to:
     ports:
@@ -151,11 +151,11 @@ rest:
 metrics:
   # -- Enables Prometheus Metrics
   enabled: false
-  # -- Metric Mode allowes to customize labels
+  # -- Metric Mode allows to customize labels
   # Allowed values: detailed, simple, custom
   mode: detailed
   # -- List of used labels in custom mode
-  # Supported fields are: ["namespace", "rule", "policy", "report" // PolicyReport name, "kind" // resource kind, "name" // resource name, "status", "severity", "category", "source"]
+  # Supported fields are: ["namespace", "rule", "policy", "report" // Report name, "kind" // resource kind, "name" // resource name, "status", "severity", "category", "source"]
   customLabels: []
   # -- Filter results to reduce cardinality
   filter: {}
@@ -168,16 +168,16 @@ profiling:
   # -- Enable profiling with pprof
   enabled: false
 
-# -- Amount of queue workers for PolicyReport resource processing
+# -- Amount of queue workers for Report resource processing
 worker: 5
 
-# -- Filter PolicyReport resources to process
+# -- Filter Report resources to process
 reportFilter: {}
   # # -- Filter reports based on an namespace allow- or disallow list, wildcards are supported
   # namespaces:
   #  include: []
   #  exclude: []
-  # # -- Disable the processing of ClusterPolicyReports
+  # # -- Disable the processing of cluster scoped Reports
   # disableClusterReports: false
 
 # -- Customize source specific logic like result ID generation
@@ -188,16 +188,26 @@ sourceConfig: []
 #     enabled: true
 #     fields: ["resource", "policy", "rule", "category", "result", "message"]
 
-# Source based PolicyReport filter
+# Source based Report filter
 sourceFilters:
   - selector:
-      # -- select PolicyReport by source
+      # -- select Report by source
       source: kyverno
-    # -- Filter out PolicyReports of controlled Pods and Jobs, only works for PolicyReport with scope resource
+    # -- Filter out Reports of controlled Pods and Jobs, only works for Reports with scope resource
     uncontrolledOnly: true
-    # -- Filter out ClusterPolicyReports
+    # -- Filter out cluster scoped Reports
     disableClusterReports: false
-    # -- Filter out PolicyReports based on the scope resource kind
+    # -- Filter out Reports based on the scope resource kind
+    kinds:
+      exclude: [ReplicaSet]
+  - selector:
+      # -- select Report by source
+      source: KyvernoValidatingPolicy
+    # -- Filter out Reports of controlled Pods and Jobs, only works for Reports with scope resource
+    uncontrolledOnly: true
+    # -- Filter out cluster scoped Reports
+    disableClusterReports: false
+    # -- Filter out Reports based on the scope resource kind
     kinds:
       exclude: [ReplicaSet]
 
@@ -340,7 +350,7 @@ target:
     minimumSeverity: ""
     # -- List of sources which should send
     sources: []
-    # -- Skip already existing PolicyReportResults on startup
+    # -- Skip already existing report results on startup
     skipExistingOnStartup: true
     # -- Added as additional labels
     customFields: {}
@@ -405,7 +415,7 @@ target:
     minimumSeverity: ""
     # -- List of sources which should send
     sources: []
-    # -- Skip already existing PolicyReportResults on startup
+    # -- Skip already existing report results on startup
     skipExistingOnStartup: true
     # -- Added as additional labels
     customFields: {}
@@ -429,7 +439,7 @@ target:
     minimumSeverity: ""
     # -- List of sources which should send
     sources: []
-    # -- Skip already existing PolicyReportResults on startup
+    # -- Skip already existing report results on startup
     skipExistingOnStartup: true
     # -- Added as additional labels
     customFields: {}
@@ -474,7 +484,7 @@ target:
     minimumSeverity: ""
     # -- List of sources which should send
     sources: []
-    # -- Skip already existing PolicyReportResults on startup
+    # -- Skip already existing report results on startup
     skipExistingOnStartup: true
     # -- Added as additional labels
     customFields: {}
@@ -503,7 +513,7 @@ target:
     minimumSeverity: ""
     # -- List of sources which should send
     sources: []
-    # -- Skip already existing PolicyReportResults on startup
+    # -- Skip already existing report results on startup
     skipExistingOnStartup: true
     # -- Added as additional labels
     customFields: {}
@@ -532,10 +542,16 @@ target:
     minimumSeverity: ""
     # -- List of sources which should send
     sources: []
-    # -- Skip already existing PolicyReportResults on startup
+    # -- Skip already existing report results on startup
     skipExistingOnStartup: true
     # -- Added as additional labels
     customFields: {}
+    # -- Keepalive configuration
+    keepalive:
+      # -- Duration string like "30s" for heartbeat interval, '0' - disabled
+      interval: "0"
+      # -- Additional parameters to include in heartbeat payload
+      params: {}
     # -- Filter Results which should send to this target
     # Wildcars for namespaces and policies are supported, you can either define exclude or include values
     # Filters are available for all targets except the UI
@@ -565,7 +581,7 @@ target:
     minimumSeverity: ""
     # -- List of sources which should send
     sources: []
-    # -- Skip already existing PolicyReportResults on startup
+    # -- Skip already existing report results on startup
     skipExistingOnStartup: true
     # -- Added as additional labels
     customFields: {}
@@ -579,6 +595,81 @@ target:
   googleChat:
     # -- Webhook Address
     webhook: ""
+    # -- Server Certificate file path
+    # Can be added under extraVolumes
+    certificate: ""
+    # -- Skip TLS verification
+    skipTLS: false
+    # -- Additional HTTP Headers
+    headers: {}
+    # -- Read configuration from an already existing Secret
+    secretRef: ""
+    # -- Mounted secret path by Secrets Controller, secret should be in json format
+    mountedSecret: ""
+    # -- Minimum severity: "" < info < low < medium < high < critical
+    minimumSeverity: ""
+    # -- List of sources which should send
+    sources: []
+    # -- Skip already existing report results on startup
+    skipExistingOnStartup: true
+    # -- Added as additional labels
+    customFields: {}
+    # -- Filter Results which should send to this target
+    # Wildcars for namespaces and policies are supported, you can either define exclude or include values
+    # Filters are available for all targets except the UI
+    filter: {}
+    # -- List of channels to route results to different configurations
+    channels: []
+
+  jira:
+    # -- JIRA server URL
+    host: ""
+    # -- JIRA username
+    username: ""
+    # -- JIRA password (use password or apiToken, not both)
+    password: ""
+    # -- JIRA API token (use password or apiToken, not both)
+    apiToken: ""
+    # -- JIRA static labels
+    apiVersion: "v3"
+    # -- JIRA project key
+    projectKey: ""
+    # -- JIRA issue type (default: "Bug")
+    issueType: ""
+    # -- JIRA component names list
+    components: []
+    # -- JIRA static labels
+    labels: []
+    # -- JIRA summary go template, available values: result, customfield
+    # default: "{{ if result.ResourceString }}{{ result.ResourceString }}: {{ end }}Policy Violation: {{ result.Policy }}"
+    summaryTemplate: ""
+    # -- Server Certificate file path
+    # Can be added under extraVolumes
+    certificate: ""
+    # -- Skip TLS verification
+    skipTLS: false
+    # -- Read configuration from an already existing Secret
+    secretRef: ""
+    # -- Mounted secret path by Secrets Controller, secret should be in json format
+    mountedSecret: ""
+    # -- Minimum severity: "" < info < low < medium < high < critical
+    minimumSeverity: ""
+    # -- List of sources which should send
+    sources: []
+    # -- Skip already existing report results on startup
+    skipExistingOnStartup: true
+    # -- Added as additional labels
+    customFields: {}
+    # -- Filter Results which should send to this target
+    # Wildcars for namespaces and policies are supported, you can either define exclude or include values
+    # Filters are available for all targets except the UI
+    filter: {}
+    # -- List of channels to route results to different configurations
+    channels: []
+
+  alertManager:
+    # -- host address
+    host: ""
     # -- Server Certificate file path
     # Can be added under extraVolumes
     certificate: ""
@@ -635,7 +726,7 @@ target:
     minimumSeverity: ""
     # -- List of sources which should send
     sources: []
-    # -- Skip already existing PolicyReportResults on startup
+    # -- Skip already existing report results on startup
     skipExistingOnStartup: true
     # -- Added as additional labels
     customFields: {}
@@ -666,7 +757,7 @@ target:
     minimumSeverity: ""
     # -- List of sources which should send
     sources: []
-    # -- Skip already existing PolicyReportResults on startup
+    # -- Skip already existing report results on startup
     skipExistingOnStartup: true
     # -- Added as additional labels
     customFields: {}
@@ -705,7 +796,7 @@ target:
     minimumSeverity: ""
     # -- List of sources which should send
     sources: []
-    # -- Skip already existing PolicyReportResults on startup
+    # -- Skip already existing report results on startup
     skipExistingOnStartup: true
     # -- Added as additional labels
     customFields: {}
@@ -718,7 +809,7 @@ target:
 
   # Authentication via PodIdentity is also supported
   gcs:
-    # -- (optional) GCS (Google Cloud Storage) Service Accout Credentials
+    # -- (optional) GCS (Google Cloud Storage) Service Account Credentials
     credentials: ""
     # -- (required) GCS Bucket
     bucket: ""
@@ -730,7 +821,7 @@ target:
     minimumSeverity: ""
     # -- List of sources which should send
     sources: []
-    # -- Skip already existing PolicyReportResults on startup
+    # -- Skip already existing report results on startup
     skipExistingOnStartup: true
     # -- Added as additional labels
     customFields: {}
@@ -851,13 +942,13 @@ ui:
     # -- (string) Image PullPolicy
     pullPolicy: IfNotPresent
     # -- (string) Image tag
-    tag: "2.3.0"
+    tag: "2.4.1"
 
   # -- Deployment replica count
   replicaCount: 1
 
-  # -- Temporary Directory to persist session data for authentication
-  tempDir: "/tmp"
+  # -- Deployment priorityClassName
+  priorityClassName: ""
 
   logging:
     # -- Enables external api request logging
@@ -878,6 +969,10 @@ ui:
     cors: true
     # -- Overwrites Request Host with Proxy Host and adds `X-Forwarded-Host` and `X-Origin-Host` headers
     overwriteHost: true
+    # -- session configuration
+    sessions:
+      storage: filesystem
+      tempDir: /tmp
 
   openIDConnect:
     # -- Enable openID Connect authentication
@@ -932,7 +1027,7 @@ ui:
     disabled: false
 
   # -- DisplayMode dark/light/colorblind/colorblinddark
-  # uses the OS configured prefered color scheme as default
+  # uses the OS configured preferred color scheme as default
   displayMode: ""
 
   # -- Configure access control for all default boards.
@@ -957,7 +1052,7 @@ ui:
   #     # -- list of displayed sources
   #     list: []
   #   clusterScope:
-  #     # -- disply cluster scoped resources and results
+  #     # -- display cluster scoped resources and results
   #     enabled: false
   #   display: ""
   #   filter:
@@ -969,7 +1064,7 @@ ui:
 
   # -- source specific configurations
   sources: []
-  # -- kyverno specific UI confiurations
+  # -- kyverno specific UI configurations
   # - name: kyverno
   # -- show results per category, other option: severity
   #  type: result
@@ -1169,6 +1264,9 @@ ui:
     # -- Deployment values
     volumes: []
 
+  # -- Extra configuration options appended to UI settings
+  extraConfig: {}
+
 plugin:
   kyverno:
     # -- (bool) Enable Kyverno Plugin
@@ -1181,10 +1279,13 @@ plugin:
       # -- (string) Image PullPolicy
       pullPolicy: IfNotPresent
       # -- (string) Image tag
-      tag: "0.4.1"
+      tag: "0.5.0"
 
     # -- Deployment replica count
     replicaCount: 1
+
+    # -- Deployment priorityClassName
+    priorityClassName: ""
 
     logging:
       # -- Enables external API request logging
@@ -1377,6 +1478,9 @@ plugin:
       # -- Deployment values
       volumes: []
 
+    # -- Extra configuration options appended to kyverno plugin settings
+    extraConfig: {}
+
   trivy:
     # -- (bool) Enable Trivy Operator Plugin
     enabled: false
@@ -1389,7 +1493,7 @@ plugin:
       pullPolicy: IfNotPresent
         # -- (string) Image tag
         # Defaults to `Chart.AppVersion` if omitted
-      tag: "0.4.3"
+      tag: "0.4.9"
 
     cli:
       image:
@@ -1401,12 +1505,18 @@ plugin:
         pullPolicy: IfNotPresent
           # -- (string) Image tag
           # Defaults to `Chart.AppVersion` if omitted
-        tag: "0.58.2"
+        tag: "0.63.0"
 
     # -- Additional container args.
     extraArgs: {}
 
+    cveawg:
+      # -- (bool) disable external CVEAWG API calls.
+      disable: false
+
     github:
+      # -- (bool) disable GitHub API calls.
+      disable: false
       # -- (string) optional github token for authenticated GitHub API calls.
       token: ""
 
@@ -1422,6 +1532,9 @@ plugin:
 
     # -- Deployment replica count
     replicaCount: 1
+
+    # -- Deployment priorityClassName
+    priorityClassName: ""
 
     logging:
       # -- Enables external API request logging
@@ -1603,6 +1716,9 @@ plugin:
       # -- Deployment values
       volumes: []
 
+    # -- Extra configuration options appended to trivy plugin settings
+    extraConfig: {}
+
 monitoring:
   # -- Enables the Prometheus Operator integration
   enabled: false
@@ -1735,3 +1851,6 @@ monitoring:
 
 # -- list of extra manifests
 extraManifests: []
+
+# -- Extra configuration options appended to core policy reporter
+extraConfig: {}

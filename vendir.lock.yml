@@ -2,18 +2,18 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: release v1.14.1 (#12977)...
-      sha: 89be1d832b20651f4394e84c6444bba04dd65e23
+      commitTitle: release v1.15.2. (#14030)...
+      sha: f4ffc2d43d2d93b3daf3e5a9cb8a5d42738aba4b
       tags:
-      - kyverno-chart-3.4.1
+      - v1.15.2
     path: .
   path: helm/kyverno/charts/kyverno
 - contents:
   - git:
-      commitTitle: Update Policy Reporter UI (#854)...
-      sha: c8aca0e4fdf2c8b982175a47c3e26b233dfe4fc0
+      commitTitle: Show underlying crd error (#1037)...
+      sha: 679b3dc00a519fc2fc9fc868bbdee3f592ee6e4d
       tags:
-      - v3.1.0
+      - v3.3.2
     path: .
   path: helm/kyverno/charts/policy-reporter
 kind: LockConfig

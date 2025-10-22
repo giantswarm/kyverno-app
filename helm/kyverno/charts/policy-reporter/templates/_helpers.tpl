@@ -203,6 +203,49 @@ config:
   webhook: {{ .webhook | quote }}
   certificate: {{ .certificate | quote }}
   skipTLS: {{ .skipTLS }}
+  {{- if .keepalive }}
+  keepalive:
+    interval: {{ .keepalive.interval | quote }}
+    {{- if .keepalive.params }}
+    params:
+      {{- toYaml .keepalive.params | nindent 6 }}
+    {{- end }}
+  {{- end }}
+  {{- with .headers }}
+  headers:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{ include "target" . }}
+{{- end }}
+
+{{- define "target.jira" -}}
+config:
+  host: {{ .host | quote }}
+  username: {{ .username | quote }}
+  password: {{ .password | quote }}
+  apiToken: {{ .apiToken | quote }}
+  apiVersion: {{ .apiVersion | quote }}
+  summaryTemplate: {{ .summaryTemplate | quote }}
+  projectKey: {{ .projectKey | quote }}
+  issueType: {{ .issueType | quote }}
+  certificate: {{ .certificate | quote }}
+  skipTLS: {{ .skipTLS }}
+  {{- with .labels }}
+  labels:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .components }}
+  components:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{ include "target" . }}
+{{- end }}
+
+{{- define "target.alertManager" -}}
+config:
+  host: {{ .host | quote }}
+  certificate: {{ .certificate | quote }}
+  skipTLS: {{ .skipTLS }}
   {{- with .headers }}
   headers:
   {{- toYaml . | nindent 4 }}
