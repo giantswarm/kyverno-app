@@ -1,4 +1,3 @@
-
 {{- with (.Values.monitoring).podLogs }}
 {{- $root := index $.Subcharts "policy-reporter" }}
 {{- if and .enabled $root.Values.ui.enabled }}
