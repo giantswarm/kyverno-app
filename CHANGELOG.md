@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add PodLogs for log collection.
+
 ### Changed
 
 - Update chart-operator `PolicyException` to v2.
