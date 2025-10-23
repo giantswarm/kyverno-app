@@ -1,5 +1,6 @@
 {{- if and ((.Values.monitoring).podLogs).enabled (not $.Values.kyverno.templating.debug) }}
-{{- range $component := list "admission-controller" "background-controller" "cleanup-controller" "reports-controller" }}
+{{- /* NOTE: Ignoring `admission-controller` because of customer data */}}
+{{- range $component := list "background-controller" "cleanup-controller" "reports-controller" }}
 {{- with $.Values.monitoring.podLogs }}
 ---
 apiVersion: monitoring.grafana.com/v1alpha2
