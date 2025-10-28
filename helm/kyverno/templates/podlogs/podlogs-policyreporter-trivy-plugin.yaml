@@ -1,0 +1,33 @@
+{{- with (.Values.monitoring).podLogs }}
+{{- $root := index $.Subcharts "policy-reporter" }}
+{{- if and .enabled $root.Values.plugin.trivy.enabled }}
+apiVersion: monitoring.grafana.com/v1alpha2
+kind: PodLogs
+metadata:
+  name: {{ include "trivy-plugin.fullname" $root }}
+  namespace: {{ include "policyreporter.namespace" $root }}
+  labels:
+    {{- include "trivy-plugin.labels" $root | nindent 4 }}
+    {{- with .labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  namespaceSelector:
+    matchLabels:
+      kubernetes.io/metadata.name: {{ include "policyreporter.namespace" $root }}
+  selector:
+    matchLabels:
+      {{- include "trivy-plugin.selectorLabels" $root | nindent 6 }}
+  relabelings:
+  - action: replace
+    replacement: {{ .tenant }}
+    targetLabel: giantswarm_observability_tenant
+  {{- with .relabelings }}
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
+{{- end }}
+{{- end }}
