@@ -1,0 +1,36 @@
+{{- if and ((.Values.monitoring).podLogs).enabled (not $.Values.kyverno.templating.debug) }}
+{{- /* NOTE: Ignoring `admission-controller` because of customer data */}}
+{{- range $component := list "background-controller" "cleanup-controller" "reports-controller" }}
+{{- with $.Values.monitoring.podLogs }}
+---
+apiVersion: monitoring.grafana.com/v1alpha2
+kind: PodLogs
+metadata:
+  name: {{ include (printf "kyverno.%s.name" $component) $.Subcharts.kyverno }}
+  namespace: {{ include "kyverno.namespace" $.Subcharts.kyverno }}
+  labels:
+    {{- include (printf "kyverno.%s.labels" $component) $.Subcharts.kyverno | nindent 4 }}
+    {{- with .labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  namespaceSelector:
+    matchLabels:
+      kubernetes.io/metadata.name: {{ include "kyverno.namespace" $.Subcharts.kyverno }}
+  selector:
+    matchLabels:
+      {{- include (printf "kyverno.%s.matchLabels" $component) $.Subcharts.kyverno | nindent 6 }}
+  relabelings:
+  - action: replace
+    replacement: {{ .tenant }}
+    targetLabel: giantswarm_observability_tenant
+  {{- with .relabelings }}
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
