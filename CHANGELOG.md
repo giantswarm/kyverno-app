@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update `kyverno` to upstream version v1.15.2.
+
+### Notes
+
+This release includes an upstream update. Please refer to the following Release Notes from upstream for the latest changes:
+
+- [v1.15.0](https://github.com/kyverno/kyverno/releases/tag/v1.15.0)
+- [v1.15.1](https://github.com/kyverno/kyverno/releases/tag/v1.15.1)
+- [v1.15.2](https://github.com/kyverno/kyverno/releases/tag/v1.15.2)
+
 ## [0.20.1] - 2025-10-28
 
 ### Added
