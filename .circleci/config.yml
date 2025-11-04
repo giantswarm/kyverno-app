@@ -85,13 +85,3 @@ workflows:
             ignore:
             - main
             - master
-    # - architect/run-tests-with-ats:
-    #     name: execute chart tests
-    #     filters:
-    #         # Do not trigger the job on merge to main.
-    #       branches:
-    #         ignore:
-    #         - main
-    #     requires:
-    #     - push-kyverno-chart-to-giantswarm-catalog
-    #     - setup-kind
