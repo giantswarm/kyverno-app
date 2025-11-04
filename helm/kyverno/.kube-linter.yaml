@@ -22,5 +22,8 @@ checks:
   - "dnsconfig-options"
   - "no-node-affinity"
   - "dangling-service"
-# Temporary
-  - "deprecated-service-account-field"
+  # Temporary
+  # - "deprecated-service-account-field"
+  - "restart-policy"
+  - "priority-class-name"
+  - "job-ttl-seconds-after-finished"
