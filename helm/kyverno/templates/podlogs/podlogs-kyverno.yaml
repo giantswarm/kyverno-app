@@ -1,4 +1,4 @@
-{{- if and ((.Values.monitoring).podLogs).enabled (not $.Values.kyverno.templating.debug) }}
+{{- if ((.Values.monitoring).podLogs).enabled }}
 {{- /* NOTE: Ignoring `admission-controller` because of customer data */}}
 {{- range $component := list "background-controller" "cleanup-controller" "reports-controller" }}
 {{- with $.Values.monitoring.podLogs }}
