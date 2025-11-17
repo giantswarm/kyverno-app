@@ -9,6 +9,8 @@ directories:
       ref: v1.16.0
     includePaths:
       - charts/kyverno/**
+    excludePaths:
+      - charts/kyverno/charts/crds/**
     newRootPath: charts/kyverno
 - path: helm/kyverno/charts/policy-reporter
   contents:
