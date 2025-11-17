@@ -27,9 +27,11 @@ jobs:
     machine:
       image: ubuntu-2204:current
     environment:
+      # repo: kubernetes-sigs/kind
       KIND_VERSION: v0.25.0
+      # repo: kindest/node
       KUBERNETES_VERSION: v1.33.4
-      # repository: giantswarm/kyverno-crds
+      # repo: giantswarm/kyverno-crds
       KYVERNO_CRDS_VERSION: "1.16.0"
     steps:
       - checkout
