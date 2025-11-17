@@ -29,7 +29,8 @@ jobs:
     environment:
       KIND_VERSION: v0.25.0
       KUBERNETES_VERSION: v1.33.4
-      KYVERNO_CRDS_VERSION: "1.15.0"
+      # repository: giantswarm/kyverno-crds
+      KYVERNO_CRDS_VERSION: "1.16.0"
     steps:
       - checkout
       - run:
