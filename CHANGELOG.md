@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Use stable API version for `ClusterPolicy/restrict-polex-namespaces`
+
 ## [0.22.0] - 2025-12-09
 
 ### Changed
