@@ -41,6 +41,9 @@ image:
   # Defaults to `latest` if omitted
   tag: &kubectlTag 'v1.34.3'
 
+kamaji:
+  enabled: false
+
 # VerticalPodAutoscaler settings for individual controllers
 verticalPodAutoscaler:
   admissionController:
