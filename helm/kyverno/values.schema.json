@@ -129,6 +129,16 @@
                 }
             }
         },
+        "kamaji": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "default": "false",
+                    "description": "Does the control plane run as pods in the MC."
+                }
+            }
+        },
         "kyverno": {
             "type": "object",
             "properties": {
