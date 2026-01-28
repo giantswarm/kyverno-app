@@ -2,18 +2,18 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: release v1.16.1 (#14435)...
-      sha: 67f7f8c3f58d64e3c7b103de5f11ffe268250c55
+      commitTitle: release v1.16.3 (#14881)...
+      sha: 188151e6b60b192aabcbc24943c3159e5cfab5da
       tags:
-      - v1.16.1
+      - v1.16.3
     path: .
   path: helm/kyverno/charts/kyverno
 - contents:
   - git:
-      commitTitle: Show underlying crd error (#1037)...
-      sha: 679b3dc00a519fc2fc9fc868bbdee3f592ee6e4d
+      commitTitle: fix dockerfile...
+      sha: af2f08fab0caf2b286d1871e45136fb3c258611b
       tags:
-      - v3.3.2
+      - v3.7.0
     path: .
   path: helm/kyverno/charts/policy-reporter
 kind: LockConfig
