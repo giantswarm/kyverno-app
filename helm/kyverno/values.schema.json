@@ -3348,21 +3348,21 @@
                   "description": "Tuf mirror",
                   "required": [],
                   "title": "mirror",
-                  "type": "string"
+                  "type": ["string", "null"]
                 },
                 "root": {
                   "default": "~",
                   "description": "Path to Tuf root",
                   "required": [],
                   "title": "root",
-                  "type": "string"
+                  "type": ["string", "null"]
                 },
                 "rootRaw": {
                   "default": "~",
                   "description": "Raw Tuf root",
                   "required": [],
                   "title": "rootRaw",
-                  "type": "string"
+                  "type": ["string", "null"]
                 }
               },
               "required": [],
@@ -3695,7 +3695,7 @@
                   "description": "Otel collector endpoint",
                   "required": [],
                   "title": "collector",
-                  "type": "string"
+                  "type": ["string", "null"]
                 },
                 "config": {
                   "default": "prometheus",
@@ -3708,7 +3708,7 @@
                   "description": "Otel collector credentials",
                   "required": [],
                   "title": "creds",
-                  "type": "string"
+                  "type": ["string", "null"]
                 },
                 "disabled": {
                   "default": "false",
@@ -4237,14 +4237,14 @@
                   "description": "Traces receiver address",
                   "required": [],
                   "title": "address",
-                  "type": "string"
+                  "type": ["string", "null"]
                 },
                 "creds": {
                   "default": "~",
                   "description": "Traces receiver credentials",
                   "required": [],
                   "title": "creds",
-                  "type": "string"
+                  "type": ["string", "null"]
                 },
                 "enabled": {
                   "default": "false",
@@ -4257,7 +4257,7 @@
                   "description": "Traces receiver port",
                   "required": [],
                   "title": "port",
-                  "type": "string"
+                  "type": ["string", "null"]
                 }
               },
               "required": [],
