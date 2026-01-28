@@ -150,6 +150,13 @@ monitoring:
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
 kyverno:
 
+  # Use openreports.io as the API group for reporting
+  openreports:
+    # -- Enable OpenReports feature in controllers
+    enabled: false
+    # -- Whether to install CRDs from the upstream OpenReports chart. Setting this to true requires enabled to also be true.
+    installCrds: false
+
   # CRDs configuration
   crds:
     # -- We manage CRDs with an outside job so this needs to be disabled
@@ -159,6 +166,17 @@ kyverno:
       enabled: true
       image:
         repository: giantswarm/kyverno-cli
+
+  grafana:
+    # -- Enable grafana dashboard creation.
+    enabled: false
+    # -- create GrafanaDashboard custom resource referencing to the configMap.
+    grafanaDashboard:
+      create: false
+      folder: kyverno
+      allowCrossNamespaceImport: true
+      matchLabels:
+        dashboards: "grafana"
 
   config:
     # -- Exclude Kyverno namespace
@@ -170,6 +188,30 @@ kyverno:
 
     # -- The registry hostname used for the image mutation.
     defaultRegistry: docker.io
+
+    # -- Maximum cumulative size of context data during policy evaluation.
+    # Supports Kubernetes quantity format (e.g., 100Mi, 2Gi) or plain bytes (e.g., 2097152).
+    # Limits memory used by context variables to prevent unbounded growth.
+    # Increase if policies legitimately need large context data (e.g., processing large ConfigMaps).
+    # Set to 0 to disable the limit (not recommended for production).
+    # @default -- 2Mi
+    maxContextSize: ~
+
+    # -- resourceFilter namespace exclude
+    # Namespaces to exclude from the default resourceFilters
+    resourceFiltersExcludeNamespaces: []
+
+    # -- resourceFilters exclude list
+    # Items to exclude from config.resourceFilters
+    resourceFiltersExclude: []
+
+    # -- resourceFilter namespace include
+    # Namespaces to include to the default resourceFilters
+    resourceFiltersIncludeNamespaces: []
+
+    # -- resourceFilters include list
+    # Items to include to config.resourceFilters
+    resourceFiltersInclude: []
 
     # -- Defines the `namespaceSelector`/`objectSelector` in the webhook configurations.
     # The Kyverno namespace is excluded if `excludeKyvernoNamespace` is `true` (default)
@@ -187,10 +229,50 @@ kyverno:
       #     - key: webhooks.kyverno.io/exclude
       #       operator: DoesNotExist
 
+  # Metrics configuration
+  metricsConfig:
+    # -- Create the configmap.
+    create: true
+
+    # -- Additional annotations to add to the configmap.
+    annotations: {}
+
+    namespaces:
+      # -- List of namespaces to capture metrics for.
+      include: []
+      # -- list of namespaces to NOT capture metrics for.
+      exclude: []
+
+    # -- (list) Configures the bucket boundaries for all Histogram metrics
+    bucketBoundaries: [0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10, 15, 20, 25, 30]
+
   features:
     admissionReports:
       # -- Enables the feature
       enabled: true
+    aggregateReports:
+      # -- Enables the feature
+      enabled: true
+    policyReports:
+      # -- Enables the feature
+      enabled: true
+    validatingAdmissionPolicyReports:
+      # -- Enables the feature
+      enabled: true
+    mutatingAdmissionPolicyReports:
+      # -- Enables the feature
+      enabled: false
+    reporting:
+      # -- Enables the feature
+      validate: true
+      # -- Enables the feature
+      mutate: true
+      # -- Enables the feature
+      mutateExisting: true
+      # -- Enables the feature
+      imageVerify: true
+      # -- Enables the feature
+      generate: true
     autoUpdateWebhooks:
       # -- Enables the feature
       enabled: true
@@ -206,6 +288,9 @@ kyverno:
     configMapCaching:
       # -- Enables the feature
       enabled: true
+    controllerRuntimeMetrics:
+      # -- Bind address for controller-runtime metrics (use "0" to disable it)
+      bindAddress: ":8080"
     deferredLoading:
       # -- Enables the feature
       enabled: true
@@ -215,6 +300,18 @@ kyverno:
     forceFailurePolicyIgnore:
       # -- Enables the feature
       enabled: false
+    generateValidatingAdmissionPolicy:
+      # -- Enables the feature
+      enabled: true
+    generateMutatingAdmissionPolicy:
+      # -- Enables the feature
+      enabled: false
+    dumpPatches:
+      # -- Enables the feature
+      enabled: false
+    globalContext:
+      # -- Maximum allowed response size from API Calls. A value of 0 bypasses checks (not recommended)
+      maxApiCallResponseLength: 2000000
     logging:
       # -- Logging format
       format: text
@@ -245,9 +342,18 @@ kyverno:
       - amazon
       - azure
       - github
-    reports:
-      # -- Reports chunk size
-      chunkSize: 1000
+    ttlController:
+      # -- Reconciliation interval for the label based cleanup manager
+      reconciliationInterval: 1m
+    tuf:
+      # -- Enables the feature
+      enabled: false
+      # -- (string) Path to Tuf root
+      root: ~
+      # -- (string) Raw Tuf root
+      rootRaw: ~
+      # -- (string) Tuf mirror
+      mirror: ~
 
   customLabels:
     giantswarm.io/service-type: "managed"
@@ -255,9 +361,23 @@ kyverno:
 
 # Admission controller configuration
   admissionController:
+    autoscaling:
+      # -- Enable horizontal pod autoscaling
+      enabled: false
+      # -- Minimum number of pods
+      minReplicas: 1
+      # -- Maximum number of pods
+      maxReplicas: 10
+      # -- Target CPU utilization percentage
+      targetCPUUtilizationPercentage: 80
+      # -- Configurable scaling behavior
+      behavior: {}
 
     # -- Overrides features defined at the root level
-    featuresOverride: {}
+    featuresOverride:
+      admissionReports:
+        # -- Max number of admission reports allowed in flight until the admission controller stops creating new ones
+        backPressureThreshold: 1000
 
     rbac:
       # -- Create RBAC resources
@@ -517,11 +637,35 @@ kyverno:
       # -- TLS Configuration for endpoint
       tlsConfig: {}
 
-    logging:
-      # -- Logging format
-      format: text
-      # -- Logging verbosity
-      verbosity: 2
+    tracing:
+      # -- Enable tracing
+      enabled: false
+      # -- Traces receiver address
+      address:
+      # -- Traces receiver port
+      port:
+      # -- Traces receiver credentials
+      creds: ''
+
+    metering:
+      # -- Disable metrics export
+      disabled: false
+      # -- Otel configuration, can be `prometheus` or `grpc`
+      config: prometheus
+      # -- Prometheus endpoint port
+      port: 8000
+      # -- Otel collector endpoint
+      collector: ''
+      # -- Otel collector credentials
+      creds: ''
+
+    profiling:
+      # -- Enable profiling
+      enabled: false
+      # -- Profiling endpoint port
+      port: 6060
+      # -- Service type.
+      serviceType: ClusterIP
 
   # Background controller configuration
   backgroundController:
@@ -700,11 +844,40 @@ kyverno:
       # -- TLS Configuration for endpoint
       tlsConfig: {}
 
-    logging:
-      # -- Logging format
-      format: text
-      # -- Logging verbosity
-      verbosity: 2
+    tracing:
+      # -- Enable tracing
+      enabled: false
+      # -- Traces receiver address
+      address:
+      # -- Traces receiver port
+      port:
+      # -- Traces receiver credentials
+      creds: ''
+
+    metering:
+      # -- Disable metrics export
+      disabled: false
+      # -- Otel configuration, can be `prometheus` or `grpc`
+      config: prometheus
+      # -- Prometheus endpoint port
+      port: 8000
+      # -- Otel collector endpoint
+      collector: ''
+      # -- Otel collector credentials
+      creds: ''
+
+    # -- backgroundController server port
+    # in case you are using hostNetwork: true, you might want to change the port the backgroundController is listening to
+    server:
+      port: 9443
+
+    profiling:
+      # -- Enable profiling
+      enabled: false
+      # -- Profiling endpoint port
+      port: 6060
+      # -- Service type.
+      serviceType: ClusterIP
 
   # Cleanup controller configuration
   cleanupController:
@@ -898,11 +1071,40 @@ kyverno:
       # -- TLS Configuration for endpoint
       tlsConfig: {}
 
-    logging:
-      # -- Logging format
-      format: text
-      # -- Logging verbosity
-      verbosity: 2
+    tracing:
+      # -- Enable tracing
+      enabled: false
+      # -- Traces receiver address
+      address:
+      # -- Traces receiver port
+      port:
+      # -- Traces receiver credentials
+      creds: ''
+
+    metering:
+      # -- Disable metrics export
+      disabled: false
+      # -- Otel configuration, can be `prometheus` or `grpc`
+      config: prometheus
+      # -- Prometheus endpoint port
+      port: 8000
+      # -- Otel collector endpoint
+      collector: ''
+      # -- Otel collector credentials
+      creds: ''
+
+    # -- cleanupController server port
+    # in case you are using hostNetwork: true, you might want to change the port the cleanupController is listening to
+    server:
+      port: 9443
+
+    profiling:
+      # -- Enable profiling
+      enabled: false
+      # -- Profiling endpoint port
+      port: 6060
+      # -- Service type.
+      serviceType: ClusterIP
 
   # Reports controller configuration
   reportsController:
@@ -1093,13 +1295,52 @@ kyverno:
       # -- TLS Configuration for endpoint
       tlsConfig: {}
 
-    logging:
-      # -- Logging format
-      format: text
-      # -- Logging verbosity
-      verbosity: 2
+    tracing:
+      # -- Enable tracing
+      enabled: false
+      # -- (string) Traces receiver address
+      address: ~
+      # -- (string) Traces receiver port
+      port: ~
+      # -- (string) Traces receiver credentials
+      creds: ~
+
+    metering:
+      # -- Disable metrics export
+      disabled: false
+      # -- Otel configuration, can be `prometheus` or `grpc`
+      config: prometheus
+      # -- Prometheus endpoint port
+      port: 8000
+      # -- (string) Otel collector endpoint
+      collector: ~
+      # -- (string) Otel collector credentials
+      creds: ~
+
+    # -- reportsController server port
+    # in case you are using hostNetwork: true, you might want to change the port the reportsController is listening to
+    server:
+      port: 9443
+
+    profiling:
+      # -- Enable profiling
+      enabled: false
+      # -- Profiling endpoint port
+      port: 6060
+      # -- Service type.
+      serviceType: ClusterIP
+
+    # -- Enable sanity check for reports CRDs
+    sanityChecks: true
 
   webhooksCleanup:
+    # -- Create a helm pre-delete hook to cleanup webhooks.
+    enabled: true
+
+    autoDeleteWebhooks:
+      # -- Allow webhooks controller to delete webhooks using finalizers
+      enabled: false
+
     image:
       # -- (string) Image registry
       registry: gsoci.azurecr.io
@@ -1148,7 +1389,6 @@ policy-reporter:
   plugin:
     kyverno:
       enabled: true
-      annotations: {}
       podLabels:
         app.kubernetes.io/component: plugin
       image:
@@ -1166,12 +1406,12 @@ policy-reporter:
     labels: {}
 
   monitoring:
+    enabled: true
     serviceMonitor:
+      namespace: kyverno
       relabelings:
       - action: labeldrop
         regex: pod|service|container
       - targetLabel: instance
         replacement: policy-reporter
         action: replace
-    enabled: true
-    namespace: kyverno
