@@ -3,7 +3,7 @@
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
 
-![Version: 3.3.1](https://img.shields.io/badge/Version-3.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.1](https://img.shields.io/badge/AppVersion-3.3.1-informational?style=flat-square)
+![Version: 3.7.1](https://img.shields.io/badge/Version-3.7.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.7.0](https://img.shields.io/badge/AppVersion-3.7.0-informational?style=flat-square)
 
 ## Documentation
 
@@ -77,6 +77,7 @@ Open `http://localhost:8082/` in your browser.
 | securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | podAnnotations | object | `{}` | Additional annotations to add to each pod |
 | podLabels | object | `{}` | Additional labels to add to each pod |
+| selectorLabels | object | `{}` | Custom selector labels, overwrites the default set |
 | resources | object | `{}` | Resource constraints |
 | networkPolicy.enabled | bool | `false` | Create NetworkPolicy |
 | networkPolicy.egress | list | `[{"ports":[{"port":6443,"protocol":"TCP"}],"to":null}]` | Egress rule to allow Kubernetes API Server access |
@@ -87,6 +88,12 @@ Open `http://localhost:8082/` in your browser.
 | ingress.annotations | object | `{}` | Annotations for the Ingress |
 | ingress.hosts | string | `nil` | Ingress host list |
 | ingress.tls | list | `[]` | Ingress tls list |
+| httproute.enabled | bool | `false` | Enable HTTPRoute resource (Gateway API alternative to Ingress) Requires Gateway API CRDs (v1) installed in cluster https://gateway-api.sigs.k8s.io/ |
+| httproute.labels | object | `{}` | Additional HTTPRoute labels |
+| httproute.annotations | object | `{}` | Additional HTTPRoute annotations |
+| httproute.parentRefs | list | `[]` | Gateway API parentRefs (list of Gateway references) Must reference an existing Gateway resource |
+| httproute.hostnames | list | `[]` | List of hostnames for HTTPRoute |
+| httproute.rules | list | `[{"matches":[{"path":{"type":"PathPrefix","value":"/"}}]}]` | HTTPRoute rules configuration Allows advanced routing with matches and filters |
 | logging.server | bool | `false` | Enables server access logging |
 | logging.encoding | string | `"console"` | Log encoding possible encodings are console and json |
 | logging.logLevel | int | `0` | Log level default info |
@@ -99,14 +106,10 @@ Open `http://localhost:8082/` in your browser.
 | worker | int | `5` | Amount of queue workers for Report resource processing |
 | reportFilter | object | `{}` | Filter Report resources to process |
 | sourceConfig | list | `[]` | Customize source specific logic like result ID generation |
-| sourceFilters[0].selector.source | string | `"kyverno"` | select Report by source |
+| sourceFilters[0].selector.sources | list | `["kyverno","KyvernoValidatingPolicy","KyvernoImageValidatingPolicy"]` | select Report by source |
 | sourceFilters[0].uncontrolledOnly | bool | `true` | Filter out Reports of controlled Pods and Jobs, only works for Reports with scope resource |
 | sourceFilters[0].disableClusterReports | bool | `false` | Filter out cluster scoped Reports |
 | sourceFilters[0].kinds | object | `{"exclude":["ReplicaSet"]}` | Filter out Reports based on the scope resource kind |
-| sourceFilters[1].selector.source | string | `"KyvernoValidatingPolicy"` | select Report by source |
-| sourceFilters[1].uncontrolledOnly | bool | `true` | Filter out Reports of controlled Pods and Jobs, only works for Reports with scope resource |
-| sourceFilters[1].disableClusterReports | bool | `false` | Filter out cluster scoped Reports |
-| sourceFilters[1].kinds | object | `{"exclude":["ReplicaSet"]}` | Filter out Reports based on the scope resource kind |
 | global.labels | object | `{}` | additional labels added on each resource |
 | basicAuth.username | string | `""` | HTTP BasicAuth username |
 | basicAuth.password | string | `""` | HTTP BasicAuth password |
@@ -360,8 +363,16 @@ Open `http://localhost:8082/` in your browser.
 | database.host | string | `""` | Host Address |
 | database.enableSSL | bool | `false` | Enables SSL |
 | database.dsn | string | `""` | Instead of configure the individual values you can also provide an DSN string example postgres: postgres://postgres:password@localhost:5432/postgres?sslmode=disable example mysql: root:password@tcp(localhost:3306)/test?tls=false |
+| database.maxOpenConnections | int | `25` | Maximum number of open connections, supported for mysql and postgres |
+| database.maxIdleConnections | int | `25` | Maximum number of idle connections, supported for mysql and postgres |
+| database.connectionMaxLifetime | int | `0` | Maximum amount of time in minutes a connection may be reused, supported for mysql and postgres |
+| database.connectionMaxIdleTime | int | `0` | Maximum amount of time in minutes a connection may be idle, supported for mysql and postgres |
+| database.timeout | int | `10` | Timeout for database operations in seconds, supported for mysql and postgres |
+| database.metrics | bool | `false` | Enables database related metrics, connection status and query histogram |
 | database.secretRef | string | `""` | Read configuration from an existing Secret supported fields: username, password, host, dsn, database |
 | database.mountedSecret | string | `""` |  |
+| periodicSync.enabled | bool | `false` |  |
+| periodicSync.interval | int | `30` |  |
 | podDisruptionBudget.minAvailable | int | `1` | Configures the minimum available pods for policy-reporter disruptions. Cannot be used if `maxUnavailable` is set. |
 | podDisruptionBudget.maxUnavailable | string | `nil` | Configures the maximum unavailable pods for policy-reporter disruptions. Cannot be used if `minAvailable` is set. |
 | nodeSelector | object | `{}` | Node labels for pod assignment ref: https://kubernetes.io/docs/user-guide/node-selection/ |
@@ -379,7 +390,8 @@ Open `http://localhost:8082/` in your browser.
 | ui.image.registry | string | `"ghcr.io"` | Image registry |
 | ui.image.repository | string | `"kyverno/policy-reporter-ui"` | Image repository |
 | ui.image.pullPolicy | string | `"IfNotPresent"` | Image PullPolicy |
-| ui.image.tag | string | `"2.4.1"` | Image tag |
+| ui.image.tag | string | `"2.5.1"` | Image tag |
+| ui.crds.customBoard | bool | `false` | Install UI CustomBoard CRDs |
 | ui.replicaCount | int | `1` | Deployment replica count |
 | ui.priorityClassName | string | `""` | Deployment priorityClassName |
 | ui.logging.api | bool | `false` | Enables external api request logging |
@@ -424,6 +436,7 @@ Open `http://localhost:8082/` in your browser.
 | ui.sidecarContainers | object | `{}` | Add sidecar containers to the UI deployment  sidecarContainers:    oauth-proxy:      image: quay.io/oauth2-proxy/oauth2-proxy:v7.6.0      args:      - --upstream=http://127.0.0.1:8080      - --http-address=0.0.0.0:8081      - ...      ports:      - containerPort: 8081        name: oauth-proxy        protocol: TCP      resources: {} |
 | ui.podAnnotations | object | `{}` | Additional annotations to add to each pod |
 | ui.podLabels | object | `{}` | Additional labels to add to each pod |
+| ui.selectorLabels | object | `{}` | Custom selector labels, overwrites the default set |
 | ui.updateStrategy | object | `{}` | Deployment update strategy. Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy |
 | ui.revisionHistoryLimit | int | `10` | The number of revisions to keep |
 | ui.podSecurityContext | object | `{"runAsGroup":1234,"runAsUser":1234}` | Security context for the pod |
@@ -450,6 +463,12 @@ Open `http://localhost:8082/` in your browser.
 | ui.ingress.annotations | object | `{}` | Ingress annotations. |
 | ui.ingress.hosts | list | `[]` | List of ingress host configurations. |
 | ui.ingress.tls | list | `[]` | List of ingress TLS configurations. |
+| ui.httproute.enabled | bool | `false` | Enable HTTPRoute resource (Gateway API alternative to Ingress) Requires Gateway API CRDs (v1) installed in cluster https://gateway-api.sigs.k8s.io/ |
+| ui.httproute.labels | object | `{}` | Additional HTTPRoute labels |
+| ui.httproute.annotations | object | `{}` | Additional HTTPRoute annotations |
+| ui.httproute.parentRefs | list | `[]` | Gateway API parentRefs (list of Gateway references) Must reference an existing Gateway resource |
+| ui.httproute.hostnames | list | `[]` | List of hostnames for HTTPRoute |
+| ui.httproute.rules | list | `[{"matches":[{"path":{"type":"PathPrefix","value":"/"}}]}]` | HTTPRoute rules configuration Allows advanced routing with matches and filters |
 | ui.networkPolicy.enabled | bool | `false` | When true, use a NetworkPolicy to allow ingress to the webhook This is useful on clusters using Calico and/or native k8s network policies in a default-deny setup. |
 | ui.networkPolicy.egress | list | `[{"ports":[{"port":6443,"protocol":"TCP"}]}]` | A list of valid from selectors according to https://kubernetes.io/docs/concepts/services-networking/network-policies. Enables Kubernetes API Server by default |
 | ui.networkPolicy.ingress | list | `[]` | A list of valid from selectors according to https://kubernetes.io/docs/concepts/services-networking/network-policies. |
@@ -459,6 +478,7 @@ Open `http://localhost:8082/` in your browser.
 | ui.nodeSelector | object | `{}` | Node labels for pod assignment |
 | ui.tolerations | list | `[]` | List of node taints to tolerate |
 | ui.affinity | object | `{}` | Affinity constraints. |
+| ui.topologySpreadConstraints | object | `{}` | Pod Topology Spread Constraints for the policy-reporter-ui. |
 | ui.extraVolumes.volumeMounts | list | `[]` | Deployment volumeMounts |
 | ui.extraVolumes.volumes | list | `[]` | Deployment values |
 | ui.extraConfig | object | `{}` | Extra configuration options appended to UI settings |
@@ -466,7 +486,7 @@ Open `http://localhost:8082/` in your browser.
 | plugin.kyverno.image.registry | string | `"ghcr.io"` | Image registry |
 | plugin.kyverno.image.repository | string | `"kyverno/policy-reporter/kyverno-plugin"` | Image repository |
 | plugin.kyverno.image.pullPolicy | string | `"IfNotPresent"` | Image PullPolicy |
-| plugin.kyverno.image.tag | string | `"0.5.0"` | Image tag |
+| plugin.kyverno.image.tag | string | `"0.5.3"` | Image tag |
 | plugin.kyverno.replicaCount | int | `1` | Deployment replica count |
 | plugin.kyverno.priorityClassName | string | `""` | Deployment priorityClassName |
 | plugin.kyverno.logging.api | bool | `false` | Enables external API request logging |
@@ -488,6 +508,7 @@ Open `http://localhost:8082/` in your browser.
 | plugin.kyverno.serviceAccount.name | string | `""` | The ServiceAccount name |
 | plugin.kyverno.podAnnotations | object | `{}` | Additional annotations to add to each pod |
 | plugin.kyverno.podLabels | object | `{}` | Additional labels to add to each pod |
+| plugin.kyverno.selectorLabels | object | `{}` | Custom selector labels, overwrites the default set |
 | plugin.kyverno.updateStrategy | object | `{}` | Deployment update strategy. Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy |
 | plugin.kyverno.revisionHistoryLimit | int | `10` | The number of revisions to keep |
 | plugin.kyverno.podSecurityContext | object | `{"runAsGroup":1234,"runAsUser":1234}` | Security context for the pod |
@@ -513,6 +534,12 @@ Open `http://localhost:8082/` in your browser.
 | plugin.kyverno.networkPolicy.enabled | bool | `false` | When true, use a NetworkPolicy to allow ingress to the webhook This is useful on clusters using Calico and/or native k8s network policies in a default-deny setup. |
 | plugin.kyverno.networkPolicy.egress | list | `[{"ports":[{"port":6443,"protocol":"TCP"}]}]` | A list of valid from selectors according to https://kubernetes.io/docs/concepts/services-networking/network-policies. Enables Kubernetes API Server by default |
 | plugin.kyverno.networkPolicy.ingress | list | `[]` | A list of valid from selectors according to https://kubernetes.io/docs/concepts/services-networking/network-policies. |
+| plugin.kyverno.httproute.enabled | bool | `false` | Enable HTTPRoute resource (Gateway API alternative to Ingress) Requires Gateway API CRDs (v1) installed in cluster https://gateway-api.sigs.k8s.io/ |
+| plugin.kyverno.httproute.labels | object | `{}` | Additional HTTPRoute labels |
+| plugin.kyverno.httproute.annotations | object | `{}` | Additional HTTPRoute annotations |
+| plugin.kyverno.httproute.parentRefs | list | `[]` | Gateway API parentRefs (list of Gateway references) Must reference an existing Gateway resource |
+| plugin.kyverno.httproute.hostnames | list | `[]` | List of hostnames for HTTPRoute |
+| plugin.kyverno.httproute.rules | list | `[{"matches":[{"path":{"type":"PathPrefix","value":"/"}}]}]` | HTTPRoute rules configuration Allows advanced routing with matches and filters |
 | plugin.kyverno.resources | object | `{}` | Resource constraints |
 | plugin.kyverno.leaderElection.lockName | string | `"kyverno-plugin"` | Lock Name |
 | plugin.kyverno.leaderElection.releaseOnCancel | bool | `true` | Released lock when the run context is cancelled. |
@@ -532,7 +559,7 @@ Open `http://localhost:8082/` in your browser.
 | plugin.trivy.image.registry | string | `"ghcr.io"` | Image registry |
 | plugin.trivy.image.repository | string | `"kyverno/policy-reporter/trivy-plugin"` | Image repository |
 | plugin.trivy.image.pullPolicy | string | `"IfNotPresent"` | Image PullPolicy |
-| plugin.trivy.image.tag | string | `"0.4.9"` | Image tag Defaults to `Chart.AppVersion` if omitted |
+| plugin.trivy.image.tag | string | `"0.4.12"` | Image tag Defaults to `Chart.AppVersion` if omitted |
 | plugin.trivy.cli.image.registry | string | `"ghcr.io"` | Image registry |
 | plugin.trivy.cli.image.repository | string | `"aquasecurity/trivy"` | Image repository |
 | plugin.trivy.cli.image.pullPolicy | string | `"IfNotPresent"` | Image PullPolicy |
@@ -560,6 +587,7 @@ Open `http://localhost:8082/` in your browser.
 | plugin.trivy.serviceAccount.name | string | `""` | The ServiceAccount name |
 | plugin.trivy.podAnnotations | object | `{}` | Additional annotations to add to each pod |
 | plugin.trivy.podLabels | object | `{}` | Additional labels to add to each pod |
+| plugin.trivy.selectorLabels | object | `{}` | Custom selector labels, overwrites the default set |
 | plugin.trivy.updateStrategy | object | `{}` | Deployment update strategy. Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy |
 | plugin.trivy.revisionHistoryLimit | int | `10` | The number of revisions to keep |
 | plugin.trivy.podSecurityContext | object | `{"runAsGroup":1234,"runAsUser":1234}` | Security context for the pod |
