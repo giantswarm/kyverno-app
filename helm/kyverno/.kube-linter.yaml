@@ -27,3 +27,4 @@ checks:
   - "restart-policy"
   - "priority-class-name"
   - "job-ttl-seconds-after-finished"
+  - "sorted-keys"
