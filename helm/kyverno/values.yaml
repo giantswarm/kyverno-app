@@ -1129,11 +1129,13 @@ kyverno:
 
       clusterRole:
         # -- Extra resource permissions to add in the cluster role
-        extraResources: []
-        # - apiGroups:
-        #     - ''
-        #   resources:
-        #     - pods
+        extraResources:
+        - apiGroups:
+            - apiextensions.k8s.io
+          resources:
+            - customresourcedefinitions
+          verbs:
+            - list
 
     image:
       # -- Image registry
