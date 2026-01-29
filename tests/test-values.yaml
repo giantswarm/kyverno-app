@@ -4,3 +4,6 @@ crds:
 monitoring:
   podLogs:
     enabled: false
+
+policyReporter:
+  namespace: default
