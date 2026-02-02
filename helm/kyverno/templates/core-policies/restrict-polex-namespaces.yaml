@@ -1,6 +1,6 @@
 {{- if .Values.policyExceptions.enablePolexPolicy }}
-apiVersion: kyverno.io/v2beta1
-kind: ClusterPolicy
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
 metadata:
   name: restrict-polex-namespaces
   labels:
@@ -19,32 +19,22 @@ metadata:
       but existing exceptions in namespaces other than those allowed here will still
       be honored by Kyverno until they are deleted.
 spec:
-  validationFailureAction: Enforce
-  background: true
-  rules:
-  - name: restrict-namespaces
-    match:
-      any:
-      - resources:
-          kinds:
-          - kyverno.io/v2/PolicyException
-    preconditions:
-      all:
-      - key: "{{`{{ request.operation || 'BACKGROUND'}}`}}"
-        operator: NotEquals
-        value: DELETE
-    validate:
-      message: {{ .Values.policyExceptions.polexPolicyMessage }}
-      deny:
-        conditions:
-          any:
-          - key: "{{`{{request.namespace}}`}}"
-            operator: AnyNotIn
-            value:
-            - giantswarm
-            - flux-giantswarm
-            - kube-system
-            {{- range .Values.policyExceptions.allowedPolexNamespaces }}
-            - {{ . }}
-            {{- end }}
+  validationActions:
+  - Deny
+  evaluation:
+    admission:
+      enabled: true
+    background:
+      enabled: true
+  matchConstraints:
+    resourceRules:
+    - apiGroups: ['kyverno.io']
+      apiVersions: [v2]
+      operations: [CREATE, UPDATE]
+      resources: [policyexceptions]
+  validations:
+    - messageExpression: >-
+       "'PolicyExceptions are not allowed to be created in the ' + object.metadata.namespace + ' namespace. Please contact a cluster administrator for assistance.'"
+      expression: >-
+        object.metadata.namespace in ['giantswarm', 'flux-giantswarm', 'kube-system'{{- range .Values.policyExceptions.allowedPolexNamespaces }}, '{{ . }}'{{- end }}]
 {{- end }}
