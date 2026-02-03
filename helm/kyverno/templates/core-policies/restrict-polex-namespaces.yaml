@@ -32,6 +32,10 @@ spec:
       apiVersions: [v2]
       operations: [CREATE, UPDATE]
       resources: [policyexceptions]
+    - apiGroups: ['policies.kyverno.io']
+      apiVersions: [v1]
+      operations: [CREATE, UPDATE]
+      resources: [policyexceptions]
   validations:
     - messageExpression: >-
        "'PolicyExceptions are not allowed to be created in the ' + object.metadata.namespace + ' namespace. Please contact a cluster administrator for assistance.'"
