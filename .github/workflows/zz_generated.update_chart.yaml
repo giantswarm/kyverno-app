@@ -26,7 +26,7 @@ permissions: {}
 jobs:
   debug_info:
     name: Debug info
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Print github context JSON
         run: |
@@ -35,7 +35,7 @@ jobs:
           EOF
   gather_facts:
     name: Gather facts
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     outputs:
       repo_name: ${{ steps.gather_facts.outputs.repo_name }}
       branch: ${{ steps.gather_facts.outputs.branch }}
@@ -77,7 +77,7 @@ jobs:
           fi
   create_update_pr:
     name: Create update PR
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     needs:
