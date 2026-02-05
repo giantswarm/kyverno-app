@@ -1,6 +1,4 @@
 import logging
-from contextlib import contextmanager
-from pathlib import Path
 from typing import Dict, List
 
 import pykube
@@ -10,7 +8,7 @@ from pytest_helm_charts.k8s.deployment import wait_for_deployments_to_run
 
 logger = logging.getLogger(__name__)
 
-namespace_name = "default"
+namespace_name = "kyverno"
 
 timeout: int = 360
 
@@ -46,9 +44,9 @@ def test_cluster_info(
 @pytest.fixture(scope="module")
 def app_deployment(kube_cluster: Cluster) -> List[pykube.Deployment]:
     deployments = wait_for_deployments_to_run(
-        kube_cluster.kube_client,   
+        kube_cluster.kube_client,
         ["kyverno-admission-controller", "kyverno-background-controller", "kyverno-reports-controller"],
-        "default",
+        namespace_name,
         timeout,
     )
     return deployments

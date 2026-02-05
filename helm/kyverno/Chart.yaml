@@ -1,7 +1,9 @@
 annotations:
+  application.giantswarm.io/team: shield
+  config.giantswarm.io/version: 1.x.x
   io.giantswarm.application.audience: all
+  io.giantswarm.application.managed: "true"
   io.giantswarm.application.restrictions.cluster-singleton: "true"
-  io.giantswarm.application.team: shield
 apiVersion: v2
 appVersion: v1.17.0
 dependencies:
