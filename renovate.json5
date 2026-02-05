@@ -18,6 +18,13 @@
       ],
       "groupName": "Architect",
       "automerge": true
+    },
+    {
+      "description": "Group all GitHub Actions workflow updates",
+      "matchFileNames": [
+        ".github/workflows/**"
+      ],
+      "groupName": "GitHub Actions"
     }
   ]
 }
