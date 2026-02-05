@@ -9,7 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add `io.giantswarm.application.audience` and `io.giantswarm.application.managed` chart annotations for Backstage visibility.
+- Add  `io.giantswarm.application.managed` chart annotations for Backstage visibility.
+### Changed
+
+- Migrate Chart.yaml metadata annotations to new `io.giantswarm.application.*` format.
+
 
 ## [0.24.0] - 2026-02-04
 

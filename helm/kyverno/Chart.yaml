@@ -31,8 +31,6 @@ keywords:
   - validating-webhook
   - admission-controller
 name: kyverno
-restrictions:
-  clusterSingleton: true
 sources:
   - https://github.com/kyverno/kyverno
 type: application
