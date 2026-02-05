@@ -31,6 +31,8 @@ jobs:
       KIND_VERSION: v0.25.0
       # repo: kindest/node
       KUBERNETES_VERSION: v1.33.4
+      # kubectl version (must be a real k8s release)
+      KUBECTL_VERSION: v1.31.0
       # repo: giantswarm/kyverno-crds
       KYVERNO_CRDS_VERSION: "1.17.0"
     steps:
@@ -42,7 +44,7 @@ jobs:
       - run:
           name: Download kubectl
           command: |
-            curl -sLO https://storage.googleapis.com/kubernetes-release/release/$KUBERNETES_VERSION/bin/linux/amd64/kubectl && chmod +x kubectl  && sudo mv kubectl /usr/bin
+            curl -sLO https://storage.googleapis.com/kubernetes-release/release/$KUBECTL_VERSION/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/bin
       - run:
           name: Install Helm
           command: |
