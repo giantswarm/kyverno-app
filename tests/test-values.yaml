@@ -26,21 +26,60 @@ monitoring:
 
 kyverno:
   admissionController:
+    # Reduce replicas for Kind cluster
+    replicas: 1
     serviceMonitor:
       enabled: false
     priorityClassName: ""
+    podDisruptionBudget:
+      minAvailable: 0
+    container:
+      resources:
+        limits:
+          memory: 256Mi
+        requests:
+          cpu: 50m
+          memory: 64Mi
+    initContainer:
+      resources:
+        limits:
+          cpu: 100m
+          memory: 128Mi
+        requests:
+          cpu: 10m
+          memory: 32Mi
   backgroundController:
     serviceMonitor:
       enabled: false
     priorityClassName: ""
+    podDisruptionBudget:
+      minAvailable: 0
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 256Mi
   cleanupController:
     serviceMonitor:
       enabled: false
     priorityClassName: ""
+    podDisruptionBudget:
+      minAvailable: 0
   reportsController:
     serviceMonitor:
       enabled: false
     priorityClassName: ""
+    podDisruptionBudget:
+      minAvailable: 0
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 256Mi
 
 policy-reporter:
   monitoring:
