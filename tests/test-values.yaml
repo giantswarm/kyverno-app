@@ -1,6 +1,57 @@
 crds:
   install: false
 
+ciliumNetworkPolicy:
+  enabled: false
+
+verticalPodAutoscaler:
+  admissionController:
+    enabled: false
+  backgroundController:
+    enabled: false
+  cleanupController:
+    enabled: false
+  reportsController:
+    enabled: false
+  kyvernoPlugin:
+    enabled: false
+  policyReporter:
+    enabled: false
+  ui:
+    enabled: false
+
 monitoring:
   podLogs:
     enabled: false
+
+kyverno:
+  admissionController:
+    serviceMonitor:
+      enabled: false
+    priorityClassName: ""
+  backgroundController:
+    serviceMonitor:
+      enabled: false
+    priorityClassName: ""
+  cleanupController:
+    serviceMonitor:
+      enabled: false
+    priorityClassName: ""
+  reportsController:
+    serviceMonitor:
+      enabled: false
+    priorityClassName: ""
+
+policy-reporter:
+  monitoring:
+    enabled: false
+
+# Disable Giant Swarm specific policy exceptions
+policyExceptions:
+  enablePolexPolicy: false
+  enableChartOperatorPolex: false
+  enableCiliumPolex: false
+  enableAwsCloudControllerManagerPolex: false
+  enableAwsEbsCsiDriverPolex: false
+  enableAzureCloudControllerManagerPolex: false
+  enableAzureCloudNodeManagerPolex: false

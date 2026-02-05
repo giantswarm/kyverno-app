@@ -32,7 +32,7 @@ jobs:
       # repo: kindest/node
       KUBERNETES_VERSION: v1.33.4
       # repo: giantswarm/kyverno-crds
-      KYVERNO_CRDS_VERSION: "1.16.0"
+      KYVERNO_CRDS_VERSION: "1.17.0"
     steps:
       - checkout
       - run:
