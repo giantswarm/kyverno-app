@@ -50,7 +50,7 @@ jobs:
       - run:
           name: Create kind cluster and install kyverno
           command: |
-            make kind-create kind-get-kubeconfig install-kyverno
+            make kind-create kind-get-kubeconfig install-vpa-crds install-kyverno
       - run-ats:
           chart_archive_prefix: kyverno
           tests_dir: tests/ats
