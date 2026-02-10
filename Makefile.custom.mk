@@ -4,5 +4,10 @@ kind-create:
 kind-get-kubeconfig:
 	kind get kubeconfig --name kyverno > kyverno-kubeconfig.yaml
 
+install-vpa-crds:
+	curl -sLo vpa-crds.yaml https://raw.githubusercontent.com/kubernetes/autoscaler/vertical-pod-autoscaler-1.3.0/vertical-pod-autoscaler/deploy/vpa-v1-crd-gen.yaml
+	kubectl --kubeconfig=kyverno-kubeconfig.yaml apply -f vpa-crds.yaml
+	rm -f vpa-crds.yaml
+
 install-kyverno:
-	helm install https://giantswarm.github.io/giantswarm-catalog/kyverno-crds-${KYVERNO_CRDS_VERSION}.tgz --generate-name
+	helm install https://giantswarm.github.io/giantswarm-catalog/kyverno-crds-${KYVERNO_CRDS_VERSION}.tgz --generate-name --kubeconfig=kyverno-kubeconfig.yaml
