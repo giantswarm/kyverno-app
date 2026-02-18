@@ -84,9 +84,22 @@ workflows:
         filters:
           tags:
             only: /^v.*/
-
-      # Run app-test-suite tests.
           branches:
             ignore:
             - main
-            - master
+
+    - architect/push-to-app-catalog:
+        context: architect
+        executor: app-build-suite
+        name: push-kyverno-chart-to-default-catalog
+        app_catalog: default-catalog
+        app_catalog_test: default-test-catalog
+        persist_chart_archive: true
+        chart: kyverno
+          # Trigger job on git tag.
+        filters:
+          tags:
+            only: /^v.*/
+          branches:
+            ignore:
+            - main
