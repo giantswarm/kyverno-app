@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Migrate Chart.yaml metadata annotations to new `io.giantswarm.application.*` format.
+- Sanitize `Chart.Version` when used in labels due to flux appending the artifact digest to the version.
 
 ## [0.24.0] - 2026-02-04
 
