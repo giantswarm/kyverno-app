@@ -39,7 +39,7 @@ image:
   repository: &kubectlRepository giantswarm/kubectl
   # -- Image tag
   # Defaults to `latest` if omitted
-  tag: &kubectlTag 'v1.34.3'
+  tag: &kubectlTag 'v1.35.2'
 
 # VerticalPodAutoscaler settings for individual controllers
 verticalPodAutoscaler:
