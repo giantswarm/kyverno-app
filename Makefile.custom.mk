@@ -1,3 +1,6 @@
+sync-values: ## Sync values.yaml and schema after upstream update
+	cd tools/values-sync && go run . --chart-dir ../../helm/kyverno
+
 kind-create:
 	kind create cluster --name kyverno --image=kindest/node:${KUBERNETES_VERSION} --config=tests/ats/kind_config.yaml
 
