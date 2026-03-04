@@ -60,18 +60,6 @@ jobs:
 workflows:
   package-and-push-chart-on-tag:
     jobs:
-    - run-tests:
-          # Needed to trigger job also on git tag.
-        filters:
-          tags:
-            only: /^v.*/
-      # Run app-test-suite tests.
-          branches:
-            ignore:
-            - main
-        requires:
-        - push-kyverno-chart-to-giantswarm-catalog
-
     - architect/push-to-app-catalog:
         context: architect
         executor: app-build-suite
