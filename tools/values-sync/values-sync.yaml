@@ -1,0 +1,8 @@
+# Paths to never remove during sync, even if they don't exist upstream.
+# Supports '*' (one segment) and '**' (one or more segments, anywhere in pattern).
+# All paths are prefixed with the subchart name, e.g. kyverno.securityContext.runAsUser.
+exclude:
+  - "**.securityContext.**"
+  - "**.resources.**"
+  - "**.customLabels.**"
+  - "**.podLabels.**"
