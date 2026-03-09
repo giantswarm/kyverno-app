@@ -6,12 +6,12 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
 
 	"github.com/spf13/cobra"
 
 	"github.com/giantswarm/kyverno-app/tools/values-sync/internal/chart"
 	"github.com/giantswarm/kyverno-app/tools/values-sync/internal/config"
-	"github.com/giantswarm/kyverno-app/tools/values-sync/internal/schema"
 	"github.com/giantswarm/kyverno-app/tools/values-sync/internal/values"
 )
 
@@ -21,25 +21,20 @@ type options struct {
 	dryRun     bool
 	addNew     bool
 	output     string
+	depth      int
+	format     string
 }
 
 // report is the JSON-serialisable sync report.
 type report struct {
 	ChartDir string       `json:"chartDir"`
 	Results  []syncResult `json:"results"`
-	Schema   schemaResult `json:"schema"`
 }
 
 type syncResult struct {
 	Subchart string   `json:"subchart"`
 	Removed  []string `json:"removed"`
 	New      []string `json:"new"`
-}
-
-type schemaResult struct {
-	Updated bool   `json:"updated"`
-	Path    string `json:"path"`
-	Error   string `json:"error,omitempty"`
 }
 
 func main() {
@@ -65,6 +60,8 @@ func run() error {
 	cmd.Flags().BoolVar(&opts.dryRun, "dry-run", false, "Print what would change without modifying files")
 	cmd.Flags().BoolVar(&opts.addNew, "add-new", false, "Auto-add new upstream keys to values.yaml with upstream default value")
 	cmd.Flags().StringVar(&opts.output, "output", "text", "Output format: text or json")
+	cmd.Flags().IntVar(&opts.depth, "depth", 0, "Max depth for tree output (0 = unlimited)")
+	cmd.Flags().StringVar(&opts.format, "format", "tree", "Output format for changed keys: tree or paths")
 
 	return cmd.Execute()
 }
@@ -112,6 +109,7 @@ func execute(opts *options) error {
 
 	// Sync each subchart.
 	rep := report{ChartDir: chartDir}
+	var syncResults []values.SyncResult
 	for _, dep := range deps {
 		upstreamPath := filepath.Join(chartDir, "charts", dep, "values.yaml")
 		if _, err := os.Stat(upstreamPath); os.IsNotExist(err) {
@@ -131,6 +129,7 @@ func execute(opts *options) error {
 		sort.Strings(res.Removed)
 		sort.Strings(res.New)
 
+		syncResults = append(syncResults, res)
 		rep.Results = append(rep.Results, syncResult{
 			Subchart: res.Subchart,
 			Removed:  res.Removed,
@@ -139,20 +138,24 @@ func execute(opts *options) error {
 	}
 
 	// Write updated values.yaml (unless dry-run).
+	// Use surgical line removal to preserve formatting unless new keys were
+	// added, in which case a full re-encode is required.
 	if !opts.dryRun {
-		if err := values.WriteValues(valuesPath, doc); err != nil {
-			return fmt.Errorf("writing updated values.yaml: %w", err)
+		hasAdditions := false
+		for _, r := range syncResults {
+			if len(r.New) > 0 {
+				hasAdditions = true
+				break
+			}
 		}
-	}
-
-	// Regenerate schema (unless dry-run).
-	schemaPath := filepath.Join(chartDir, "values.schema.json")
-	rep.Schema.Path = schemaPath
-	if !opts.dryRun {
-		if err := schema.Regenerate(valuesPath, schemaPath); err != nil {
-			rep.Schema.Error = err.Error()
-		} else {
-			rep.Schema.Updated = true
+		if hasAdditions {
+			if err := values.WriteValues(valuesPath, doc); err != nil {
+				return fmt.Errorf("writing updated values.yaml: %w", err)
+			}
+		} else if values.HasRemovals(syncResults) {
+			if err := values.WriteValuesSurgical(valuesPath, syncResults); err != nil {
+				return fmt.Errorf("writing updated values.yaml: %w", err)
+			}
 		}
 	}
 
@@ -203,33 +206,94 @@ func printTextReport(rep report, opts *options) {
 			fmt.Printf("  [%s] no changes\n", r.Subchart)
 			continue
 		}
-		fmt.Printf("  [%s]\n", r.Subchart)
+
+		parts := []string{}
+		if n := len(r.Removed); n > 0 {
+			parts = append(parts, fmt.Sprintf("-%d", n))
+		}
+		if n := len(r.New); n > 0 {
+			parts = append(parts, fmt.Sprintf("+%d", n))
+		}
+		fmt.Printf("  [%s] %s\n", r.Subchart, strings.Join(parts, "  "))
+
 		if len(r.Removed) > 0 {
-			action := "Removed from values.yaml"
+			action := "removed"
 			if opts.dryRun {
-				action = "Would remove from values.yaml"
+				action = "would remove"
 			}
 			fmt.Printf("    %s:\n", action)
-			for _, p := range r.Removed {
-				fmt.Printf("      - %s\n", p)
-			}
+			printPaths(r.Removed, r.Subchart, "      ", opts.format, opts.depth)
 		}
 		if len(r.New) > 0 {
-			action := "Added new upstream keys"
+			action := "new upstream keys"
 			if opts.dryRun {
-				action = "Would add new upstream keys"
+				action = "would add"
 			}
 			fmt.Printf("    %s:\n", action)
-			for _, p := range r.New {
-				fmt.Printf("      - %s\n", p)
-			}
+			printPaths(r.New, r.Subchart, "      ", opts.format, opts.depth)
 		}
 	}
-	if opts.dryRun {
-		fmt.Println("  Schema: dry-run, not regenerated")
-	} else if rep.Schema.Updated {
-		fmt.Printf("  Schema: Updated %s\n", rep.Schema.Path)
-	} else if rep.Schema.Error != "" {
-		fmt.Printf("  Schema: ERROR: %s\n", rep.Schema.Error)
+}
+
+// treeNode is a node in the trie used to render dot-separated paths as a tree.
+type treeNode struct {
+	children map[string]*treeNode
+	order    []string // keys in insertion order
+}
+
+func newTreeNode() *treeNode {
+	return &treeNode{children: make(map[string]*treeNode)}
+}
+
+func (t *treeNode) insert(parts []string) {
+	if len(parts) == 0 {
+		return
+	}
+	key := parts[0]
+	if _, ok := t.children[key]; !ok {
+		t.children[key] = newTreeNode()
+		t.order = append(t.order, key)
+	}
+	t.children[key].insert(parts[1:])
+}
+
+// printPaths dispatches to the appropriate renderer based on format.
+func printPaths(paths []string, subchart, indent, format string, maxDepth int) {
+	if format == "paths" {
+		for _, p := range paths {
+			fmt.Printf("%s%s\n", indent, p)
+		}
+		return
+	}
+	printPathTree(paths, subchart, indent, maxDepth)
+}
+
+// printPathTree renders a list of dot-separated paths as an indented tree.
+// The subchart prefix (e.g. "kyverno.") is stripped before building the tree.
+// maxDepth limits how many levels are expanded (0 = unlimited).
+func printPathTree(paths []string, subchart, indent string, maxDepth int) {
+	root := newTreeNode()
+	strip := subchart + "."
+	for _, p := range paths {
+		root.insert(strings.Split(strings.TrimPrefix(p, strip), "."))
+	}
+	renderTreeNode(root, indent, "", 1, maxDepth)
+}
+
+func renderTreeNode(node *treeNode, indent, prefix string, depth, maxDepth int) {
+	for i, key := range node.order {
+		child := node.children[key]
+		isLast := i == len(node.order)-1
+		connector := "├── "
+		childPrefix := prefix + "│   "
+		if isLast {
+			connector = "└── "
+			childPrefix = prefix + "    "
+		}
+		truncated := maxDepth > 0 && depth >= maxDepth
+		fmt.Printf("%s%s%s%s\n", indent, prefix, connector, key)
+		if len(child.order) > 0 && !truncated {
+			renderTreeNode(child, indent, childPrefix, depth+1, maxDepth)
+		}
 	}
 }

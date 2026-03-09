@@ -1,8 +1,10 @@
 package values
 
 import (
+	"bytes"
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 
 	"gopkg.in/yaml.v3"
@@ -12,10 +14,14 @@ import (
 
 // SyncResult holds what changed for one subchart.
 type SyncResult struct {
-	Subchart string
-	Removed  []string
-	New      []string // populated when AddNew is set
+	Subchart     string
+	Removed      []string
+	New          []string   // populated when AddNew is set
+	removedLines []lineRange // line ranges deleted from the source file
 }
+
+// lineRange is a 1-indexed inclusive range of lines in the source file.
+type lineRange struct{ first, last int }
 
 // SyncOptions controls sync behaviour.
 type SyncOptions struct {
@@ -52,6 +58,9 @@ func SyncSubchart(ourDoc *yaml.Node, name string, upstreamPath string, opts Sync
 		// Upstream is empty — remove everything under this key.
 		result.Removed = flattenPaths(ourMapping, name)
 		if !opts.DryRun {
+			for i := 0; i+1 < len(ourMapping.Content); i += 2 {
+				result.removedLines = append(result.removedLines, nodeLineRange(ourMapping.Content[i], ourMapping.Content[i+1]))
+			}
 			ourMapping.Content = nil
 		}
 		return result, nil
@@ -87,7 +96,7 @@ func SyncSubchart(ourDoc *yaml.Node, name string, upstreamPath string, opts Sync
 
 	if !opts.DryRun {
 		// Remove keys that disappeared.
-		pruneNode(ourMapping, upstreamMapping, name, opts.Exclude)
+		result.removedLines = pruneNode(ourMapping, upstreamMapping, name, opts.Exclude)
 
 		// Add new keys if requested.
 		if opts.AddNew {
@@ -98,17 +107,83 @@ func SyncSubchart(ourDoc *yaml.Node, name string, upstreamPath string, opts Sync
 	return result, nil
 }
 
-// WriteValues marshals the YAML document back to file.
-func WriteValues(path string, doc *yaml.Node) error {
-	f, err := os.Create(path)
-	if err != nil {
-		return fmt.Errorf("opening %s for write: %w", path, err)
-	}
-	defer f.Close()
+// commentSpacingRe matches a non-whitespace character followed by exactly one
+// space and then a '#', which is the pattern yaml.NewEncoder produces for
+// inline comments. ct lint requires at least two spaces before '#'.
+var commentSpacingRe = regexp.MustCompile(`(\S) (#)`)
 
-	enc := yaml.NewEncoder(f)
+// ensureCommentSpacing post-processes YAML text to guarantee that inline
+// comments are preceded by at least two spaces, as required by ct lint.
+func ensureCommentSpacing(s string) string {
+	lines := strings.Split(s, "\n")
+	for i, line := range lines {
+		lines[i] = commentSpacingRe.ReplaceAllString(line, "$1  $2")
+	}
+	return strings.Join(lines, "\n")
+}
+
+// WriteValues marshals the full YAML document back to the file.
+// Used when new keys are added (--add-new), since inserted nodes have no
+// original line information to preserve.
+func WriteValues(path string, doc *yaml.Node) error {
+	var buf bytes.Buffer
+	enc := yaml.NewEncoder(&buf)
 	enc.SetIndent(2)
-	return enc.Encode(doc)
+	if err := enc.Encode(doc); err != nil {
+		return fmt.Errorf("encoding YAML: %w", err)
+	}
+	out := ensureCommentSpacing(buf.String())
+	if err := os.WriteFile(path, []byte(out), 0o644); err != nil {
+		return fmt.Errorf("writing %s: %w", path, err)
+	}
+	return nil
+}
+
+// WriteValuesSurgical removes exactly the lines that were pruned from the
+// original file, preserving all other formatting (blank lines, comment
+// alignment, indentation).
+func WriteValuesSurgical(path string, results []SyncResult) error {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return fmt.Errorf("reading %s: %w", path, err)
+	}
+
+	// Collect all line ranges to remove across all subcharts.
+	toRemove := make(map[int]bool)
+	for _, r := range results {
+		for _, lr := range r.removedLines {
+			for i := lr.first; i <= lr.last; i++ {
+				toRemove[i] = true
+			}
+		}
+	}
+
+	if len(toRemove) == 0 {
+		return nil
+	}
+
+	lines := strings.Split(string(data), "\n")
+
+	// Also remove blank lines that immediately precede a removed block and
+	// would otherwise be left orphaned.
+	for _, r := range results {
+		for _, lr := range r.removedLines {
+			line := lr.first - 1
+			for line >= 1 && strings.TrimSpace(lines[line-1]) == "" {
+				toRemove[line] = true
+				line--
+			}
+		}
+	}
+
+	var kept []string
+	for i, line := range lines {
+		if !toRemove[i+1] { // lines are 0-indexed; toRemove is 1-indexed
+			kept = append(kept, line)
+		}
+	}
+
+	return os.WriteFile(path, []byte(strings.Join(kept, "\n")), 0o644)
 }
 
 // LoadValuesDoc reads and parses a values.yaml, returning the document node.
@@ -126,6 +201,16 @@ func LoadValuesDoc(path string) (*yaml.Node, error) {
 		doc.Content = []*yaml.Node{{Kind: yaml.MappingNode}}
 	}
 	return &doc, nil
+}
+
+// HasRemovals returns true if any SyncResult recorded removed lines.
+func HasRemovals(results []SyncResult) bool {
+	for _, r := range results {
+		if len(r.removedLines) > 0 {
+			return true
+		}
+	}
+	return false
 }
 
 // --- helpers ---
@@ -221,12 +306,29 @@ func isPrefixOfAny(prefix string, paths map[string]bool) bool {
 	return false
 }
 
+// nodeLastLine returns the last line number occupied by n and all its descendants.
+func nodeLastLine(n *yaml.Node) int {
+	last := n.Line
+	for _, child := range n.Content {
+		if cl := nodeLastLine(child); cl > last {
+			last = cl
+		}
+	}
+	return last
+}
+
+// nodeLineRange returns the line range covered by a key/value pair.
+func nodeLineRange(key, val *yaml.Node) lineRange {
+	return lineRange{first: key.Line, last: nodeLastLine(val)}
+}
+
 // pruneNode removes from ourNode any keys (and their subtrees) that don't
 // exist in upstreamNode, unless the path matches an exclude pattern.
 // currentPath is the dot-separated path to ourNode (e.g. "kyverno").
-func pruneNode(ourNode, upstreamNode *yaml.Node, currentPath string, excludes []string) {
+// Returns the line ranges that were removed.
+func pruneNode(ourNode, upstreamNode *yaml.Node, currentPath string, excludes []string) []lineRange {
 	if ourNode == nil || upstreamNode == nil || ourNode.Kind != yaml.MappingNode {
-		return
+		return nil
 	}
 
 	upstreamKeys := make(map[string]*yaml.Node)
@@ -234,6 +336,7 @@ func pruneNode(ourNode, upstreamNode *yaml.Node, currentPath string, excludes []
 		upstreamKeys[upstreamNode.Content[i].Value] = upstreamNode.Content[i+1]
 	}
 
+	var removals []lineRange
 	kept := make([]*yaml.Node, 0, len(ourNode.Content))
 	for i := 0; i+1 < len(ourNode.Content); i += 2 {
 		keyNode := ourNode.Content[i]
@@ -241,30 +344,42 @@ func pruneNode(ourNode, upstreamNode *yaml.Node, currentPath string, excludes []
 		fullPath := currentPath + "." + keyNode.Value
 		upVal, exists := upstreamKeys[keyNode.Value]
 		if !exists {
-			// Keep if the path itself is excluded, or if it's a mapping that
-			// contains at least one excluded descendant.
 			if config.MatchesAny(fullPath, excludes) {
 				kept = append(kept, keyNode, valNode)
-			} else if valNode.Kind == yaml.MappingNode && pruneOrphanNode(valNode, fullPath, excludes) {
-				kept = append(kept, keyNode, valNode)
+			} else if valNode.Kind == yaml.MappingNode {
+				orphanRemovals := pruneOrphanNode(valNode, fullPath, excludes)
+				if valNode.Content != nil { // pruneOrphanNode kept something
+					kept = append(kept, keyNode, valNode)
+					removals = append(removals, orphanRemovals...)
+				} else {
+					removals = append(removals, nodeLineRange(keyNode, valNode))
+				}
+			} else {
+				removals = append(removals, nodeLineRange(keyNode, valNode))
 			}
 			continue
 		}
 		if valNode.Kind == yaml.MappingNode && upVal != nil && upVal.Kind == yaml.MappingNode {
-			pruneNode(valNode, upVal, fullPath, excludes)
+			removals = append(removals, pruneNode(valNode, upVal, fullPath, excludes)...)
 		}
 		kept = append(kept, keyNode, valNode)
 	}
 	ourNode.Content = kept
+	return removals
 }
 
 // pruneOrphanNode removes all leaves from a node that has no upstream
 // counterpart, keeping only paths that match an exclude pattern.
-// Returns true if any content remains after pruning.
-func pruneOrphanNode(node *yaml.Node, currentPath string, excludes []string) bool {
+// Returns the line ranges that were removed. Sets node.Content to nil if
+// nothing was kept.
+func pruneOrphanNode(node *yaml.Node, currentPath string, excludes []string) []lineRange {
 	if node.Kind != yaml.MappingNode {
-		return config.MatchesAny(currentPath, excludes)
+		if config.MatchesAny(currentPath, excludes) {
+			return nil
+		}
+		return []lineRange{{node.Line, node.Line}}
 	}
+	var removals []lineRange
 	kept := make([]*yaml.Node, 0, len(node.Content))
 	for i := 0; i+1 < len(node.Content); i += 2 {
 		keyNode := node.Content[i]
@@ -272,12 +387,24 @@ func pruneOrphanNode(node *yaml.Node, currentPath string, excludes []string) boo
 		fullPath := currentPath + "." + keyNode.Value
 		if config.MatchesAny(fullPath, excludes) {
 			kept = append(kept, keyNode, valNode)
-		} else if valNode.Kind == yaml.MappingNode && pruneOrphanNode(valNode, fullPath, excludes) {
-			kept = append(kept, keyNode, valNode)
+		} else if valNode.Kind == yaml.MappingNode {
+			childRemovals := pruneOrphanNode(valNode, fullPath, excludes)
+			if valNode.Content != nil {
+				kept = append(kept, keyNode, valNode)
+				removals = append(removals, childRemovals...)
+			} else {
+				removals = append(removals, nodeLineRange(keyNode, valNode))
+			}
+		} else {
+			removals = append(removals, nodeLineRange(keyNode, valNode))
 		}
 	}
-	node.Content = kept
-	return len(kept) > 0
+	if len(kept) == 0 {
+		node.Content = nil
+	} else {
+		node.Content = kept
+	}
+	return removals
 }
 
 // addNewKeys adds keys that exist in upstreamNode but not in ourNode,
