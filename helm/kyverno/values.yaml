@@ -150,6 +150,10 @@ monitoring:
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
 kyverno:
 
+  global:
+    image:
+      registry: gsoci.azurecr.io
+
   # Use openreports.io as the API group for reporting
   openreports:
     # -- Enable OpenReports feature in controllers
@@ -1411,6 +1415,13 @@ policy-reporter:
         requests:
           cpu: 10m
           memory: 30Mi
+
+    trivy:
+      image:
+        registry: gsoci.azurecr.io
+      cli:
+        image:
+          registry: gsoci.azurecr.io
 
   global:
     labels: {}

@@ -1726,6 +1726,19 @@
                     },
                     "type": "object"
                 },
+                "global": {
+                    "properties": {
+                        "image": {
+                            "properties": {
+                                "registry": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
                 "grafana": {
                     "properties": {
                         "enabled": {
@@ -2391,6 +2404,32 @@
                                                 }
                                             },
                                             "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "trivy": {
+                            "properties": {
+                                "cli": {
+                                    "properties": {
+                                        "image": {
+                                            "properties": {
+                                                "registry": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "image": {
+                                    "properties": {
+                                        "registry": {
+                                            "type": "string"
                                         }
                                     },
                                     "type": "object"
