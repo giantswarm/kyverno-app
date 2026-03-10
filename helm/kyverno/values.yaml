@@ -481,14 +481,6 @@ kyverno:
 
     # -- Node affinity constraints.
     nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 50
-          preference:
-            matchExpressions:
-              - key: karpenter.sh/capacity-type
-                operator: NotIn
-                values:
-                  - spot
 
     # -- Topology spread constraints
     topologySpreadConstraints: []
