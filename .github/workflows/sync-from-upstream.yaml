@@ -4,8 +4,11 @@ on:
   schedule:
     - cron: '0 8 */7 * *' # At 08:00 on every 7th day-of-month
 
-  # Allows to run this workflow manually from the Actions tab
+  # Allows manual triggering from the Actions tab of this repository
   workflow_dispatch:
+
+  # Allows triggering from another repository
+  workflow_call:
 env:
   policy_reporter_fork_repo: https://github.com/giantswarm/policy-reporter-upstream
   kyverno_fork_repo: https://github.com/giantswarm/kyverno-upstream
@@ -45,3 +48,107 @@ jobs:
     secrets: inherit
     with:
       branch: 'main#update-chart'
+  sync-values:
+    runs-on: ubuntu-latest
+    needs: copy-kyverno-crds
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: 'main#update-chart'
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.2'
+          cache-dependency-path: tools/values-sync/go.sum
+      - name: Run values-sync
+        run: cd tools/values-sync && go run . --chart-dir ../../helm/kyverno
+      - name: Commit and push
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add helm/kyverno/values.yaml
+          git diff --cached --quiet || git commit -m "Sync values from upstream"
+          git push origin 'main#update-chart'
+
+  sync-schema:
+    runs-on: ubuntu-latest
+    needs: sync-values
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: 'main#update-chart'
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.2'
+          cache-dependency-path: tools/schema-gen/go.sum
+      - name: Run schema-gen
+        run: cd tools/schema-gen && go run . --chart-dir ../../helm/kyverno
+      - name: Commit and push
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add helm/kyverno/values.schema.json
+          git diff --cached --quiet || git commit -m "Regenerate values schema"
+          git push origin 'main#update-chart'
+
+  update-changelog:
+    runs-on: ubuntu-latest
+    needs: sync-schema
+    outputs:
+      entries: ${{ steps.changelog.outputs.entries }}
+    steps:
+      - name: Generate token
+        id: generate_token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.HERALD_APP_ID }}
+          private-key: ${{ secrets.HERALD_APP_KEY }}
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: 'main#update-chart'
+          token: ${{ steps.generate_token.outputs.token }}
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      - name: Run changelog tool
+        id: changelog
+        run: |
+          output=$(./hack/update-changelog.sh)
+          echo "${output}"
+          entries=$(echo "${output}" | grep "^Adding changelog entry:" | sed 's/^Adding changelog entry: //')
+          {
+            echo "entries<<EOF"
+            echo "${entries}"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+      - name: Commit and push
+        run: |
+          git config --local user.email "149080493+heraldbot[bot]@users.noreply.github.com"
+          git config --local user.name "HeraldBot[bot]"
+          git add CHANGELOG.md
+          git diff --cached --quiet || git commit -m "Update changelog"
+          git push origin 'main#update-chart'
+
+  update-pr-description:
+    runs-on: ubuntu-latest
+    needs: update-changelog
+    if: needs.update-changelog.outputs.entries != ''
+    steps:
+      - name: Generate token
+        id: generate_token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.HERALD_APP_ID }}
+          private-key: ${{ secrets.HERALD_APP_KEY }}
+      - name: Update PR description
+        env:
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+        run: |
+          gh pr edit 'main#update-chart' \
+            --repo ${{ github.repository }} \
+            --body "$(printf '### Changes\n\n%s' "${{ needs.update-changelog.outputs.entries }}")"
