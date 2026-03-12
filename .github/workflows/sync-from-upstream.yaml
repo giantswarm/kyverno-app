@@ -9,10 +9,13 @@ on:
 
   # Allows triggering from another repository
   workflow_call:
+
 env:
-  policy_reporter_fork_repo: https://github.com/giantswarm/policy-reporter-upstream
-  kyverno_fork_repo: https://github.com/giantswarm/kyverno-upstream
-  branch: 'main#update-chart'
+  # Repo-specific settings – update these when using as a template
+  CHART_DIR: helm/kyverno
+  UPDATE_BRANCH: 'main#update-chart'
+  POLICY_REPORTER_FORK_REPO: https://github.com/giantswarm/policy-reporter-upstream
+  KYVERNO_FORK_REPO: https://github.com/giantswarm/kyverno-upstream
 
 jobs:
   sync-app-kyverno-with-fork:
@@ -20,83 +23,37 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      - run: |
-          # Get the last tag from fork repo
-          POLICY_REPORTER_LAST_TAG=$(git ls-remote --tags --sort='v:refname' --refs $policy_reporter_fork_repo \
+      - name: Update vendir and push to update branch
+        run: |
+          POLICY_REPORTER_LAST_TAG=$(git ls-remote --tags --sort='v:refname' --refs ${{ env.POLICY_REPORTER_FORK_REPO }} \
            | tail -1 | cut -d '/' -f3)
           echo "Policy Reporter last tag found is $POLICY_REPORTER_LAST_TAG"
 
-          KYVERNO_LAST_TAG=$(git ls-remote --tags --sort='v:refname' --refs $kyverno_fork_repo \
+          KYVERNO_LAST_TAG=$(git ls-remote --tags --sort='v:refname' --refs ${{ env.KYVERNO_FORK_REPO }} \
            | tail -1 | cut -d '/' -f3)
           echo "Kyverno last tag found is $KYVERNO_LAST_TAG"
 
-          # Setup git config
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
 
-          git checkout -b $branch
+          git checkout -b ${{ env.UPDATE_BRANCH }}
 
-          # Modify the version in Vendir config
           sed -i "/policy-reporter/{n;s/ref: .*/ref: $POLICY_REPORTER_LAST_TAG/}" vendir.yml
           sed -i "/kyverno/{n;s/ref: .*/ref: $KYVERNO_LAST_TAG/}" vendir.yml
           git add vendir.yml
           git commit -m "Update app version from fork repo"
-          git push origin $branch
+          git push origin ${{ env.UPDATE_BRANCH }}
+
   call-update-chart:
     uses: ./.github/workflows/zz_generated.update_chart.yaml
     needs: sync-app-kyverno-with-fork
     secrets: inherit
     with:
       branch: 'main#update-chart'
-  sync-values:
+
+  sync-and-update:
     runs-on: ubuntu-latest
     needs: call-update-chart
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-        with:
-          ref: 'main#update-chart'
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.24.2'
-          cache-dependency-path: tools/values-sync/go.sum
-      - name: Run values-sync
-        run: cd tools/values-sync && go run . --chart-dir ../../helm/kyverno
-      - name: Commit and push
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add helm/kyverno/values.yaml
-          git diff --cached --quiet || git commit -m "Sync values from upstream"
-          git push origin 'main#update-chart'
-
-  sync-schema:
-    runs-on: ubuntu-latest
-    needs: sync-values
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-        with:
-          ref: 'main#update-chart'
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.24.2'
-          cache-dependency-path: tools/schema-gen/go.sum
-      - name: Run schema-gen
-        run: cd tools/schema-gen && go run . --chart-dir ../../helm/kyverno
-      - name: Commit and push
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add helm/kyverno/values.schema.json
-          git diff --cached --quiet || git commit -m "Regenerate values schema"
-          git push origin 'main#update-chart'
-
-  update-changelog:
-    runs-on: ubuntu-latest
-    needs: sync-schema
     outputs:
       entries: ${{ steps.changelog.outputs.entries }}
     steps:
@@ -109,40 +66,40 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
         with:
-          ref: 'main#update-chart'
+          ref: ${{ env.UPDATE_BRANCH }}
           token: ${{ steps.generate_token.outputs.token }}
-      - name: Set up Go
-        uses: actions/setup-go@v5
+      - name: Fetch main branch for version comparison
+        run: git fetch origin main
+      - name: Run values-sync
+        uses: docker://gsoci.azurecr.io/giantswarm/shield-values-sync:0.0.3
         with:
-          go-version: '1.22'
-      - name: Run changelog tool
-        id: changelog
+          args: --chart-dir /github/workspace/${{ env.CHART_DIR }} --config /github/workspace/values-sync-ignore.yaml
+      - name: Run schema-gen
+        uses: docker://gsoci.azurecr.io/giantswarm/shield-schema-gen:0.0.3
+        with:
+          args: --chart-dir /github/workspace/${{ env.CHART_DIR }}
+      - name: Detect dependency version changes
+        id: detect
         run: |
           set -euo pipefail
 
-          curl -fsSL https://raw.githubusercontent.com/giantswarm/security-bundle/main/hack/changelogger.go \
-            -o /tmp/changelogger.go
-
-          CHART_DIR="$(echo helm/*/)"
-          CHART_DIR="${CHART_DIR%/}"
-          CHART_YAML="${CHART_DIR}/Chart.yaml"
-
+          CHART_YAML="${{ env.CHART_DIR }}/Chart.yaml"
           deps=$(awk '
             /^dependencies:/ { in_deps=1; next }
             in_deps && /^[^[:space:]]/ { in_deps=0 }
             in_deps && /name:/ { print $NF }
           ' "${CHART_YAML}")
 
-          output=""
+          entries_file=$(mktemp)
           while IFS= read -r dep; do
-            subchart_chart="${CHART_DIR}/charts/${dep}/Chart.yaml"
-            if [[ ! -f "${subchart_chart}" ]]; then
-              echo "warning: ${subchart_chart} not found, skipping ${dep}" >&2
+            subchart="${{ env.CHART_DIR }}/charts/${dep}/Chart.yaml"
+            if [[ ! -f "${subchart}" ]]; then
+              echo "warning: ${subchart} not found, skipping ${dep}" >&2
               continue
             fi
 
-            new_version=$(grep -E "^appVersion:" "${subchart_chart}" | awk '{print $NF}')
-            old_version=$(git show origin/main:"${subchart_chart}" 2>/dev/null \
+            new_version=$(grep -E "^appVersion:" "${subchart}" | awk '{print $NF}')
+            old_version=$(git show origin/main:"${subchart}" 2>/dev/null \
               | grep -E "^appVersion:" | awk '{print $NF}' || true)
 
             if [[ "${old_version}" == "${new_version}" ]]; then
@@ -151,32 +108,51 @@ jobs:
             fi
 
             [[ "${new_version}" != v* ]] && new_version="v${new_version}"
-            entry="- Updated \`${dep}\` to upstream version \`${new_version}\`."
-            echo "Adding changelog entry: ${entry}"
-            go run /tmp/changelogger.go \
-              --changelog-path CHANGELOG.md \
-              --add-changed "${entry}"
-            output="${output}${entry}"$'\n'
+            echo "- Updated \`${dep}\` to upstream version \`${new_version}\`." >> "${entries_file}"
           done <<< "${deps}"
 
-          entries="${output%$'\n'}"
-          {
-            echo "entries<<EOF"
-            echo "${entries}"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
+          echo "entries_file=${entries_file}" >> "$GITHUB_OUTPUT"
+      - name: Run changelogger
+        id: changelogger
+        run: |
+          set -euo pipefail
+
+          entries_file="${{ steps.detect.outputs.entries_file }}"
+          args=()
+          entries=""
+          while IFS= read -r entry; do
+            args+=(--add-changed "${entry}")
+            entries="${entries}${entry}"$'\n'
+          done < "${entries_file}"
+
+          if [[ ${#args[@]} -gt 0 ]]; then
+            docker run --rm \
+              -v ${{ github.workspace }}:/workspace \
+              gsoci.azurecr.io/giantswarm/shield-changelogger:0.0.3 \
+              --changelog-path /workspace/CHANGELOG.md \
+              "${args[@]}"
+          fi
+
+          if [[ -n "${entries}" ]]; then
+            delimiter=$(openssl rand -hex 16)
+            {
+              echo "entries<<${delimiter}"
+              printf '%s' "${entries}"
+              echo "${delimiter}"
+            } >> "$GITHUB_OUTPUT"
+          fi
       - name: Commit and push
         run: |
           git config --local user.email "149080493+heraldbot[bot]@users.noreply.github.com"
           git config --local user.name "HeraldBot[bot]"
-          git add CHANGELOG.md
-          git diff --cached --quiet || git commit -m "Update changelog"
-          git push origin 'main#update-chart'
+          git add ${{ env.CHART_DIR }}/values.yaml ${{ env.CHART_DIR }}/values.schema.json CHANGELOG.md
+          git diff --cached --quiet || git commit -m "Sync values, schema and changelog from upstream"
+          git push origin ${{ env.UPDATE_BRANCH }}
 
   update-pr-description:
     runs-on: ubuntu-latest
-    needs: update-changelog
-    if: needs.update-changelog.outputs.entries != ''
+    needs: sync-and-update
+    if: needs.sync-and-update.outputs.entries != ''
     steps:
       - name: Generate token
         id: generate_token
@@ -188,6 +164,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
         run: |
-          gh pr edit 'main#update-chart' \
+          gh pr edit '${{ env.UPDATE_BRANCH }}' \
             --repo ${{ github.repository }} \
-            --body "$(printf '### Changes\n\n%s' "${{ needs.update-changelog.outputs.entries }}")"
+            --body "$(printf '### Changes\n\n%s' "${{ needs.sync-and-update.outputs.entries }}")"
