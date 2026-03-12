@@ -133,11 +133,14 @@ jobs:
               "${args[@]}"
           fi
 
-          {
-            echo "entries<<EOF"
-            printf '%s' "${entries%$'\n'}"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
+          if [[ -n "${entries}" ]]; then
+            delimiter=$(openssl rand -hex 16)
+            {
+              echo "entries<<${delimiter}"
+              printf '%s' "${entries}"
+              echo "${delimiter}"
+            } >> "$GITHUB_OUTPUT"
+          fi
       - name: Commit and push
         run: |
           git config --local user.email "149080493+heraldbot[bot]@users.noreply.github.com"
