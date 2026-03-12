@@ -4,6 +4,7 @@
     "github>giantswarm/renovate-presets:lang-go.json5",
     "github>giantswarm/renovate-presets:disable-vendir.json5"
   ],
+  "automerge": true,
   "ignorePaths": [
     "helm/*/charts/**"
   ],
