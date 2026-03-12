@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   # used by renovate
   # repo: giantswarm/architect-orb
-  architect: giantswarm/architect@6.12.0
+  architect: giantswarm/architect@6.15.0
 
 commands:
   run-ats:
@@ -31,8 +31,10 @@ jobs:
       KIND_VERSION: v0.25.0
       # repo: kindest/node
       KUBERNETES_VERSION: v1.33.4
+      # kubectl version (must be a real k8s release)
+      KUBECTL_VERSION: v1.31.0
       # repo: giantswarm/kyverno-crds
-      KYVERNO_CRDS_VERSION: "1.16.0"
+      KYVERNO_CRDS_VERSION: "1.17.0"
     steps:
       - checkout
       - run:
@@ -42,7 +44,7 @@ jobs:
       - run:
           name: Download kubectl
           command: |
-            curl -sLO https://storage.googleapis.com/kubernetes-release/release/$KUBERNETES_VERSION/bin/linux/amd64/kubectl && chmod +x kubectl  && sudo mv kubectl /usr/bin
+            curl -sLO https://storage.googleapis.com/kubernetes-release/release/$KUBECTL_VERSION/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/bin
       - run:
           name: Install Helm
           command: |
@@ -50,7 +52,7 @@ jobs:
       - run:
           name: Create kind cluster and install kyverno
           command: |
-            make kind-create kind-get-kubeconfig install-kyverno
+            make kind-create kind-get-kubeconfig install-vpa-crds install-kyverno
       - run-ats:
           chart_archive_prefix: kyverno
           tests_dir: tests/ats
@@ -58,18 +60,6 @@ jobs:
 workflows:
   package-and-push-chart-on-tag:
     jobs:
-    - run-tests:
-          # Needed to trigger job also on git tag.
-        filters:
-          tags:
-            only: /^v.*/
-      # Run app-test-suite tests.
-          branches:
-            ignore:
-            - main
-        requires:
-        - push-kyverno-chart-to-giantswarm-catalog
-
     - architect/push-to-app-catalog:
         context: architect
         executor: app-build-suite
@@ -82,9 +72,22 @@ workflows:
         filters:
           tags:
             only: /^v.*/
-
-      # Run app-test-suite tests.
           branches:
             ignore:
             - main
-            - master
+
+    - architect/push-to-app-catalog:
+        context: architect
+        executor: app-build-suite
+        name: push-kyverno-chart-to-default-catalog
+        app_catalog: default-catalog
+        app_catalog_test: default-test-catalog
+        persist_chart_archive: true
+        chart: kyverno
+          # Trigger job on git tag.
+        filters:
+          tags:
+            only: /^v.*/
+          branches:
+            ignore:
+            - main

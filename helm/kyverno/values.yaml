@@ -157,6 +157,21 @@ kyverno:
     # -- Whether to install CRDs from the upstream OpenReports chart. Setting this to true requires enabled to also be true.
     installCrds: false
 
+  # Reports Server configuration
+  reportsServer:
+    # -- Enable reports-server deployment alongside Kyverno
+    enabled: false
+    # -- Wait for reports-server to be ready before starting Kyverno components
+    waitForReady: true
+    # -- Timeout for waiting for reports-server readiness (in seconds)
+    readinessTimeout: 300
+
+  # Test configuration
+  test:
+    image:
+      registry: gsoci.azurecr.io
+      repository: giantswarm/kyverno-readiness-checker
+
   # CRDs configuration
   crds:
     # -- We manage CRDs with an outside job so this needs to be disabled
@@ -165,6 +180,7 @@ kyverno:
     migration:
       enabled: true
       image:
+        registry: gsoci.azurecr.io
         repository: giantswarm/kyverno-cli
 
   grafana:

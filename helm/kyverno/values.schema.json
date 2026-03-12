@@ -3605,6 +3605,53 @@
           "title": "openreports",
           "type": "object"
         },
+        "reportsServer": {
+          "description": "Reports Server configuration",
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": false,
+              "description": "Enable reports-server deployment alongside Kyverno"
+            },
+            "waitForReady": {
+              "type": "boolean",
+              "default": true,
+              "description": "Wait for reports-server to be ready before starting Kyverno components"
+            },
+            "readinessTimeout": {
+              "type": "integer",
+              "default": 300,
+              "description": "Timeout for waiting for reports-server readiness (in seconds)"
+            }
+          }
+        },
+        "test": {
+          "description": "Test configuration",
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "image": {
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "registry": {
+                  "type": "string",
+                  "description": "Image registry"
+                },
+                "repository": {
+                  "type": "string",
+                  "description": "Image repository"
+                },
+                "tag": {
+                  "type": "string",
+                  "description": "Image tag"
+                }
+              }
+            }
+          }
+        },
         "reportsController": {
           "description": "Reports controller configuration",
           "properties": {
@@ -5328,5 +5375,6 @@
     "kyverno",
     "policy-reporter"
   ],
-  "type": "object"
+  "type": "object",
+  "additionalProperties": true
 }

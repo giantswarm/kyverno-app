@@ -4,6 +4,7 @@
     "github>giantswarm/renovate-presets:lang-go.json5",
     "github>giantswarm/renovate-presets:disable-vendir.json5"
   ],
+  "automerge": true,
   "ignorePaths": [
     "helm/*/charts/**"
   ],
@@ -18,6 +19,13 @@
       ],
       "groupName": "Architect",
       "automerge": true
+    },
+    {
+      "description": "Group all GitHub Actions workflow updates",
+      "matchFileNames": [
+        ".github/workflows/**"
+      ],
+      "groupName": "GitHub Actions"
     }
   ]
 }

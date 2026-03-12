@@ -1,16 +1,16 @@
 annotations:
-  application.giantswarm.io/metadata: https://giantswarm.github.io/giantswarm-test-catalog/kyverno-0.14.10-1657bb8295e1ae79d41ba0f6a4b00d81d5b6d842.tgz-meta/main.yaml
-  application.giantswarm.io/readme: https://giantswarm.github.io/giantswarm-test-catalog/kyverno-0.14.10-1657bb8295e1ae79d41ba0f6a4b00d81d5b6d842.tgz-meta/README.md
   application.giantswarm.io/team: shield
-  application.giantswarm.io/values-schema: https://giantswarm.github.io/giantswarm-test-catalog/kyverno-0.14.10-1657bb8295e1ae79d41ba0f6a4b00d81d5b6d842.tgz-meta/values.schema.json
   config.giantswarm.io/version: 1.x.x
+  io.giantswarm.application.audience: all
+  io.giantswarm.application.managed: "true"
+  io.giantswarm.application.restrictions.cluster-singleton: "true"
 apiVersion: v2
-appVersion: v1.16.3
+appVersion: v1.17.0
 dependencies:
   - name: policy-reporter
     version: 3.7.1
   - name: kyverno
-    version: 3.6.3
+    version: 3.7.0
 description: 'Kyverno is a policy engine designed for Kubernetes. It can validate, mutate,
 
   and generate configurations using admission controls and background scans.
@@ -29,9 +29,7 @@ keywords:
   - validating-webhook
   - admission-controller
 name: kyverno
-restrictions:
-  clusterSingleton: true
 sources:
   - https://github.com/kyverno/kyverno
 type: application
-version: 0.23.0
+version: 0.24.1
