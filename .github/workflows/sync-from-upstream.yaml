@@ -73,7 +73,7 @@ jobs:
       - name: Run values-sync
         uses: docker://gsoci.azurecr.io/giantswarm/shield-values-sync:0.0.2
         with:
-          args: --chart-dir /github/workspace/${{ env.CHART_DIR }}
+          args: --chart-dir /github/workspace/${{ env.CHART_DIR }} --config /github/workspace/values-sync-ignore.yaml
       - name: Run schema-gen
         uses: docker://gsoci.azurecr.io/giantswarm/shield-schema-gen:0.0.2
         with:
