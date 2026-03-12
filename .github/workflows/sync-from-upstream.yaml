@@ -133,10 +133,11 @@ jobs:
               "${args[@]}"
           fi
 
+          delimiter=$(openssl rand -hex 16)
           {
-            echo "entries<<EOF"
+            echo "entries<<${delimiter}"
             printf '%s' "${entries%$'\n'}"
-            echo "EOF"
+            echo "${delimiter}"
           } >> "$GITHUB_OUTPUT"
       - name: Commit and push
         run: |
