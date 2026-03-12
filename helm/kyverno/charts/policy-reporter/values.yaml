@@ -7,6 +7,10 @@ fullnameOverride: "policy-reporter"
 # -- Overwrite the namespace of all resources
 namespaceOverride: ""
 
+# -- Overwrite apiVersion for specific resources
+apiVersionOverride:
+  podDisruptionBudget: ""
+
 image:
   # -- (string) Image registry
   registry: ghcr.io
@@ -881,6 +885,16 @@ redis:
   username: ""
   # -- (optional) Password
   password: ""
+  # -- (optional) Path to a server CA certificate
+  certificate: ""
+  # -- (optional) Path to client certificate for mutual TLS authentication
+  clientCert: ""
+  # -- (optional) Path to client key for mutual TLS authentication
+  clientKey: ""
+  # -- (optional) Secret name to pull username and password from
+  secretRef: ""
+  # -- Skip TLS verification
+  skipTLS: false
 
 database:
   # -- Use an external Database, supported: mysql, postgres, mariadb
@@ -1873,6 +1887,10 @@ monitoring:
     scrapeTimeout:
     # -- (optional) Scrape interval
     interval:
+    # -- Is TLS required for endpoint
+    secure: false
+    # -- TLS Configuration for endpoint
+    tlsConfig: {}
 
   grafana:
     # -- Naamespace for configMap of grafana dashboards
