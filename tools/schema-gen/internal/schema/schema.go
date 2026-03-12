@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	schemapkg "github.com/losisin/helm-values-schema-json/pkg"
+	schemapkg "github.com/losisin/helm-values-schema-json/v2/pkg"
 	"sigs.k8s.io/yaml"
 )
 
