@@ -379,9 +379,9 @@ kyverno:
   admissionController:
     autoscaling:
       # -- Enable horizontal pod autoscaling
-      enabled: false
+      enabled: true
       # -- Minimum number of pods
-      minReplicas: 1
+      minReplicas: 3
       # -- Maximum number of pods
       maxReplicas: 10
       # -- Target CPU utilization percentage
