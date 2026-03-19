@@ -5,7 +5,8 @@ directories:
   contents:
   - path: .
     git:
-      url: https://github.com/giantswarm/kyverno-upstream
+      url: https://github.com/kyverno/kyverno
+      # renovate: datasource=github-tags depName=kyverno/kyverno
       ref: v1.17.0
     includePaths:
       - charts/kyverno/**
@@ -16,7 +17,8 @@ directories:
   contents:
   - path: .
     git:
-      url: https://github.com/giantswarm/policy-reporter-upstream
+      url: https://github.com/kyverno/policy-reporter
+      # renovate: datasource=github-tags depName=kyverno/policy-reporter
       ref: v3.7.0
     includePaths:
       - charts/policy-reporter/**
