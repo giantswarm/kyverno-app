@@ -7,7 +7,7 @@ directories:
     git:
       url: https://github.com/kyverno/kyverno
       # renovate: datasource=github-tags depName=kyverno/kyverno
-      ref: v1.17.0
+      ref: v1.17.1
     includePaths:
       - charts/kyverno/**
     excludePaths:
@@ -19,7 +19,7 @@ directories:
     git:
       url: https://github.com/kyverno/policy-reporter
       # renovate: datasource=github-tags depName=kyverno/policy-reporter
-      ref: v3.7.0
+      ref: v3.7.3
     includePaths:
       - charts/policy-reporter/**
     newRootPath: charts/policy-reporter
