@@ -17,8 +17,8 @@ directories:
   contents:
   - path: .
     git:
-      url: https://github.com/kyverno/policy-reporter-upstream
-      # renovate: datasource=github-tags depName=kyverno/policy-reporter-upstream
+      url: https://github.com/kyverno/policy-reporter
+      # renovate: datasource=github-tags depName=kyverno/policy-reporter
       ref: v3.7.0
     includePaths:
       - charts/policy-reporter/**
