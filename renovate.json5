@@ -40,7 +40,8 @@
     {
       "matchFileNames": ["vendir.yml"],
       "branchPrefix": "renovate/vendir/",
-      "prCreation": "approval"
+      "prCreation": "approval",
+      "groupName": "kyverno-upstream"
     }
   ]
 }
