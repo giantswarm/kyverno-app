@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Updated `policy-reporter` to upstream version `v3.7.2`.
+
 ## [0.24.1] - 2026-02-24
 
 ### Added
@@ -41,7 +45,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Notes
 
 This release includes an upstream update. Please refer to the following Release Notes from upstream for the latest changes:
-
 - [v1.16.0](https://github.com/kyverno/kyverno/releases/tag/v1.16.0)
 - [v1.16.1](https://github.com/kyverno/kyverno/releases/tag/v1.16.1)
 
@@ -54,7 +57,6 @@ This release includes an upstream update. Please refer to the following Release 
 ### Notes
 
 This release includes an upstream update. Please refer to the following Release Notes from upstream for the latest changes:
-
 - [v1.15.0](https://github.com/kyverno/kyverno/releases/tag/v1.15.0)
 - [v1.15.1](https://github.com/kyverno/kyverno/releases/tag/v1.15.1)
 - [v1.15.2](https://github.com/kyverno/kyverno/releases/tag/v1.15.2)
@@ -82,7 +84,6 @@ This release includes an upstream update. Please refer to the following Release 
 ### Notes
 
 This release includes an upstream update. Please refer to the following Release Notes from upstream for the latest changes:
-
 - [v1.14.0](https://github.com/kyverno/kyverno/releases/tag/v1.14.0)
 - [v1.14.1](https://github.com/kyverno/kyverno/releases/tag/v1.14.1)
 - [v1.14.2](https://github.com/kyverno/kyverno/releases/tag/v1.14.2)
@@ -529,8 +530,6 @@ This release includes an upstream update. Please refer to the following Release 
 - Enable Pod Disruption Budget by default.
 
 ## [0.8.1] - 2022-02-18
-
-- Make PDB version conditional based on available API.
 
 ## [0.8.0] - 2022-02-03
 
