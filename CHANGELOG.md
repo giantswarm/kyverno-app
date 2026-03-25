@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Added new `PolicyException` types to the `restrict-polex-namespaces` Policy.
+
 ## [0.24.1] - 2026-02-24
 
 ### Added
