@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Added new `PolicyException` types to the `restrict-polex-namespaces` Policy.
+- Enabled `HorizontalPodAutoscaler` feature for the `admission-controller` deployment.
 
 ## [0.24.1] - 2026-02-24
 
