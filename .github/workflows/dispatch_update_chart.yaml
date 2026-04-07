@@ -41,8 +41,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          PASS_STRING="pass"
-          FAIL_STRING="fail"
+          PASS_STRING="success"
+          FAIL_STRING="failure"
           PENDING_STRING="waiting"
 
           result="$PENDING_STRING"
