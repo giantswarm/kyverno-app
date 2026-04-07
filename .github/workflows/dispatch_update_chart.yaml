@@ -5,12 +5,19 @@ on:
     branches:
       - 'main#update-chart'
 
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
+  actions: read
 
 jobs:
   dispatch:
     runs-on: ubuntu-latest
+    env:
+      STATUS_TIMEOUT_MINUTES: 20
     steps:
       - name: Generate GitHub App token
         id: generate-token
@@ -28,3 +35,46 @@ jobs:
           repository: giantswarm/security-bundle
           event-type: update-chart
           client-payload: '{"sha": "${{ github.sha }}", "repo": "${{ github.repository }}"}'
+
+      - name: Wait for workflow status
+        id: wait-status
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TIMEOUT=$(( STATUS_TIMEOUT_MINUTES * 60 ))
+          INTERVAL=30
+          elapsed=0
+          result="waiting"
+
+          while [ $elapsed -lt $TIMEOUT ]; do
+            runs=$(gh api "repos/${{ github.repository }}/actions/runs?head_sha=${{ github.sha }}&per_page=100" \
+              --jq '.workflow_runs | map(select(.name != "${{ github.workflow }}"))')
+
+            has_failure=$(echo "$runs" | jq '[.[] | select(.conclusion == "failure" or .conclusion == "cancelled" or .conclusion == "timed_out")] | length')
+
+            if [ "$has_failure" -gt 0 ]; then
+              result="fail"
+              break
+            fi
+
+            total=$(echo "$runs" | jq 'length')
+            in_progress=$(echo "$runs" | jq '[.[] | select(.status != "completed")] | length')
+
+            if [ "$total" -gt 0 ] && [ "$in_progress" -eq 0 ]; then
+              result="pass"
+              break
+            fi
+
+            sleep $INTERVAL
+            elapsed=$(( elapsed + INTERVAL ))
+          done
+
+          echo "result=$result" >> "$GITHUB_OUTPUT"
+
+      - name: Dispatch status to security-bundle
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
+          repository: giantswarm/security-bundle
+          event-type: update-chart-status
+          client-payload: '{"sha": "${{ github.sha }}", "repo": "${{ github.repository }}", "status": "${{ steps.wait-status.outputs.result }}"}'
