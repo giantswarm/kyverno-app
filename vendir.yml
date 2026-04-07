@@ -5,17 +5,21 @@ directories:
   contents:
   - path: .
     git:
-      url: https://github.com/giantswarm/kyverno-upstream
-      ref: v1.10.2
+      url: https://github.com/kyverno/kyverno
+      # renovate: datasource=github-tags depName=kyverno/kyverno
+      ref: v1.17.0
     includePaths:
       - charts/kyverno/**
+    excludePaths:
+      - charts/kyverno/charts/crds/**
     newRootPath: charts/kyverno
 - path: helm/kyverno/charts/policy-reporter
   contents:
   - path: .
     git:
-      url: https://github.com/giantswarm/policy-reporter-upstream
-      ref: policy-reporter-2.19.4
+      url: https://github.com/kyverno/policy-reporter
+      # renovate: datasource=github-tags depName=kyverno/policy-reporter
+      ref: v3.7.0
     includePaths:
       - charts/policy-reporter/**
     newRootPath: charts/policy-reporter

@@ -1,23 +1,30 @@
 apiVersion: v2
 type: application
 name: kyverno
-version: 3.0.3
-appVersion: v1.10.2
+version: 3.7.0  # VERSION
+appVersion: v1.17.0
 icon: https://github.com/kyverno/kyverno/raw/main/img/logo.png
 description: Kubernetes Native Policy Management
 keywords:
   - kubernetes
   - nirmata
   - policy agent
+  - policy
   - validating webhook
-  - admissions controller
+  - admission controller
+  - mutation
+  - mutate
+  - validate
+  - generate
+  - supply chain
+  - security
 home: https://kyverno.io/
 sources:
   - https://github.com/kyverno/kyverno
 maintainers:
   - name: Nirmata
     url: https://kyverno.io/
-kubeVersion: ">=1.16.0-0"
+kubeVersion: ">=1.25.0-0"
 annotations:
   artifacthub.io/operator: "false"
   artifacthub.io/prerelease: "false"
@@ -27,18 +34,29 @@ annotations:
   # valid kinds are: added, changed, deprecated, removed, fixed and security
   artifacthub.io/changes: |
     - kind: fixed
-      description: rbac templating issues
-    - kind: added
-      description: define resources for cleanupJobs
+      description: Ensure spec.template.metadata isn't null
+    - kind: removed
+      description: Remove the `delete` permission for policyexceptions in the admission controller
     - kind: changed
-      description: change to enable webhook cleanup hook by default
-    - kind: added
-      description: allow pod labels for cleanup jobs
-    - kind: added
-      description: allow nodeSelector for cleanup jobs
-    - kind: added
-      description: allow nodeSelector, tolerations and affinity settings for webhooksCleanup
-    - kind: added
-      description: allow affinity settings for cleanup jobs
-    - kind: added
-      description: Add helper to handle the labels for cleanup jobs, add component label
+      description: Enable the flag `--generateValidatingAdmissionPolicy` by default in the admission controller.
+    - kind: changed
+      description: Enable the flag `--validatingAdmissionPolicyReports` by default in the reports controller.
+dependencies:
+  - name: grafana
+    version: 3.7.0  # VERSION
+    condition: grafana.enabled
+  - name: crds
+    version: 3.7.0  # VERSION
+    condition: crds.install
+  - name: kyverno-api
+    version: 0.0.1-alpha.2
+    repository: "https://kyverno.github.io/api"
+    condition: crds.install
+  - name: openreports
+    version: 0.1.0
+    repository: "https://openreports.github.io/reports-api"
+    condition: openreports.installCrds
+  - name: reports-server
+    version: 0.1.6
+    repository: "https://kyverno.github.io/reports-server/"
+    condition: reportsServer.enabled

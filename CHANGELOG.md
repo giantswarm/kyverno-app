@@ -7,9 +7,244 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Enabled `HorizontalPodAutoscaler` feature for the `admission-controller` deployment.
+- Add tolerations for CAPI `node.cluster.x-k8s.io/uninitialized` taint.
+
+## [0.24.1] - 2026-02-24
+
 ### Added
 
-- Add tolerations for CAPI `node.cluster.x-k8s.io/uninitialized` taint.
+- Add  `io.giantswarm.application.managed` chart annotations for Backstage visibility.
+- Push to the `default` catalog.
+
+### Changed
+
+- Migrate Chart.yaml metadata annotations to new `io.giantswarm.application.*` format.
+- Sanitize `Chart.Version` when used in labels due to flux appending the artifact digest to the version.
+
+## [0.24.0] - 2026-02-04
+
+### Changed
+
+- Update `kyverno` to upstream version v1.17.0.
+
+## [0.23.0] - 2026-01-29
+
+### Changed
+
+- Update `kyverno` to upstream version v1.16.3.
+- Update `policy-reporter` to upstream version v3.7.0.
+
+## [0.22.0] - 2025-12-09
+
+### Changed
+
+- Update `kyverno` to upstream version v1.16.1.
+
+### Notes
+
+This release includes an upstream update. Please refer to the following Release Notes from upstream for the latest changes:
+
+- [v1.16.0](https://github.com/kyverno/kyverno/releases/tag/v1.16.0)
+- [v1.16.1](https://github.com/kyverno/kyverno/releases/tag/v1.16.1)
+
+## [0.21.0] - 2025-10-28
+
+### Changed
+
+- Update `kyverno` to upstream version v1.15.2.
+
+### Notes
+
+This release includes an upstream update. Please refer to the following Release Notes from upstream for the latest changes:
+
+- [v1.15.0](https://github.com/kyverno/kyverno/releases/tag/v1.15.0)
+- [v1.15.1](https://github.com/kyverno/kyverno/releases/tag/v1.15.1)
+- [v1.15.2](https://github.com/kyverno/kyverno/releases/tag/v1.15.2)
+
+## [0.20.1] - 2025-10-28
+
+### Added
+
+- Add PodLogs for log collection.
+
+### Changed
+
+- Update chart-operator `PolicyException` to v2.
+
+## [0.20.0] - 2025-06-12
+
+### Changed
+
+- Update `kyverno` to upstream version v1.14.2.
+- Update `kyverno-policy-reporter` to upstream version v3.1.0.
+- Update PolicyExceptions from `v2beta1` to `v2`.
+- Add karpenter spot anti-affinity to kyverno admission controller.
+- Update PolicyException for Cilium.
+
+### Notes
+
+This release includes an upstream update. Please refer to the following Release Notes from upstream for the latest changes:
+
+- [v1.14.0](https://github.com/kyverno/kyverno/releases/tag/v1.14.0)
+- [v1.14.1](https://github.com/kyverno/kyverno/releases/tag/v1.14.1)
+- [v1.14.2](https://github.com/kyverno/kyverno/releases/tag/v1.14.2)
+
+## [0.19.0] - 2025-02-20
+
+### Changed
+
+- Update `kyverno` to upstream version v1.13.4.
+- Use GVK for specifying Kinds in core-policies.
+- Add `runAsGroup` to container security contexts.
+
+## [0.18.1] - 2024-10-01
+
+### Changed
+
+- Update `Kyverno` to upstream version v1.12.6.
+- Update `kyverno-policy-reporter` to upstream version v2.20.2.
+
+## [0.18.0] - 2024-09-25
+
+### Changed
+
+- Update `Kyverno` to upstream version v1.12.5.
+
+## [0.17.16] - 2024-08-29
+
+### Changed
+
+- Split Cilium PolicyExceptions per component.
+- Add rules to cilium-agent PolicyException.
+- Restrict Policy and ClusterPolicy to kyverno.io/v1 for wildcard policy matching
+
+### Removed
+
+- Remove Helm `hooks` annotations from default Policies and PolicyExceptions.
+
+## [0.17.15] - 2024-07-18
+
+### Changed
+
+- Set VPA max 6 CPU / 24Gi memory and adjust default requests/limits for `reports-controller`.
+- Set VPA max 4 CPU / 8Gi memory and adjust default requests/limits for `background-controller`.
+- Set starting CPU limit of request+25% for `cleanup-controller`.
+
+### Removed
+
+- Disable Kyverno CRDs install Job in favor of `kyverno-crds` App.
+
+## [0.17.14] - 2024-06-12
+
+### Changed
+
+- Remove duplicated key from the `allow-kyverno-policy-reporter-talk-to-kyverno-ui` CiliumNetworkPolicy.
+- Add Helm annotations to core policies.
+
+## [0.17.13] - 2024-05-23
+
+### Changed
+
+- Disable Trivy cleanup policy by default.
+
+## [0.17.12] - 2024-05-22
+
+### Changed
+
+- Fix template issue with DNS rules on the `admission-controller` CiliumNetworkPolicy.
+
+## [0.17.11] - 2024-05-16
+
+### Added
+
+- Add cleanup policy to remove old `trivy-operator` resources.
+
+### Changed
+
+- Enable `cleanup-controller` with VericalPodAutoscaler by default.
+- Add missing ingress to `cleanup-controller` CiliumNetworkPolicy.
+- Add `before-hook-creation` delete-policy for upstream hooks.
+
+## [0.17.10] - 2024-04-30
+
+### Added
+
+- Add Helm labels and annotations for easy CRD adoption in the future.
+
+### Changed
+
+- Adapt Kyverno Policy Reporter CiliumNetworkPolicy to allow for DNS resolution of the `kyverno-ui` service.
+- Disable AdmissionReports and ClusterAdmissionReports cleanup jobs.
+
+## [0.17.9] - 2024-04-03
+
+### Changed
+
+- Revert `kubectl` images to v1.29.2.
+
+## [0.17.8] - 2024-04-03
+
+### Added
+
+- Add new CiliumNetworkPolicy section to allow for DNS and FQDNs connections.
+
+### Changed
+
+- Don't push to vsphere-app-collection, capz-app-collection, capa-app-collection or cloud-director-app-collection. We started to consume kyverno-app from security-bundle.
+
+## [0.17.7] - 2024-02-28
+
+### Changed
+
+- Disable v1.10 upgrade jobs. They are not needed when migrating from v1.10 to v1.11+.
+
+## [0.17.6] - 2024-02-22
+
+### Fixed
+
+- Add missing ingress to Cleanup Controller CiliumNetworkPolicy.
+
+## [0.17.5] - 2024-02-08
+
+### Fixed
+
+- Add missing CiliumNetworkPolicies for pre-delete and post-ugprade hooks.
+
+## [0.17.4] - 2024-02-07
+
+### Changed
+
+- Fix label selector `kyverno-policy-reporter` to talk to `kyverno-ui` rule.
+- Add `policy-exceptions` namespace if it doesn't exist.
+
+## [0.17.3] - 2024-01-26
+
+### Changed
+
+- Allow `kyverno-policy-reporter` to talk to `kyverno-ui`.
+
+## [0.17.2] - 2024-01-25
+
+### Changed
+
+- Enable CiliumNetworkPolicies by default.
+- Enable API Priority and Fairness.
+
+## [0.17.1] - 2024-01-25
+
+### Changed
+
+- Bump to upstream version v1.11.4.
+
+## [0.17.0] - 2024-01-15
+
+### Changed
+
+- Bump to upstream version v1.11.2.
+- Enable the Policy Reporter subchart by default.
 
 ## [0.16.4] - 2023-12-06
 
@@ -398,7 +633,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.16.4...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.24.1...HEAD
+[0.24.1]: https://github.com/giantswarm/kyverno-app/compare/v0.24.0...v0.24.1
+[0.24.0]: https://github.com/giantswarm/kyverno-app/compare/v0.23.0...v0.24.0
+[0.23.0]: https://github.com/giantswarm/kyverno-app/compare/v0.22.0...v0.23.0
+[0.22.0]: https://github.com/giantswarm/kyverno-app/compare/v0.21.0...v0.22.0
+[0.21.0]: https://github.com/giantswarm/kyverno-app/compare/v0.20.1...v0.21.0
+[0.20.1]: https://github.com/giantswarm/kyverno-app/compare/v0.20.0...v0.20.1
+[0.20.0]: https://github.com/giantswarm/kyverno-app/compare/v0.19.0...v0.20.0
+[0.19.0]: https://github.com/giantswarm/kyverno-app/compare/v0.18.1...v0.19.0
+[0.18.1]: https://github.com/giantswarm/kyverno-app/compare/v0.18.0...v0.18.1
+[0.18.0]: https://github.com/giantswarm/kyverno-app/compare/v0.17.16...v0.18.0
+[0.17.16]: https://github.com/giantswarm/kyverno-app/compare/v0.17.15...v0.17.16
+[0.17.15]: https://github.com/giantswarm/kyverno-app/compare/v0.17.14...v0.17.15
+[0.17.14]: https://github.com/giantswarm/kyverno-app/compare/v0.17.13...v0.17.14
+[0.17.13]: https://github.com/giantswarm/kyverno-app/compare/v0.17.12...v0.17.13
+[0.17.12]: https://github.com/giantswarm/kyverno-app/compare/v0.17.11...v0.17.12
+[0.17.11]: https://github.com/giantswarm/kyverno-app/compare/v0.17.10...v0.17.11
+[0.17.10]: https://github.com/giantswarm/kyverno-app/compare/v0.17.9...v0.17.10
+[0.17.9]: https://github.com/giantswarm/kyverno-app/compare/v0.17.8...v0.17.9
+[0.17.8]: https://github.com/giantswarm/kyverno-app/compare/v0.17.7...v0.17.8
+[0.17.7]: https://github.com/giantswarm/kyverno-app/compare/v0.17.6...v0.17.7
+[0.17.6]: https://github.com/giantswarm/kyverno-app/compare/v0.17.5...v0.17.6
+[0.17.5]: https://github.com/giantswarm/kyverno-app/compare/v0.17.4...v0.17.5
+[0.17.4]: https://github.com/giantswarm/kyverno-app/compare/v0.17.3...v0.17.4
+[0.17.3]: https://github.com/giantswarm/kyverno-app/compare/v0.17.2...v0.17.3
+[0.17.2]: https://github.com/giantswarm/kyverno-app/compare/v0.17.1...v0.17.2
+[0.17.1]: https://github.com/giantswarm/kyverno-app/compare/v0.17.0...v0.17.1
+[0.17.0]: https://github.com/giantswarm/kyverno-app/compare/v0.16.4...v0.17.0
 [0.16.4]: https://github.com/giantswarm/kyverno-app/compare/v0.16.3...v0.16.4
 [0.16.3]: https://github.com/giantswarm/kyverno-app/compare/v0.16.2...v0.16.3
 [0.16.2]: https://github.com/giantswarm/kyverno-app/compare/v0.16.1...v0.16.2

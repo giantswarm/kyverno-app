@@ -1,0 +1,10 @@
+{{- if not (lookup "v1" "Namespace" "" "policy-exceptions")}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: policy-exceptions
+  annotations:
+    "helm.sh/resource-policy": keep
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+{{- end }}
