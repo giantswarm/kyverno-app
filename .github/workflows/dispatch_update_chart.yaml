@@ -41,27 +41,37 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          PASS_STRING="pass"
+          FAIL_STRING="fail"
+          PENDING_STRING="waiting"
+
+          result="$PENDING_STRING"
+
           TIMEOUT=$(( STATUS_TIMEOUT_MINUTES * 60 ))
           INTERVAL=30
+
           elapsed=0
-          result="waiting"
-
           while [ $elapsed -lt $TIMEOUT ]; do
-            runs=$(gh api "repos/${{ github.repository }}/actions/runs?head_sha=${{ github.sha }}&per_page=100" \
-              --jq '.workflow_runs | map(select(.name != "${{ github.workflow }}"))')
+            # GitHub Actions workflow runs (excluding this workflow)
+            gha_runs=$(gh api "repos/${{ github.repository }}/actions/runs?head_sha=${{ github.sha }}&per_page=100" \
+              --jq '[.workflow_runs[] | select(.name != "${{ github.workflow }}")]')
 
-            has_failure=$(echo "$runs" | jq '[.[] | select(.conclusion == "failure" or .conclusion == "cancelled" or .conclusion == "timed_out")] | length')
+            gha_failed=$(echo "$gha_runs" | jq '[.[] | select(.conclusion == "failure" or .conclusion == "cancelled" or .conclusion == "timed_out")] | length')
+            gha_total=$(echo "$gha_runs" | jq 'length')
+            gha_in_progress=$(echo "$gha_runs" | jq '[.[] | select(.status != "completed")] | length')
 
-            if [ "$has_failure" -gt 0 ]; then
-              result="fail"
+            # Combined commit status (e.g. CircleCI) — single aggregated state
+            commit_status=$(gh api "repos/${{ github.repository }}/commits/${{ github.sha }}/status")
+            commit_state=$(echo "$commit_status" | jq -r '.state')
+            commit_total=$(echo "$commit_status" | jq '.statuses | length')
+
+            if [ "$gha_failed" -gt 0 ] || [ "$commit_state" = "failure" ] || [ "$commit_state" = "error" ]; then
+              result="$FAIL_STRING"
               break
             fi
 
-            total=$(echo "$runs" | jq 'length')
-            in_progress=$(echo "$runs" | jq '[.[] | select(.status != "completed")] | length')
-
-            if [ "$total" -gt 0 ] && [ "$in_progress" -eq 0 ]; then
-              result="pass"
+            if [ "$gha_total" -gt 0 ] && [ "$gha_in_progress" -eq 0 ] && { [ "$commit_state" = "success" ] || [ "$commit_total" -eq 0 ]; }; then
+              result="$PASS_STRING"
               break
             fi
 
