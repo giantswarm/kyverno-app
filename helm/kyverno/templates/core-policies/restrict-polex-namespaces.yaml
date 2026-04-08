@@ -28,6 +28,8 @@ spec:
       - resources:
           kinds:
           - kyverno.io/v2/PolicyException
+          - policies.kyverno.io/v1/PolicyException
+          - policy.giantswarm.io/v1alpha1/PolicyException
     preconditions:
       all:
       - key: "{{`{{ request.operation || 'BACKGROUND'}}`}}"
