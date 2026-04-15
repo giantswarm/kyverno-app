@@ -12,7 +12,7 @@ concurrency:
 permissions: {}
 
 jobs:
-  sync-from-upstream:
+  dispatch-events:
     uses: giantswarm/github-workflows/.github/workflows/dispatch-update-chart-events.yaml@a67158bc8e7bc6d64f6dae8758d72de530dac312
     permissions:
       actions: read
