@@ -1,0 +1,22 @@
+name: Dispatch update-chart events to security-bundle
+
+on:
+  push:
+    branches:
+      - 'main#update-chart'
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  sync-from-upstream:
+    uses: giantswarm/github-workflows/.github/workflows/dispatch-update-chart-events.yaml@a67158bc8e7bc6d64f6dae8758d72de530dac312
+    permissions:
+      actions: read
+      statuses: read
+    with:
+      target_repository: 'security-bundle'
+    secrets: inherit
