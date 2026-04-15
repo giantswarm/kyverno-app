@@ -1,3 +1,9 @@
+# DO NOT EDIT. Generated with:
+#
+#    devctl
+#
+#    https://github.com/giantswarm/devctl/blob//pkg/gen/input/workflows/internal/file/dispatch_update_chart_events.yaml.template
+#
 name: Dispatch update-chart events to security-bundle
 
 on:
@@ -13,7 +19,7 @@ permissions: {}
 
 jobs:
   dispatch-events:
-    uses: giantswarm/github-workflows/.github/workflows/dispatch-update-chart-events.yaml@a67158bc8e7bc6d64f6dae8758d72de530dac312
+    uses: giantswarm/github-workflows/.github/workflows/dispatch-update-chart-events.yaml@main
     permissions:
       actions: read
       statuses: read
