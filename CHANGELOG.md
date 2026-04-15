@@ -9,9 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Enabled `HorizontalPodAutoscaler` feature for the `admission-controller` deployment.
 - Updated `policy-reporter` to upstream version `v3.7.2`.
 - Updated `kyverno` to upstream version `v1.17.1`.
+- Enabled `HorizontalPodAutoscaler` feature for the `admission-controller` deployment.
+- Add tolerations for CAPI `node.cluster.x-k8s.io/uninitialized` taint.
 
 ## [0.24.1] - 2026-02-24
 
