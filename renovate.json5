@@ -1,45 +1,49 @@
 {
-  "extends": [
-    "github>giantswarm/renovate-presets:default.json5",
-    "github>giantswarm/renovate-presets:lang-go.json5",
-    "github>giantswarm/renovate-presets:disable-vendir.json5",
-    "github>giantswarm/renovate-presets:disable-upstream-charts.json5"
+  extends: [
+    'github>giantswarm/renovate-presets:default.json5',
+    'github>giantswarm/renovate-presets:lang-go.json5',
+    'github>giantswarm/renovate-presets:disable-vendir.json5',
+    'github>giantswarm/renovate-presets:disable-upstream-charts.json5',
   ],
-  "automerge": true,
-  "customManagers": [
+  automerge: true,
+  customManagers: [
     {
-      "customType": "regex",
-      "fileMatch": ["(^|/)vendir\\.yml$"],
-      "matchStrings": [
-        "# renovate: datasource=(?<datasource>[^\\s]+) depName=(?<depName>[^\\n]+)\\n\\s+ref: (?<currentValue>[^\\n]+)"
+      customType: 'regex',
+      managerFilePatterns: [
+        '/(^|/)vendir\\.yml$/',
       ],
-      "versioningTemplate": "semver"
-    }
+      matchStrings: [
+        '# renovate: datasource=(?<datasource>[^\\s]+) depName=(?<depName>[^\\n]+)\\n\\s+ref: (?<currentValue>[^\\n]+)',
+      ],
+      versioningTemplate: 'semver',
+    },
   ],
-  "packageRules": [
+  packageRules: [
     {
-      "description": "Automerge architect updates",
-      "matchFileNames": [
-        ".circleci/config.yml"
+      description: 'Automerge architect updates',
+      matchFileNames: [
+        '.circleci/config.yml',
       ],
-      "matchDepNames": [
-        "architect"
+      matchDepNames: [
+        'architect',
       ],
-      "groupName": "Architect",
-      "automerge": true
+      groupName: 'Architect',
+      automerge: true,
     },
     {
-      "description": "Group all GitHub Actions workflow updates",
-      "matchFileNames": [
-        ".github/workflows/**"
+      description: 'Group all GitHub Actions workflow updates',
+      matchFileNames: [
+        '.github/workflows/**',
       ],
-      "groupName": "GitHub Actions"
+      groupName: 'GitHub Actions',
     },
     {
-      "matchFileNames": ["vendir.yml"],
-      "branchPrefix": "renovate/vendir/",
-      "prCreation": "approval",
-      "groupName": "kyverno-upstream"
-    }
-  ]
+      matchFileNames: [
+        'vendir.yml',
+      ],
+      branchPrefix: 'renovate/vendir/',
+      prCreation: 'approval',
+      groupName: 'kyverno-upstream',
+    },
+  ],
 }
