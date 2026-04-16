@@ -1,0 +1,56 @@
+{{- if .Values.policyExceptions.enableChartOperatorPolex }}
+apiVersion: kyverno.io/v2
+kind: PolicyException
+metadata:
+  name: kyverno-app-chart-operator-policy-exception
+  namespace: giantswarm
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+spec:
+  exceptions:
+  - policyName: disallow-host-ports
+    ruleNames:
+    - host-ports-none
+    - autogen-host-ports-none
+  - policyName: disallow-host-namespaces
+    ruleNames:
+    - host-namespaces
+    - autogen-host-namespaces
+  match:
+    all:
+    - resources:
+        kinds:
+        - Deployment
+        - ReplicaSet
+        - Pod
+        namespaces:
+        - giantswarm
+        names:
+        - chart-operator*
+---
+apiVersion: kyverno.io/v2
+kind: PolicyException
+metadata:
+  name: kyverno-app-chart-operator-sa-policy-exception
+  namespace: giantswarm
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+spec:
+  background: false
+  exceptions:
+  - policyName: restrict-polex-namespaces
+    ruleNames:
+    - restrict-namespaces
+  match:
+    all:
+    - resources:
+        kinds:
+        - PolicyException
+        operations:
+        - CREATE
+        - UPDATE
+      subjects:
+      - kind: ServiceAccount
+        name: chart-operator
+        namespace: giantswarm
+{{- end -}}

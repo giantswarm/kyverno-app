@@ -1,0 +1,6 @@
+exclude:
+  - "**.securityContext.**"
+  - "**.resources.**"
+  - "**.customLabels.**"
+  - "**.podLabels.**"
+  - "*.admissionController.nodeAffinity.**"

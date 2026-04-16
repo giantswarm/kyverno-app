@@ -1,0 +1,30 @@
+{{- if .Values.policyExceptions.enableCiliumPolex }}
+apiVersion: kyverno.io/v2
+kind: PolicyException
+metadata:
+  name: kyverno-app-cilium-operator-policy-exception
+  namespace: giantswarm
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+spec:
+  exceptions:
+  - policyName: disallow-host-namespaces
+    ruleNames:
+    - host-namespaces
+    - autogen-host-namespaces
+  - policyName: disallow-host-ports
+    ruleNames:
+    - host-ports-none
+    - autogen-host-ports-none
+  match:
+    any:
+    - resources:
+        kinds:
+        - Deployment
+        - ReplicaSet
+        - Pod
+        namespaces:
+        - kube-system
+        names:
+        - cilium-operator*
+{{- end -}}
