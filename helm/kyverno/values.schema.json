@@ -632,6 +632,20 @@
                             "type": "object"
                         },
                         "tolerations": {
+                            "items": {
+                                "properties": {
+                                    "effect": {
+                                        "type": "string"
+                                    },
+                                    "key": {
+                                        "type": "string"
+                                    },
+                                    "operator": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
                             "type": "array"
                         },
                         "topologySpreadConstraints": {
