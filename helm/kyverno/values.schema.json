@@ -529,11 +529,6 @@
                             "type": "object"
                         },
                         "podLabels": {
-                            "properties": {
-                                "app.kubernetes.io/name": {
-                                    "type": "string"
-                                }
-                            },
                             "type": "object"
                         },
                         "podSecurityContext": {

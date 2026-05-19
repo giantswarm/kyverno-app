@@ -427,8 +427,7 @@ kyverno:
     replicas: 3
 
     # -- Additional labels to add to each pod
-    podLabels:
-      app.kubernetes.io/name: kyverno
+    podLabels: {}
 
     # -- Additional annotations to add to each pod
     podAnnotations: {}
