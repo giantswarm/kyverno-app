@@ -2,18 +2,18 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'release: v1.17.0 (#15089)...'
-      sha: 3e5e775669753daae01e280298f85b4604db9198
+      commitTitle: 'chore: release v1.17.2 (#15945)...'
+      sha: f64c0f5820a022d354c77316785d08511d2a5cc4
       tags:
-      - v1.17.0
+      - v1.17.2
     path: .
   path: helm/kyverno/charts/kyverno
 - contents:
   - git:
-      commitTitle: fix dockerfile...
-      sha: af2f08fab0caf2b286d1871e45136fb3c258611b
+      commitTitle: Merge branch 'main' of https://github.com/kyverno/policy-reporter
+      sha: 71a856db524dd10d99dd6a7891aef34408a53ca4
       tags:
-      - v3.7.0
+      - policy-reporter-3.7.4
     path: .
   path: helm/kyverno/charts/policy-reporter
 kind: LockConfig
