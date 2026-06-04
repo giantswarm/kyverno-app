@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.24.2] - 2026-05-04
+
 ### Changed
 
 - Updated `policy-reporter` to upstream version `v3.7.2`.
@@ -631,7 +633,8 @@ This release includes an upstream update. Please refer to the following Release 
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.24.1...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.24.2...HEAD
+[0.24.2]: https://github.com/giantswarm/kyverno-app/compare/v0.24.1...v0.24.2
 [0.24.1]: https://github.com/giantswarm/kyverno-app/compare/v0.24.0...v0.24.1
 [0.24.0]: https://github.com/giantswarm/kyverno-app/compare/v0.23.0...v0.24.0
 [0.23.0]: https://github.com/giantswarm/kyverno-app/compare/v0.22.0...v0.23.0
