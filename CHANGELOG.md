@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updated `kyverno` to upstream version `v1.18.0`.
+- Updated `kyverno` to upstream version `v1.18.1`.
 
 ## [0.24.2] - 2026-05-04
 
