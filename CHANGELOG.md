@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Increase default VPA minimum resources for Policy Reporter components to 50m CPU/50Mi memory.
+
 ## [0.24.2] - 2026-05-04
 
 ### Changed
