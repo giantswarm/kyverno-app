@@ -71,13 +71,22 @@ verticalPodAutoscaler:
   # VPA settings for Policy Reporter components
   kyvernoPlugin:
     enabled: true
-    containerPolicies: {}
+    containerPolicies:
+      minAllowed:
+        cpu: 50m
+        memory: 50Mi
   policyReporter:
     enabled: true
-    containerPolicies: {}
+    containerPolicies:
+      minAllowed:
+        cpu: 50m
+        memory: 50Mi
   ui:
     enabled: true
-    containerPolicies: {}
+    containerPolicies:
+      minAllowed:
+        cpu: 50m
+        memory: 50Mi
 
 cleanupPolicies:
   trivyOperator:
