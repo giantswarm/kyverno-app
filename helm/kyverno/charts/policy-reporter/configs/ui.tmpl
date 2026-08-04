@@ -9,7 +9,7 @@ server:
   cors: {{ .Values.ui.server.cors }}
   overwriteHost: {{ .Values.ui.server.overwriteHost }}
   {{- with .Values.ui.server.sessions }}
-  sessions: 
+  sessions:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 

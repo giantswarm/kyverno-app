@@ -1,19 +1,16 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
-    "additionalProperties": false,
+    "additionalProperties": true,
     "properties": {
         "ciliumNetworkPolicy": {
             "type": "object",
-            "additionalProperties": false,
             "properties": {
                 "admissionControllerExtraEgress": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "dnsSelector": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "rules": {
                                     "type": "array"
@@ -25,7 +22,6 @@
                         },
                         "fqdnsConnection": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "port": {
                                     "type": "string"
@@ -47,11 +43,9 @@
         },
         "cleanupPolicies": {
             "type": "object",
-            "additionalProperties": false,
             "properties": {
                 "trivyOperator": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "enabled": {
                             "type": "boolean",
@@ -71,18 +65,15 @@
         },
         "crds": {
             "type": "object",
-            "additionalProperties": false,
             "properties": {
                 "install": {
                     "type": "boolean"
                 },
                 "resources": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "limits": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "cpu": {
                                     "type": "string"
@@ -94,7 +85,6 @@
                         },
                         "requests": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "cpu": {
                                     "type": "string"
@@ -110,11 +100,9 @@
         },
         "global": {
             "type": "object",
-            "additionalProperties": false,
             "properties": {
                 "image": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "registry": {
                             "type": "string"
@@ -123,7 +111,6 @@
                 },
                 "podSecurityStandards": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "enforced": {
                             "type": "boolean"
@@ -134,7 +121,6 @@
         },
         "image": {
             "type": "object",
-            "additionalProperties": false,
             "properties": {
                 "registry": {
                     "type": "string"
@@ -150,15 +136,12 @@
         },
         "kyverno": {
             "type": "object",
-            "additionalProperties": false,
             "properties": {
                 "admissionController": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "antiAffinity": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -172,12 +155,10 @@
                         },
                         "autoscaling": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "behavior": {
                                     "type": "object",
-                                    "description": "Configurable scaling behavior",
-                                    "additionalProperties": false
+                                    "description": "Configurable scaling behavior"
                                 },
                                 "enabled": {
                                     "type": "boolean",
@@ -199,12 +180,10 @@
                         },
                         "container": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "extraArgs": {
                                     "type": "object",
-                                    "description": "Additional container args.",
-                                    "additionalProperties": false
+                                    "description": "Additional container args."
                                 },
                                 "extraEnvVars": {
                                     "type": "array",
@@ -212,7 +191,6 @@
                                 },
                                 "image": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "pullPolicy": {
                                             "type": "string",
@@ -230,12 +208,10 @@
                                 },
                                 "resources": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "limits": {
                                             "type": "object",
                                             "description": "Pod resource limits",
-                                            "additionalProperties": false,
                                             "properties": {
                                                 "memory": {
                                                     "type": "string"
@@ -245,7 +221,6 @@
                                         "requests": {
                                             "type": "object",
                                             "description": "Pod resource requests",
-                                            "additionalProperties": false,
                                             "properties": {
                                                 "cpu": {
                                                     "type": "string"
@@ -260,14 +235,12 @@
                                 "securityContext": {
                                     "type": "object",
                                     "description": "Container security context",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "allowPrivilegeEscalation": {
                                             "type": "boolean"
                                         },
                                         "capabilities": {
                                             "type": "object",
-                                            "additionalProperties": false,
                                             "properties": {
                                                 "drop": {
                                                     "type": "array",
@@ -294,7 +267,6 @@
                                         },
                                         "seccompProfile": {
                                             "type": "object",
-                                            "additionalProperties": false,
                                             "properties": {
                                                 "type": {
                                                     "type": "string"
@@ -320,11 +292,9 @@
                         "featuresOverride": {
                             "type": "object",
                             "description": "Overrides features defined at the root level",
-                            "additionalProperties": false,
                             "properties": {
                                 "admissionReports": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "backPressureThreshold": {
                                             "type": "integer",
@@ -340,12 +310,10 @@
                         },
                         "initContainer": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "extraArgs": {
                                     "type": "object",
-                                    "description": "Additional container args.",
-                                    "additionalProperties": false
+                                    "description": "Additional container args."
                                 },
                                 "extraEnvVars": {
                                     "type": "array",
@@ -353,7 +321,6 @@
                                 },
                                 "image": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "registry": {
                                             "type": "string",
@@ -367,12 +334,10 @@
                                 },
                                 "resources": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "limits": {
                                             "type": "object",
                                             "description": "Pod resource limits",
-                                            "additionalProperties": false,
                                             "properties": {
                                                 "cpu": {
                                                     "type": "string"
@@ -385,7 +350,6 @@
                                         "requests": {
                                             "type": "object",
                                             "description": "Pod resource requests",
-                                            "additionalProperties": false,
                                             "properties": {
                                                 "cpu": {
                                                     "type": "string"
@@ -400,14 +364,12 @@
                                 "securityContext": {
                                     "type": "object",
                                     "description": "Container security context",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "allowPrivilegeEscalation": {
                                             "type": "boolean"
                                         },
                                         "capabilities": {
                                             "type": "object",
-                                            "additionalProperties": false,
                                             "properties": {
                                                 "drop": {
                                                     "type": "array",
@@ -434,7 +396,6 @@
                                         },
                                         "seccompProfile": {
                                             "type": "object",
-                                            "additionalProperties": false,
                                             "properties": {
                                                 "type": {
                                                     "type": "string"
@@ -447,7 +408,6 @@
                         },
                         "metering": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "collector": {
                                     "type": "string",
@@ -473,7 +433,6 @@
                         },
                         "metricsService": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "type": {
                                     "type": "string",
@@ -481,8 +440,7 @@
                                 },
                                 "annotations": {
                                     "type": "object",
-                                    "description": "Service node port. Only used if `type` is `NodePort`. nodePort:",
-                                    "additionalProperties": false
+                                    "description": "Service node port. Only used if `type` is `NodePort`. nodePort:"
                                 },
                                 "create": {
                                     "type": "boolean",
@@ -496,7 +454,6 @@
                         },
                         "networkPolicy": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -511,23 +468,19 @@
                         "nodeAffinity": {
                             "type": "object",
                             "description": "Node affinity constraints.",
-                            "additionalProperties": false,
                             "properties": {
                                 "preferredDuringSchedulingIgnoredDuringExecution": {
                                     "type": "array",
                                     "items": {
                                         "type": "object",
-                                        "additionalProperties": false,
                                         "properties": {
                                             "preference": {
                                                 "type": "object",
-                                                "additionalProperties": false,
                                                 "properties": {
                                                     "matchExpressions": {
                                                         "type": "array",
                                                         "items": {
                                                             "type": "object",
-                                                            "additionalProperties": false,
                                                             "properties": {
                                                                 "key": {
                                                                     "type": "string"
@@ -556,43 +509,35 @@
                         },
                         "nodeSelector": {
                             "type": "object",
-                            "description": "Node labels for pod assignment",
-                            "additionalProperties": false
+                            "description": "Node labels for pod assignment"
                         },
                         "podAffinity": {
                             "type": "object",
-                            "description": "Pod affinity constraints.",
-                            "additionalProperties": false
+                            "description": "Pod affinity constraints."
                         },
                         "podAnnotations": {
                             "type": "object",
-                            "description": "Additional annotations to add to each pod",
-                            "additionalProperties": false
+                            "description": "Additional annotations to add to each pod"
                         },
                         "podAntiAffinity": {
                             "type": "object",
                             "description": "Pod anti affinity constraints.",
-                            "additionalProperties": false,
                             "properties": {
                                 "preferredDuringSchedulingIgnoredDuringExecution": {
                                     "type": "array",
                                     "items": {
                                         "type": "object",
-                                        "additionalProperties": false,
                                         "properties": {
                                             "podAffinityTerm": {
                                                 "type": "object",
-                                                "additionalProperties": false,
                                                 "properties": {
                                                     "labelSelector": {
                                                         "type": "object",
-                                                        "additionalProperties": false,
                                                         "properties": {
                                                             "matchExpressions": {
                                                                 "type": "array",
                                                                 "items": {
                                                                     "type": "object",
-                                                                    "additionalProperties": false,
                                                                     "properties": {
                                                                         "key": {
                                                                             "type": "string"
@@ -626,7 +571,6 @@
                         },
                         "podDisruptionBudget": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "minAvailable": {
                                     "type": "integer",
@@ -641,12 +585,15 @@
                         "podLabels": {
                             "type": "object",
                             "description": "Additional labels to add to each pod",
-                            "additionalProperties": false
+                            "properties": {
+                                "app.kubernetes.io/name": {
+                                    "type": "string"
+                                }
+                            }
                         },
                         "podSecurityContext": {
                             "type": "object",
-                            "description": "Security context for the pod",
-                            "additionalProperties": false
+                            "description": "Security context for the pod"
                         },
                         "priorityClassName": {
                             "type": "string",
@@ -654,7 +601,6 @@
                         },
                         "profiling": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -672,11 +618,9 @@
                         },
                         "rbac": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "clusterRole": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "extraResources": {
                                             "type": "array",
@@ -690,12 +634,10 @@
                                 },
                                 "serviceAccount": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "annotations": {
                                             "type": "object",
-                                            "description": "Annotations for the ServiceAccount",
-                                            "additionalProperties": false
+                                            "description": "Annotations for the ServiceAccount"
                                         },
                                         "name": {
                                             "type": "string",
@@ -711,7 +653,6 @@
                         },
                         "service": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "type": {
                                     "type": "string",
@@ -719,8 +660,7 @@
                                 },
                                 "annotations": {
                                     "type": "object",
-                                    "description": "Service node port. Only used if `type` is `NodePort`. nodePort:",
-                                    "additionalProperties": false
+                                    "description": "Service node port. Only used if `type` is `NodePort`. nodePort:"
                                 },
                                 "port": {
                                     "type": "integer",
@@ -730,12 +670,10 @@
                         },
                         "serviceMonitor": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "additionalLabels": {
                                     "type": "object",
-                                    "description": "Additional labels",
-                                    "additionalProperties": false
+                                    "description": "Additional labels"
                                 },
                                 "enabled": {
                                     "type": "boolean",
@@ -755,15 +693,13 @@
                                 },
                                 "tlsConfig": {
                                     "type": "object",
-                                    "description": "TLS Configuration for endpoint",
-                                    "additionalProperties": false
+                                    "description": "TLS Configuration for endpoint"
                                 }
                             }
                         },
                         "sigstoreVolume": {
                             "type": "object",
                             "description": "Volume to be mounted in pods for TUF/cosign work.",
-                            "additionalProperties": false,
                             "properties": {
                                 "emptyDir": {
                                     "type": "object",
@@ -776,7 +712,6 @@
                             "description": "List of node taints to tolerate",
                             "items": {
                                 "type": "object",
-                                "additionalProperties": false,
                                 "properties": {
                                     "effect": {
                                         "type": "string"
@@ -796,7 +731,6 @@
                         },
                         "tracing": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "address": {
                                     "type": "null",
@@ -823,14 +757,12 @@
                         "updateStrategy": {
                             "type": "object",
                             "description": "Deployment update strategy. Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy",
-                            "additionalProperties": false,
                             "properties": {
                                 "type": {
                                     "type": "string"
                                 },
                                 "rollingUpdate": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "maxSurge": {
                                             "type": "integer"
@@ -846,11 +778,9 @@
                 },
                 "backgroundController": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "antiAffinity": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -868,13 +798,11 @@
                         },
                         "extraArgs": {
                             "type": "object",
-                            "description": "Extra arguments passed to the container on the command line",
-                            "additionalProperties": false
+                            "description": "Extra arguments passed to the container on the command line"
                         },
                         "featuresOverride": {
                             "type": "object",
-                            "description": "Overrides features defined at the root level",
-                            "additionalProperties": false
+                            "description": "Overrides features defined at the root level"
                         },
                         "hostNetwork": {
                             "type": "boolean",
@@ -882,7 +810,6 @@
                         },
                         "image": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "pullPolicy": {
                                     "type": "string",
@@ -904,7 +831,6 @@
                         },
                         "metering": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "collector": {
                                     "type": "string",
@@ -930,7 +856,6 @@
                         },
                         "metricsService": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "type": {
                                     "type": "string",
@@ -938,8 +863,7 @@
                                 },
                                 "annotations": {
                                     "type": "object",
-                                    "description": "Service node port. Only used if `metricsService.type` is `NodePort`. nodePort:",
-                                    "additionalProperties": false
+                                    "description": "Service node port. Only used if `metricsService.type` is `NodePort`. nodePort:"
                                 },
                                 "create": {
                                     "type": "boolean",
@@ -953,7 +877,6 @@
                         },
                         "networkPolicy": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -967,43 +890,35 @@
                         },
                         "nodeAffinity": {
                             "type": "object",
-                            "description": "Node affinity constraints.",
-                            "additionalProperties": false
+                            "description": "Node affinity constraints."
                         },
                         "nodeSelector": {
                             "type": "object",
-                            "description": "Node labels for pod assignment",
-                            "additionalProperties": false
+                            "description": "Node labels for pod assignment"
                         },
                         "podAffinity": {
                             "type": "object",
-                            "description": "Pod affinity constraints.",
-                            "additionalProperties": false
+                            "description": "Pod affinity constraints."
                         },
                         "podAntiAffinity": {
                             "type": "object",
                             "description": "Pod anti affinity constraints.",
-                            "additionalProperties": false,
                             "properties": {
                                 "preferredDuringSchedulingIgnoredDuringExecution": {
                                     "type": "array",
                                     "items": {
                                         "type": "object",
-                                        "additionalProperties": false,
                                         "properties": {
                                             "podAffinityTerm": {
                                                 "type": "object",
-                                                "additionalProperties": false,
                                                 "properties": {
                                                     "labelSelector": {
                                                         "type": "object",
-                                                        "additionalProperties": false,
                                                         "properties": {
                                                             "matchExpressions": {
                                                                 "type": "array",
                                                                 "items": {
                                                                     "type": "object",
-                                                                    "additionalProperties": false,
                                                                     "properties": {
                                                                         "key": {
                                                                             "type": "string"
@@ -1037,7 +952,6 @@
                         },
                         "podDisruptionBudget": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "minAvailable": {
                                     "type": "integer",
@@ -1047,8 +961,7 @@
                         },
                         "podSecurityContext": {
                             "type": "object",
-                            "description": "Security context for the pod",
-                            "additionalProperties": false
+                            "description": "Security context for the pod"
                         },
                         "priorityClassName": {
                             "type": "string",
@@ -1056,7 +969,6 @@
                         },
                         "profiling": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -1074,11 +986,9 @@
                         },
                         "rbac": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "clusterRole": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "extraResources": {
                                             "type": "array",
@@ -1092,12 +1002,10 @@
                                 },
                                 "serviceAccount": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "annotations": {
                                             "type": "object",
-                                            "description": "Annotations for the ServiceAccount",
-                                            "additionalProperties": false
+                                            "description": "Annotations for the ServiceAccount"
                                         },
                                         "name": {
                                             "type": "string",
@@ -1109,12 +1017,10 @@
                         },
                         "resources": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "limits": {
                                     "type": "object",
                                     "description": "Pod resource limits",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "cpu": {
                                             "type": "string"
@@ -1127,7 +1033,6 @@
                                 "requests": {
                                     "type": "object",
                                     "description": "Pod resource requests",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "cpu": {
                                             "type": "string"
@@ -1142,14 +1047,12 @@
                         "securityContext": {
                             "type": "object",
                             "description": "Security context for the containers",
-                            "additionalProperties": false,
                             "properties": {
                                 "allowPrivilegeEscalation": {
                                     "type": "boolean"
                                 },
                                 "capabilities": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "drop": {
                                             "type": "array",
@@ -1176,7 +1079,6 @@
                                 },
                                 "seccompProfile": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "type": {
                                             "type": "string"
@@ -1188,7 +1090,6 @@
                         "server": {
                             "type": "object",
                             "description": "backgroundController server port in case you are using hostNetwork: true, you might want to change the port the backgroundController is listening to",
-                            "additionalProperties": false,
                             "properties": {
                                 "port": {
                                     "type": "integer"
@@ -1197,12 +1098,10 @@
                         },
                         "serviceMonitor": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "additionalLabels": {
                                     "type": "object",
-                                    "description": "Additional labels",
-                                    "additionalProperties": false
+                                    "description": "Additional labels"
                                 },
                                 "enabled": {
                                     "type": "boolean",
@@ -1222,8 +1121,7 @@
                                 },
                                 "tlsConfig": {
                                     "type": "object",
-                                    "description": "TLS Configuration for endpoint",
-                                    "additionalProperties": false
+                                    "description": "TLS Configuration for endpoint"
                                 }
                             }
                         },
@@ -1237,7 +1135,6 @@
                         },
                         "tracing": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "address": {
                                     "type": "null",
@@ -1260,14 +1157,12 @@
                         "updateStrategy": {
                             "type": "object",
                             "description": "Deployment update strategy. Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy",
-                            "additionalProperties": false,
                             "properties": {
                                 "type": {
                                     "type": "string"
                                 },
                                 "rollingUpdate": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "maxSurge": {
                                             "type": "integer"
@@ -1283,11 +1178,9 @@
                 },
                 "cleanupController": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "antiAffinity": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -1309,13 +1202,11 @@
                         },
                         "extraArgs": {
                             "type": "object",
-                            "description": "Extra arguments passed to the container on the command line",
-                            "additionalProperties": false
+                            "description": "Extra arguments passed to the container on the command line"
                         },
                         "featuresOverride": {
                             "type": "object",
-                            "description": "Overrides features defined at the root level",
-                            "additionalProperties": false
+                            "description": "Overrides features defined at the root level"
                         },
                         "hostNetwork": {
                             "type": "boolean",
@@ -1323,7 +1214,6 @@
                         },
                         "image": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "pullPolicy": {
                                     "type": "string",
@@ -1345,7 +1235,6 @@
                         },
                         "metering": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "collector": {
                                     "type": "string",
@@ -1371,7 +1260,6 @@
                         },
                         "metricsService": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "type": {
                                     "type": "string",
@@ -1379,8 +1267,7 @@
                                 },
                                 "annotations": {
                                     "type": "object",
-                                    "description": "Service node port. Only used if `metricsService.type` is `NodePort`. nodePort:",
-                                    "additionalProperties": false
+                                    "description": "Service node port. Only used if `metricsService.type` is `NodePort`. nodePort:"
                                 },
                                 "create": {
                                     "type": "boolean",
@@ -1394,7 +1281,6 @@
                         },
                         "networkPolicy": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -1408,43 +1294,35 @@
                         },
                         "nodeAffinity": {
                             "type": "object",
-                            "description": "Node affinity constraints.",
-                            "additionalProperties": false
+                            "description": "Node affinity constraints."
                         },
                         "nodeSelector": {
                             "type": "object",
-                            "description": "Node labels for pod assignment",
-                            "additionalProperties": false
+                            "description": "Node labels for pod assignment"
                         },
                         "podAffinity": {
                             "type": "object",
-                            "description": "Pod affinity constraints.",
-                            "additionalProperties": false
+                            "description": "Pod affinity constraints."
                         },
                         "podAntiAffinity": {
                             "type": "object",
                             "description": "Pod anti affinity constraints.",
-                            "additionalProperties": false,
                             "properties": {
                                 "preferredDuringSchedulingIgnoredDuringExecution": {
                                     "type": "array",
                                     "items": {
                                         "type": "object",
-                                        "additionalProperties": false,
                                         "properties": {
                                             "podAffinityTerm": {
                                                 "type": "object",
-                                                "additionalProperties": false,
                                                 "properties": {
                                                     "labelSelector": {
                                                         "type": "object",
-                                                        "additionalProperties": false,
                                                         "properties": {
                                                             "matchExpressions": {
                                                                 "type": "array",
                                                                 "items": {
                                                                     "type": "object",
-                                                                    "additionalProperties": false,
                                                                     "properties": {
                                                                         "key": {
                                                                             "type": "string"
@@ -1478,7 +1356,6 @@
                         },
                         "podDisruptionBudget": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "minAvailable": {
                                     "type": "integer",
@@ -1488,8 +1365,7 @@
                         },
                         "podSecurityContext": {
                             "type": "object",
-                            "description": "Security context for the pod",
-                            "additionalProperties": false
+                            "description": "Security context for the pod"
                         },
                         "priorityClassName": {
                             "type": "string",
@@ -1497,7 +1373,6 @@
                         },
                         "profiling": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -1515,11 +1390,9 @@
                         },
                         "rbac": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "clusterRole": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "extraResources": {
                                             "type": "array",
@@ -1533,12 +1406,10 @@
                                 },
                                 "serviceAccount": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "annotations": {
                                             "type": "object",
-                                            "description": "Annotations for the ServiceAccount",
-                                            "additionalProperties": false
+                                            "description": "Annotations for the ServiceAccount"
                                         },
                                         "name": {
                                             "type": "string",
@@ -1550,12 +1421,10 @@
                         },
                         "resources": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "limits": {
                                     "type": "object",
                                     "description": "Pod resource limits",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "cpu": {
                                             "type": "string"
@@ -1568,7 +1437,6 @@
                                 "requests": {
                                     "type": "object",
                                     "description": "Pod resource requests",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "cpu": {
                                             "type": "string"
@@ -1583,14 +1451,12 @@
                         "securityContext": {
                             "type": "object",
                             "description": "Security context for the containers",
-                            "additionalProperties": false,
                             "properties": {
                                 "allowPrivilegeEscalation": {
                                     "type": "boolean"
                                 },
                                 "capabilities": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "drop": {
                                             "type": "array",
@@ -1617,7 +1483,6 @@
                                 },
                                 "seccompProfile": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "type": {
                                             "type": "string"
@@ -1629,7 +1494,6 @@
                         "server": {
                             "type": "object",
                             "description": "cleanupController server port in case you are using hostNetwork: true, you might want to change the port the cleanupController is listening to",
-                            "additionalProperties": false,
                             "properties": {
                                 "port": {
                                     "type": "integer"
@@ -1638,7 +1502,6 @@
                         },
                         "service": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "type": {
                                     "type": "string",
@@ -1646,8 +1509,7 @@
                                 },
                                 "annotations": {
                                     "type": "object",
-                                    "description": "Service node port. Only used if `service.type` is `NodePort`. nodePort:",
-                                    "additionalProperties": false
+                                    "description": "Service node port. Only used if `service.type` is `NodePort`. nodePort:"
                                 },
                                 "port": {
                                     "type": "integer",
@@ -1657,12 +1519,10 @@
                         },
                         "serviceMonitor": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "additionalLabels": {
                                     "type": "object",
-                                    "description": "Additional labels",
-                                    "additionalProperties": false
+                                    "description": "Additional labels"
                                 },
                                 "enabled": {
                                     "type": "boolean",
@@ -1682,8 +1542,7 @@
                                 },
                                 "tlsConfig": {
                                     "type": "object",
-                                    "description": "TLS Configuration for endpoint",
-                                    "additionalProperties": false
+                                    "description": "TLS Configuration for endpoint"
                                 }
                             }
                         },
@@ -1697,7 +1556,6 @@
                         },
                         "tracing": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "address": {
                                     "type": "null",
@@ -1720,14 +1578,12 @@
                         "updateStrategy": {
                             "type": "object",
                             "description": "Deployment update strategy. Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy",
-                            "additionalProperties": false,
                             "properties": {
                                 "type": {
                                     "type": "string"
                                 },
                                 "rollingUpdate": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "maxSurge": {
                                             "type": "integer"
@@ -1743,7 +1599,6 @@
                 },
                 "config": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "defaultRegistry": {
                             "type": "string",
@@ -1780,17 +1635,14 @@
                         "webhooks": {
                             "type": "object",
                             "description": "Defines the `namespaceSelector`/`objectSelector` in the webhook configurations. The Kyverno namespace is excluded if `excludeKyvernoNamespace` is `true` (default)",
-                            "additionalProperties": false,
                             "properties": {
                                 "namespaceSelector": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "matchExpressions": {
                                             "type": "array",
                                             "items": {
                                                 "type": "object",
-                                                "additionalProperties": false,
                                                 "properties": {
                                                     "key": {
                                                         "type": "string"
@@ -1815,7 +1667,6 @@
                 },
                 "crds": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "install": {
                             "type": "boolean",
@@ -1823,14 +1674,12 @@
                         },
                         "migration": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean"
                                 },
                                 "image": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "registry": {
                                             "type": "string"
@@ -1846,7 +1695,6 @@
                 },
                 "customLabels": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "application.giantswarm.io/team": {
                             "type": "string"
@@ -1858,11 +1706,9 @@
                 },
                 "features": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "admissionReports": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -1872,7 +1718,6 @@
                         },
                         "aggregateReports": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -1882,7 +1727,6 @@
                         },
                         "autoUpdateWebhooks": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -1892,7 +1736,6 @@
                         },
                         "backgroundScan": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "backgroundScanInterval": {
                                     "type": "string",
@@ -1914,7 +1757,6 @@
                         },
                         "configMapCaching": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -1924,7 +1766,6 @@
                         },
                         "controllerRuntimeMetrics": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "bindAddress": {
                                     "type": "string",
@@ -1934,7 +1775,6 @@
                         },
                         "deferredLoading": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -1944,7 +1784,6 @@
                         },
                         "dumpPatches": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -1954,7 +1793,6 @@
                         },
                         "dumpPayload": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -1964,7 +1802,6 @@
                         },
                         "forceFailurePolicyIgnore": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -1974,7 +1811,6 @@
                         },
                         "generateMutatingAdmissionPolicy": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -1984,7 +1820,6 @@
                         },
                         "generateValidatingAdmissionPolicy": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -1994,7 +1829,6 @@
                         },
                         "globalContext": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "maxApiCallResponseLength": {
                                     "type": "integer",
@@ -2004,7 +1838,6 @@
                         },
                         "logging": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "format": {
                                     "type": "string",
@@ -2018,7 +1851,6 @@
                         },
                         "mutatingAdmissionPolicyReports": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -2028,7 +1860,6 @@
                         },
                         "omitEvents": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "eventTypes": {
                                     "type": "array",
@@ -2041,7 +1872,6 @@
                         },
                         "policyExceptions": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -2055,7 +1885,6 @@
                         },
                         "policyReports": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -2065,7 +1894,6 @@
                         },
                         "protectManagedResources": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -2075,7 +1903,6 @@
                         },
                         "registryClient": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "allowInsecure": {
                                     "type": "boolean",
@@ -2092,7 +1919,6 @@
                         },
                         "reporting": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "generate": {
                                     "type": "boolean",
@@ -2118,7 +1944,6 @@
                         },
                         "ttlController": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "reconciliationInterval": {
                                     "type": "string",
@@ -2128,7 +1953,6 @@
                         },
                         "tuf": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -2150,7 +1974,6 @@
                         },
                         "validatingAdmissionPolicyReports": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -2162,7 +1985,6 @@
                 },
                 "grafana": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "enabled": {
                             "type": "boolean",
@@ -2171,7 +1993,6 @@
                         "grafanaDashboard": {
                             "type": "object",
                             "description": "create GrafanaDashboard custom resource referencing to the configMap.",
-                            "additionalProperties": false,
                             "properties": {
                                 "allowCrossNamespaceImport": {
                                     "type": "boolean"
@@ -2184,7 +2005,6 @@
                                 },
                                 "matchLabels": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "dashboards": {
                                             "type": "string"
@@ -2197,18 +2017,16 @@
                 },
                 "metricsConfig": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "annotations": {
                             "type": "object",
-                            "description": "Additional annotations to add to the configmap.",
-                            "additionalProperties": false
+                            "description": "Additional annotations to add to the configmap."
                         },
                         "bucketBoundaries": {
                             "type": "array",
                             "description": "Configures the bucket boundaries for all Histogram metrics",
                             "items": {
-                                "type": "integer"
+                                "type": "number"
                             }
                         },
                         "create": {
@@ -2217,7 +2035,6 @@
                         },
                         "namespaces": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "exclude": {
                                     "type": "array",
@@ -2233,7 +2050,6 @@
                 },
                 "openreports": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "enabled": {
                             "type": "boolean",
@@ -2247,11 +2063,9 @@
                 },
                 "reportsController": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "antiAffinity": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -2273,13 +2087,11 @@
                         },
                         "extraArgs": {
                             "type": "object",
-                            "description": "Extra arguments passed to the container on the command line",
-                            "additionalProperties": false
+                            "description": "Extra arguments passed to the container on the command line"
                         },
                         "featuresOverride": {
                             "type": "object",
-                            "description": "Overrides features defined at the root level",
-                            "additionalProperties": false
+                            "description": "Overrides features defined at the root level"
                         },
                         "hostNetwork": {
                             "type": "boolean",
@@ -2287,7 +2099,6 @@
                         },
                         "image": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "pullPolicy": {
                                     "type": "string",
@@ -2309,7 +2120,6 @@
                         },
                         "metering": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "collector": {
                                     "type": "null",
@@ -2335,7 +2145,6 @@
                         },
                         "metricsService": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "type": {
                                     "type": "string",
@@ -2343,8 +2152,7 @@
                                 },
                                 "annotations": {
                                     "type": "object",
-                                    "description": "Service node port. Only used if `type` is `NodePort`. nodePort: ~",
-                                    "additionalProperties": false
+                                    "description": "Service node port. Only used if `type` is `NodePort`. nodePort: ~"
                                 },
                                 "create": {
                                     "type": "boolean",
@@ -2358,7 +2166,6 @@
                         },
                         "networkPolicy": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -2372,43 +2179,35 @@
                         },
                         "nodeAffinity": {
                             "type": "object",
-                            "description": "Node affinity constraints.",
-                            "additionalProperties": false
+                            "description": "Node affinity constraints."
                         },
                         "nodeSelector": {
                             "type": "object",
-                            "description": "Node labels for pod assignment",
-                            "additionalProperties": false
+                            "description": "Node labels for pod assignment"
                         },
                         "podAffinity": {
                             "type": "object",
-                            "description": "Pod affinity constraints.",
-                            "additionalProperties": false
+                            "description": "Pod affinity constraints."
                         },
                         "podAntiAffinity": {
                             "type": "object",
                             "description": "Pod anti affinity constraints.",
-                            "additionalProperties": false,
                             "properties": {
                                 "preferredDuringSchedulingIgnoredDuringExecution": {
                                     "type": "array",
                                     "items": {
                                         "type": "object",
-                                        "additionalProperties": false,
                                         "properties": {
                                             "podAffinityTerm": {
                                                 "type": "object",
-                                                "additionalProperties": false,
                                                 "properties": {
                                                     "labelSelector": {
                                                         "type": "object",
-                                                        "additionalProperties": false,
                                                         "properties": {
                                                             "matchExpressions": {
                                                                 "type": "array",
                                                                 "items": {
                                                                     "type": "object",
-                                                                    "additionalProperties": false,
                                                                     "properties": {
                                                                         "key": {
                                                                             "type": "string"
@@ -2442,7 +2241,6 @@
                         },
                         "podDisruptionBudget": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "minAvailable": {
                                     "type": "integer",
@@ -2452,8 +2250,7 @@
                         },
                         "podSecurityContext": {
                             "type": "object",
-                            "description": "Security context for the pod",
-                            "additionalProperties": false
+                            "description": "Security context for the pod"
                         },
                         "priorityClassName": {
                             "type": "string",
@@ -2461,7 +2258,6 @@
                         },
                         "profiling": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -2479,18 +2275,15 @@
                         },
                         "rbac": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "clusterRole": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "extraResources": {
                                             "type": "array",
                                             "description": "Extra resource permissions to add in the cluster role",
                                             "items": {
                                                 "type": "object",
-                                                "additionalProperties": false,
                                                 "properties": {
                                                     "apiGroups": {
                                                         "type": "array",
@@ -2521,12 +2314,10 @@
                                 },
                                 "serviceAccount": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "annotations": {
                                             "type": "object",
-                                            "description": "Annotations for the ServiceAccount",
-                                            "additionalProperties": false
+                                            "description": "Annotations for the ServiceAccount"
                                         },
                                         "name": {
                                             "type": "string",
@@ -2538,12 +2329,10 @@
                         },
                         "resources": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "limits": {
                                     "type": "object",
                                     "description": "Pod resource limits",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "cpu": {
                                             "type": "string"
@@ -2556,7 +2345,6 @@
                                 "requests": {
                                     "type": "object",
                                     "description": "Pod resource requests",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "cpu": {
                                             "type": "string"
@@ -2575,14 +2363,12 @@
                         "securityContext": {
                             "type": "object",
                             "description": "Security context for the containers",
-                            "additionalProperties": false,
                             "properties": {
                                 "allowPrivilegeEscalation": {
                                     "type": "boolean"
                                 },
                                 "capabilities": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "drop": {
                                             "type": "array",
@@ -2609,7 +2395,6 @@
                                 },
                                 "seccompProfile": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "type": {
                                             "type": "string"
@@ -2621,7 +2406,6 @@
                         "server": {
                             "type": "object",
                             "description": "reportsController server port in case you are using hostNetwork: true, you might want to change the port the reportsController is listening to",
-                            "additionalProperties": false,
                             "properties": {
                                 "port": {
                                     "type": "integer"
@@ -2630,12 +2414,10 @@
                         },
                         "serviceMonitor": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "additionalLabels": {
                                     "type": "object",
-                                    "description": "Additional labels",
-                                    "additionalProperties": false
+                                    "description": "Additional labels"
                                 },
                                 "enabled": {
                                     "type": "boolean",
@@ -2655,15 +2437,13 @@
                                 },
                                 "tlsConfig": {
                                     "type": "object",
-                                    "description": "TLS Configuration for endpoint",
-                                    "additionalProperties": false
+                                    "description": "TLS Configuration for endpoint"
                                 }
                             }
                         },
                         "sigstoreVolume": {
                             "type": "object",
                             "description": "Volume to be mounted in pods for TUF/cosign work.",
-                            "additionalProperties": false,
                             "properties": {
                                 "emptyDir": {
                                     "type": "object",
@@ -2681,7 +2461,6 @@
                         },
                         "tracing": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "address": {
                                     "type": "null",
@@ -2708,14 +2487,12 @@
                         "updateStrategy": {
                             "type": "object",
                             "description": "Deployment update strategy. Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy",
-                            "additionalProperties": false,
                             "properties": {
                                 "type": {
                                     "type": "string"
                                 },
                                 "rollingUpdate": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "maxSurge": {
                                             "type": "integer"
@@ -2731,7 +2508,6 @@
                 },
                 "reportsServer": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "enabled": {
                             "type": "boolean",
@@ -2749,11 +2525,9 @@
                 },
                 "test": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "image": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "registry": {
                                     "type": "string"
@@ -2767,11 +2541,9 @@
                 },
                 "webhooksCleanup": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "autoDeleteWebhooks": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
@@ -2785,7 +2557,6 @@
                         },
                         "image": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "registry": {
                                     "type": "string",
@@ -2805,11 +2576,9 @@
         },
         "monitoring": {
             "type": "object",
-            "additionalProperties": false,
             "properties": {
                 "podLogs": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "annotations": {
                             "type": "object",
@@ -2834,14 +2603,12 @@
         },
         "policy-reporter": {
             "type": "object",
-            "additionalProperties": false,
             "properties": {
                 "fullnameOverride": {
                     "type": "string"
                 },
                 "global": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "labels": {
                             "type": "object",
@@ -2851,7 +2618,6 @@
                 },
                 "image": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "registry": {
                             "type": "string"
@@ -2863,14 +2629,12 @@
                 },
                 "monitoring": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "enabled": {
                             "type": "boolean"
                         },
                         "serviceMonitor": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "namespace": {
                                     "type": "string"
@@ -2879,7 +2643,6 @@
                                     "type": "array",
                                     "items": {
                                         "type": "object",
-                                        "additionalProperties": false,
                                         "properties": {
                                             "action": {
                                                 "type": "string"
@@ -2902,18 +2665,15 @@
                 },
                 "plugin": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "kyverno": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean"
                                 },
                                 "image": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "registry": {
                                             "type": "string"
@@ -2925,7 +2685,6 @@
                                 },
                                 "podLabels": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "app.kubernetes.io/component": {
                                             "type": "string"
@@ -2934,11 +2693,9 @@
                                 },
                                 "resources": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "limits": {
                                             "type": "object",
-                                            "additionalProperties": false,
                                             "properties": {
                                                 "cpu": {
                                                     "type": "string"
@@ -2950,7 +2707,6 @@
                                         },
                                         "requests": {
                                             "type": "object",
-                                            "additionalProperties": false,
                                             "properties": {
                                                 "cpu": {
                                                     "type": "string"
@@ -2968,7 +2724,6 @@
                 },
                 "podLabels": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "app.kubernetes.io/component": {
                             "type": "string"
@@ -2977,11 +2732,9 @@
                 },
                 "resources": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "limits": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "cpu": {
                                     "type": "string"
@@ -2993,7 +2746,6 @@
                         },
                         "requests": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "cpu": {
                                     "type": "string"
@@ -3007,7 +2759,6 @@
                 },
                 "serviceAccount": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "name": {
                             "type": "string"
@@ -3016,14 +2767,12 @@
                 },
                 "ui": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "enabled": {
                             "type": "boolean"
                         },
                         "image": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "registry": {
                                     "type": "string"
@@ -3035,7 +2784,6 @@
                         },
                         "podLabels": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "app.kubernetes.io/component": {
                                     "type": "string"
@@ -3044,11 +2792,9 @@
                         },
                         "resources": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "limits": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "cpu": {
                                             "type": "string"
@@ -3060,7 +2806,6 @@
                                 },
                                 "requests": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "cpu": {
                                             "type": "string"
@@ -3074,7 +2819,6 @@
                         },
                         "serviceAccount": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "create": {
                                     "type": "boolean"
@@ -3090,7 +2834,6 @@
         },
         "policyExceptions": {
             "type": "object",
-            "additionalProperties": false,
             "properties": {
                 "allowedPolexNamespaces": {
                     "type": "array",
@@ -3132,7 +2875,6 @@
         },
         "upgradeJob": {
             "type": "object",
-            "additionalProperties": false,
             "properties": {
                 "enabled": {
                     "type": "boolean"
@@ -3141,11 +2883,9 @@
         },
         "verticalPodAutoscaler": {
             "type": "object",
-            "additionalProperties": false,
             "properties": {
                 "admissionController": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "containerPolicies": {
                             "type": "object",
@@ -3158,15 +2898,12 @@
                 },
                 "backgroundController": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "containerPolicies": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "maxAllowed": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "cpu": {
                                             "type": "integer"
@@ -3178,7 +2915,6 @@
                                 },
                                 "minAllowed": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "cpu": {
                                             "type": "string"
@@ -3197,7 +2933,6 @@
                 },
                 "cleanupController": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "containerPolicies": {
                             "type": "object",
@@ -3210,15 +2945,12 @@
                 },
                 "kyvernoPlugin": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "containerPolicies": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "minAllowed": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "cpu": {
                                             "type": "string"
@@ -3237,15 +2969,12 @@
                 },
                 "policyReporter": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "containerPolicies": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "minAllowed": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "cpu": {
                                             "type": "string"
@@ -3264,15 +2993,12 @@
                 },
                 "reportsController": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "containerPolicies": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "maxAllowed": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "cpu": {
                                             "type": "integer"
@@ -3284,7 +3010,6 @@
                                 },
                                 "minAllowed": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "cpu": {
                                             "type": "string"
@@ -3303,15 +3028,12 @@
                 },
                 "ui": {
                     "type": "object",
-                    "additionalProperties": false,
                     "properties": {
                         "containerPolicies": {
                             "type": "object",
-                            "additionalProperties": false,
                             "properties": {
                                 "minAllowed": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "properties": {
                                         "cpu": {
                                             "type": "string"
