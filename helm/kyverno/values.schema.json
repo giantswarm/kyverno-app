@@ -2025,7 +2025,7 @@
                             "type": "array",
                             "description": "Configures the bucket boundaries for all Histogram metrics",
                             "items": {
-                                "type": "integer"
+                                "type": "number"
                             }
                         },
                         "create": {
