@@ -584,12 +584,7 @@
                         },
                         "podLabels": {
                             "type": "object",
-                            "description": "Additional labels to add to each pod",
-                            "properties": {
-                                "app.kubernetes.io/name": {
-                                    "type": "string"
-                                }
-                            }
+                            "description": "Additional labels to add to each pod"
                         },
                         "podSecurityContext": {
                             "type": "object",
@@ -702,8 +697,7 @@
                             "description": "Volume to be mounted in pods for TUF/cosign work.",
                             "properties": {
                                 "emptyDir": {
-                                    "type": "object",
-                                    "additionalProperties": false
+                                    "type": "object"
                                 }
                             }
                         },
@@ -2446,8 +2440,7 @@
                             "description": "Volume to be mounted in pods for TUF/cosign work.",
                             "properties": {
                                 "emptyDir": {
-                                    "type": "object",
-                                    "additionalProperties": false
+                                    "type": "object"
                                 }
                             }
                         },
@@ -2581,15 +2574,13 @@
                     "type": "object",
                     "properties": {
                         "annotations": {
-                            "type": "object",
-                            "additionalProperties": false
+                            "type": "object"
                         },
                         "enabled": {
                             "type": "boolean"
                         },
                         "labels": {
-                            "type": "object",
-                            "additionalProperties": false
+                            "type": "object"
                         },
                         "relabelings": {
                             "type": "array"
@@ -2611,8 +2602,7 @@
                     "type": "object",
                     "properties": {
                         "labels": {
-                            "type": "object",
-                            "additionalProperties": false
+                            "type": "object"
                         }
                     }
                 },
@@ -2888,8 +2878,7 @@
                     "type": "object",
                     "properties": {
                         "containerPolicies": {
-                            "type": "object",
-                            "additionalProperties": false
+                            "type": "object"
                         },
                         "enabled": {
                             "type": "boolean"
@@ -2935,8 +2924,7 @@
                     "type": "object",
                     "properties": {
                         "containerPolicies": {
-                            "type": "object",
-                            "additionalProperties": false
+                            "type": "object"
                         },
                         "enabled": {
                             "type": "boolean"
