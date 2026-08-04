@@ -23,4 +23,3 @@ directories:
     includePaths:
       - charts/policy-reporter/**
     newRootPath: charts/policy-reporter
-
