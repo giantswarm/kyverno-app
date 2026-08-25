@@ -1,8 +1,8 @@
 apiVersion: v2
 type: application
 name: kyverno
-version: 3.7.2  # VERSION
-appVersion: v1.17.2
+version: 3.9.0  # VERSION
+appVersion: v1.19.0
 icon: https://github.com/kyverno/kyverno/raw/main/img/logo.png
 description: Kubernetes Native Policy Management
 keywords:
@@ -22,6 +22,7 @@ sources:
   - https://github.com/kyverno/kyverno
 kubeVersion: ">=1.25.0-0"
 annotations:
+  artifacthub.io/license: Apache-2.0
   artifacthub.io/operator: "false"
   artifacthub.io/prerelease: "false"
   artifacthub.io/links: |
@@ -37,15 +38,17 @@ annotations:
       description: Enable the flag `--generateValidatingAdmissionPolicy` by default in the admission controller.
     - kind: changed
       description: Enable the flag `--validatingAdmissionPolicyReports` by default in the reports controller.
+    - kind: added
+      description: Add support for configuring container lifecycle hooks (e.g. a preStop sleep) on the admission, background, cleanup and reports controllers.
 dependencies:
   - name: grafana
-    version: 3.7.2  # VERSION
+    version: 3.9.0  # VERSION
     condition: grafana.enabled
   - name: crds
-    version: 3.7.2  # VERSION
+    version: 3.9.0  # VERSION
     condition: crds.install
   - name: kyverno-api
-    version: 0.0.1-alpha.2
+    version: 0.0.1-alpha.4
     repository: "https://kyverno.github.io/api"
     condition: crds.install
   - name: openreports
