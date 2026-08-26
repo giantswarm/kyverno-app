@@ -36,6 +36,9 @@ global:
     #   path: /etc/pki/tls/ca-certificates.crt
     #   type: File
 
+  # -- Global priority class name for pod priority. Non-global values will override the global value.
+  priorityClassName: ''
+
   # -- Additional container environment variables to apply to all containers and init containers
   extraEnvVars: []
   # Example setting proxy
@@ -43,8 +46,9 @@ global:
   # - name: HTTPS_PROXY
   #   value: 'https://proxy.example.com:3128'
 
-  # -- Global node labels for pod assignment. Non-global values will override the global value.
-  nodeSelector: {}
+  # -- Global node labels for pod assignment, applied to all chart workloads including controller Deployments, hook Jobs, and Helm test Pods. Non-global (controller) values will override the global value when non-empty. The default `kubernetes.io/os: linux` key is always merged into any user-supplied value and cannot be unset by design, because Kyverno images only run on Linux nodes.
+  nodeSelector:
+    kubernetes.io/os: linux
 
   # -- Global List of node taints to tolerate. Non-global values will override the global value.
   tolerations: []
@@ -105,7 +109,10 @@ crds:
 
   groups:
 
-    # -- Install CRDs in group `kyverno.io`
+    # -- Install CRDs in group `kyverno.io`.
+    # Note: the legacy policy types in this group (`ClusterPolicy`, `Policy`, `ClusterCleanupPolicy`, `CleanupPolicy`, `PolicyException`)
+    # are deprecated and will be removed in a future release, migrate to the `policies.kyverno.io` policy types
+    # (see https://kyverno.io/docs/guides/migration-to-cel/).
     kyverno:
       cleanuppolicies: true
       clustercleanuppolicies: true
@@ -151,6 +158,9 @@ crds:
     # -- Enable CRDs migration using helm post upgrade hook
     enabled: true
 
+    # -- Additional CLI flags passed to the migration job
+    extraArgs: {}
+
     # -- Resources to migrate
     resources:
       - cleanuppolicies.kyverno.io
@@ -192,7 +202,7 @@ crds:
     # -- Security context for the pod
     podSecurityContext: {}
 
-    # -- Node labels for pod assignment
+    # -- Node labels for pod assignment. Overrides `global.nodeSelector` when non-empty. When empty, the default is `kubernetes.io/os: linux`.
     nodeSelector: {}
 
     # -- List of node taints to tolerate
@@ -238,10 +248,21 @@ crds:
         memory: 64Mi
 
     serviceAccount:
-      # -- Toggle automounting of the ServiceAccount
+      # -- Toggle automounting of the ServiceAccount.
+      # When set to false, a projected service account token is used instead
+      # which provides time-limited and audience-bound tokens for improved security.
       automountServiceAccountToken: true
 
-# -- Scoped token injected into outbound APICall and CEL HTTP requests.
+      # -- Projected service account token configuration (only used when automountServiceAccountToken is false)
+      projectedServiceAccountToken:
+        # -- Token expiration time in seconds.
+        # The kubelet will request a new token before the token expires.
+        expirationSeconds: 3600
+        # -- Audience for the projected service account token.
+        # If not set, the token will have no audience restriction.
+        audience: ""
+
+# -- Scoped token injected into outbound APICall and CEL http requests.
 # This token carries a custom audience so that if leaked to an external service
 # it cannot be replayed against the Kubernetes API server.
 apiCallToken:
@@ -293,6 +314,14 @@ config:
 
   # -- Generate success events.
   generateSuccessEvents: false
+
+  # -- Comma-separated list of event actions for which success events should be generated.
+  # When set, only success events matching the specified actions are emitted.
+  # Requires `generateSuccessEvents` to be `true`.
+  # Valid values: "Resource Mutated", "Resource Passed", "Resource Generated", "Resource Cleaned Up".
+  # Example: "Resource Mutated" or "Resource Mutated,Resource Generated".
+  # @default -- "" (empty, all success events are emitted when generateSuccessEvents is true)
+  successEventActions: ""
 
   # -- Maximum cumulative size of context data during policy evaluation.
   # Supports Kubernetes quantity format (e.g., 100Mi, 2Gi) or plain bytes (e.g., 2097152).
@@ -519,6 +548,14 @@ metricsConfig:
       disabledLabelDimensions: ["resource_namespace"]
     kyverno_cleanup_controller_deletedobjects_total:
       disabledLabelDimensions: ["resource_namespace", "policy_namespace"]
+    kyverno_validating_policy_results_total:
+      disabledLabelDimensions: ["resource_namespace", "policy_namespace"]
+    kyverno_mutating_policy_results_total:
+      disabledLabelDimensions: ["resource_namespace", "policy_namespace"]
+    kyverno_generating_policy_results_total:
+      disabledLabelDimensions: ["resource_namespace", "policy_namespace"]
+    kyverno_image_validating_policy_results_total:
+      disabledLabelDimensions: ["resource_namespace", "policy_namespace"]
 
 # -- Image pull secrets for image verification policies, this will define the `--imagePullSecrets` argument
 imagePullSecrets: {}
@@ -548,7 +585,7 @@ test:
     repository: kyverno/readiness-checker
     # -- Image tag
     # Defaults to `latest` if omitted
-    tag: 'v0.1.0'
+    tag: ~
     # -- (string) Image pull policy
     # Defaults to image.pullPolicy if omitted
     pullPolicy: ~
@@ -581,10 +618,21 @@ test:
     seccompProfile:
       type: RuntimeDefault
 
-  # -- Toggle automounting of the ServiceAccount
+  # -- Toggle automounting of the ServiceAccount.
+  # When set to false, a projected service account token is used instead
+  # which provides time-limited and audience-bound tokens for improved security.
   automountServiceAccountToken: true
 
-  # -- Node labels for pod assignment
+  # -- Projected service account token configuration (only used when automountServiceAccountToken is false)
+  projectedServiceAccountToken:
+    # -- Token expiration time in seconds.
+    # The kubelet will request a new token before the token expires.
+    expirationSeconds: 3600
+    # -- Audience for the projected service account token.
+    # If not set, the token will have no audience restriction.
+    audience: ""
+
+  # -- Node labels for pod assignment. Overrides `global.nodeSelector` when non-empty. When empty, the default is `kubernetes.io/os: linux`.
   nodeSelector: {}
 
    # -- Additional Pod annotations
@@ -601,18 +649,14 @@ webhooksCleanup:
   # -- Create a helm pre-delete hook to cleanup webhooks.
   enabled: true
 
-  autoDeleteWebhooks:
-    # -- Allow webhooks controller to delete webhooks using finalizers
-    enabled: false
-
   image:
     # -- (string) Image registry
-    registry: registry.k8s.io
+    registry: ghcr.io
     # -- Image repository
-    repository: kubectl
+    repository: kyverno/readiness-checker
     # -- Image tag
     # Defaults to `latest` if omitted
-    tag: 'v1.34.3'
+    tag: ~
     # -- (string) Image pull policy
     # Defaults to image.pullPolicy if omitted
     pullPolicy: ~
@@ -623,7 +667,7 @@ webhooksCleanup:
   # -- Security context for the pod
   podSecurityContext: {}
 
-  # -- Node labels for pod assignment
+  # -- Node labels for pod assignment. Overrides `global.nodeSelector` when non-empty. When empty, the default is `kubernetes.io/os: linux`.
   nodeSelector: {}
 
   # -- List of node taints to tolerate
@@ -669,8 +713,19 @@ webhooksCleanup:
       memory: 64Mi
 
   serviceAccount:
-    # -- Toggle automounting of the ServiceAccount
+    # -- Toggle automounting of the ServiceAccount.
+    # When set to false, a projected service account token is used instead
+    # which provides time-limited and audience-bound tokens for improved security.
     automountServiceAccountToken: true
+
+    # -- Projected service account token configuration (only used when automountServiceAccountToken is false)
+    projectedServiceAccountToken:
+      # -- Token expiration time in seconds.
+      # The kubelet will request a new token before the token expires.
+      expirationSeconds: 3600
+      # -- Audience for the projected service account token.
+      # If not set, the token will have no audience restriction.
+      audience: ""
 
 grafana:
   # -- Enable grafana dashboard creation.
@@ -698,6 +753,78 @@ grafana:
     allowCrossNamespaceImport: true
     matchLabels:
       dashboards: "grafana"
+
+prometheusRule:
+  # -- Enable PrometheusRule resource creation.
+  # Requires prometheus-operator (monitoring.coreos.com/v1 CRD) to be installed —
+  # the same prerequisite as serviceMonitor.enabled.
+  # The resource is only created when `enabled: true` and `spec` is non-empty.
+  enabled: false
+
+  # -- (string) Namespace to create the PrometheusRule in.
+  # If not set, it will be created in the same namespace as the chart.
+  namespace: ~
+
+  # -- Additional annotations to add to the PrometheusRule.
+  additionalAnnotations: {}
+
+  # -- Additional labels to add to the PrometheusRule.
+  # Must match the `ruleSelector` configured on your Prometheus instance
+  # (e.g. `release: prometheus` for kube-prometheus-stack).
+  additionalLabels: {}
+
+  # -- Alert rule groups. Provide your own rules here; the examples below use
+  # Kyverno's histogram metrics and can serve as starting points.
+  # Thresholds MUST be tuned to your environment's measured baseline —
+  # see https://kyverno.io/docs/guides/monitoring/#alerting for guidance.
+  spec: []
+  # spec:
+  #   - name: kyverno.admission
+  #     rules:
+  #       - alert: KyvernoAdmissionHighLatency
+  #         expr: |
+  #           histogram_quantile(0.99,
+  #             sum(rate(kyverno_admission_review_duration_seconds_bucket[5m])) by (le)
+  #           ) > 1
+  #         for: 5m
+  #         labels:
+  #           severity: warning
+  #         annotations:
+  #           summary: Kyverno admission review p99 latency is elevated
+  #           description: >-
+  #             Admission review p99 latency is {{ $value | humanizeDuration }},
+  #             above the 1s threshold. Kubernetes webhooks hard-timeout at 10s.
+  #           runbook_url: https://kyverno.io/docs/guides/monitoring/#admission-latency-high
+  #       - alert: KyvernoAdmissionCriticalLatency
+  #         expr: |
+  #           histogram_quantile(0.99,
+  #             sum(rate(kyverno_admission_review_duration_seconds_bucket[5m])) by (le)
+  #           ) > 5
+  #         for: 5m
+  #         labels:
+  #           severity: critical
+  #         annotations:
+  #           summary: Kyverno admission review p99 latency is critically high
+  #           description: >-
+  #             Admission review p99 latency is {{ $value | humanizeDuration }},
+  #             above 5s. Kubernetes webhooks hard-timeout at 10s.
+  #           runbook_url: https://kyverno.io/docs/guides/monitoring/#admission-latency-high
+  #   - name: kyverno.policy
+  #     rules:
+  #       - alert: KyvernoPolicyExecutionHighLatency
+  #         expr: |
+  #           histogram_quantile(0.99,
+  #             sum(rate(kyverno_policy_execution_duration_seconds_bucket[5m])) by (le, rule_type)
+  #           ) > 0.5
+  #         for: 5m
+  #         labels:
+  #           severity: warning
+  #         annotations:
+  #           summary: Kyverno policy execution p99 latency is elevated
+  #           description: >-
+  #             {{ $labels.rule_type }} rule p99 execution latency is
+  #             {{ $value | humanizeDuration }}.
+  #           runbook_url: https://kyverno.io/docs/guides/monitoring/#policy-execution-latency-high
 
 # Features configuration
 features:
@@ -730,6 +857,9 @@ features:
   autoUpdateWebhooks:
     # -- Enables the feature
     enabled: true
+  excludeBootstrapResources:
+    # -- Excludes cluster bootstrap resources (Node, CertificateSigningRequest) from Fail resource webhooks to avoid a webhook deadlock when the cluster restarts with no Kyverno pods running. Policies targeting these resources are not enforced while enabled.
+    enabled: false
   backgroundScan:
     # -- Enables the feature
     enabled: true
@@ -766,6 +896,10 @@ features:
   globalContext:
     # -- Maximum allowed response size from API Calls. A value of 0 bypasses checks (not recommended)
     maxApiCallResponseLength: 2000000
+    # -- Timeout for HTTP API calls made by policies. A value of 0s means no timeout.
+    apiCallTimeout: 30s
+    # -- Maximum number of entries in the global context store. A value of 0 means unbounded.
+    maxGlobalContextEntries: 0
   logging:
     # -- Logging format
     format: text
@@ -825,6 +959,9 @@ admissionController:
     # -- Target CPU utilization percentage
     targetCPUUtilizationPercentage: 80
 
+    # -- (int) Target memory utilization percentage
+    targetMemoryUtilizationPercentage: ~
+
     # -- Configurable scaling behavior
     behavior: {}
 
@@ -852,8 +989,19 @@ admissionController:
       annotations: {}
         # example.com/annotation: value
 
-      # -- Toggle automounting of the ServiceAccount
+      # -- Toggle automounting of the ServiceAccount.
+      # When set to false, a projected service account token is used instead
+      # which provides time-limited and audience-bound tokens for improved security.
       automountServiceAccountToken: true
+
+      # -- Projected service account token configuration (only used when automountServiceAccountToken is false)
+      projectedServiceAccountToken:
+        # -- Token expiration time in seconds.
+        # The kubelet will request a new token before the token expires.
+        expirationSeconds: 3600
+        # -- Audience for the projected service account token.
+        # If not set, the token will have no audience restriction.
+        audience: ""
 
     coreClusterRole:
       # -- Extra resource permissions to add in the core cluster role.
@@ -939,6 +1087,9 @@ admissionController:
   # -- Additional annotations to add to each pod
   podAnnotations: {}
     # example.com/annotation: foo
+
+  # -- Deployment labels.
+  labels: {}
 
   # -- Deployment annotations.
   annotations: {}
@@ -1038,9 +1189,8 @@ admissionController:
     failureThreshold: 6
     successThreshold: 1
 
-  # -- Node labels for pod assignment
-  nodeSelector:
-    kubernetes.io/os: linux
+  # -- Node labels for pod assignment. Overrides `global.nodeSelector` when non-empty. When empty, the default is `kubernetes.io/os: linux`.
+  nodeSelector: {}
 
   # -- List of node taints to tolerate
   tolerations: []
@@ -1140,6 +1290,8 @@ admissionController:
 
     # -- Container security context
     securityContext:
+      runAsUser: 65534
+      runAsGroup: 65534
       runAsNonRoot: true
       privileged: false
       allowPrivilegeEscalation: false
@@ -1185,6 +1337,8 @@ admissionController:
 
     # -- Container security context
     securityContext:
+      runAsUser: 65534
+      runAsGroup: 65534
       runAsNonRoot: true
       privileged: false
       allowPrivilegeEscalation: false
@@ -1194,6 +1348,14 @@ admissionController:
           - ALL
       seccompProfile:
         type: RuntimeDefault
+
+    # -- Container lifecycle hooks (e.g. a preStop sleep for graceful shutdown). The sleep action requires Kubernetes 1.30+.
+    lifecycle: {}
+    # Example:
+    # lifecycle:
+    #   preStop:
+    #     sleep:
+    #       seconds: 10
 
     # -- Additional container args.
     extraArgs: {}
@@ -1216,6 +1378,16 @@ admissionController:
     # - name: myapp-container
     #   image: busybox
     #   command: ['sh', '-c', 'echo Hello && sleep 3600']
+
+  # -- Additional volumes to be mounted in the pod
+  extraVolumes: []
+    # - name: my-volume
+    #   emptyDir: {}
+
+  # -- Additional volumeMounts to be mounted to the main container
+  extraVolumeMounts: []
+    # - name: my-volume
+    #   mountPath: /path/to/mount
 
   service:
     # -- Service port.
@@ -1294,6 +1466,11 @@ admissionController:
     config: prometheus
     # -- Prometheus endpoint port
     port: 8000
+    # -- Is TLS required for endpoint
+    secure: false
+    # -- Key algorithm for self-signed TLS certificates.
+    # Supported values: RSA, ECDSA, Ed25519
+    tlsKeyAlgorithm: RSA
     # -- Otel collector endpoint
     collector: ''
     # -- Otel collector credentials
@@ -1337,8 +1514,19 @@ backgroundController:
       annotations: {}
         # example.com/annotation: value
 
-      # -- Toggle automounting of the ServiceAccount
+      # -- Toggle automounting of the ServiceAccount.
+      # When set to false, a projected service account token is used instead
+      # which provides time-limited and audience-bound tokens for improved security.
       automountServiceAccountToken: true
+
+      # -- Projected service account token configuration (only used when automountServiceAccountToken is false)
+      projectedServiceAccountToken:
+        # -- Token expiration time in seconds.
+        # The kubelet will request a new token before the token expires.
+        expirationSeconds: 3600
+        # -- Audience for the projected service account token.
+        # If not set, the token will have no audience restriction.
+        audience: ""
 
     coreClusterRole:
       # -- Extra resource permissions to add in the core cluster role.
@@ -1434,6 +1622,9 @@ backgroundController:
   podAnnotations: {}
   # example.com/annotation: foo
 
+  # -- Deployment labels.
+  labels: {}
+
   # -- Deployment annotations.
   annotations: {}
 
@@ -1485,9 +1676,8 @@ backgroundController:
       cpu: 100m
       memory: 64Mi
 
-  # -- Node labels for pod assignment
-  nodeSelector:
-    kubernetes.io/os: linux
+  # -- Node labels for pod assignment. Overrides `global.nodeSelector` when non-empty. When empty, the default is `kubernetes.io/os: linux`.
+  nodeSelector: {}
 
   # -- List of node taints to tolerate
   tolerations: []
@@ -1525,6 +1715,8 @@ backgroundController:
 
   # -- Security context for the containers
   securityContext:
+    runAsUser: 65534
+    runAsGroup: 65534
     runAsNonRoot: true
     privileged: false
     allowPrivilegeEscalation: false
@@ -1534,6 +1726,14 @@ backgroundController:
         - ALL
     seccompProfile:
       type: RuntimeDefault
+
+  # -- Container lifecycle hooks (e.g. a preStop sleep for graceful shutdown). The sleep action requires Kubernetes 1.30+.
+  lifecycle: {}
+  # Example:
+  # lifecycle:
+  #   preStop:
+  #     sleep:
+  #       seconds: 10
 
   podDisruptionBudget:
     # -- Enable PodDisruptionBudget.
@@ -1560,6 +1760,16 @@ backgroundController:
     # hostPath:
     #   path: /etc/pki/tls/ca-certificates.crt
     #   type: File
+
+  # -- Additional volumes to be mounted in the pod
+  extraVolumes: []
+    # - name: my-volume
+    #   emptyDir: {}
+
+  # -- Additional volumeMounts to be mounted to the main container
+  extraVolumeMounts: []
+    # - name: my-volume
+    #   mountPath: /path/to/mount
 
   metricsService:
     # -- Create service.
@@ -1626,6 +1836,11 @@ backgroundController:
     config: prometheus
     # -- Prometheus endpoint port
     port: 8000
+    # -- Is TLS required for endpoint
+    secure: false
+    # -- Key algorithm for self-signed TLS certificates.
+    # Supported values: RSA, ECDSA, Ed25519
+    tlsKeyAlgorithm: RSA
     # -- Otel collector endpoint
     collector: ''
     # -- Otel collector credentials
@@ -1668,8 +1883,25 @@ cleanupController:
       annotations: {}
         # example.com/annotation: value
 
-      # -- Toggle automounting of the ServiceAccount
+      # -- Toggle automounting of the ServiceAccount.
+      # When set to false, a projected service account token is used instead
+      # which provides time-limited and audience-bound tokens for improved security.
       automountServiceAccountToken: true
+
+      # -- Projected service account token configuration (only used when automountServiceAccountToken is false)
+      projectedServiceAccountToken:
+        # -- Token expiration time in seconds.
+        # The kubelet will request a new token before the token expires.
+        expirationSeconds: 3600
+        # -- Audience for the projected service account token.
+        # If not set, the token will have no audience restriction.
+        audience: ""
+
+    coreClusterRole:
+      # -- Extra resource permissions to add in the core cluster role.
+      # This was introduced to avoid breaking change in the chart but should ideally be moved in `clusterRole.extraResources`.
+      # @default -- See [values.yaml](values.yaml)
+      extraResources: []
 
     clusterRole:
       # -- Extra resource permissions to add in the cluster role
@@ -1762,6 +1994,9 @@ cleanupController:
   # -- Additional annotations to add to each pod
   podAnnotations: {}
   # example.com/annotation: foo
+
+  # -- Deployment labels.
+  labels: {}
 
   # -- Deployment annotations.
   annotations: {}
@@ -1862,9 +2097,8 @@ cleanupController:
     failureThreshold: 6
     successThreshold: 1
 
-  # -- Node labels for pod assignment
-  nodeSelector:
-    kubernetes.io/os: linux
+  # -- Node labels for pod assignment. Overrides `global.nodeSelector` when non-empty. When empty, the default is `kubernetes.io/os: linux`.
+  nodeSelector: {}
 
   # -- List of node taints to tolerate
   tolerations: []
@@ -1902,6 +2136,8 @@ cleanupController:
 
   # -- Security context for the containers
   securityContext:
+    runAsUser: 65534
+    runAsGroup: 65534
     runAsNonRoot: true
     privileged: false
     allowPrivilegeEscalation: false
@@ -1911,6 +2147,14 @@ cleanupController:
         - ALL
     seccompProfile:
       type: RuntimeDefault
+
+  # -- Container lifecycle hooks (e.g. a preStop sleep for graceful shutdown). The sleep action requires Kubernetes 1.30+.
+  lifecycle: {}
+  # Example:
+  # lifecycle:
+  #   preStop:
+  #     sleep:
+  #       seconds: 10
 
   podDisruptionBudget:
     # -- Enable PodDisruptionBudget.
@@ -1925,6 +2169,16 @@ cleanupController:
     # -- Unhealthy pod eviction policy to be used.
     # Possible values are `IfHealthyBudget` or `AlwaysAllow`.
     unhealthyPodEvictionPolicy:
+
+  # -- Additional volumes to be mounted in the pod
+  extraVolumes: []
+    # - name: my-volume
+    #   emptyDir: {}
+
+  # -- Additional volumeMounts to be mounted to the main container
+  extraVolumeMounts: []
+    # - name: my-volume
+    #   mountPath: /path/to/mount
 
   service:
     # -- Service port.
@@ -2005,6 +2259,11 @@ cleanupController:
     config: prometheus
     # -- Prometheus endpoint port
     port: 8000
+    # -- Is TLS required for endpoint
+    secure: false
+    # -- Key algorithm for self-signed TLS certificates.
+    # Supported values: RSA, ECDSA, Ed25519
+    tlsKeyAlgorithm: RSA
     # -- Otel collector endpoint
     collector: ''
     # -- Otel collector credentials
@@ -2048,8 +2307,19 @@ reportsController:
       annotations: {}
         # example.com/annotation: value
 
-      # -- Toggle automounting of the ServiceAccount
+      # -- Toggle automounting of the ServiceAccount.
+      # When set to false, a projected service account token is used instead
+      # which provides time-limited and audience-bound tokens for improved security.
       automountServiceAccountToken: true
+
+      # -- Projected service account token configuration (only used when automountServiceAccountToken is false)
+      projectedServiceAccountToken:
+        # -- Token expiration time in seconds.
+        # The kubelet will request a new token before the token expires.
+        expirationSeconds: 3600
+        # -- Audience for the projected service account token.
+        # If not set, the token will have no audience restriction.
+        audience: ""
 
     coreClusterRole:
       # -- Extra resource permissions to add in the core cluster role.
@@ -2097,6 +2367,9 @@ reportsController:
   # -- Additional annotations to add to each pod
   podAnnotations: {}
   # example.com/annotation: foo
+
+  # -- Deployment labels.
+  labels: {}
 
   # -- Deployment annotations.
   annotations: {}
@@ -2167,9 +2440,8 @@ reportsController:
       cpu: 100m
       memory: 64Mi
 
-  # -- Node labels for pod assignment
-  nodeSelector:
-    kubernetes.io/os: linux
+  # -- Node labels for pod assignment. Overrides `global.nodeSelector` when non-empty. When empty, the default is `kubernetes.io/os: linux`.
+  nodeSelector: {}
 
   # -- List of node taints to tolerate
   tolerations: []
@@ -2207,6 +2479,8 @@ reportsController:
 
   # -- Security context for the containers
   securityContext:
+    runAsUser: 65534
+    runAsGroup: 65534
     runAsNonRoot: true
     privileged: false
     allowPrivilegeEscalation: false
@@ -2216,6 +2490,14 @@ reportsController:
         - ALL
     seccompProfile:
       type: RuntimeDefault
+
+  # -- Container lifecycle hooks (e.g. a preStop sleep for graceful shutdown). The sleep action requires Kubernetes 1.30+.
+  lifecycle: {}
+  # Example:
+  # lifecycle:
+  #   preStop:
+  #     sleep:
+  #       seconds: 10
 
   podDisruptionBudget:
     # -- Enable PodDisruptionBudget.
@@ -2250,6 +2532,15 @@ reportsController:
     #   path: /etc/pki/tls/ca-certificates.crt
     #   type: File
 
+  # -- Additional volumes to be mounted in the pod
+  extraVolumes: []
+    # - name: my-volume
+    #   emptyDir: {}
+
+  # -- Additional volumeMounts to be mounted to the main container
+  extraVolumeMounts: []
+    # - name: my-volume
+    #   mountPath: /path/to/mount
 
   metricsService:
     # -- Create service.
@@ -2316,6 +2607,11 @@ reportsController:
     config: prometheus
     # -- Prometheus endpoint port
     port: 8000
+    # -- Is TLS required for endpoint
+    secure: false
+    # -- Key algorithm for self-signed TLS certificates.
+    # Supported values: RSA, ECDSA, Ed25519
+    tlsKeyAlgorithm: RSA
     # -- (string) Otel collector endpoint
     collector: ~
     # -- (string) Otel collector credentials
