@@ -1,5 +1,5 @@
 # Create PSPs for every component including the CRD install job
-global:
+global:  # @schema skipProperties: true; additionalProperties: true
   podSecurityStandards:
     enforced: true
   image:
@@ -157,7 +157,7 @@ monitoring:
     relabelings: []
 
 # Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
-kyverno:
+kyverno:  # @schema skipProperties: true; additionalProperties: true
 
   # Use openreports.io as the API group for reporting
   openreports:
@@ -1382,7 +1382,7 @@ kyverno:
       tag: *kubectlTag
 
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
-policy-reporter:
+policy-reporter:  # @schema skipProperties: true; additionalProperties: true
   fullnameOverride: "kyverno-policy-reporter"
   podLabels:
     app.kubernetes.io/component: policy-reporter
