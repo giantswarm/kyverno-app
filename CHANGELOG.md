@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Allow additional properties for the vendored `kyverno`, `policy-reporter` and shared `global` values so upstream keys are not rejected by the generated schema.
 - Increase default VPA minimum resources for Policy Reporter components to 50m CPU/50Mi memory.
+- Updated `policy-reporter` to upstream version `v3.10.0`.
+- Updated `kyverno` to upstream version `v1.18.2`.
 
 ## [0.24.2] - 2026-05-04
 
