@@ -437,8 +437,8 @@ kyverno:  # @schema skipProperties: true; additionalProperties: true
     replicas: 3
 
     # -- Additional labels to add to each pod
-    podLabels:
-      app.kubernetes.io/name: kyverno
+    podLabels: {}
+      # example.com/label: foo
 
     # -- Additional annotations to add to each pod
     podAnnotations: {}
