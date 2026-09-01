@@ -15,8 +15,8 @@ language.
 
 | Repository | Name | Version |
 |------------|------|---------|
-|  | kyverno | 3.7.2 |
-|  | policy-reporter | 3.7.4 |
+|  | kyverno | 3.8.2 |
+|  | policy-reporter | 3.10.0 |
 
 ## Values
 
@@ -160,7 +160,7 @@ language.
 | kyverno.admissionController.rbac.clusterRole.extraResources | list | `[]` | Extra resource permissions to add in the cluster role |
 | kyverno.admissionController.createSelfSignedCert | bool | `false` | Create self-signed certificates at deployment time. The certificates won't be automatically renewed if this is set to `true`. |
 | kyverno.admissionController.replicas | int | `3` | Desired number of pods |
-| kyverno.admissionController.podLabels | object | `{"app.kubernetes.io/name":"kyverno"}` | Additional labels to add to each pod |
+| kyverno.admissionController.podLabels | object | `{}` | Additional labels to add to each pod |
 | kyverno.admissionController.podAnnotations | object | `{}` | Additional annotations to add to each pod |
 | kyverno.admissionController.updateStrategy | object | See [values.yaml](values.yaml) | Deployment update strategy. Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy |
 | kyverno.admissionController.priorityClassName | string | `"giantswarm-critical"` | Optional priority class |
