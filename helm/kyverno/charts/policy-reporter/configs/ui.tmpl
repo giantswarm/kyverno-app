@@ -9,7 +9,7 @@ server:
   cors: {{ .Values.ui.server.cors }}
   overwriteHost: {{ .Values.ui.server.overwriteHost }}
   {{- with .Values.ui.server.sessions }}
-  sessions:
+  sessions: 
     {{- toYaml . | nindent 4 }}
   {{- end }}
 
@@ -22,6 +22,7 @@ ui:
 
 crds:
   customBoard: {{ .Values.ui.crds.customBoard }}
+  cluster: {{ .Values.ui.crds.cluster }}
 
 {{- $default := false -}}
 {{- range .Values.ui.clusters }}
