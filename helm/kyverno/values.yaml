@@ -1406,13 +1406,17 @@ policy-reporter:  # @schema skipProperties: true; additionalProperties: true
     image:
       registry: gsoci.azurecr.io
       repository: giantswarm/policy-reporter-ui
+    # Requests equal verticalPodAutoscaler.ui.containerPolicies.minAllowed so a
+    # freshly scheduled pod is usable before VPA has a recommendation.
+    # VPA scales limits proportionally to requests, so the ratios below
+    # (4x CPU, 1.5x memory) are preserved whenever VPA resizes the pod.
     resources:
       limits:
-        cpu: 10m
-        memory: 16Mi
+        cpu: 200m
+        memory: 75Mi
       requests:
-        cpu: 1m
-        memory: 8Mi
+        cpu: 50m
+        memory: 50Mi
     serviceAccount:
       create: true
       name: "policyreporter-ui-sa"  # Only needed to support adding a PSP. Can be removed when PSPs are disabled.
