@@ -18,7 +18,7 @@ spec:
   targetRef:
     apiVersion: "apps/v1"
     kind:       Deployment
-    name:       {{ include "kyverno-stack.fullname" . }}-kyverno-plugin
+    name:       {{ include "kyverno-stack.fullname" . }}-policy-reporter-kyverno-plugin
   updatePolicy:
     updateMode: Auto
 {{- end -}}
