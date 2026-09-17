@@ -1389,13 +1389,15 @@ policy-reporter:  # @schema skipProperties: true; additionalProperties: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/policy-reporter
+  # Requests equal verticalPodAutoscaler.policyReporter.containerPolicies.minAllowed.
+  # Limits keep a 4x CPU / 1.5x memory ratio that VPA preserves on resize.
   resources:
     limits:
-      cpu: 30m
-      memory: 100Mi
+      cpu: 200m
+      memory: 75Mi
     requests:
-      cpu: 5m
-      memory: 30Mi
+      cpu: 50m
+      memory: 50Mi
   serviceAccount:
     name: "policyreporter-sa"  # Only needed to support adding a PSP. Can be removed when PSPs are disabled.
 
@@ -1429,13 +1431,15 @@ policy-reporter:  # @schema skipProperties: true; additionalProperties: true
       image:
         registry: gsoci.azurecr.io
         repository: giantswarm/kyverno-plugin
+      # Requests equal verticalPodAutoscaler.kyvernoPlugin.containerPolicies.minAllowed.
+      # Limits keep a 4x CPU / 1.5x memory ratio that VPA preserves on resize.
       resources:
         limits:
-          cpu: 50m
-          memory: 100Mi
+          cpu: 200m
+          memory: 75Mi
         requests:
-          cpu: 10m
-          memory: 30Mi
+          cpu: 50m
+          memory: 50Mi
 
   global:
     labels: {}

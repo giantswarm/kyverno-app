@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Allow additional properties for the vendored `kyverno`, `policy-reporter` and shared `global` values so upstream keys are not rejected by the generated schema.
 - Increase default VPA minimum resources for Policy Reporter components to 50m CPU/50Mi memory.
 - Align Policy Reporter UI resource requests with its VPA minimum (50m CPU/50Mi memory) and set limits to 200m CPU/75Mi memory (4x/1.5x), which VPA preserves as the pod is resized.
+- Align policy-reporter core and Kyverno plugin resource requests with their VPA minimums (50m CPU/50Mi memory) and set limits to 200m CPU/75Mi memory (4x/1.5x).
 
 ### Fixed
 
