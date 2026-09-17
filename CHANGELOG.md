@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fix `kyverno-plugin` and `kyverno-ui` VPA targets to match new upstream names.
+- Restrict the admission-controller VPA to memory so it no longer changes the CPU request that the admission-controller HPA measures utilization against.
 
 ## [0.24.2] - 2026-05-04
 

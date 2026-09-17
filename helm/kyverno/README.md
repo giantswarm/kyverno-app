@@ -39,7 +39,7 @@ language.
 | image.repository | string | `"giantswarm/kubectl"` |  |
 | image.tag | string | `"v1.34.3"` | Image tag Defaults to `latest` if omitted |
 | verticalPodAutoscaler.admissionController.enabled | bool | `true` |  |
-| verticalPodAutoscaler.admissionController.containerPolicies | object | `{}` |  |
+| verticalPodAutoscaler.admissionController.containerPolicies.controlledResources[0] | string | `"memory"` |  |
 | verticalPodAutoscaler.backgroundController.enabled | bool | `true` |  |
 | verticalPodAutoscaler.backgroundController.containerPolicies.minAllowed.cpu | string | `"100m"` |  |
 | verticalPodAutoscaler.backgroundController.containerPolicies.minAllowed.memory | string | `"100Mi"` |  |

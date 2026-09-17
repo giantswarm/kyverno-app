@@ -262,7 +262,15 @@
                     "properties": {
                         "containerPolicies": {
                             "type": "object",
-                            "additionalProperties": true
+                            "additionalProperties": true,
+                            "properties": {
+                                "controlledResources": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
                         },
                         "enabled": {
                             "type": "boolean"

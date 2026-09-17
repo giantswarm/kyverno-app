@@ -47,7 +47,12 @@ image:
 verticalPodAutoscaler:
   admissionController:
     enabled: true
-    containerPolicies: {}  # @schema additionalProperties: true
+    # The admission controller is scaled horizontally on CPU utilization
+    # (kyverno.admissionController.autoscaling). VPA must not move the CPU
+    # request that utilization is measured against, so it manages memory only.
+    containerPolicies:  # @schema additionalProperties: true
+      controlledResources:
+        - memory
   backgroundController:
     enabled: true
     containerPolicies:  # @schema additionalProperties: true
