@@ -44,6 +44,7 @@ image:
 # VerticalPodAutoscaler settings for individual controllers.
 # containerPolicies accepts any field of a VPA ContainerResourcePolicy
 # (minAllowed, maxAllowed, controlledResources, controlledValues, mode).
+# containerName is chart-managed ('*'); do not set it here.
 verticalPodAutoscaler:
   admissionController:
     enabled: true
@@ -86,18 +87,15 @@ verticalPodAutoscaler:
   # VPA settings for Policy Reporter components
   kyvernoPlugin:
     enabled: true
-    # CPU: evict only to shrink. The 4x CPU limit covers bursts while in use,
-    # a higher CPU request is applied at the next natural pod creation, and the
-    # pod is reclaimed once idle again.
-    # Memory is deliberately NOT listed: an OOMKilled container restarts inside
-    # the same pod and cannot pick up a new limit, so VPA must stay free to evict
-    # for memory growth.
     updatePolicy:  # @schema additionalProperties: true
       updateMode: Auto
-      evictionRequirements:
-        - resources: ["cpu"]
-          changeRequirement: TargetLowerThanRequests
+    # VPA manages memory only. CPU stays at the chart's request and limit, so a
+    # CPU burst while someone is using this component never triggers an eviction;
+    # the 4x CPU limit provides the headroom instead. Memory is still right-sized
+    # (and evicted to grow if needed, which avoids OOMKill loops).
     containerPolicies:  # @schema additionalProperties: true
+      controlledResources:
+        - memory
       minAllowed:
         cpu: 50m
         memory: 50Mi
@@ -111,18 +109,15 @@ verticalPodAutoscaler:
         memory: 50Mi
   ui:
     enabled: true
-    # CPU: evict only to shrink. The 4x CPU limit covers bursts while in use,
-    # a higher CPU request is applied at the next natural pod creation, and the
-    # pod is reclaimed once idle again.
-    # Memory is deliberately NOT listed: an OOMKilled container restarts inside
-    # the same pod and cannot pick up a new limit, so VPA must stay free to evict
-    # for memory growth.
     updatePolicy:  # @schema additionalProperties: true
       updateMode: Auto
-      evictionRequirements:
-        - resources: ["cpu"]
-          changeRequirement: TargetLowerThanRequests
+    # VPA manages memory only. CPU stays at the chart's request and limit, so a
+    # CPU burst while someone is using this component never triggers an eviction;
+    # the 4x CPU limit provides the headroom instead. Memory is still right-sized
+    # (and evicted to grow if needed, which avoids OOMKill loops).
     containerPolicies:  # @schema additionalProperties: true
+      controlledResources:
+        - memory
       minAllowed:
         cpu: 50m
         memory: 50Mi

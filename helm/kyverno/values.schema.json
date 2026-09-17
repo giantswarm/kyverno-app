@@ -364,6 +364,12 @@
                             "type": "object",
                             "additionalProperties": true,
                             "properties": {
+                                "controlledResources": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
                                 "minAllowed": {
                                     "type": "object",
                                     "additionalProperties": false,
@@ -385,24 +391,6 @@
                             "type": "object",
                             "additionalProperties": true,
                             "properties": {
-                                "evictionRequirements": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "additionalProperties": false,
-                                        "properties": {
-                                            "changeRequirement": {
-                                                "type": "string"
-                                            },
-                                            "resources": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            }
-                                        }
-                                    }
-                                },
                                 "updateMode": {
                                     "type": "string"
                                 }
@@ -502,6 +490,12 @@
                             "type": "object",
                             "additionalProperties": true,
                             "properties": {
+                                "controlledResources": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
                                 "minAllowed": {
                                     "type": "object",
                                     "additionalProperties": false,
@@ -523,24 +517,6 @@
                             "type": "object",
                             "additionalProperties": true,
                             "properties": {
-                                "evictionRequirements": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "additionalProperties": false,
-                                        "properties": {
-                                            "changeRequirement": {
-                                                "type": "string"
-                                            },
-                                            "resources": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            }
-                                        }
-                                    }
-                                },
                                 "updateMode": {
                                     "type": "string"
                                 }

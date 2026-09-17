@@ -9,20 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `verticalPodAutoscaler.<component>.updatePolicy` is now configurable. Defaults keep `updateMode: Auto`; the Policy Reporter UI and Kyverno plugin additionally set a CPU-only `evictionRequirements` so VPA never restarts them to grow CPU while in use, while memory growth can still be applied.
+- `verticalPodAutoscaler.<component>.updatePolicy` is now configurable (default `updateMode: Auto`).
 
 ### Changed
 
 - Allow additional properties for the vendored `kyverno`, `policy-reporter` and shared `global` values so upstream keys are not rejected by the generated schema.
 - Increase default VPA minimum resources for Policy Reporter components to 50m CPU/50Mi memory.
-- Align Policy Reporter UI resource requests with its VPA minimum (50m CPU/50Mi memory) and set limits to 200m CPU/75Mi memory (4x/1.5x), which VPA preserves as the pod is resized.
-- Align policy-reporter core and Kyverno plugin resource requests with their VPA minimums (50m CPU/50Mi memory) and set limits to 200m CPU/75Mi memory (4x/1.5x).
+- Align Policy Reporter UI resource requests with its VPA minimum (50m CPU/50Mi memory, up from 1m/8Mi) and set limits to 200m CPU/75Mi memory (4x/1.5x), which VPA preserves as the pod is resized.
+- Align policy-reporter core and Kyverno plugin resource requests with their VPA minimums (50m CPU/50Mi memory, up from 5m/30Mi and 10m/30Mi) and set limits to 200m CPU/75Mi memory (4x/1.5x; memory limit down from 100Mi).
 - Allow any `ContainerResourcePolicy` field (`maxAllowed`, `controlledResources`, `controlledValues`, `mode`) under `verticalPodAutoscaler.<component>.containerPolicies`.
 
 ### Fixed
 
 - Fix `kyverno-plugin` and `kyverno-ui` VPA targets to match new upstream names.
 - Restrict the admission-controller VPA to memory so it no longer changes the CPU request that the admission-controller HPA measures utilization against.
+- Restrict the Policy Reporter UI and Kyverno plugin VPAs to memory so a CPU burst while the UI is in use never evicts the pod; the chart's 4x CPU limit provides the burst headroom instead.
 
 ## [0.24.2] - 2026-05-04
 

@@ -58,8 +58,7 @@ language.
 | verticalPodAutoscaler.reportsController.containerPolicies.maxAllowed.memory | string | `"24Gi"` |  |
 | verticalPodAutoscaler.kyvernoPlugin.enabled | bool | `true` |  |
 | verticalPodAutoscaler.kyvernoPlugin.updatePolicy.updateMode | string | `"Auto"` |  |
-| verticalPodAutoscaler.kyvernoPlugin.updatePolicy.evictionRequirements[0].resources[0] | string | `"cpu"` |  |
-| verticalPodAutoscaler.kyvernoPlugin.updatePolicy.evictionRequirements[0].changeRequirement | string | `"TargetLowerThanRequests"` |  |
+| verticalPodAutoscaler.kyvernoPlugin.containerPolicies.controlledResources[0] | string | `"memory"` |  |
 | verticalPodAutoscaler.kyvernoPlugin.containerPolicies.minAllowed.cpu | string | `"50m"` |  |
 | verticalPodAutoscaler.kyvernoPlugin.containerPolicies.minAllowed.memory | string | `"50Mi"` |  |
 | verticalPodAutoscaler.policyReporter.enabled | bool | `true` |  |
@@ -68,8 +67,7 @@ language.
 | verticalPodAutoscaler.policyReporter.containerPolicies.minAllowed.memory | string | `"50Mi"` |  |
 | verticalPodAutoscaler.ui.enabled | bool | `true` |  |
 | verticalPodAutoscaler.ui.updatePolicy.updateMode | string | `"Auto"` |  |
-| verticalPodAutoscaler.ui.updatePolicy.evictionRequirements[0].resources[0] | string | `"cpu"` |  |
-| verticalPodAutoscaler.ui.updatePolicy.evictionRequirements[0].changeRequirement | string | `"TargetLowerThanRequests"` |  |
+| verticalPodAutoscaler.ui.containerPolicies.controlledResources[0] | string | `"memory"` |  |
 | verticalPodAutoscaler.ui.containerPolicies.minAllowed.cpu | string | `"50m"` |  |
 | verticalPodAutoscaler.ui.containerPolicies.minAllowed.memory | string | `"50Mi"` |  |
 | cleanupPolicies.trivyOperator.enabled | bool | `false` | Enable Trivy cleanup policy to delete old Trivy Operator reports |
