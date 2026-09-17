@@ -41,14 +41,16 @@ image:
   # Defaults to `latest` if omitted
   tag: &kubectlTag 'v1.34.3'
 
-# VerticalPodAutoscaler settings for individual controllers
+# VerticalPodAutoscaler settings for individual controllers.
+# containerPolicies accepts any field of a VPA ContainerResourcePolicy
+# (minAllowed, maxAllowed, controlledResources, controlledValues, mode).
 verticalPodAutoscaler:
   admissionController:
     enabled: true
-    containerPolicies: {}
+    containerPolicies: {}  # @schema additionalProperties: true
   backgroundController:
     enabled: true
-    containerPolicies:
+    containerPolicies:  # @schema additionalProperties: true
       minAllowed:
         cpu: 100m
         memory: 100Mi
@@ -57,10 +59,10 @@ verticalPodAutoscaler:
         memory: 8Gi
   cleanupController:
     enabled: true
-    containerPolicies: {}
+    containerPolicies: {}  # @schema additionalProperties: true
   reportsController:
     enabled: true
-    containerPolicies:
+    containerPolicies:  # @schema additionalProperties: true
       minAllowed:
         cpu: 100m
         memory: 100Mi
@@ -71,19 +73,19 @@ verticalPodAutoscaler:
   # VPA settings for Policy Reporter components
   kyvernoPlugin:
     enabled: true
-    containerPolicies:
+    containerPolicies:  # @schema additionalProperties: true
       minAllowed:
         cpu: 50m
         memory: 50Mi
   policyReporter:
     enabled: true
-    containerPolicies:
+    containerPolicies:  # @schema additionalProperties: true
       minAllowed:
         cpu: 50m
         memory: 50Mi
   ui:
     enabled: true
-    containerPolicies:
+    containerPolicies:  # @schema additionalProperties: true
       minAllowed:
         cpu: 50m
         memory: 50Mi
