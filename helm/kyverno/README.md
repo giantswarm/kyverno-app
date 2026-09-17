@@ -39,26 +39,37 @@ language.
 | image.repository | string | `"giantswarm/kubectl"` |  |
 | image.tag | string | `"v1.34.3"` | Image tag Defaults to `latest` if omitted |
 | verticalPodAutoscaler.admissionController.enabled | bool | `true` |  |
+| verticalPodAutoscaler.admissionController.updatePolicy.updateMode | string | `"Auto"` |  |
 | verticalPodAutoscaler.admissionController.containerPolicies.controlledResources[0] | string | `"memory"` |  |
 | verticalPodAutoscaler.backgroundController.enabled | bool | `true` |  |
+| verticalPodAutoscaler.backgroundController.updatePolicy.updateMode | string | `"Auto"` |  |
 | verticalPodAutoscaler.backgroundController.containerPolicies.minAllowed.cpu | string | `"100m"` |  |
 | verticalPodAutoscaler.backgroundController.containerPolicies.minAllowed.memory | string | `"100Mi"` |  |
 | verticalPodAutoscaler.backgroundController.containerPolicies.maxAllowed.cpu | int | `4` |  |
 | verticalPodAutoscaler.backgroundController.containerPolicies.maxAllowed.memory | string | `"8Gi"` |  |
 | verticalPodAutoscaler.cleanupController.enabled | bool | `true` |  |
+| verticalPodAutoscaler.cleanupController.updatePolicy.updateMode | string | `"Auto"` |  |
 | verticalPodAutoscaler.cleanupController.containerPolicies | object | `{}` |  |
 | verticalPodAutoscaler.reportsController.enabled | bool | `true` |  |
+| verticalPodAutoscaler.reportsController.updatePolicy.updateMode | string | `"Auto"` |  |
 | verticalPodAutoscaler.reportsController.containerPolicies.minAllowed.cpu | string | `"100m"` |  |
 | verticalPodAutoscaler.reportsController.containerPolicies.minAllowed.memory | string | `"100Mi"` |  |
 | verticalPodAutoscaler.reportsController.containerPolicies.maxAllowed.cpu | int | `6` |  |
 | verticalPodAutoscaler.reportsController.containerPolicies.maxAllowed.memory | string | `"24Gi"` |  |
 | verticalPodAutoscaler.kyvernoPlugin.enabled | bool | `true` |  |
+| verticalPodAutoscaler.kyvernoPlugin.updatePolicy.updateMode | string | `"Auto"` |  |
+| verticalPodAutoscaler.kyvernoPlugin.updatePolicy.evictionRequirements[0].resources[0] | string | `"cpu"` |  |
+| verticalPodAutoscaler.kyvernoPlugin.updatePolicy.evictionRequirements[0].changeRequirement | string | `"TargetLowerThanRequests"` |  |
 | verticalPodAutoscaler.kyvernoPlugin.containerPolicies.minAllowed.cpu | string | `"50m"` |  |
 | verticalPodAutoscaler.kyvernoPlugin.containerPolicies.minAllowed.memory | string | `"50Mi"` |  |
 | verticalPodAutoscaler.policyReporter.enabled | bool | `true` |  |
+| verticalPodAutoscaler.policyReporter.updatePolicy.updateMode | string | `"Auto"` |  |
 | verticalPodAutoscaler.policyReporter.containerPolicies.minAllowed.cpu | string | `"50m"` |  |
 | verticalPodAutoscaler.policyReporter.containerPolicies.minAllowed.memory | string | `"50Mi"` |  |
 | verticalPodAutoscaler.ui.enabled | bool | `true` |  |
+| verticalPodAutoscaler.ui.updatePolicy.updateMode | string | `"Auto"` |  |
+| verticalPodAutoscaler.ui.updatePolicy.evictionRequirements[0].resources[0] | string | `"cpu"` |  |
+| verticalPodAutoscaler.ui.updatePolicy.evictionRequirements[0].changeRequirement | string | `"TargetLowerThanRequests"` |  |
 | verticalPodAutoscaler.ui.containerPolicies.minAllowed.cpu | string | `"50m"` |  |
 | verticalPodAutoscaler.ui.containerPolicies.minAllowed.memory | string | `"50Mi"` |  |
 | cleanupPolicies.trivyOperator.enabled | bool | `false` | Enable Trivy cleanup policy to delete old Trivy Operator reports |

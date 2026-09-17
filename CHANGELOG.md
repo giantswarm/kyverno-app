@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `verticalPodAutoscaler.<component>.updatePolicy` is now configurable. Defaults keep `updateMode: Auto`; the Policy Reporter UI and Kyverno plugin additionally set a CPU-only `evictionRequirements` so VPA never restarts them to grow CPU while in use, while memory growth can still be applied.
+
 ### Changed
 
 - Allow additional properties for the vendored `kyverno`, `policy-reporter` and shared `global` values so upstream keys are not rejected by the generated schema.

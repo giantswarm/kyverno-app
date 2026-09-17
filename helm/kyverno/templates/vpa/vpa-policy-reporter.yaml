@@ -20,5 +20,5 @@ spec:
     kind:       Deployment
     name:       {{ include "kyverno-stack.fullname" . }}-policy-reporter
   updatePolicy:
-    updateMode: Auto
+    {{- toYaml .Values.verticalPodAutoscaler.policyReporter.updatePolicy | nindent 4 }}
 {{- end -}}

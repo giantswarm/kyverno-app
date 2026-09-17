@@ -20,5 +20,5 @@ spec:
     kind:       Deployment
     name:       {{ include "kyverno-stack.fullname" . }}-admission-controller
   updatePolicy:
-    updateMode: Auto
+    {{- toYaml .Values.verticalPodAutoscaler.admissionController.updatePolicy | nindent 4 }}
 {{- end -}}

@@ -274,6 +274,15 @@
                         },
                         "enabled": {
                             "type": "boolean"
+                        },
+                        "updatePolicy": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                                "updateMode": {
+                                    "type": "string"
+                                }
+                            }
                         }
                     }
                 },
@@ -313,6 +322,15 @@
                         },
                         "enabled": {
                             "type": "boolean"
+                        },
+                        "updatePolicy": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                                "updateMode": {
+                                    "type": "string"
+                                }
+                            }
                         }
                     }
                 },
@@ -326,6 +344,15 @@
                         },
                         "enabled": {
                             "type": "boolean"
+                        },
+                        "updatePolicy": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                                "updateMode": {
+                                    "type": "string"
+                                }
+                            }
                         }
                     }
                 },
@@ -353,6 +380,33 @@
                         },
                         "enabled": {
                             "type": "boolean"
+                        },
+                        "updatePolicy": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                                "evictionRequirements": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "additionalProperties": false,
+                                        "properties": {
+                                            "changeRequirement": {
+                                                "type": "string"
+                                            },
+                                            "resources": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "updateMode": {
+                                    "type": "string"
+                                }
+                            }
                         }
                     }
                 },
@@ -380,6 +434,15 @@
                         },
                         "enabled": {
                             "type": "boolean"
+                        },
+                        "updatePolicy": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                                "updateMode": {
+                                    "type": "string"
+                                }
+                            }
                         }
                     }
                 },
@@ -419,6 +482,15 @@
                         },
                         "enabled": {
                             "type": "boolean"
+                        },
+                        "updatePolicy": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                                "updateMode": {
+                                    "type": "string"
+                                }
+                            }
                         }
                     }
                 },
@@ -446,6 +518,33 @@
                         },
                         "enabled": {
                             "type": "boolean"
+                        },
+                        "updatePolicy": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                                "evictionRequirements": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "additionalProperties": false,
+                                        "properties": {
+                                            "changeRequirement": {
+                                                "type": "string"
+                                            },
+                                            "resources": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "updateMode": {
+                                    "type": "string"
+                                }
+                            }
                         }
                     }
                 }
