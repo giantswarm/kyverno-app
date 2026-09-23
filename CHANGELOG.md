@@ -7,12 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Updated `kyverno` to upstream version `v1.19.1`.
+
 ## [0.25.0] - 2026-09-23
-
-### Fixed
-
-- Take the `app.kubernetes.io/version` label from the chart app version instead of the chart version, as described in the Helm chart best practices. The chart version carries build metadata that pushed the label past the 63 byte limit and made the install fail.
-- Remove the duplicated `app.kubernetes.io/name: kyverno` pod label from the admission controller.
 
 ### Changed
 
@@ -20,6 +19,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Increase default VPA minimum resources for Policy Reporter components to 50m CPU/50Mi memory.
 - Updated `policy-reporter` to upstream version `v3.10.0`.
 - Updated `kyverno` to upstream version `v1.18.2`.
+
+### Fixed
+
+- Take the `app.kubernetes.io/version` label from the chart app version instead of the chart version, as described in the Helm chart best practices. The chart version carries build metadata that pushed the label past the 63 byte limit and made the install fail.
+- Remove the duplicated `app.kubernetes.io/name: kyverno` pod label from the admission controller.
 
 ## [0.24.2] - 2026-05-04
 

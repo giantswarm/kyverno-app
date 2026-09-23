@@ -15,7 +15,7 @@ language.
 
 | Repository | Name | Version |
 |------------|------|---------|
-|  | kyverno | 3.8.2 |
+|  | kyverno | 3.9.1 |
 |  | policy-reporter | 3.10.0 |
 
 ## Values
