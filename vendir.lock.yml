@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'chore: cut v1.18.2 (#16526)...'
-      sha: 945ac9ce8546ea6cd51370f24b615148c577da5e
+      commitTitle: 'chore: cut release v1.19.1 (#17541)...'
+      sha: 40ec788d48bb28d83dbf85538e962a59db9d45c6
       tags:
-      - v1.18.2
+      - kyverno-chart-3.9.1
     path: .
   path: helm/kyverno/charts/kyverno
 - contents:
