@@ -21,6 +21,24 @@ ciliumNetworkPolicy:
       # - matchPattern: "*"
       # - matchPattern: "s3.*.amazonaws.com"
       # - matchName: "s3.eu-west-1.amazonaws.com"
+  # Allow the Konnectivity agent to reach the admission controller webhook.
+  # Required on clusters where the control plane reaches the workload cluster
+  # through a Konnectivity tunnel, otherwise admission requests never arrive.
+  konnectivityAgent:
+    enabled: false
+    # Namespace the Konnectivity agent runs in.
+    namespace: kube-system
+    # Pod label selectors identifying the Konnectivity agent, keyed by an arbitrary
+    # name. Selectors are matched with OR. A cluster provider can add its own entry
+    # or override a single one without restating the others, and can drop a default
+    # by setting it to null.
+    podSelectors: # @schema mergeProperties: true
+      kamaji: # @schema mergeProperties: true
+        k8s-app: konnectivity-agent
+      aks: # @schema mergeProperties: true
+        app: konnectivity-agent
+      aksAutoscaler: # @schema mergeProperties: true
+        app: konnectivity-agent-autoscaler
 
 # We install CRDs through a Job with the helm specific crd folder.
 crds:

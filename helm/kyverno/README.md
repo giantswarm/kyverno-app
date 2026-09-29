@@ -30,6 +30,11 @@ language.
 | ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.port | string | `"443"` |  |
 | ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.protocol | string | `"TCP"` |  |
 | ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.rules | list | `[]` |  |
+| ciliumNetworkPolicy.konnectivityAgent.enabled | bool | `false` |  |
+| ciliumNetworkPolicy.konnectivityAgent.namespace | string | `"kube-system"` |  |
+| ciliumNetworkPolicy.konnectivityAgent.podSelectors.kamaji.k8s-app | string | `"konnectivity-agent"` |  |
+| ciliumNetworkPolicy.konnectivityAgent.podSelectors.aks.app | string | `"konnectivity-agent"` |  |
+| ciliumNetworkPolicy.konnectivityAgent.podSelectors.aksAutoscaler.app | string | `"konnectivity-agent-autoscaler"` |  |
 | crds.install | bool | `false` |  |
 | crds.resources.requests.cpu | string | `"100m"` |  |
 | crds.resources.requests.memory | string | `"256Mi"` |  |
