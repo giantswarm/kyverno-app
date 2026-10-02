@@ -31,6 +31,8 @@ spec:
             kinds:
               - kyverno.io/v1/Policy
               - kyverno.io/v1/ClusterPolicy
+              - kyverno.io/v2beta1/Policy
+              - kyverno.io/v2beta1/ClusterPolicy
       preconditions:
         all:
         - key: "{{`{{ request.operation || 'BACKGROUND' }}`}}"
