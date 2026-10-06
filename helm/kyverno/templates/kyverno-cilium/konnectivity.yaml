@@ -1,0 +1,39 @@
+{{- if and .Values.ciliumNetworkPolicy.enabled .Values.ciliumNetworkPolicy.konnectivityAgent.enabled }}
+{{- $konnectivityAgent := .Values.ciliumNetworkPolicy.konnectivityAgent }}
+{{- /* Entries set to null are dropped, so a provider can disable a default selector. */}}
+{{- $podSelectors := dict }}
+{{- range $name, $podSelector := $konnectivityAgent.podSelectors }}
+{{- if $podSelector }}
+{{- $podSelectors = merge $podSelectors (dict $name $podSelector) }}
+{{- end }}
+{{- end }}
+{{- if not $podSelectors }}
+{{- fail "ciliumNetworkPolicy.konnectivityAgent.podSelectors must hold at least one non-empty selector for ciliumNetworkPolicy.konnectivityAgent.enabled=true" }}
+{{- end }}
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-kyverno-admission-controller-ingress-from-konnectivity
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+  namespace: {{ include "kyverno-stack.namespace" . }}
+spec:
+  description: "Allow the Konnectivity agent to reach the Kyverno admission controller webhook."
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/component: admission-controller
+      app.kubernetes.io/instance: kyverno
+  ingress:
+    - fromEndpoints:
+        {{- range $name, $podSelector := $podSelectors }}
+        - matchLabels:
+            "k8s:io.kubernetes.pod.namespace": {{ $konnectivityAgent.namespace }}
+            {{- range $key, $value := $podSelector }}
+            {{ $key }}: {{ $value | quote }}
+            {{- end }}
+        {{- end }}
+      toPorts:
+        - ports:
+            - port: "9443"
+              protocol: TCP
+{{- end }}

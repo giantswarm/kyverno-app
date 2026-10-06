@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add optional `ciliumNetworkPolicy.konnectivityAgent` policy allowing the Konnectivity agent to reach the admission
+  controller webhook on port 9443. Disabled by default; the agent namespace and pod selectors are configurable.
+
 ## [0.25.0] - 2026-09-23
 
 ### Fixed
