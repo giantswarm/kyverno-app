@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- `restrict-policy-kind-wildcards` matches `Policy` and `ClusterPolicy` of the `kyverno.io` group in every version (`kyverno.io/*/Policy`, `kyverno.io/*/ClusterPolicy`) instead of the bare kinds. The changed list also makes Helm re-assert the kinds on clusters whose live policy still carried the hook-era bare `Policy`/`ClusterPolicy` kinds, which widened the webhook to every API group serving a `ClusterPolicy` (the NVIDIA GPU operator's) and denied them with a JMESPath error (#697).
+- Match all `kyverno.io` Group `Policy` and `ClusterPolicy` versions in the `restrict-policy-kind-wildcards` policy to ensure it still applies to newer API versions.
 
 ## [0.25.0] - 2026-09-23
 
