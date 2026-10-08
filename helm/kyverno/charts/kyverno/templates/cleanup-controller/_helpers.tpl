@@ -6,6 +6,7 @@
 
 {{- define "kyverno.cleanup-controller.labels" -}}
 {{- template "kyverno.labels.merge" (list
+  (include "kyverno.labels.name" (include "kyverno.cleanup-controller.name" .))
   (include "kyverno.labels.common" .)
   (include "kyverno.cleanup-controller.matchLabels" .)
 ) -}}
@@ -19,7 +20,7 @@
 {{- end -}}
 
 {{- define "kyverno.cleanup-controller.image" -}}
-{{- $imageRegistry := default .image.registry .globalRegistry -}}
+{{- $imageRegistry := default (default .image.defaultRegistry .globalRegistry) .image.registry -}}
 {{- if $imageRegistry -}}
   {{ $imageRegistry }}/{{ required "An image repository is required" .image.repository }}:{{ default .defaultTag .image.tag }}
 {{- else -}}

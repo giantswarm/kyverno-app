@@ -21,5 +21,10 @@ checks:
   - "wildcard-in-rules"
   - "dnsconfig-options"
   - "no-node-affinity"
-# Temporary
-  - "deprecated-service-account-field"
+  - "dangling-service"
+  # Temporary
+  # - "deprecated-service-account-field"
+  - "restart-policy"
+  - "priority-class-name"
+  - "job-ttl-seconds-after-finished"
+  - "sorted-keys"

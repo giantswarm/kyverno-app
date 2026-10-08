@@ -1,7 +1,7 @@
 # Create PSPs for every component including the CRD install job
-global:
+global:  # @schema skipProperties: true; additionalProperties: true
   podSecurityStandards:
-    enforced: false
+    enforced: true
   image:
     registry: gsoci.azurecr.io
 
@@ -36,10 +36,10 @@ crds:
 image:
   registry: gsoci.azurecr.io
   # Tag for kubectl image
-  repository: giantswarm/kubectl
+  repository: &kubectlRepository giantswarm/kubectl
   # -- Image tag
   # Defaults to `latest` if omitted
-  tag: '1.30.3'
+  tag: &kubectlTag 'v1.34.3'
 
 # VerticalPodAutoscaler settings for individual controllers
 verticalPodAutoscaler:
@@ -71,13 +71,22 @@ verticalPodAutoscaler:
   # VPA settings for Policy Reporter components
   kyvernoPlugin:
     enabled: true
-    containerPolicies: {}
+    containerPolicies:
+      minAllowed:
+        cpu: 50m
+        memory: 50Mi
   policyReporter:
     enabled: true
-    containerPolicies: {}
+    containerPolicies:
+      minAllowed:
+        cpu: 50m
+        memory: 50Mi
   ui:
     enabled: true
-    containerPolicies: {}
+    containerPolicies:
+      minAllowed:
+        cpu: 50m
+        memory: 50Mi
 
 cleanupPolicies:
   trivyOperator:
@@ -130,20 +139,69 @@ policyExceptions:
 upgradeJob:
   enabled: false
 
-# Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
-kyverno:
-  # Enable upgrade from v2 to v3 chart
-  upgrade:
-    fromV2: false
-
-  # Create a PSP and ClusterRoleBinding for Kyverno.
-  psp:
+monitoring:
+  podLogs:
+    # Enable log collection for monitoring.
     enabled: true
+
+    # Tenant to use for monitoring
+    tenant: giantswarm
+
+    # Optional additional annotations.
+    annotations: {}
+
+    # Optional additional labels.
+    labels: {}
+
+    # List of relabeling rules for logs.
+    relabelings: []
+
+# Additional options defined in charts/kyverno/values.yaml. Upstream docs: https://github.com/kyverno/kyverno
+kyverno:  # @schema skipProperties: true; additionalProperties: true
+
+  # Use openreports.io as the API group for reporting
+  openreports:
+    # -- Enable OpenReports feature in controllers
+    enabled: false
+    # -- Whether to install CRDs from the upstream OpenReports chart. Setting this to true requires enabled to also be true.
+    installCrds: false
+
+  # Reports Server configuration
+  reportsServer:
+    # -- Enable reports-server deployment alongside Kyverno
+    enabled: false
+    # -- Wait for reports-server to be ready before starting Kyverno components
+    waitForReady: true
+    # -- Timeout for waiting for reports-server readiness (in seconds)
+    readinessTimeout: 300
+
+  # Test configuration
+  test:
+    image:
+      registry: gsoci.azurecr.io
+      repository: giantswarm/kyverno-readiness-checker
 
   # CRDs configuration
   crds:
     # -- We manage CRDs with an outside job so this needs to be disabled
     install: false
+  # Enable CRD migration
+    migration:
+      enabled: true
+      image:
+        registry: gsoci.azurecr.io
+        repository: giantswarm/kyverno-cli
+
+  grafana:
+    # -- Enable grafana dashboard creation.
+    enabled: false
+    # -- create GrafanaDashboard custom resource referencing to the configMap.
+    grafanaDashboard:
+      create: false
+      folder: kyverno
+      allowCrossNamespaceImport: true
+      matchLabels:
+        dashboards: "grafana"
 
   config:
     # -- Exclude Kyverno namespace
@@ -156,22 +214,91 @@ kyverno:
     # -- The registry hostname used for the image mutation.
     defaultRegistry: docker.io
 
-    # -- Defines the `namespaceSelector` in the webhook configurations.
-    # Note that it takes a list of `namespaceSelector` and/or `objectSelector` in the JSON format, and only the first element
-    # will be forwarded to the webhook configurations.
+    # -- Maximum cumulative size of context data during policy evaluation.
+    # Supports Kubernetes quantity format (e.g., 100Mi, 2Gi) or plain bytes (e.g., 2097152).
+    # Limits memory used by context variables to prevent unbounded growth.
+    # Increase if policies legitimately need large context data (e.g., processing large ConfigMaps).
+    # Set to 0 to disable the limit (not recommended for production).
+    # @default -- 2Mi
+    maxContextSize: ~
+
+    # -- resourceFilter namespace exclude
+    # Namespaces to exclude from the default resourceFilters
+    resourceFiltersExcludeNamespaces: []
+
+    # -- resourceFilters exclude list
+    # Items to exclude from config.resourceFilters
+    resourceFiltersExclude: []
+
+    # -- resourceFilter namespace include
+    # Namespaces to include to the default resourceFilters
+    resourceFiltersIncludeNamespaces: []
+
+    # -- resourceFilters include list
+    # Items to include to config.resourceFilters
+    resourceFiltersInclude: []
+
+    # -- Defines the `namespaceSelector`/`objectSelector` in the webhook configurations.
     # The Kyverno namespace is excluded if `excludeKyvernoNamespace` is `true` (default)
     webhooks:
-      - namespaceSelector:
-          matchExpressions:
-          - key: kubernetes.io/metadata.name
-            operator: NotIn
-            values:
-              - kube-system
+      # Exclude namespaces
+      namespaceSelector:
+        matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: NotIn
+          values:
+            - kube-system
+      # Exclude objects
+      # - objectSelector:
+      #     matchExpressions:
+      #     - key: webhooks.kyverno.io/exclude
+      #       operator: DoesNotExist
+
+  # Metrics configuration
+  metricsConfig:
+    # -- Create the configmap.
+    create: true
+
+    # -- Additional annotations to add to the configmap.
+    annotations: {}
+
+    namespaces:
+      # -- List of namespaces to capture metrics for.
+      include: []
+      # -- list of namespaces to NOT capture metrics for.
+      exclude: []
+
+    # @schema item: number
+    # -- (list) Configures the bucket boundaries for all Histogram metrics
+    bucketBoundaries: [0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10, 15, 20, 25, 30]
 
   features:
     admissionReports:
       # -- Enables the feature
       enabled: true
+    aggregateReports:
+      # -- Enables the feature
+      enabled: true
+    policyReports:
+      # -- Enables the feature
+      enabled: true
+    validatingAdmissionPolicyReports:
+      # -- Enables the feature
+      enabled: true
+    mutatingAdmissionPolicyReports:
+      # -- Enables the feature
+      enabled: false
+    reporting:
+      # -- Enables the feature
+      validate: true
+      # -- Enables the feature
+      mutate: true
+      # -- Enables the feature
+      mutateExisting: true
+      # -- Enables the feature
+      imageVerify: true
+      # -- Enables the feature
+      generate: true
     autoUpdateWebhooks:
       # -- Enables the feature
       enabled: true
@@ -187,6 +314,9 @@ kyverno:
     configMapCaching:
       # -- Enables the feature
       enabled: true
+    controllerRuntimeMetrics:
+      # -- Bind address for controller-runtime metrics (use "0" to disable it)
+      bindAddress: ":8080"
     deferredLoading:
       # -- Enables the feature
       enabled: true
@@ -196,6 +326,18 @@ kyverno:
     forceFailurePolicyIgnore:
       # -- Enables the feature
       enabled: false
+    generateValidatingAdmissionPolicy:
+      # -- Enables the feature
+      enabled: true
+    generateMutatingAdmissionPolicy:
+      # -- Enables the feature
+      enabled: false
+    dumpPatches:
+      # -- Enables the feature
+      enabled: false
+    globalContext:
+      # -- Maximum allowed response size from API Calls. A value of 0 bypasses checks (not recommended)
+      maxApiCallResponseLength: 2000000
     logging:
       # -- Logging format
       format: text
@@ -212,7 +354,7 @@ kyverno:
       # -- Enables the feature
       enabled: true
       # -- Restrict policy exceptions to a single namespace
-      namespace: ''
+      namespace: '*'
     protectManagedResources:
       # -- Enables the feature
       enabled: false
@@ -226,127 +368,42 @@ kyverno:
       - amazon
       - azure
       - github
-    reports:
-      # -- Reports chunk size
-      chunkSize: 1000
+    ttlController:
+      # -- Reconciliation interval for the label based cleanup manager
+      reconciliationInterval: 1m
+    tuf:
+      # -- Enables the feature
+      enabled: false
+      # -- (string) Path to Tuf root
+      root: ~
+      # -- (string) Raw Tuf root
+      rootRaw: ~
+      # -- (string) Tuf mirror
+      mirror: ~
 
   customLabels:
     giantswarm.io/service-type: "managed"
     application.giantswarm.io/team: "shield"
 
-  # Cleanup cronjobs to prevent internal resources from stacking up in the cluster
-  cleanupJobs:
-
-    admissionReports:
-
-      # -- Enable cleanup cronjob
-      enabled: false
-
-      image:
-        # -- (string) Image registry
-        registry: gsoci.azurecr.io
-        # -- Image repository
-        repository: giantswarm/kubectl
-        # -- Image tag
-        # Defaults to `latest` if omitted
-        tag: '1.30.3'
-        # -- (string) Image pull policy
-        # Defaults to image.pullPolicy if omitted
-        pullPolicy: IfNotPresent
-
-      # -- Cronjob schedule
-      schedule: '*/10 * * * *'
-
-      # -- Reports threshold, if number of reports are above this value the cronjob will start deleting them
-      threshold: 10000
-
-      # -- Cronjob history
-      history:
-        success: 1
-        failure: 1
-
-      # -- Security context for the pod
-      podSecurityContext:
-        runAsUser: 65534
-        runAsGroup: 65534
-
-      # -- Security context for the containers
-      securityContext:
-        runAsUser: 65534
-        runAsGroup: 65534
-        runAsNonRoot: true
-        privileged: false
-        allowPrivilegeEscalation: false
-        readOnlyRootFilesystem: true
-        capabilities:
-          drop:
-            - ALL
-        seccompProfile:
-          type: RuntimeDefault
-
-      # -- Labels for the CleanupJob
-      podLabels:
-        app.kubernetes.io/component: cleanup-jobs
-        app.kubernetes.io/instance: kyverno
-
-    clusterAdmissionReports:
-
-      # -- Enable cleanup cronjob
-      enabled: false
-
-      image:
-        # -- (string) Image registry
-        registry: gsoci.azurecr.io
-        # -- Image repository
-        repository: giantswarm/kubectl
-        # -- Image tag
-        # Defaults to `latest` if omitted
-        # repo: giantswarm/kubectl
-        tag: '1.30.3'
-        # -- (string) Image pull policy
-        # Defaults to image.pullPolicy if omitted
-        pullPolicy: IfNotPresent
-
-      # -- Cronjob schedule
-      schedule: '*/10 * * * *'
-
-      # -- Reports threshold, if number of reports are above this value the cronjob will start deleting them
-      threshold: 10000
-
-      # -- Cronjob history
-      history:
-        success: 1
-        failure: 1
-
-      # -- Security context for the pod
-      podSecurityContext:
-        runAsUser: 65534
-        runAsGroup: 65534
-
-      # -- Security context for the cont
-      securityContext:
-        runAsUser: 65534
-        runAsGroup: 65534
-        runAsNonRoot: true
-        privileged: false
-        allowPrivilegeEscalation: false
-        readOnlyRootFilesystem: true
-        capabilities:
-          drop:
-            - ALL
-        seccompProfile:
-          type: RuntimeDefault
-
-      # -- Labels for the CleanupJob
-      podLabels:
-        app.kubernetes.io/component: cleanup-jobs
-        app.kubernetes.io/instance: kyverno
-
-  # Admission controller configuration
+# Admission controller configuration
   admissionController:
+    autoscaling:
+      # -- Enable horizontal pod autoscaling
+      enabled: true
+      # -- Minimum number of pods
+      minReplicas: 3
+      # -- Maximum number of pods
+      maxReplicas: 10
+      # -- Target CPU utilization percentage
+      targetCPUUtilizationPercentage: 80
+      # -- Configurable scaling behavior
+      behavior: {}
 
     # -- Overrides features defined at the root level
-    featuresOverride: {}
+    featuresOverride:
+      admissionReports:
+        # -- Max number of admission reports allowed in flight until the admission controller stops creating new ones
+        backPressureThreshold: 1000
 
     rbac:
       # -- Create RBAC resources
@@ -380,8 +437,8 @@ kyverno:
     replicas: 3
 
     # -- Additional labels to add to each pod
-    podLabels:
-      app.kubernetes.io/name: kyverno
+    podLabels: {}
+      # example.com/label: foo
 
     # -- Additional annotations to add to each pod
     podAnnotations: {}
@@ -408,7 +465,10 @@ kyverno:
     nodeSelector: {}
 
     # -- List of node taints to tolerate
-    tolerations: []
+    tolerations:
+    - key: "node.cluster.x-k8s.io/uninitialized"
+      operator: "Exists"
+      effect: "NoSchedule"
 
     antiAffinity:
       # -- Pod antiAffinities toggle.
@@ -433,9 +493,17 @@ kyverno:
     podAffinity: {}
 
     # -- Node affinity constraints.
-    nodeAffinity: {}
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 50
+          preference:
+            matchExpressions:
+              - key: karpenter.sh/capacity-type
+                operator: NotIn
+                values:
+                  - spot
 
-    # -- Topology spread constraints.
+    # -- Topology spread constraints
     topologySpreadConstraints: []
 
     # -- Security context for the pod
@@ -448,6 +516,7 @@ kyverno:
       # -- Configures the maximum unavailable pods for disruptions.
       # Cannot be used if `minAvailable` is set.
       # maxUnavailable:
+      unhealthyPodEvictionPolicy: AlwaysAllow
 
     # -- A writable volume to use for the TUF root initialization.
     tufRootMountPath: /.sigstore
@@ -480,6 +549,8 @@ kyverno:
 
       # -- Container security context
       securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
         runAsNonRoot: true
         privileged: false
         allowPrivilegeEscalation: false
@@ -517,6 +588,8 @@ kyverno:
 
       # -- Container security context
       securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
         runAsNonRoot: true
         privileged: false
         allowPrivilegeEscalation: false
@@ -593,11 +666,35 @@ kyverno:
       # -- TLS Configuration for endpoint
       tlsConfig: {}
 
-    logging:
-      # -- Logging format
-      format: text
-      # -- Logging verbosity
-      verbosity: 2
+    tracing:
+      # -- Enable tracing
+      enabled: false
+      # -- Traces receiver address
+      address:
+      # -- Traces receiver port
+      port:
+      # -- Traces receiver credentials
+      creds: ''
+
+    metering:
+      # -- Disable metrics export
+      disabled: false
+      # -- Otel configuration, can be `prometheus` or `grpc`
+      config: prometheus
+      # -- Prometheus endpoint port
+      port: 8000
+      # -- Otel collector endpoint
+      collector: ''
+      # -- Otel collector credentials
+      creds: ''
+
+    profiling:
+      # -- Enable profiling
+      enabled: false
+      # -- Profiling endpoint port
+      port: 6060
+      # -- Service type.
+      serviceType: ClusterIP
 
   # Background controller configuration
   backgroundController:
@@ -717,6 +814,8 @@ kyverno:
 
     # -- Security context for the containers
     securityContext:
+      runAsUser: 65534
+      runAsGroup: 65534
       runAsNonRoot: true
       privileged: false
       allowPrivilegeEscalation: false
@@ -774,11 +873,40 @@ kyverno:
       # -- TLS Configuration for endpoint
       tlsConfig: {}
 
-    logging:
-      # -- Logging format
-      format: text
-      # -- Logging verbosity
-      verbosity: 2
+    tracing:
+      # -- Enable tracing
+      enabled: false
+      # -- Traces receiver address
+      address:
+      # -- Traces receiver port
+      port:
+      # -- Traces receiver credentials
+      creds: ''
+
+    metering:
+      # -- Disable metrics export
+      disabled: false
+      # -- Otel configuration, can be `prometheus` or `grpc`
+      config: prometheus
+      # -- Prometheus endpoint port
+      port: 8000
+      # -- Otel collector endpoint
+      collector: ''
+      # -- Otel collector credentials
+      creds: ''
+
+    # -- backgroundController server port
+    # in case you are using hostNetwork: true, you might want to change the port the backgroundController is listening to
+    server:
+      port: 9443
+
+    profiling:
+      # -- Enable profiling
+      enabled: false
+      # -- Profiling endpoint port
+      port: 6060
+      # -- Service type.
+      serviceType: ClusterIP
 
   # Cleanup controller configuration
   cleanupController:
@@ -902,6 +1030,8 @@ kyverno:
 
     # -- Security context for the containers
     securityContext:
+      runAsUser: 65534
+      runAsGroup: 65534
       runAsNonRoot: true
       privileged: false
       allowPrivilegeEscalation: false
@@ -970,11 +1100,40 @@ kyverno:
       # -- TLS Configuration for endpoint
       tlsConfig: {}
 
-    logging:
-      # -- Logging format
-      format: text
-      # -- Logging verbosity
-      verbosity: 2
+    tracing:
+      # -- Enable tracing
+      enabled: false
+      # -- Traces receiver address
+      address:
+      # -- Traces receiver port
+      port:
+      # -- Traces receiver credentials
+      creds: ''
+
+    metering:
+      # -- Disable metrics export
+      disabled: false
+      # -- Otel configuration, can be `prometheus` or `grpc`
+      config: prometheus
+      # -- Prometheus endpoint port
+      port: 8000
+      # -- Otel collector endpoint
+      collector: ''
+      # -- Otel collector credentials
+      creds: ''
+
+    # -- cleanupController server port
+    # in case you are using hostNetwork: true, you might want to change the port the cleanupController is listening to
+    server:
+      port: 9443
+
+    profiling:
+      # -- Enable profiling
+      enabled: false
+      # -- Profiling endpoint port
+      port: 6060
+      # -- Service type.
+      serviceType: ClusterIP
 
   # Reports controller configuration
   reportsController:
@@ -999,11 +1158,13 @@ kyverno:
 
       clusterRole:
         # -- Extra resource permissions to add in the cluster role
-        extraResources: []
-        # - apiGroups:
-        #     - ''
-        #   resources:
-        #     - pods
+        extraResources:
+        - apiGroups:
+            - apiextensions.k8s.io
+          resources:
+            - customresourcedefinitions
+          verbs:
+            - list
 
     image:
       # -- Image registry
@@ -1099,6 +1260,8 @@ kyverno:
 
     # -- Security context for the containers
     securityContext:
+      runAsUser: 65534
+      runAsGroup: 65534
       runAsNonRoot: true
       privileged: false
       allowPrivilegeEscalation: false
@@ -1163,34 +1326,64 @@ kyverno:
       # -- TLS Configuration for endpoint
       tlsConfig: {}
 
-    logging:
-      # -- Logging format
-      format: text
-      # -- Logging verbosity
-      verbosity: 2
+    tracing:
+      # -- Enable tracing
+      enabled: false
+      # -- (string) Traces receiver address
+      address: ~
+      # -- (string) Traces receiver port
+      port: ~
+      # -- (string) Traces receiver credentials
+      creds: ~
 
-  policyReportsCleanup:
-    image:
-      # -- (string) Image registry
-      registry: gsoci.azurecr.io
-      # -- Image repository
-      repository: giantswarm/kubectl
-      # -- Image tag
-      # Defaults to `latest` if omitted
-      tag: '1.30.3'
+    metering:
+      # -- Disable metrics export
+      disabled: false
+      # -- Otel configuration, can be `prometheus` or `grpc`
+      config: prometheus
+      # -- Prometheus endpoint port
+      port: 8000
+      # -- (string) Otel collector endpoint
+      collector: ~
+      # -- (string) Otel collector credentials
+      creds: ~
+
+    # -- reportsController server port
+    # in case you are using hostNetwork: true, you might want to change the port the reportsController is listening to
+    server:
+      port: 9443
+
+    profiling:
+      # -- Enable profiling
+      enabled: false
+      # -- Profiling endpoint port
+      port: 6060
+      # -- Service type.
+      serviceType: ClusterIP
+
+    # -- Enable sanity check for reports CRDs
+    sanityChecks: true
 
   webhooksCleanup:
+    # -- Create a helm pre-delete hook to cleanup webhooks.
+    enabled: true
+
+    autoDeleteWebhooks:
+      # -- Allow webhooks controller to delete webhooks using finalizers
+      enabled: false
+
     image:
       # -- (string) Image registry
       registry: gsoci.azurecr.io
       # -- Image repository
-      repository: giantswarm/kubectl
+      repository: *kubectlRepository
       # -- Image tag
       # Defaults to `latest` if omitted
-      tag: '1.30.3'
+      tag: *kubectlTag
 
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
-policy-reporter:
+policy-reporter:  # @schema skipProperties: true; additionalProperties: true
+  fullnameOverride: "kyverno-policy-reporter"
   podLabels:
     app.kubernetes.io/component: policy-reporter
   image:
@@ -1213,8 +1406,6 @@ policy-reporter:
     image:
       registry: gsoci.azurecr.io
       repository: giantswarm/policy-reporter-ui
-    plugins:
-      kyverno: true
     resources:
       limits:
         cpu: 10m
@@ -1226,34 +1417,32 @@ policy-reporter:
       create: true
       name: "policyreporter-ui-sa"  # Only needed to support adding a PSP. Can be removed when PSPs are disabled.
 
-  kyvernoPlugin:
-    enabled: true
-    annotations: {}
-    podLabels:
-      app.kubernetes.io/component: plugin
-    image:
-      registry: gsoci.azurecr.io
-      repository: giantswarm/policy-reporter-kyverno-plugin
-    resources:
-      limits:
-        cpu: 50m
-        memory: 100Mi
-      requests:
-        cpu: 10m
-        memory: 30Mi
-    serviceAccount:
-      name: "policyreporter-plugin-sa"  # Only needed to support adding a PSP. Can be removed when PSPs are disabled.
+  plugin:
+    kyverno:
+      enabled: true
+      podLabels:
+        app.kubernetes.io/component: plugin
+      image:
+        registry: gsoci.azurecr.io
+        repository: giantswarm/kyverno-plugin
+      resources:
+        limits:
+          cpu: 50m
+          memory: 100Mi
+        requests:
+          cpu: 10m
+          memory: 30Mi
 
   global:
-    plugins:
-      kyverno: true
-
     labels: {}
 
   monitoring:
     enabled: true
-    namespace: kyverno
-
-  # Create a PSP and ClusterRoleBinding for PolicyReporter.
-  psp:
-    enabled: true
+    serviceMonitor:
+      namespace: kyverno
+      relabelings:
+      - action: labeldrop
+        regex: pod|service|container
+      - targetLabel: instance
+        replacement: policy-reporter
+        action: replace

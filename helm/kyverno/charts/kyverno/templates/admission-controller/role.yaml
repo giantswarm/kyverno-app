@@ -11,10 +11,12 @@ rules:
       - ''
     resources:
       - secrets
+      - serviceaccounts
     verbs:
       - get
       - list
       - watch
+      - patch
       - create
       - update
       - delete
@@ -45,7 +47,7 @@ rules:
     resources:
       - deployments
       {{- if .Values.webhooksCleanup.enabled }}
-      {{- if not .Values.templating.enabled }}
+      {{- if not .Values.global.templating.enabled }}
       - deployments/scale
       {{- end }}
       {{- end }}
@@ -54,7 +56,7 @@ rules:
       - list
       - watch
       {{- if .Values.webhooksCleanup.enabled }}
-      {{- if not .Values.templating.enabled }}
+      {{- if not .Values.global.templating.enabled }}
       - patch
       - update
       {{- end }}

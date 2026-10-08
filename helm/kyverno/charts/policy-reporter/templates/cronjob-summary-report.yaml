@@ -51,7 +51,7 @@ spec:
           {{- end }}
           restartPolicy: {{ .Values.emailReports.summary.restartPolicy }}
           containers:
-            - name: {{ default .Chart.Name .Values.nameOverride }}
+            - name: policy-reporter
               image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
               imagePullPolicy: {{ .Values.image.pullPolicy }}
               {{- if .Values.securityContext }}
@@ -69,8 +69,15 @@ spec:
                 mountPath: /app/config.yaml
                 subPath: config.yaml
                 readOnly: true
-              {{- if .Values.emailReports.smtp.secret }}
+              {{- with .Values.extraVolumes.volumeMounts }}
+              {{ toYaml . | nindent 14 | trim }}
+              {{- end }}
               env:
+              - name: POD_NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+              {{- if .Values.emailReports.smtp.secret }}
               - name: EMAIL_REPORTS_SMTP_HOST
                 valueFrom:
                   secretKeyRef:
@@ -115,6 +122,9 @@ spec:
             secret:
               secretName: {{ include "policyreporter.fullname" . }}-config-email-reports
               optional: true
+          {{- with .Values.extraVolumes.volumes }}
+          {{ toYaml . | nindent 10 | trim }}
+          {{- end }}
           {{- with .Values.nodeSelector }}
           nodeSelector:
             {{- toYaml . | nindent 12 }}

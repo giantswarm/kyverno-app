@@ -8,6 +8,8 @@ metadata:
 aggregationRule:
   clusterRoleSelectors:
     - matchLabels:
+        rbac.kyverno.io/aggregate-to-admission-controller: "true"
+    - matchLabels:
         {{- include "kyverno.admission-controller.matchLabels" . | nindent 8 }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -18,14 +20,26 @@ metadata:
     {{- include "kyverno.admission-controller.labels" . | nindent 4 }}
 rules:
   - apiGroups:
+      - apiextensions.k8s.io
+    resources:
+      - customresourcedefinitions
+    verbs:
+      - get
+      {{- if .Values.admissionController.crdWatcher | default .Values.global.crdWatcher }}
+      - list
+      - watch
+      {{- end }}
+  - apiGroups:
       - admissionregistration.k8s.io
     resources:
       - mutatingwebhookconfigurations
       - validatingwebhookconfigurations
-      {{- if .Values.features.generateValidatingAdmissionPolicy.enabled }}
+      # Always grant permissions for admission policies to support per-policy generation overrides 
+      # even when global generateValidatingAdmissionPolicy/generateMutatingAdmissionPolicy flags are disabled.
       - validatingadmissionpolicies
       - validatingadmissionpolicybindings
-      {{- end }}
+      - mutatingadmissionpolicies
+      - mutatingadmissionpolicybindings
     verbs:
       - create
       - delete
@@ -43,6 +57,7 @@ rules:
       - rolebindings
       - clusterrolebindings
     verbs:
+      - get
       - list
       - watch
   - apiGroups:
@@ -54,10 +69,72 @@ rules:
       - clusterpolicies/status
       - updaterequests
       - updaterequests/status
-      - admissionreports
-      - clusteradmissionreports
-      - backgroundscanreports
-      - clusterbackgroundscanreports
+      - globalcontextentries
+      - globalcontextentries/status
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+      - deletecollection
+  - apiGroups:
+      - kyverno.io
+    resources:
+      - policyexceptions
+    verbs:
+      - create
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - policies.kyverno.io
+    resources:
+      - validatingpolicies
+      - validatingpolicies/status
+      - namespacedvalidatingpolicies
+      - namespacedvalidatingpolicies/status
+      - imagevalidatingpolicies
+      - imagevalidatingpolicies/status
+      - namespacedimagevalidatingpolicies
+      - namespacedimagevalidatingpolicies/status
+      - generatingpolicies
+      - generatingpolicies/status
+      - namespacedgeneratingpolicies
+      - namespacedgeneratingpolicies/status
+      - mutatingpolicies
+      - mutatingpolicies/status
+      - namespacedmutatingpolicies
+      - namespacedmutatingpolicies/status
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+      - deletecollection
+  - apiGroups:
+      - policies.kyverno.io
+    resources:
+      - policyexceptions
+    verbs:
+      - create
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - reports.kyverno.io
+    resources:
+      - ephemeralreports
+      - clusterephemeralreports
     verbs:
       - create
       - delete
@@ -99,13 +176,28 @@ rules:
     verbs:
       - create
   - apiGroups:
-      - '*'
+      - ''
     resources:
-      - '*'
+      - configmaps
+      - namespaces
     verbs:
       - get
       - list
       - watch
+  - apiGroups:
+      - coordination.k8s.io
+    resources:
+      - leases
+    verbs:
+      - create
+      - update
+      - patch
+      - get
+      - list
+      - watch
+{{- with .Values.admissionController.rbac.coreClusterRole.extraResources }}
+  {{- toYaml . | nindent 2 }}
+{{- end }}
 {{- with .Values.admissionController.rbac.clusterRole.extraResources }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
