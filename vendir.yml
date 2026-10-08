@@ -18,8 +18,8 @@ directories:
   - path: .
     git:
       url: https://github.com/kyverno/policy-reporter
-      # renovate: datasource=github-tags depName=kyverno/policy-reporter
-      ref: v3.10.0
+      # renovate: datasource=github-tags depName=kyverno/policy-reporter versioning=regex:^policy-reporter-chart-v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
+      ref: policy-reporter-chart-v3.11.0
     includePaths:
       - charts/policy-reporter/**
     newRootPath: charts/policy-reporter
