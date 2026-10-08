@@ -10,10 +10,10 @@ directories:
   path: helm/kyverno/charts/kyverno
 - contents:
   - git:
-      commitTitle: 'chore: dependency updates (#1576)...'
-      sha: dca6fb5136d05bff3401a98219af331508d75338
+      commitTitle: 'release(v3.11.0): update tags (#1641)...'
+      sha: e47b57b4058143542a35f44123b74bd98a8c5a5a
       tags:
-      - v3.10.0
+      - policy-reporter-3.11.0
     path: .
   path: helm/kyverno/charts/policy-reporter
 kind: LockConfig

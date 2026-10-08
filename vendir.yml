@@ -19,7 +19,7 @@ directories:
     git:
       url: https://github.com/kyverno/policy-reporter
       # renovate: datasource=github-tags depName=kyverno/policy-reporter
-      ref: v3.10.0
+      ref: policy-reporter-chart-v3.11.0
     includePaths:
       - charts/policy-reporter/**
     newRootPath: charts/policy-reporter
