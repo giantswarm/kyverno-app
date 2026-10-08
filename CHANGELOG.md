@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+### Changed
+
+- Updated `policy-reporter` to upstream version `v3.11.0`.
+
 ## [0.25.1] - 2026-10-06
 
 ### Fixed
