@@ -17,3 +17,6 @@ install-vpa-crds:
 
 install-kyverno:
 	helm install https://giantswarm.github.io/giantswarm-catalog/kyverno-crds-${KYVERNO_CRDS_VERSION}.tgz --generate-name --kubeconfig=kyverno-kubeconfig.yaml
+
+check-appversion: ## Check the chart's appVersion equals the kyverno subchart's
+	hack/check-appversion.sh helm/kyverno

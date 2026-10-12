@@ -5,7 +5,7 @@ annotations:
   io.giantswarm.application.managed: "true"
   io.giantswarm.application.restrictions.cluster-singleton: "true"
 apiVersion: v2
-appVersion: v1.17.0
+appVersion: v1.18.2
 dependencies:
   - name: policy-reporter
     version: 3.11.0

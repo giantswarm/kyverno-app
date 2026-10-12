@@ -1,0 +1,19 @@
+name: Check appVersion
+
+on:
+  pull_request:
+    paths:
+      - 'helm/kyverno/Chart.yaml'
+      - 'helm/kyverno/charts/kyverno/Chart.yaml'
+      - 'hack/check-appversion.sh'
+      - '.github/workflows/check_appversion.yaml'
+
+permissions:
+  contents: read
+
+jobs:
+  check-appversion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: hack/check-appversion.sh
