@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+### Fixed
+
+- Set the chart `appVersion` to the Kyverno version the `kyverno` subchart deploys (`v1.18.2`), so the `app.kubernetes.io/version` label shows it.
+
+### Added
+
+- Check that the chart `appVersion` equals the `kyverno` subchart's `appVersion` in pull requests.
+
 ### Changed
 
 - Updated `policy-reporter` to upstream version `v3.11.0`.
