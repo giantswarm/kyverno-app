@@ -10,10 +10,10 @@ directories:
   path: helm/kyverno/charts/kyverno
 - contents:
   - git:
-      commitTitle: 'release(v3.11.0): update tags (#1641)...'
-      sha: e47b57b4058143542a35f44123b74bd98a8c5a5a
+      commitTitle: Merge branch 'main' of https://github.com/kyverno/policy-reporter
+      sha: 3599edf6a501c7f13ecd5565fd07b1bc851c07a5
       tags:
-      - policy-reporter-3.11.0
+      - policy-reporter-3.11.1
     path: .
   path: helm/kyverno/charts/policy-reporter
 kind: LockConfig
