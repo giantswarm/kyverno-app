@@ -32,4 +32,4 @@ name: kyverno
 sources:
   - https://github.com/kyverno/kyverno
 type: application
-version: 0.25.2
+version: 0.25.3
