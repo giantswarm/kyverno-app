@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Updated `kyverno` to upstream version `v1.19.1`.
+
 ## [0.25.3] - 2026-10-14
 
 ### Changed
@@ -14,11 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `policy-reporter` to upstream version `v3.11.1`.
 
 ## [0.25.2] - 2026-10-12
-
-
-### Fixed
-
-- Set the chart `appVersion` to the Kyverno version the `kyverno` subchart deploys (`v1.18.2`), so the `app.kubernetes.io/version` label shows it.
 
 ### Added
 
@@ -28,6 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated `policy-reporter` to upstream version `v3.11.0`.
 
+### Fixed
+
+- Set the chart `appVersion` to the Kyverno version the `kyverno` subchart deploys (`v1.18.2`), so the `app.kubernetes.io/version` label shows it.
+
 ## [0.25.1] - 2026-10-06
 
 ### Fixed
@@ -36,17 +39,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.25.0] - 2026-09-23
 
-### Fixed
-
-- Take the `app.kubernetes.io/version` label from the chart app version instead of the chart version, as described in the Helm chart best practices. The chart version carries build metadata that pushed the label past the 63 byte limit and made the install fail.
-- Remove the duplicated `app.kubernetes.io/name: kyverno` pod label from the admission controller.
-
 ### Changed
 
 - Allow additional properties for the vendored `kyverno`, `policy-reporter` and shared `global` values so upstream keys are not rejected by the generated schema.
 - Increase default VPA minimum resources for Policy Reporter components to 50m CPU/50Mi memory.
 - Updated `policy-reporter` to upstream version `v3.10.0`.
 - Updated `kyverno` to upstream version `v1.18.2`.
+
+### Fixed
+
+- Take the `app.kubernetes.io/version` label from the chart app version instead of the chart version, as described in the Helm chart best practices. The chart version carries build metadata that pushed the label past the 63 byte limit and made the install fail.
+- Remove the duplicated `app.kubernetes.io/name: kyverno` pod label from the admission controller.
 
 ## [0.24.2] - 2026-05-04
 
