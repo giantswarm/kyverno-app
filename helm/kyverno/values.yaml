@@ -523,7 +523,8 @@ kyverno:  # @schema skipProperties: true; additionalProperties: true
 
     # -- Volume to be mounted in pods for TUF/cosign work.
     sigstoreVolume:
-      emptyDir: {}
+      emptyDir:
+        sizeLimit: 100Mi
 
     # -- Image pull secrets
     imagePullSecrets: []
@@ -1285,7 +1286,8 @@ kyverno:  # @schema skipProperties: true; additionalProperties: true
 
     # -- Volume to be mounted in pods for TUF/cosign work.
     sigstoreVolume:
-      emptyDir: {}
+      emptyDir:
+        sizeLimit: 100Mi
 
     metricsService:
       # -- Create service.
@@ -1384,6 +1386,14 @@ kyverno:  # @schema skipProperties: true; additionalProperties: true
 # Additional options defined in charts/policy-reporter/values.yaml. Upstream docs: https://github.com/kyverno/policy-reporter
 policy-reporter:  # @schema skipProperties: true; additionalProperties: true
   fullnameOverride: "kyverno-policy-reporter"
+  # Bounded emptyDirs (require-emptydir-requests-and-limits). The sqlite cache holds every
+  # policy result in the cluster.
+  sqliteVolume:
+    emptyDir:
+      sizeLimit: 4Gi
+  tmpVolume:
+    emptyDir:
+      sizeLimit: 256Mi
   podLabels:
     app.kubernetes.io/component: policy-reporter
   image:
@@ -1401,6 +1411,9 @@ policy-reporter:  # @schema skipProperties: true; additionalProperties: true
 
   ui:
     enabled: true
+    tmpVolume:
+      emptyDir:
+        sizeLimit: 256Mi
     podLabels:
       app.kubernetes.io/component: ui
     image:
