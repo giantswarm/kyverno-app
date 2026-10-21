@@ -1387,7 +1387,7 @@ kyverno:  # @schema skipProperties: true; additionalProperties: true
 policy-reporter:  # @schema skipProperties: true; additionalProperties: true
   fullnameOverride: "kyverno-policy-reporter"
   # Bounded emptyDirs (require-emptydir-requests-and-limits). The sqlite cache holds every
-  # policy result in the cluster; the largest fleet clusters carry 40-55k PolicyReports.
+  # policy result in the cluster.
   sqliteVolume:
     emptyDir:
       sizeLimit: 4Gi
