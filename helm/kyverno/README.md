@@ -176,7 +176,7 @@ language.
 | kyverno.admissionController.podDisruptionBudget.minAvailable | int | `2` | Configures the minimum available pods for disruptions. Cannot be used if `maxUnavailable` is set. |
 | kyverno.admissionController.podDisruptionBudget.unhealthyPodEvictionPolicy | string | `"AlwaysAllow"` | Configures the maximum unavailable pods for disruptions. Cannot be used if `minAvailable` is set. maxUnavailable: |
 | kyverno.admissionController.tufRootMountPath | string | `"/.sigstore"` | A writable volume to use for the TUF root initialization. |
-| kyverno.admissionController.sigstoreVolume | object | `{"emptyDir":{}}` | Volume to be mounted in pods for TUF/cosign work. |
+| kyverno.admissionController.sigstoreVolume | object | `{"emptyDir":{"sizeLimit":"100Mi"}}` | Volume to be mounted in pods for TUF/cosign work. |
 | kyverno.admissionController.imagePullSecrets | list | `[]` | Image pull secrets |
 | kyverno.admissionController.initContainer.image.registry | string | `"gsoci.azurecr.io"` | Image registry |
 | kyverno.admissionController.initContainer.image.repository | string | `"giantswarm/kyvernopre"` | Image repository |
@@ -359,7 +359,7 @@ language.
 | kyverno.reportsController.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsGroup":65534,"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}}` | Security context for the containers |
 | kyverno.reportsController.podDisruptionBudget.minAvailable | int | `1` | Configures the minimum available pods for disruptions. Cannot be used if `maxUnavailable` is set. |
 | kyverno.reportsController.tufRootMountPath | string | `"/.sigstore"` | A writable volume to use for the TUF root initialization. |
-| kyverno.reportsController.sigstoreVolume | object | `{"emptyDir":{}}` | Volume to be mounted in pods for TUF/cosign work. |
+| kyverno.reportsController.sigstoreVolume | object | `{"emptyDir":{"sizeLimit":"100Mi"}}` | Volume to be mounted in pods for TUF/cosign work. |
 | kyverno.reportsController.metricsService.create | bool | `true` | Create service. |
 | kyverno.reportsController.metricsService.port | int | `8000` | Service port. Metrics server will be exposed at this port. |
 | kyverno.reportsController.metricsService.type | string | `"ClusterIP"` | Service type. |
@@ -392,6 +392,8 @@ language.
 | kyverno.webhooksCleanup.image.repository | string | `"giantswarm/kubectl"` | Image repository |
 | kyverno.webhooksCleanup.image.tag | string | `"v1.34.3"` | Image tag Defaults to `latest` if omitted |
 | policy-reporter.fullnameOverride | string | `"kyverno-policy-reporter"` |  |
+| policy-reporter.sqliteVolume.emptyDir.sizeLimit | string | `"4Gi"` |  |
+| policy-reporter.tmpVolume.emptyDir.sizeLimit | string | `"256Mi"` |  |
 | policy-reporter.podLabels."app.kubernetes.io/component" | string | `"policy-reporter"` |  |
 | policy-reporter.image.registry | string | `"gsoci.azurecr.io"` |  |
 | policy-reporter.image.repository | string | `"giantswarm/policy-reporter"` |  |
@@ -401,6 +403,7 @@ language.
 | policy-reporter.resources.requests.memory | string | `"30Mi"` |  |
 | policy-reporter.serviceAccount.name | string | `"policyreporter-sa"` |  |
 | policy-reporter.ui.enabled | bool | `true` |  |
+| policy-reporter.ui.tmpVolume.emptyDir.sizeLimit | string | `"256Mi"` |  |
 | policy-reporter.ui.podLabels."app.kubernetes.io/component" | string | `"ui"` |  |
 | policy-reporter.ui.image.registry | string | `"gsoci.azurecr.io"` |  |
 | policy-reporter.ui.image.repository | string | `"giantswarm/policy-reporter-ui"` |  |
