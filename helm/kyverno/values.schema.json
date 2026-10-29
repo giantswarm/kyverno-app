@@ -135,10 +135,24 @@
                 }
             }
         },
+        "externalDNSIP": {
+            "type": "string"
+        },
         "gcpProject": {
             "type": "string"
         },
         "global": {
+            "type": "object",
+            "description": "Global values shared between all subcharts and the platform.",
+            "additionalProperties": true,
+            "properties": {
+                "podSecurityStandards": {
+                    "type": "object",
+                    "additionalProperties": true
+                }
+            }
+        },
+        "helm": {
             "type": "object",
             "additionalProperties": true
         },
@@ -161,6 +175,9 @@
         "kyverno": {
             "type": "object",
             "additionalProperties": true
+        },
+        "managementCluster": {
+            "type": "string"
         },
         "monitoring": {
             "type": "object",
