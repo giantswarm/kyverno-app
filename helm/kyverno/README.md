@@ -30,8 +30,8 @@ language.
 | ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.port | string | `"443"` |  |
 | ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.protocol | string | `"TCP"` |  |
 | ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.rules | list | `[]` |  |
-| ciliumNetworkPolicy.imageVerificationEgress.enabled | bool | `true` | Allow the admission and reports controllers to reach the registry and Sigstore endpoints for image signature verification. |
-| ciliumNetworkPolicy.imageVerificationEgress.fqdns | list | `[{"matchName":"gsoci.azurecr.io"},{"matchPattern":"*.blob.core.windows.net"},{"matchName":"tuf-repo-cdn.sigstore.dev"},{"matchName":"rekor.sigstore.dev"}]` | FQDNs the controllers may resolve and connect to. When overriding this list, include the four default entries as well, because Helm replaces lists on merge instead of appending. gsoci serves blobs from Azure Storage (`*.blob.core.windows.net`); a registry with dedicated data endpoints needs `*.*.data.azurecr.io` (Cilium `*` matches a single DNS label). |
+| ciliumNetworkPolicy.imageVerificationEgress.enabled | bool | `true` | Allow the admission and reports controllers to reach the registry and Sigstore. |
+| ciliumNetworkPolicy.imageVerificationEgress.fqdns | list | `[{"matchName":"gsoci.azurecr.io"},{"matchPattern":"*.blob.core.windows.net"},{"matchName":"tuf-repo-cdn.sigstore.dev"},{"matchName":"rekor.sigstore.dev"}]` | FQDNs the controllers may resolve and connect to. Overriding replaces the whole list, so keep the defaults you still need. |
 | ciliumNetworkPolicy.imageVerificationEgress.port | string | `"443"` | Port for the FQDN connections. |
 | crds.install | bool | `false` |  |
 | crds.resources.requests.cpu | string | `"100m"` |  |

@@ -21,14 +21,11 @@ ciliumNetworkPolicy:
       # - matchPattern: "*"
       # - matchPattern: "s3.*.amazonaws.com"
       # - matchName: "s3.eu-west-1.amazonaws.com"
-  # Egress for the admission and reports controllers to verify image signatures
-  # (container registry, Sigstore TUF and Rekor). Additive to admissionControllerExtraEgress.
-  # DNS egress is scoped to the same FQDN list. There is no wildcard fallback.
+  # Egress for the admission and reports controllers to verify image signatures.
   imageVerificationEgress:
-    # -- Allow the admission and reports controllers to reach the registry and Sigstore endpoints for image signature verification.
+    # -- Allow the admission and reports controllers to reach the registry and Sigstore.
     enabled: true
-    # -- FQDNs the controllers may resolve and connect to. When overriding this list, include the four default entries as well, because Helm replaces lists on merge instead of appending.
-    # gsoci serves blobs from Azure Storage (`*.blob.core.windows.net`); a registry with dedicated data endpoints needs `*.*.data.azurecr.io` (Cilium `*` matches a single DNS label).
+    # -- FQDNs the controllers may resolve and connect to. Overriding replaces the whole list, so keep the defaults you still need.
     fqdns:  # @schema minItems: 1
       - matchName: gsoci.azurecr.io
       - matchPattern: "*.blob.core.windows.net"

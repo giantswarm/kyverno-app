@@ -158,12 +158,7 @@ app.kubernetes.io/instance: "{{ template "kyverno-stack.name" . }}"
 "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
 {{- end -}}
 
-{{/*
-Egress rules for image signature verification (registry, TUF and Rekor), used by the
-admission and reports controller CiliumNetworkPolicies. DNS is scoped to the same FQDN
-list. Renders nothing when disabled. Fails when enabled with an empty FQDN list, so there
-is never a wildcard fallback.
-*/}}
+{{/* Egress rules for image signature verification, shared by the admission and reports controller CNPs. */}}
 {{- define "kyverno-stack.imageVerificationEgress" -}}
 {{- $cfg := .Values.ciliumNetworkPolicy.imageVerificationEgress -}}
 {{- if $cfg.enabled -}}
