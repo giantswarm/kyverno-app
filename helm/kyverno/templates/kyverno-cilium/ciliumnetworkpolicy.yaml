@@ -97,6 +97,7 @@ spec:
             - port: {{ default "443" .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.port | quote }}
               protocol: {{ default "TCP" .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.protocol }}
   {{- end }}
+    {{- include "kyverno-stack.imageVerificationEgress" . | nindent 4 }}
     - toEntities:
       - kube-apiserver
       toPorts:
@@ -247,6 +248,7 @@ spec:
       app.kubernetes.io/component: reports-controller
       app.kubernetes.io/instance: kyverno
   egress:
+    {{- include "kyverno-stack.imageVerificationEgress" . | nindent 4 }}
     - toEntities:
       - kube-apiserver
       toPorts:

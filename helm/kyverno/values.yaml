@@ -21,6 +21,19 @@ ciliumNetworkPolicy:
       # - matchPattern: "*"
       # - matchPattern: "s3.*.amazonaws.com"
       # - matchName: "s3.eu-west-1.amazonaws.com"
+  # Egress for the admission and reports controllers to verify image signatures
+  # (container registry, Sigstore TUF and Rekor). Additive to admissionControllerExtraEgress.
+  # DNS egress is scoped to the same FQDN list. There is no wildcard fallback.
+  imageVerificationEgress:
+    enabled: true
+    # -- FQDNs the controllers may resolve and connect to. Append your own registry here.
+    fqdns:
+      - matchName: gsoci.azurecr.io
+      - matchPattern: "*.data.azurecr.io"
+      - matchName: tuf-repo-cdn.sigstore.dev
+      - matchName: rekor.sigstore.dev
+    # Port for the FQDN connections
+    port: "443"
 
 # We install CRDs through a Job with the helm specific crd folder.
 crds:

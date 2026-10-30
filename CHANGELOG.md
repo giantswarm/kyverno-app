@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add `ciliumNetworkPolicy.imageVerificationEgress` (enabled by default) to let the Kyverno admission and reports controllers resolve and reach the container registry and Sigstore TUF and Rekor for image signature verification. DNS and `toFQDNs` egress are scoped to the explicit `fqdns` list (`gsoci.azurecr.io`, `*.data.azurecr.io`, `tuf-repo-cdn.sigstore.dev`, `rekor.sigstore.dev`) on a configurable `port` (default `443`), with no wildcard fallback. Append your own registry to `fqdns`. It is additive to `admissionControllerExtraEgress`.
+- Proxy wiring not added: the vendored `kyverno` subchart (3.8.2) has the env hooks (`kyverno.global.extraEnvVars`, `kyverno.admissionController.container.extraEnvVars`, `kyverno.reportsController.extraEnvVars`), but this chart defines no cluster-proxy value convention (no `proxy`, `global.proxy`, `httpProxy` or `noProxy` key in `helm/kyverno/values.yaml` or `helm/kyverno/zz_generated.app-platform.values.yaml`). Installations that reach registries and Sigstore only through a proxy must set `HTTPS_PROXY`, `HTTP_PROXY` and `NO_PROXY` through those `extraEnvVars` keys themselves.
+
 ### Changed
 
 - set size limits for emptyDir volumes

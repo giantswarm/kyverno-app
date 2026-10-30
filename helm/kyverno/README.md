@@ -30,6 +30,9 @@ language.
 | ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.port | string | `"443"` |  |
 | ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.protocol | string | `"TCP"` |  |
 | ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.rules | list | `[]` |  |
+| ciliumNetworkPolicy.imageVerificationEgress.enabled | bool | `true` |  |
+| ciliumNetworkPolicy.imageVerificationEgress.fqdns | list | `[{"matchName":"gsoci.azurecr.io"},{"matchPattern":"*.data.azurecr.io"},{"matchName":"tuf-repo-cdn.sigstore.dev"},{"matchName":"rekor.sigstore.dev"}]` | FQDNs the controllers may resolve and connect to. Append your own registry here. |
+| ciliumNetworkPolicy.imageVerificationEgress.port | string | `"443"` |  |
 | crds.install | bool | `false` |  |
 | crds.resources.requests.cpu | string | `"100m"` |  |
 | crds.resources.requests.memory | string | `"256Mi"` |  |

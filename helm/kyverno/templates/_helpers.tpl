@@ -157,3 +157,38 @@ app.kubernetes.io/instance: "{{ template "kyverno-stack.name" . }}"
 "helm.sh/hook": "pre-upgrade"
 "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
 {{- end -}}
+
+{{/*
+Egress rules for image signature verification (registry, TUF and Rekor), used by the
+admission and reports controller CiliumNetworkPolicies. DNS is scoped to the same FQDN
+list. Renders nothing when disabled or when the list is empty, never a wildcard fallback.
+*/}}
+{{- define "kyverno-stack.imageVerificationEgress" -}}
+{{- $cfg := .Values.ciliumNetworkPolicy.imageVerificationEgress -}}
+{{- if and $cfg.enabled $cfg.fqdns -}}
+# Allow DNS for the image verification FQDNs only
+- toEndpoints:
+  - matchLabels:
+      "k8s:io.kubernetes.pod.namespace": kube-system
+      "k8s:k8s-app": coredns
+  - matchLabels:
+      "k8s:io.kubernetes.pod.namespace": kube-system
+      "k8s:k8s-app": k8s-dns-node-cache
+  toPorts:
+  - ports:
+    - port: "1053"
+      protocol: ANY
+    - port: "53"
+      protocol: ANY
+    rules:
+      dns:
+        {{- toYaml $cfg.fqdns | nindent 8 }}
+# Allow image verification FQDNs connection
+- toFQDNs:
+  {{- toYaml $cfg.fqdns | nindent 2 }}
+  toPorts:
+  - ports:
+    - port: {{ default "443" $cfg.port | quote }}
+      protocol: TCP
+{{- end -}}
+{{- end }}

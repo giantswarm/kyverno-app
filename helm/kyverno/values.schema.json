@@ -53,6 +53,34 @@
                 },
                 "enabled": {
                     "type": "boolean"
+                },
+                "imageVerificationEgress": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "fqdns": {
+                            "type": "array",
+                            "description": "FQDNs the controllers may resolve and connect to. Append your own registry here.",
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "matchName": {
+                                        "type": "string"
+                                    },
+                                    "matchPattern": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "port": {
+                            "type": "string"
+                        }
+                    }
                 }
             }
         },
