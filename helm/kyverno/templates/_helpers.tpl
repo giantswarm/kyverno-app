@@ -161,11 +161,15 @@ app.kubernetes.io/instance: "{{ template "kyverno-stack.name" . }}"
 {{/*
 Egress rules for image signature verification (registry, TUF and Rekor), used by the
 admission and reports controller CiliumNetworkPolicies. DNS is scoped to the same FQDN
-list. Renders nothing when disabled or when the list is empty, never a wildcard fallback.
+list. Renders nothing when disabled. Fails when enabled with an empty FQDN list, so there
+is never a wildcard fallback.
 */}}
 {{- define "kyverno-stack.imageVerificationEgress" -}}
 {{- $cfg := .Values.ciliumNetworkPolicy.imageVerificationEgress -}}
-{{- if and $cfg.enabled $cfg.fqdns -}}
+{{- if $cfg.enabled -}}
+{{- if not $cfg.fqdns -}}
+{{- fail "ciliumNetworkPolicy.imageVerificationEgress.fqdns must not be empty when imageVerificationEgress.enabled is true: list the registry and Sigstore FQDNs to allow, or set enabled to false" -}}
+{{- end -}}
 # Allow DNS for the image verification FQDNs only
 - toEndpoints:
   - matchLabels:

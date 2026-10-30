@@ -59,11 +59,12 @@
                     "additionalProperties": false,
                     "properties": {
                         "enabled": {
-                            "type": "boolean"
+                            "type": "boolean",
+                            "description": "Allow the admission and reports controllers to reach the registry and Sigstore endpoints for image signature verification."
                         },
                         "fqdns": {
                             "type": "array",
-                            "description": "FQDNs the controllers may resolve and connect to. Append your own registry here.",
+                            "description": "FQDNs the controllers may resolve and connect to. When overriding this list, include the four default entries as well, because Helm replaces lists on merge instead of appending. gsoci serves blobs from Azure Storage (`*.blob.core.windows.net`); a registry with dedicated data endpoints needs `*.*.data.azurecr.io` (Cilium `*` matches a single DNS label).",
                             "items": {
                                 "type": "object",
                                 "additionalProperties": false,
@@ -75,10 +76,12 @@
                                         "type": "string"
                                     }
                                 }
-                            }
+                            },
+                            "minItems": 1
                         },
                         "port": {
-                            "type": "string"
+                            "type": "string",
+                            "description": "Port for the FQDN connections."
                         }
                     }
                 }
