@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add `ciliumNetworkPolicy.imageVerificationEgress` (enabled by default) to let the Kyverno admission and reports controllers resolve and reach the container registry and Sigstore TUF and Rekor for image signature verification. DNS and `toFQDNs` egress are scoped to the explicit `fqdns` list (`gsoci.azurecr.io`, `*.blob.core.windows.net`, `tuf-repo-cdn.sigstore.dev`, `rekor.sigstore.dev`) on a configurable `port` (default `443`), with no wildcard fallback. When overriding `fqdns`, list the four default entries too, because Helm replaces lists on merge. It is additive to `admissionControllerExtraEgress`. Proxied installations must set `HTTPS_PROXY`/`HTTP_PROXY`/`NO_PROXY` via `kyverno.admissionController.container.extraEnvVars` and `kyverno.reportsController.extraEnvVars`.
+- Added `ciliumNetworkPolicy.imageVerificationEgress`, enabled by default, which allows the Kyverno admission and reports controllers to reach the Giant Swarm container registry and Sigstore for image signature verification. Customers can add their own registries to the `fqdns` list.
 
 ### Changed
 
