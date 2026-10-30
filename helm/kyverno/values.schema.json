@@ -53,6 +53,37 @@
                 },
                 "enabled": {
                     "type": "boolean"
+                },
+                "imageVerificationEgress": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Allow the admission and reports controllers to reach the registry and Sigstore."
+                        },
+                        "fqdns": {
+                            "type": "array",
+                            "description": "FQDNs the controllers may resolve and connect to. Overriding replaces the whole list, so keep the defaults you still need.",
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "matchName": {
+                                        "type": "string"
+                                    },
+                                    "matchPattern": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "minItems": 1
+                        },
+                        "port": {
+                            "type": "string",
+                            "description": "Port for the FQDN connections."
+                        }
+                    }
                 }
             }
         },
