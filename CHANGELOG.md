@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `kyverno` to upstream version `v1.19.2`.
 - Raise `policy-reporter-ui` memory limit to `64Mi` to stop OOM kills at startup.
 
+### Fixed
+
+- Point the `policy-reporter-ui` and `kyverno-plugin` VPAs at their actual Deployments.
+
 ## [0.25.3] - 2026-10-14
 
 ### Changed
