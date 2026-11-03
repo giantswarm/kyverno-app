@@ -1434,10 +1434,10 @@ policy-reporter:  # @schema skipProperties: true; additionalProperties: true
     resources:
       limits:
         cpu: 10m
-        memory: 16Mi
+        memory: 64Mi
       requests:
-        cpu: 1m
-        memory: 8Mi
+        cpu: 10m
+        memory: 32Mi
     serviceAccount:
       create: true
       name: "policyreporter-ui-sa"  # Only needed to support adding a PSP. Can be removed when PSPs are disabled.

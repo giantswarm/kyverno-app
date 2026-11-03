@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - set size limits for emptyDir volumes
 - Updated `policy-reporter` to upstream version `v3.11.2`.
 - Updated `kyverno` to upstream version `v1.19.2`.
+- Raise `policy-reporter-ui` memory limit to `64Mi` to stop OOM kills at startup.
 
 ## [0.25.3] - 2026-10-14
 

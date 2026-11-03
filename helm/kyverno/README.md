@@ -411,9 +411,9 @@ language.
 | policy-reporter.ui.image.registry | string | `"gsoci.azurecr.io"` |  |
 | policy-reporter.ui.image.repository | string | `"giantswarm/policy-reporter-ui"` |  |
 | policy-reporter.ui.resources.limits.cpu | string | `"10m"` |  |
-| policy-reporter.ui.resources.limits.memory | string | `"16Mi"` |  |
-| policy-reporter.ui.resources.requests.cpu | string | `"1m"` |  |
-| policy-reporter.ui.resources.requests.memory | string | `"8Mi"` |  |
+| policy-reporter.ui.resources.limits.memory | string | `"64Mi"` |  |
+| policy-reporter.ui.resources.requests.cpu | string | `"10m"` |  |
+| policy-reporter.ui.resources.requests.memory | string | `"32Mi"` |  |
 | policy-reporter.ui.serviceAccount.create | bool | `true` |  |
 | policy-reporter.ui.serviceAccount.name | string | `"policyreporter-ui-sa"` |  |
 | policy-reporter.plugin.kyverno.enabled | bool | `true` |  |
