@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Allow in-cluster ingress to the Policy Reporter MCP server's port (`policy-reporter.mcp.port`, default `9090`) in the `allow-kyverno-policy-reporter-talk-to-apiserver` CiliumNetworkPolicy when `policy-reporter.mcp.enabled` is true, so muster and teleport-kube-agent can reach it.
+
 ### Changed
 
 - set size limits for emptyDir volumes
