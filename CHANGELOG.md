@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.26.0] - 2026-11-04
+
 ### Added
 
 - Allow in-cluster ingress to the Policy Reporter MCP server's port (`policy-reporter.mcp.port`, default `9090`) in the `allow-kyverno-policy-reporter-talk-to-apiserver` CiliumNetworkPolicy when `policy-reporter.mcp.enabled` is true, so muster and teleport-kube-agent can reach it.
@@ -689,7 +691,8 @@ This release includes an upstream update. Please refer to the following Release 
 
 ## [0.0.1] - 2021-03-19
 
-[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.25.3...HEAD
+[Unreleased]: https://github.com/giantswarm/kyverno-app/compare/v0.26.0...HEAD
+[0.26.0]: https://github.com/giantswarm/kyverno-app/compare/v0.25.3...v0.26.0
 [0.25.3]: https://github.com/giantswarm/kyverno-app/compare/v0.25.2...v0.25.3
 [0.25.2]: https://github.com/giantswarm/kyverno-app/compare/v0.25.1...v0.25.2
 [0.25.1]: https://github.com/giantswarm/kyverno-app/compare/v0.25.0...v0.25.1
