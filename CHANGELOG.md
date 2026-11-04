@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added `ciliumNetworkPolicy.imageVerificationEgress`, enabled by default, which allows the Kyverno admission and reports controllers to reach the Giant Swarm container registry and Sigstore for image signature verification. Customers can add their own registries to the `fqdns` list.
+
 ### Changed
 
 - set size limits for emptyDir volumes
