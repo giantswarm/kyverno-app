@@ -15,8 +15,8 @@ language.
 
 | Repository | Name | Version |
 |------------|------|---------|
-|  | kyverno | 3.8.2 |
-|  | policy-reporter | 3.11.1 |
+|  | kyverno | 3.9.2 |
+|  | policy-reporter | 3.11.2 |
 
 ## Values
 
@@ -58,12 +58,14 @@ language.
 | verticalPodAutoscaler.kyvernoPlugin.enabled | bool | `true` |  |
 | verticalPodAutoscaler.kyvernoPlugin.containerPolicies.minAllowed.cpu | string | `"50m"` |  |
 | verticalPodAutoscaler.kyvernoPlugin.containerPolicies.minAllowed.memory | string | `"50Mi"` |  |
+| verticalPodAutoscaler.kyvernoPlugin.containerPolicies.maxAllowed.memory | string | `"64Mi"` |  |
 | verticalPodAutoscaler.policyReporter.enabled | bool | `true` |  |
 | verticalPodAutoscaler.policyReporter.containerPolicies.minAllowed.cpu | string | `"50m"` |  |
 | verticalPodAutoscaler.policyReporter.containerPolicies.minAllowed.memory | string | `"50Mi"` |  |
 | verticalPodAutoscaler.ui.enabled | bool | `true` |  |
 | verticalPodAutoscaler.ui.containerPolicies.minAllowed.cpu | string | `"50m"` |  |
 | verticalPodAutoscaler.ui.containerPolicies.minAllowed.memory | string | `"50Mi"` |  |
+| verticalPodAutoscaler.ui.containerPolicies.maxAllowed.memory | string | `"64Mi"` |  |
 | cleanupPolicies.trivyOperator.enabled | bool | `false` | Enable Trivy cleanup policy to delete old Trivy Operator reports |
 | cleanupPolicies.trivyOperator.schedule | string | `"37 * * * *"` | Cleanup schedule |
 | cleanupPolicies.trivyOperator.olderThan | string | `"336h"` | Reports older than this duration will be deleted. Needs to be specified in hours. Defaults to 2 weeks (336 hours). |
@@ -411,9 +413,9 @@ language.
 | policy-reporter.ui.image.registry | string | `"gsoci.azurecr.io"` |  |
 | policy-reporter.ui.image.repository | string | `"giantswarm/policy-reporter-ui"` |  |
 | policy-reporter.ui.resources.limits.cpu | string | `"10m"` |  |
-| policy-reporter.ui.resources.limits.memory | string | `"16Mi"` |  |
-| policy-reporter.ui.resources.requests.cpu | string | `"1m"` |  |
-| policy-reporter.ui.resources.requests.memory | string | `"8Mi"` |  |
+| policy-reporter.ui.resources.limits.memory | string | `"64Mi"` |  |
+| policy-reporter.ui.resources.requests.cpu | string | `"10m"` |  |
+| policy-reporter.ui.resources.requests.memory | string | `"32Mi"` |  |
 | policy-reporter.ui.serviceAccount.create | bool | `true` |  |
 | policy-reporter.ui.serviceAccount.name | string | `"policyreporter-ui-sa"` |  |
 | policy-reporter.plugin.kyverno.enabled | bool | `true` |  |

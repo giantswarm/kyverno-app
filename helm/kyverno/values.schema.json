@@ -377,6 +377,15 @@
                             "type": "object",
                             "additionalProperties": false,
                             "properties": {
+                                "maxAllowed": {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "memory": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
                                 "minAllowed": {
                                     "type": "object",
                                     "additionalProperties": false,
@@ -470,6 +479,15 @@
                             "type": "object",
                             "additionalProperties": false,
                             "properties": {
+                                "maxAllowed": {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "memory": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
                                 "minAllowed": {
                                     "type": "object",
                                     "additionalProperties": false,
