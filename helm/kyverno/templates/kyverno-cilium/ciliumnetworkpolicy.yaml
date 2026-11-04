@@ -178,6 +178,11 @@ spec:
       - ports:
         - port: "8080"
           protocol: TCP
+        {{- $policyReporter := index .Values "policy-reporter" | default dict }}
+        {{- if dig "mcp" "enabled" false $policyReporter }}
+        - port: {{ dig "mcp" "port" 9090 $policyReporter | quote }}
+          protocol: TCP
+        {{- end }}
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy

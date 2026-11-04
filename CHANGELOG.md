@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Allow in-cluster ingress to the Policy Reporter MCP server's port (`policy-reporter.mcp.port`, default `9090`) in the `allow-kyverno-policy-reporter-talk-to-apiserver` CiliumNetworkPolicy when `policy-reporter.mcp.enabled` is true, so muster and teleport-kube-agent can reach it.
 - Added `ciliumNetworkPolicy.imageVerificationEgress`, enabled by default, which allows the Kyverno admission and reports controllers to reach the Giant Swarm container registry and Sigstore for image signature verification. Customers can add their own registries to the `fqdns` list.
 
 ### Changed
