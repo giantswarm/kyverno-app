@@ -58,12 +58,14 @@ language.
 | verticalPodAutoscaler.kyvernoPlugin.enabled | bool | `true` |  |
 | verticalPodAutoscaler.kyvernoPlugin.containerPolicies.minAllowed.cpu | string | `"50m"` |  |
 | verticalPodAutoscaler.kyvernoPlugin.containerPolicies.minAllowed.memory | string | `"50Mi"` |  |
+| verticalPodAutoscaler.kyvernoPlugin.containerPolicies.maxAllowed.memory | string | `"64Mi"` |  |
 | verticalPodAutoscaler.policyReporter.enabled | bool | `true` |  |
 | verticalPodAutoscaler.policyReporter.containerPolicies.minAllowed.cpu | string | `"50m"` |  |
 | verticalPodAutoscaler.policyReporter.containerPolicies.minAllowed.memory | string | `"50Mi"` |  |
 | verticalPodAutoscaler.ui.enabled | bool | `true` |  |
 | verticalPodAutoscaler.ui.containerPolicies.minAllowed.cpu | string | `"50m"` |  |
 | verticalPodAutoscaler.ui.containerPolicies.minAllowed.memory | string | `"50Mi"` |  |
+| verticalPodAutoscaler.ui.containerPolicies.maxAllowed.memory | string | `"64Mi"` |  |
 | cleanupPolicies.trivyOperator.enabled | bool | `false` | Enable Trivy cleanup policy to delete old Trivy Operator reports |
 | cleanupPolicies.trivyOperator.schedule | string | `"37 * * * *"` | Cleanup schedule |
 | cleanupPolicies.trivyOperator.olderThan | string | `"336h"` | Reports older than this duration will be deleted. Needs to be specified in hours. Defaults to 2 weeks (336 hours). |

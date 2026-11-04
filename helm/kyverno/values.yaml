@@ -87,6 +87,8 @@ verticalPodAutoscaler:
       minAllowed:
         cpu: 50m
         memory: 50Mi
+      maxAllowed:
+        memory: 64Mi
   policyReporter:
     enabled: true
     containerPolicies:
@@ -99,6 +101,8 @@ verticalPodAutoscaler:
       minAllowed:
         cpu: 50m
         memory: 50Mi
+      maxAllowed:
+        memory: 64Mi
 
 cleanupPolicies:
   trivyOperator:
