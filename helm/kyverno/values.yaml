@@ -207,6 +207,11 @@ kyverno:  # @schema skipProperties: true; additionalProperties: true
       image:
         registry: gsoci.azurecr.io
         repository: giantswarm/kyverno-cli
+      # Selected by allow-kyverno-hook-jobs-talk-to-apiserver. The upstream chart
+      # only puts the hook labels on the Job, not on its pods.
+      podLabels:
+        app.kubernetes.io/component: hooks
+        app.kubernetes.io/instance: kyverno
 
   grafana:
     # -- Enable grafana dashboard creation.
@@ -1385,6 +1390,12 @@ kyverno:  # @schema skipProperties: true; additionalProperties: true
   webhooksCleanup:
     # -- Create a helm pre-delete hook to cleanup webhooks.
     enabled: true
+
+    # Selected by allow-kyverno-hook-jobs-talk-to-apiserver. The upstream chart
+    # only puts the hook labels on the Job, not on its pods.
+    podLabels:
+      app.kubernetes.io/component: hooks
+      app.kubernetes.io/instance: kyverno
 
     autoDeleteWebhooks:
       # -- Allow webhooks controller to delete webhooks using finalizers
