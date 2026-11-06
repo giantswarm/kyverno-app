@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fix the Cilium network policies for a namespace default deny: select the `kyverno-plugin` pods by their `app.kubernetes.io/component: plugin` label, add a policy for `policy-reporter-ui` (API server, DNS, policy-reporter and plugin egress, in-cluster ingress on `8080`), allow `policy-reporter` egress to the plugin, and label the hook job pods (`crds.migration`, `webhooksCleanup`) so `allow-kyverno-hook-jobs-talk-to-apiserver` selects them.
+- Fix the Cilium network policies for a namespace default deny: select the `kyverno-plugin` pods by their `app.kubernetes.io/component: plugin` label, add a policy for `policy-reporter-ui` (API server, DNS, policy-reporter and plugin egress, in-cluster ingress on `8080`), and label the hook job pods (`crds.migration`, `webhooksCleanup`) so `allow-kyverno-hook-jobs-talk-to-apiserver` selects them.
 
 ## [0.26.0] - 2026-11-04
 

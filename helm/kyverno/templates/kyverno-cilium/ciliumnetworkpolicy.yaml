@@ -137,6 +137,8 @@ spec:
       # policy-reporter-kyverno-plugin.
       app.kubernetes.io/component: plugin
       app.kubernetes.io/instance: kyverno
+  # The plugin config also points at policy-reporter (core.host), but no
+  # handler calls it today. Add DNS and policy-reporter egress if that changes.
   egress:
     - toEntities:
       - kube-apiserver
@@ -300,16 +302,14 @@ spec:
     - matchLabels:
         app.kubernetes.io/component: ui
         app.kubernetes.io/instance: kyverno
-    - matchLabels:
-        app.kubernetes.io/component: plugin
-        app.kubernetes.io/instance: kyverno
     toPorts:
     - ports:
       - port: "8080"
         protocol: TCP
 ---
-# 2. policy-reporter-ui had no policy, so under a default deny it could reach
-# neither the API server nor its backends and never became ready.
+# policy-reporter-ui reads its cluster secret from the API server and calls
+# policy-reporter and the kyverno plugin. Without this policy it never becomes
+# ready under a namespace default deny.
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
