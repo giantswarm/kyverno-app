@@ -97,6 +97,8 @@ language.
 | kyverno.crds.migration.enabled | bool | `true` |  |
 | kyverno.crds.migration.image.registry | string | `"gsoci.azurecr.io"` |  |
 | kyverno.crds.migration.image.repository | string | `"giantswarm/kyverno-cli"` |  |
+| kyverno.crds.migration.podLabels."app.kubernetes.io/component" | string | `"hooks"` |  |
+| kyverno.crds.migration.podLabels."app.kubernetes.io/instance" | string | `"kyverno"` |  |
 | kyverno.grafana.enabled | bool | `false` | Enable grafana dashboard creation. |
 | kyverno.grafana.grafanaDashboard | object | `{"allowCrossNamespaceImport":true,"create":false,"folder":"kyverno","matchLabels":{"dashboards":"grafana"}}` | create GrafanaDashboard custom resource referencing to the configMap. |
 | kyverno.config.excludeKyvernoNamespace | bool | `true` | Exclude Kyverno namespace Determines if default Kyverno namespace exclusion is enabled for webhooks and resourceFilters |
@@ -392,6 +394,8 @@ language.
 | kyverno.reportsController.profiling.serviceType | string | `"ClusterIP"` | Service type. |
 | kyverno.reportsController.sanityChecks | bool | `true` | Enable sanity check for reports CRDs |
 | kyverno.webhooksCleanup.enabled | bool | `true` | Create a helm pre-delete hook to cleanup webhooks. |
+| kyverno.webhooksCleanup.podLabels."app.kubernetes.io/component" | string | `"hooks"` |  |
+| kyverno.webhooksCleanup.podLabels."app.kubernetes.io/instance" | string | `"kyverno"` |  |
 | kyverno.webhooksCleanup.autoDeleteWebhooks.enabled | bool | `false` | Allow webhooks controller to delete webhooks using finalizers |
 | kyverno.webhooksCleanup.image.registry | string | `"gsoci.azurecr.io"` | Image registry |
 | kyverno.webhooksCleanup.image.repository | string | `"giantswarm/kubectl"` | Image repository |
