@@ -1,0 +1,46 @@
+{{- if and .Values.policyExceptions.enableCiliumPolex .Values.kyvernoPolicyExceptions.enabled .Values.kyvernoPolicyExceptions.cel.enabled }}
+apiVersion: policies.kyverno.io/v1
+kind: PolicyException
+metadata:
+  name: kyverno-app-cilium-policies-policy-exception
+  namespace: giantswarm
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+spec:
+  policyRefs:
+  - name: require-run-as-non-root-user
+    kind: ValidatingPolicy
+  - name: require-run-as-nonroot
+    kind: ValidatingPolicy
+  - name: disallow-host-path
+    kind: ValidatingPolicy
+  - name: restrict-volume-types
+    kind: ValidatingPolicy
+  - name: disallow-host-namespaces
+    kind: ValidatingPolicy
+  - name: restrict-seccomp-strict
+    kind: ValidatingPolicy
+  - name: disallow-host-ports
+    kind: ValidatingPolicy
+  - name: disallow-capabilities
+    kind: ValidatingPolicy
+  - name: disallow-capabilities-strict
+    kind: ValidatingPolicy
+  - name: disallow-privilege-escalation
+    kind: ValidatingPolicy
+  - name: disallow-selinux
+    kind: ValidatingPolicy
+  - name: restrict-apparmor-profiles
+    kind: ValidatingPolicy
+  - name: disallow-privileged-containers
+    kind: ValidatingPolicy
+  matchConditions:
+  - name: cilium-policies-jobs
+    expression: >-
+      request.kind.kind in ['Job', 'Pod'] &&
+      request.namespace == 'kube-system' &&
+      has(object.metadata.name) &&
+      (object.metadata.name.startsWith('cilium-create-extra-policies') ||
+      object.metadata.name.startsWith('cilium-remove-default-policies') ||
+      object.metadata.name.startsWith('cilium-create-default-policies'))
+{{- end -}}

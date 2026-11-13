@@ -1,0 +1,76 @@
+{{- if and .Values.policyExceptions.enableCiliumPolex .Values.kyvernoPolicyExceptions.enabled .Values.kyvernoPolicyExceptions.cel.enabled }}
+apiVersion: policies.kyverno.io/v1
+kind: PolicyException
+metadata:
+  name: kyverno-app-cilium-agent-policy-exception
+  namespace: giantswarm
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+spec:
+  policyRefs:
+  - name: require-non-root-groups
+    kind: ValidatingPolicy
+  - name: require-ro-rootfs
+    kind: ValidatingPolicy
+  - name: require-run-as-non-root-user
+    kind: ValidatingPolicy
+  - name: require-run-as-nonroot
+    kind: ValidatingPolicy
+  - name: disallow-host-path
+    kind: ValidatingPolicy
+  - name: restrict-volume-types
+    kind: ValidatingPolicy
+  - name: disallow-host-namespaces
+    kind: ValidatingPolicy
+  - name: restrict-seccomp-strict
+    kind: ValidatingPolicy
+  - name: disallow-host-ports
+    kind: ValidatingPolicy
+  - name: disallow-capabilities
+    kind: ValidatingPolicy
+  - name: disallow-capabilities-strict
+    kind: ValidatingPolicy
+  - name: disallow-capabilities-not-strict
+    kind: ValidatingPolicy
+  - name: disallow-privilege-escalation
+    kind: ValidatingPolicy
+  - name: disallow-selinux
+    kind: ValidatingPolicy
+  - name: restrict-apparmor-profiles
+    kind: ValidatingPolicy
+  - name: disallow-privileged-containers
+    kind: ValidatingPolicy
+  # restrict-seccomp is missing from the legacy exception. It is excepted
+  # because the cilium DaemonSet and Pods fail it.
+  - name: restrict-seccomp
+    kind: ValidatingPolicy
+  # require-container-requests-and-limits is a supplemental policy and usually
+  # not enabled. It is excepted because the cilium DaemonSet and Pods fail it
+  # when the policy is enforced.
+  - name: require-container-requests-and-limits
+    kind: ValidatingPolicy
+  # require-emptydir-requests-and-limits is a supplemental policy and usually
+  # not enabled. It is excepted because the cilium DaemonSet and Pods fail it
+  # when the policy is enforced.
+  - name: require-emptydir-requests-and-limits
+    kind: ValidatingPolicy
+  # restrict-sa-automount-sa-token is a supplemental policy and usually not
+  # enabled. It is excepted because the cilium ServiceAccount fails it when the
+  # policy is enforced.
+  - name: restrict-sa-automount-sa-token
+    kind: ValidatingPolicy
+  matchConditions:
+  - name: cilium-agent-workloads
+    # The second block matches the cilium ServiceAccount, which no legacy
+    # exception covers: it has no k8s-app label, so the first block can't match it.
+    expression: >-
+      (request.kind.kind in ['DaemonSet', 'Pod'] &&
+      request.namespace == 'kube-system' &&
+      has(object.metadata.labels) &&
+      'k8s-app' in object.metadata.labels &&
+      object.metadata.labels['k8s-app'] == 'cilium') ||
+      (request.kind.kind == 'ServiceAccount' &&
+      request.namespace == 'kube-system' &&
+      has(object.metadata.name) &&
+      object.metadata.name == 'cilium')
+{{- end -}}

@@ -1,0 +1,33 @@
+{{- if and .Values.policyExceptions.enableCiliumPolex .Values.kyvernoPolicyExceptions.enabled .Values.kyvernoPolicyExceptions.cel.enabled }}
+apiVersion: policies.kyverno.io/v1
+kind: PolicyException
+metadata:
+  name: kyverno-app-cilium-operator-policy-exception
+  namespace: giantswarm
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+spec:
+  policyRefs:
+  - name: disallow-host-namespaces
+    kind: ValidatingPolicy
+  - name: disallow-host-ports
+    kind: ValidatingPolicy
+  # check-resources-request-and-limits-ratio is a supplemental policy and
+  # usually not enabled. It is excepted because the cilium-operator Deployment
+  # and Pods fail it when the policy is enforced.
+  - name: check-resources-request-and-limits-ratio
+    kind: ValidatingPolicy
+  # restrict-sa-automount-sa-token is a supplemental policy and usually not
+  # enabled. It is excepted because the cilium-operator ServiceAccount fails it
+  # when the policy is enforced.
+  - name: restrict-sa-automount-sa-token
+    kind: ValidatingPolicy
+  matchConditions:
+  - name: cilium-operator-workloads
+    # ServiceAccount is matched for restrict-sa-automount-sa-token.
+    expression: >-
+      request.kind.kind in ['Deployment', 'ReplicaSet', 'Pod', 'ServiceAccount'] &&
+      request.namespace == 'kube-system' &&
+      has(object.metadata.name) &&
+      object.metadata.name.startsWith('cilium-operator')
+{{- end -}}

@@ -1,4 +1,4 @@
-{{- if .Values.policyExceptions.enableChartOperatorPolex }}
+{{- if and .Values.policyExceptions.enableChartOperatorPolex .Values.kyvernoPolicyExceptions.enabled .Values.kyvernoPolicyExceptions.legacy.enabled }}
 apiVersion: kyverno.io/v2
 kind: PolicyException
 metadata:
@@ -6,6 +6,7 @@ metadata:
   namespace: giantswarm
   labels:
     {{- include "kyverno-stack.labels" . | nindent 4 }}
+    policy.giantswarm.io/migrated-to-cel: "true"
 spec:
   exceptions:
   - policyName: disallow-host-ports
@@ -35,6 +36,7 @@ metadata:
   namespace: giantswarm
   labels:
     {{- include "kyverno-stack.labels" . | nindent 4 }}
+    policy.giantswarm.io/migrated-to-cel: "true"
 spec:
   background: false
   exceptions:

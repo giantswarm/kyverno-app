@@ -1,4 +1,4 @@
-{{- if .Values.policyExceptions.enableAzureCloudControllerManagerPolex }}
+{{- if and .Values.policyExceptions.enableAzureCloudControllerManagerPolex .Values.kyvernoPolicyExceptions.enabled .Values.kyvernoPolicyExceptions.legacy.enabled }}
 apiVersion: kyverno.io/v2
 kind: PolicyException
 metadata:
@@ -6,6 +6,7 @@ metadata:
   namespace: giantswarm
   labels:
     {{- include "kyverno-stack.labels" . | nindent 4 }}
+    policy.giantswarm.io/migrated-to-cel: "true"
 spec:
   exceptions:
   - policyName: disallow-host-path
