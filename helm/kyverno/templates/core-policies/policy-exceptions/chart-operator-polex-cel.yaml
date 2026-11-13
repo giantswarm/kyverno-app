@@ -1,0 +1,45 @@
+{{- if and .Values.policyExceptions.enableChartOperatorPolex .Values.kyvernoPolicyExceptions.enabled .Values.kyvernoPolicyExceptions.cel.enabled }}
+apiVersion: policies.kyverno.io/v1
+kind: PolicyException
+metadata:
+  name: kyverno-app-chart-operator-policy-exception
+  namespace: giantswarm
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+spec:
+  policyRefs:
+  - name: disallow-host-ports
+    kind: ValidatingPolicy
+  - name: disallow-host-namespaces
+    kind: ValidatingPolicy
+  matchConditions:
+  - name: chart-operator-workloads
+    expression: >-
+      request.kind.kind in ['Deployment', 'ReplicaSet', 'Pod'] &&
+      request.namespace == 'giantswarm' &&
+      has(object.metadata.name) &&
+      object.metadata.name.startsWith('chart-operator')
+---
+apiVersion: policies.kyverno.io/v1
+kind: PolicyException
+metadata:
+  name: kyverno-app-chart-operator-sa-policy-exception
+  namespace: giantswarm
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+spec:
+  policyRefs:
+  - name: restrict-polex-namespaces
+    kind: ValidatingPolicy
+  matchConditions:
+  # Translation of the legacy `subjects` (ServiceAccount giantswarm/chart-operator)
+  # and `operations` match: Kyverno matches a ServiceAccount subject against the
+  # username `system:serviceaccount:<namespace>:<name>`. Background scans send an
+  # empty userInfo, so this never matches there, like the legacy `background: false`.
+  - name: chart-operator-policy-exceptions
+    expression: >-
+      request.kind.kind == 'PolicyException' &&
+      request.operation in ['CREATE', 'UPDATE'] &&
+      has(request.userInfo.username) &&
+      request.userInfo.username == 'system:serviceaccount:giantswarm:chart-operator'
+{{- end -}}

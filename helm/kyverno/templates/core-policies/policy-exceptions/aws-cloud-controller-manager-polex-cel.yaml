@@ -1,0 +1,43 @@
+{{- if and .Values.policyExceptions.enableAwsCloudControllerManagerPolex .Values.kyvernoPolicyExceptions.enabled .Values.kyvernoPolicyExceptions.cel.enabled }}
+apiVersion: policies.kyverno.io/v1
+kind: PolicyException
+metadata:
+  name: kyverno-app-aws-cloud-controller-policy-exception
+  namespace: giantswarm
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+spec:
+  policyRefs:
+  - name: require-run-as-nonroot
+    kind: ValidatingPolicy
+  - name: restrict-seccomp-strict
+    kind: ValidatingPolicy
+  - name: disallow-capabilities-strict
+    kind: ValidatingPolicy
+  - name: disallow-host-namespaces
+    kind: ValidatingPolicy
+  - name: require-run-as-non-root-user
+    kind: ValidatingPolicy
+  # disallow-host-ports is missing from the legacy exception. It is excepted
+  # because the aws-cloud-controller-manager Pods fail it.
+  - name: disallow-host-ports
+    kind: ValidatingPolicy
+  # check-resources-request-and-limits-ratio is a supplemental policy and
+  # usually not enabled. It is excepted because the aws-cloud-controller-manager
+  # DaemonSet and Pods fail it when the policy is enforced.
+  - name: check-resources-request-and-limits-ratio
+    kind: ValidatingPolicy
+  # restrict-sa-automount-sa-token is a supplemental policy and usually not
+  # enabled. It is excepted because the aws-cloud-controller-manager
+  # ServiceAccount fails it when the policy is enforced.
+  - name: restrict-sa-automount-sa-token
+    kind: ValidatingPolicy
+  matchConditions:
+  - name: aws-cloud-controller-manager-workloads
+    # ServiceAccount is matched for restrict-sa-automount-sa-token.
+    expression: >-
+      request.kind.kind in ['DaemonSet', 'ReplicaSet', 'Pod', 'ServiceAccount'] &&
+      request.namespace == 'kube-system' &&
+      has(object.metadata.name) &&
+      object.metadata.name.startsWith('aws-cloud-controller-manager')
+{{- end }}

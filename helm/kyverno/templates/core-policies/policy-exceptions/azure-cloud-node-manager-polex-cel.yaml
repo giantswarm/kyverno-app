@@ -1,0 +1,28 @@
+{{- if and .Values.policyExceptions.enableAzureCloudNodeManagerPolex .Values.kyvernoPolicyExceptions.enabled .Values.kyvernoPolicyExceptions.cel.enabled }}
+apiVersion: policies.kyverno.io/v1
+kind: PolicyException
+metadata:
+  name: kyverno-app-azure-cloud-node-manager-policy-exception
+  namespace: giantswarm
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+spec:
+  policyRefs:
+  - name: require-run-as-nonroot
+    kind: ValidatingPolicy
+  - name: restrict-seccomp-strict
+    kind: ValidatingPolicy
+  - name: disallow-capabilities-strict
+    kind: ValidatingPolicy
+  - name: require-run-as-non-root-user
+    kind: ValidatingPolicy
+  - name: disallow-host-namespaces
+    kind: ValidatingPolicy
+  matchConditions:
+  - name: azure-cloud-node-manager-workloads
+    expression: >-
+      request.kind.kind in ['DaemonSet', 'ReplicaSet', 'Pod'] &&
+      request.namespace == 'kube-system' &&
+      has(object.metadata.name) &&
+      object.metadata.name.startsWith('azure-cloud-node-manager')
+{{- end }}

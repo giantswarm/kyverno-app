@@ -151,6 +151,15 @@ policyExceptions:
   # Deploy a PolicyException for Azure Cloud Node Manager (required for Giant Swarm clusters).
   enableAzureCloudNodeManagerPolex: true
 
+kyvernoPolicyExceptions:
+  enabled: true
+  legacy:
+    # -- Render the kyverno.io/v2 PolicyException, which only applies to ClusterPolicies. Turn it off once the cluster runs the CEL policies.
+    enabled: true
+  cel:
+    # -- Render the policies.kyverno.io/v1 PolicyException, which only applies to CEL policies (ValidatingPolicy).
+    enabled: true
+
 # Upgrade job for Kyverno < 1.10.0 upgrades.
 upgradeJob:
   enabled: false
