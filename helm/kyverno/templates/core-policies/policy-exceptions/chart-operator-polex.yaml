@@ -1,4 +1,4 @@
-{{- if and .Values.policyExceptions.enableChartOperatorPolex .Values.kyvernoPolicyExceptions.enabled .Values.kyvernoPolicyExceptions.legacy.enabled }}
+{{- if .Values.policyExceptions.enableChartOperatorPolex }}
 apiVersion: kyverno.io/v2
 kind: PolicyException
 metadata:

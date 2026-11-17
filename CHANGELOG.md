@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add a `policies.kyverno.io/v1` PolicyException next to the `kyverno.io/v2` one, so the exception also applies to the CEL (ValidatingPolicy) versions of the policies. The CEL one is always rendered; set `kyvernoPolicyExceptions.legacy.enabled: false` to stop rendering the legacy one.
+- Add a `policies.kyverno.io/v1` PolicyException next to the `kyverno.io/v2` one, so the exception also applies to the CEL (ValidatingPolicy) versions of the policies. Each one is guarded by the same `policyExceptions.enable*Polex` value as its legacy counterpart.
 - Label the `kyverno.io/v2` PolicyExceptions with `policy.giantswarm.io/migrated-to-cel: "true"`, to mark them as migrated to CEL.
 
 ## [0.26.1] - 2026-11-10

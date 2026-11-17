@@ -1,4 +1,4 @@
-{{- if and .Values.policyExceptions.enableAzureCloudControllerManagerPolex .Values.kyvernoPolicyExceptions.enabled .Values.kyvernoPolicyExceptions.legacy.enabled }}
+{{- if .Values.policyExceptions.enableAzureCloudControllerManagerPolex }}
 apiVersion: kyverno.io/v2
 kind: PolicyException
 metadata:

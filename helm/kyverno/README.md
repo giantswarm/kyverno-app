@@ -80,8 +80,6 @@ language.
 | policyExceptions.enableAwsEbsCsiDriverPolex | bool | `true` |  |
 | policyExceptions.enableAzureCloudControllerManagerPolex | bool | `true` |  |
 | policyExceptions.enableAzureCloudNodeManagerPolex | bool | `true` |  |
-| kyvernoPolicyExceptions.enabled | bool | `true` |  |
-| kyvernoPolicyExceptions.legacy.enabled | bool | `true` | Render the kyverno.io/v2 PolicyException, which only applies to ClusterPolicies. Turn it off once the cluster runs the CEL policies. |
 | upgradeJob.enabled | bool | `false` |  |
 | monitoring.podLogs.enabled | bool | `true` |  |
 | monitoring.podLogs.tenant | string | `"giantswarm"` |  |

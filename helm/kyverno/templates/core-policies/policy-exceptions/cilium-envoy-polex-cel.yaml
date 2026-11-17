@@ -1,4 +1,4 @@
-{{- if and .Values.policyExceptions.enableCiliumPolex .Values.kyvernoPolicyExceptions.enabled }}
+{{- if .Values.policyExceptions.enableCiliumPolex }}
 apiVersion: policies.kyverno.io/v1
 kind: PolicyException
 metadata:
