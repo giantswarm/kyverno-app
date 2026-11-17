@@ -1,4 +1,4 @@
-{{- if and .Values.policyExceptions.enableAwsEbsCsiDriverPolex .Values.kyvernoPolicyExceptions.enabled .Values.kyvernoPolicyExceptions.cel.enabled }}
+{{- if and .Values.policyExceptions.enableAwsEbsCsiDriverPolex .Values.kyvernoPolicyExceptions.enabled }}
 apiVersion: policies.kyverno.io/v1
 kind: PolicyException
 metadata:
