@@ -28,5 +28,5 @@ spec:
       request.kind.kind in ['DaemonSet', 'ReplicaSet', 'Pod'] &&
       request.namespace == 'kube-system' &&
       has(object.metadata.name) &&
-      object.metadata.name.startsWith('azure-cloud-controller-manager')
+      (object.metadata.name == 'azure-cloud-controller-manager' || object.metadata.name.startsWith('azure-cloud-controller-manager-'))
 {{- end }}

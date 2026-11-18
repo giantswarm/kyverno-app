@@ -30,5 +30,5 @@ spec:
       request.kind.kind in ['DaemonSet', 'Deployment', 'ReplicaSet', 'Pod'] &&
       request.namespace == 'kube-system' &&
       has(object.metadata.name) &&
-      object.metadata.name.startsWith('ebs-csi')
+      (object.metadata.name == 'ebs-csi' || object.metadata.name.startsWith('ebs-csi-'))
 {{- end }}

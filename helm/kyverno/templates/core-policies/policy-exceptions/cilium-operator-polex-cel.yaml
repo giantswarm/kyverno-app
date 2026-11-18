@@ -29,5 +29,5 @@ spec:
       request.kind.kind in ['Deployment', 'ReplicaSet', 'Pod', 'ServiceAccount'] &&
       request.namespace == 'kube-system' &&
       has(object.metadata.name) &&
-      object.metadata.name.startsWith('cilium-operator')
+      (object.metadata.name == 'cilium-operator' || object.metadata.name.startsWith('cilium-operator-'))
 {{- end -}}

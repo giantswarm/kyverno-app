@@ -56,5 +56,5 @@ spec:
       request.kind.kind in ['DaemonSet', 'Pod', 'ServiceAccount'] &&
       request.namespace == 'kube-system' &&
       has(object.metadata.name) &&
-      object.metadata.name.startsWith('cilium-envoy')
+      (object.metadata.name == 'cilium-envoy' || object.metadata.name.startsWith('cilium-envoy-'))
 {{- end -}}

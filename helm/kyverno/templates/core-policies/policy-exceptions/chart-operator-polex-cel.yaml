@@ -18,7 +18,7 @@ spec:
       request.kind.kind in ['Deployment', 'ReplicaSet', 'Pod'] &&
       request.namespace == 'giantswarm' &&
       has(object.metadata.name) &&
-      object.metadata.name.startsWith('chart-operator')
+      (object.metadata.name == 'chart-operator' || object.metadata.name.startsWith('chart-operator-'))
 ---
 apiVersion: policies.kyverno.io/v1
 kind: PolicyException

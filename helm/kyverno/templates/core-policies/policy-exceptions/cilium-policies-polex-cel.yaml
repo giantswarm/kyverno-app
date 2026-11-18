@@ -40,7 +40,7 @@ spec:
       request.kind.kind in ['Job', 'Pod'] &&
       request.namespace == 'kube-system' &&
       has(object.metadata.name) &&
-      (object.metadata.name.startsWith('cilium-create-extra-policies') ||
-      object.metadata.name.startsWith('cilium-remove-default-policies') ||
-      object.metadata.name.startsWith('cilium-create-default-policies'))
+      ((object.metadata.name == 'cilium-create-extra-policies' || object.metadata.name.startsWith('cilium-create-extra-policies-')) ||
+      (object.metadata.name == 'cilium-remove-default-policies' || object.metadata.name.startsWith('cilium-remove-default-policies-')) ||
+      (object.metadata.name == 'cilium-create-default-policies' || object.metadata.name.startsWith('cilium-create-default-policies-')))
 {{- end -}}
