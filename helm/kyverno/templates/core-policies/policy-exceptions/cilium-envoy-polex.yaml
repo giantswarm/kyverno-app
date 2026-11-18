@@ -6,6 +6,7 @@ metadata:
   namespace: giantswarm
   labels:
     {{- include "kyverno-stack.labels" . | nindent 4 }}
+    policy.giantswarm.io/migrated-to-cel: "true"
 spec:
   exceptions:
   - policyName: disallow-capabilities
