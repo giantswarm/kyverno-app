@@ -40,5 +40,5 @@ spec:
     - messageExpression: >-
        "'PolicyExceptions are not allowed to be created in the ' + object.metadata.namespace + ' namespace. Please contact a cluster administrator for assistance.'"
       expression: >-
-        object.metadata.namespace in ['giantswarm', 'flux-giantswarm', 'kube-system'{{- range .Values.policyExceptions.allowedPolexNamespaces }}, '{{ . }}'{{- end }}]
+        object.metadata.namespace in ['giantswarm', 'flux-giantswarm', 'kube-system', 'security-profiles-operator'{{- range .Values.policyExceptions.allowedPolexNamespaces }}, '{{ . }}'{{- end }}]
 {{- end }}
