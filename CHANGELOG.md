@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Move the PolicyExceptions from the `giantswarm` namespace to `kube-system`, as the `giantswarm` namespace is going away. The chart-operator exceptions still match chart-operator in `giantswarm`.
+
 ## [0.26.2] - 2026-11-18
 
 ### Added
