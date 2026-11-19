@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add `security-profiles-operator` namespace to the allowed namespaces for the `restrict-polex-namespaces` policy.
+
 ## [0.26.2] - 2026-11-18
 
 ### Added
