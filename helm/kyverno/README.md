@@ -71,6 +71,7 @@ language.
 | cleanupPolicies.trivyOperator.olderThan | string | `"336h"` | Reports older than this duration will be deleted. Needs to be specified in hours. Defaults to 2 weeks (336 hours). |
 | policyExceptions.enablePolexPolicy | bool | `true` |  |
 | policyExceptions.allowedPolexNamespaces[0] | string | `"policy-exceptions"` |  |
+| policyExceptions.allowedPolexNamespaces[1] | string | `"security-profiles-operator"` |  |
 | policyExceptions.polexPolicyMessage | string | `"PolicyExceptions are not allowed to be created in the {{ request.namespace }} namespace. Please contact a cluster administrator for assistance."` |  |
 | policyExceptions.enableChartOperatorPolex | bool | `true` |  |
 | policyExceptions.enableCiliumPolex | bool | `true` |  |
