@@ -158,7 +158,7 @@ app.kubernetes.io/instance: "{{ template "kyverno-stack.name" . }}"
 "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
 {{- end -}}
 
-{{/* Egress rules for image signature verification, shared by the admission and reports controller CNPs. */}}
+{{/* Egress rules for image signature verification, used by the allow-kyverno-image-verification-egress CNP for the admission and reports controllers. */}}
 {{- define "kyverno-stack.imageVerificationEgress" -}}
 {{- $cfg := .Values.ciliumNetworkPolicy.imageVerificationEgress -}}
 {{- if $cfg.enabled -}}
