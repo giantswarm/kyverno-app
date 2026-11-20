@@ -61,43 +61,6 @@ spec:
       app.kubernetes.io/component: admission-controller
       app.kubernetes.io/instance: kyverno
   egress:
-  {{- if .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.enabled }}
-    # Allow DNS for FQDN resolution
-    - toEndpoints:
-      - matchLabels:
-          "k8s:io.kubernetes.pod.namespace": kube-system
-          "k8s:k8s-app": coredns
-      - matchLabels:
-          "k8s:io.kubernetes.pod.namespace": kube-system
-          "k8s:k8s-app": k8s-dns-node-cache
-      toPorts:
-      - ports:
-          - port: "1053"
-            protocol: ANY
-          - port: "53"
-            protocol: ANY
-        {{- if .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.dnsSelector.rules }}
-        rules:
-          dns:
-            {{- with .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.dnsSelector.rules -}}
-            {{ toYaml . | nindent 10 }}
-            {{- end }}
-        {{- end }}
-    # Allow FQDNs connection
-    - toFQDNs:
-    {{- if .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.rules -}}
-      {{- with .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.rules -}}
-      {{ toYaml .| nindent 6 }}
-      {{- end }}
-    {{- else }}
-      - matchPattern: "*"
-    {{- end }}
-      toPorts:
-        - ports:
-            - port: {{ default "443" .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.port | quote }}
-              protocol: {{ default "TCP" .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.protocol }}
-  {{- end }}
-    {{- with include "kyverno-stack.imageVerificationEgress" . }}{{ . | nindent 4 }}{{- end }}
     - toEntities:
       - kube-apiserver
       toPorts:
@@ -257,7 +220,6 @@ spec:
       app.kubernetes.io/component: reports-controller
       app.kubernetes.io/instance: kyverno
   egress:
-    {{- with include "kyverno-stack.imageVerificationEgress" . }}{{ . | nindent 4 }}{{- end }}
     - toEntities:
       - kube-apiserver
       toPorts:
@@ -391,4 +353,81 @@ spec:
             protocol: TCP
           - port: "6443"
             protocol: TCP
+{{- /*
+The L7 (DNS and FQDN) rules live in their own policies. A Cilium without the L7
+proxy, for example AKS without ACNS, rejects a whole policy that contains them,
+which would also drop the API server and webhook rules of the controllers.
+*/}}
+{{- with include "kyverno-stack.imageVerificationEgress" . }}
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-kyverno-image-verification-egress
+  labels:
+    {{- include "kyverno-stack.labels" $ | nindent 4 }}
+  namespace: {{ include "kyverno-stack.namespace" $ }}
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: kyverno
+    matchExpressions:
+      - key: app.kubernetes.io/component
+        operator: In
+        values:
+          - admission-controller
+          - reports-controller
+  egress:
+    {{- . | nindent 4 }}
+{{- end }}
+{{- if .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.enabled }}
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-kyverno-admission-controller-extra-egress
+  labels:
+    {{- include "kyverno-stack.labels" . | nindent 4 }}
+  namespace: {{ include "kyverno-stack.namespace" . }}
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/component: admission-controller
+      app.kubernetes.io/instance: kyverno
+  egress:
+    # Allow DNS for FQDN resolution
+    - toEndpoints:
+      - matchLabels:
+          "k8s:io.kubernetes.pod.namespace": kube-system
+          "k8s:k8s-app": coredns
+      - matchLabels:
+          "k8s:io.kubernetes.pod.namespace": kube-system
+          "k8s:k8s-app": k8s-dns-node-cache
+      toPorts:
+      - ports:
+          - port: "1053"
+            protocol: ANY
+          - port: "53"
+            protocol: ANY
+        {{- if .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.dnsSelector.rules }}
+        rules:
+          dns:
+            {{- with .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.dnsSelector.rules -}}
+            {{ toYaml . | nindent 10 }}
+            {{- end }}
+        {{- end }}
+    # Allow FQDNs connection
+    - toFQDNs:
+    {{- if .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.rules -}}
+      {{- with .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.rules -}}
+      {{ toYaml .| nindent 6 }}
+      {{- end }}
+    {{- else }}
+      - matchPattern: "*"
+    {{- end }}
+      toPorts:
+        - ports:
+            - port: {{ default "443" .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.port | quote }}
+              protocol: {{ default "TCP" .Values.ciliumNetworkPolicy.admissionControllerExtraEgress.fqdnsConnection.protocol }}
+{{- end }}
 {{- end }}
