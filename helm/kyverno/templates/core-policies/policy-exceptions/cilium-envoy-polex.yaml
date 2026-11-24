@@ -3,7 +3,7 @@ apiVersion: kyverno.io/v2
 kind: PolicyException
 metadata:
   name: kyverno-app-cilium-envoy-policy-exception
-  namespace: giantswarm
+  namespace: kube-system
   labels:
     {{- include "kyverno-stack.labels" . | nindent 4 }}
     policy.giantswarm.io/migrated-to-cel: "true"

@@ -3,7 +3,7 @@ apiVersion: policies.kyverno.io/v1
 kind: PolicyException
 metadata:
   name: kyverno-app-aws-cloud-controller-policy-exception
-  namespace: giantswarm
+  namespace: kube-system
   labels:
     {{- include "kyverno-stack.labels" . | nindent 4 }}
 spec:

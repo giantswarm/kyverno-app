@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Move the image verification egress and the `admissionControllerExtraEgress` DNS and FQDN rules into their own CiliumNetworkPolicies, `allow-kyverno-image-verification-egress` and `allow-kyverno-admission-controller-extra-egress`. A Cilium without the L7 proxy, like AKS without ACNS, rejected the whole admission and reports controller policies because of them, so the controllers lost their API server and webhook allows under a default deny. On such clusters the two new policies stay invalid, so image signature verification has no egress there under a default deny.
 
+### Changed
+
+- Move the PolicyExceptions from the `giantswarm` namespace to `kube-system`, as the `giantswarm` namespace is going away. The chart-operator exceptions still match chart-operator in `giantswarm`.
+
 ## [0.26.2] - 2026-11-18
 
 ### Added
